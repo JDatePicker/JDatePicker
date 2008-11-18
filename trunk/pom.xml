@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <version>1.0.4-SNAPSHOT</version>
   <name>jdatepicker</name>
-  <url>http://www.pepperbytes.net/jdatepicker</url>
+  <url>http://www.pepperbytes.net/opensource/jdatepicker</url>
   <description>JDatePicker and JDatePanel is a Java Swing component. It is designed with the Model View Controller pattern and it uses the Java Calendar object as the model. The component may be used via a popup control or embedded on a panel.</description>
   <licenses>
     <license>
