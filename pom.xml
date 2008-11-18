@@ -4,7 +4,7 @@
   <groupId>net.sourceforge.jdatepicker</groupId>
   <artifactId>jdatepicker</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.1</version>
   <name>jdatepicker</name>
   <url>http://www.pepperbytes.net/jdatepicker</url>
   <dependencies>
