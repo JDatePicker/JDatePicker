@@ -4,9 +4,23 @@
   <groupId>net.sourceforge.jdatepicker</groupId>
   <artifactId>jdatepicker</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.2-SNAPSHOT</version>
   <name>jdatepicker</name>
   <url>http://www.pepperbytes.net/jdatepicker</url>
+  <description>JDatePicker and JDatePanel has a L&F similar to the MS version. It is designed with the Model View Controller pattern and it uses the Java Calendar object as the model.</description>
+  <licenses>
+    <license>
+      <name>The BSD License</name>
+      <url>http://www.opensource.org/licenses/bsd-license.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:svn:https://jdatepicker.svn.sourceforge.net/svnroot/jdatepicker</connection>
+    <developerConnection>scm:svn:https://jdatepicker.svn.sourceforge.net/svnroot/jdatepicker</developerConnection>
+    <tag>1.0.1</tag>
+    <url>https://jdatepicker.svn.sourceforge.net/svnroot/jdatepicker</url>
+  </scm>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
