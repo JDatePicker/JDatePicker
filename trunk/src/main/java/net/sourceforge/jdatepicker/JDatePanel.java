@@ -1,5 +1,5 @@
-
 package net.sourceforge.jdatepicker;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -153,6 +153,16 @@ public class JDatePanel extends JPanel {
 				else {
 					cal.set(Calendar.DATE,day);
 				}
+				calendarModel.setCalendar(cal.getTime());
+			}
+			else if (arg0.getSource() == nextYearButton) {
+				GregorianCalendar cal = (GregorianCalendar)calendarModel.getCalendarClone();
+				cal.set(cal.get(Calendar.YEAR) + 1, cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+				calendarModel.setCalendar(cal.getTime());
+			}
+			else if (arg0.getSource() == previousYearButton) {
+				GregorianCalendar cal = (GregorianCalendar)calendarModel.getCalendarClone();
+				cal.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
 				calendarModel.setCalendar(cal.getTime());
 			} else {
 				for (int month=0; month<monthPopupMenuItems.length; month++) {
@@ -402,7 +412,12 @@ public class JDatePanel extends JPanel {
 		JPanel content = new JPanel();
 		//content.add(new JDatePanel());
 		//testFrame.getContentPane().add(content);
-		testFrame.getContentPane().add(new JDatePanel());
+		JDatePanel datePanel = new JDatePanel();
+		datePanel.setShowYearButtons(true);
+		testFrame.getContentPane().add(datePanel);
+		datePanel.setShowYearButtons(false);
+		datePanel.setShowYearButtons(true);
+
 		testFrame.setSize(300,300);
 		testFrame.addWindowFocusListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent arg0) {
@@ -435,6 +450,12 @@ public class JDatePanel extends JPanel {
 	private javax.swing.JPanel southPanel = null;
 	private javax.swing.JLabel todayLabel = null;
 	private javax.swing.JSpinner yearSpinner = null;
+	private javax.swing.JButton previousYearButton = null;
+	private javax.swing.JButton nextYearButton = null;
+	private javax.swing.JPanel previousButtonPanel = null;
+	private javax.swing.JPanel nextButtonPanel = null;
+
+	private boolean showYearButtons = false;
 	
 	/**
 	 * This is the default constructor
@@ -645,13 +666,9 @@ public class JDatePanel extends JPanel {
 	}
 
 	/**
-
 	 * This method initializes nextMonthButton	
-
 	 * 	
-
 	 * @return javax.swing.JButton	
-
 	 */    
 	private javax.swing.JButton getNextMonthButton() {
 		if (nextMonthButton == null) {
@@ -661,8 +678,27 @@ public class JDatePanel extends JPanel {
 			nextMonthButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			nextMonthButton.setFocusable(false);
 			nextMonthButton.addActionListener(getEventHandler());
+			nextMonthButton.setToolTipText("Next Month");
 		}
 		return nextMonthButton;
+	}
+
+	/**
+	 * This method initializes nextYearButton	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */    
+	private javax.swing.JButton getNextYearButton() {
+		if (nextYearButton == null) {
+			nextYearButton = new javax.swing.JButton(new JNextIcon(8,7, true));
+			nextYearButton.setText("");
+			nextYearButton.setPreferredSize(new java.awt.Dimension(20,15));
+			nextYearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			nextYearButton.setFocusable(false);
+			nextYearButton.addActionListener(getEventHandler());
+			nextYearButton.setToolTipText("Next Year");
+		}
+		return nextYearButton;
 	}
 
 	/**
@@ -702,21 +738,59 @@ public class JDatePanel extends JPanel {
 			northPanel.setName("");
 			northPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(3,3,3,3));
 			northPanel.setBackground(java.awt.SystemColor.activeCaption);
-			northPanel.add(getPreviousMonthButton(), java.awt.BorderLayout.WEST);
-			northPanel.add(getNextMonthButton(), java.awt.BorderLayout.EAST);
+			northPanel.add(getPreviousButtonPanel(), java.awt.BorderLayout.WEST);
+			northPanel.add(getNextButtonPanel(), java.awt.BorderLayout.EAST);
 			northPanel.add(getNorthCenterPanel(), java.awt.BorderLayout.CENTER);
 		}
 		return northPanel;
 	}
 
 	/**
+	 * This method initializes previousButtonPanel
+	 *
+	 * @return javax.swing.JPanel
+	 */
+	private javax.swing.JPanel getPreviousButtonPanel() {
+		if (previousButtonPanel == null) {
+			previousButtonPanel = new javax.swing.JPanel();
+			java.awt.GridLayout layout = new java.awt.GridLayout(1,2);
+			layout.setHgap(3);
+			previousButtonPanel.setLayout(layout);
+			previousButtonPanel.setName("");
+			previousButtonPanel.setBackground(java.awt.SystemColor.activeCaption);
+			if (isShowYearButtons()) {
+				previousButtonPanel.add(getPreviousYearButton());
+			}
+			previousButtonPanel.add(getPreviousMonthButton());
+		}
+		return previousButtonPanel;
+	}
 
+	/**
+	 * This method initializes nextButtonPanel
+	 *
+	 * @return javax.swing.JPanel
+	 */
+	private javax.swing.JPanel getNextButtonPanel() {
+		if (nextButtonPanel == null) {
+			nextButtonPanel = new javax.swing.JPanel();
+			java.awt.GridLayout layout = new java.awt.GridLayout(1,2);
+			layout.setHgap(3);
+			nextButtonPanel.setLayout(layout);
+			nextButtonPanel.setName("");
+			nextButtonPanel.setBackground(java.awt.SystemColor.activeCaption);
+			nextButtonPanel.add(getNextMonthButton());
+			if (isShowYearButtons()) {
+				nextButtonPanel.add(getNextYearButton());
+			}
+		}
+		return nextButtonPanel;
+	}
+
+	/**
 	 * This method initializes previousMonthButton	
-
 	 * 	
-
 	 * @return javax.swing.JButton	
-
 	 */    
 	private javax.swing.JButton getPreviousMonthButton() {
 		if (previousMonthButton == null) {
@@ -726,8 +800,27 @@ public class JDatePanel extends JPanel {
 			previousMonthButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 			previousMonthButton.setFocusable(false);
 			previousMonthButton.addActionListener(getEventHandler());
+			previousMonthButton.setToolTipText("Previous Month");
 		}
 		return previousMonthButton;
+	}
+	
+	/**
+	 * This method initializes previousMonthButton	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */    
+	private javax.swing.JButton getPreviousYearButton() {
+		if (previousYearButton == null) {
+			previousYearButton = new javax.swing.JButton(new JPreviousIcon(8,7, true));
+			previousYearButton.setText("");
+			previousYearButton.setPreferredSize(new java.awt.Dimension(20,15));
+			previousYearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+			previousYearButton.setFocusable(false);
+			previousYearButton.addActionListener(getEventHandler());
+			previousYearButton.setToolTipText("Previous Year");
+		}
+		return previousYearButton;
 	}
 
 	/**
@@ -827,6 +920,95 @@ public class JDatePanel extends JPanel {
 	public String toString(){
 		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
 		return df.format(calendarModel.getCalendarClone().getTime());
+	}
+
+	/**
+	 * Set the tool tip text for the Previous Year Button.
+	 * @param toolTipText
+	 */
+	public void setPreviousYearButtonToolTipText(String toolTipText) {
+		this.getPreviousYearButton().setToolTipText(toolTipText);
+	}
+
+	/**
+	 * Gets the tool tip text for the Previous Year Button.
+	 * @return the tool tip text for the previous year button
+	 */
+	public String getPreviousYearButtonToolTipText() {
+	       return this.getPreviousYearButton().getToolTipText();
+      	}	       
+
+	/**
+	 * Set the tool tip text for the Next Year Button.
+	 * @param toolTipText
+	 */
+	public void setNextYearButtonToolTipText(String toolTipText) {
+		this.getNextYearButton().setToolTipText(toolTipText);
+	}
+
+	/**
+	 * Gets the tool tip text for the Next Year Button.
+	 * @return the tool tip text for the next year button
+	 */
+	public String getNextYearButtonToolTipText() {
+	       return this.getNextYearButton().getToolTipText();
+      	}	       
+
+	/**
+	 * Set the tool tip text for the Previous Month Button.
+	 * @param toolTipText
+	 */
+	public void setPreviousMonthButtonToolTipText(String toolTipText) {
+		this.getPreviousMonthButton().setToolTipText(toolTipText);
+	}
+
+	/**
+	 * Gets the tool tip text for the Previous Month Button.
+	 * @return the tool tip text for the previous month button
+	 */
+	public String getPreviousMonthButtonToolTipText() {
+	       return this.getPreviousMonthButton().getToolTipText();
+      	}	       
+
+	/**
+	 * Set the tool tip text for the Next Month Button.
+	 * @param toolTipText
+	 */
+	public void setNextMonthButtonToolTipText(String toolTipText) {
+		this.getNextMonthButton().setToolTipText(toolTipText);
+	}
+
+	/**
+	 * Gets the tool tip text for the Next Month Button.
+	 * @return the tool tip text for the next month button
+	 */
+	public String getNextMonthButtonToolTipText() {
+	       return this.getNextMonthButton().getToolTipText();
+      	}	       
+
+	/**
+	 * Sets the visibilty of the Year navigation buttons
+	 * @param showYearButtons
+	 */
+	public void setShowYearButtons(boolean showYearButtons) {
+		this.showYearButtons = showYearButtons;
+		if (this.showYearButtons) {
+			getNextButtonPanel().add(getNextYearButton());
+			getPreviousButtonPanel().removeAll();
+			getPreviousButtonPanel().add(getPreviousYearButton());
+			getPreviousButtonPanel().add(getPreviousMonthButton());
+		} else {
+			getNextButtonPanel().remove(getNextYearButton());
+			getPreviousButtonPanel().remove(getPreviousYearButton());
+		}
+	}
+
+	/**
+	 * Is the year navigation buttons active
+	 * @return visiblity of the year
+	 */
+	public boolean isShowYearButtons() {
+		return this.showYearButtons;
 	}
 
   }  
