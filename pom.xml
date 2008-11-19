@@ -29,4 +29,19 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>ssh-repository-jdatepicker</id>
+      <url>scpexe://web.sourceforge.net:/home/groups/j/jd/jdatepicker/htdocs/repo</url>
+    </repository>
+  </distributionManagement>
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+         <artifactId>wagon-ssh-external</artifactId>
+         <version>1.0-alpha-5</version>
+      </extension>
+    </extensions>
+  </build>
 </project>
