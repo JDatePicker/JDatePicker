@@ -32,7 +32,7 @@
   <distributionManagement>
     <repository>
       <id>ssh-repository-jdatepicker</id>
-      <url>scpexe://web.sourceforge.net:/home/groups/j/jd/jdatepicker/htdocs/repo</url>
+      <url>scpexe://web.sourceforge.net/home/groups/j/jd/jdatepicker/htdocs/repo</url>
     </repository>
   </distributionManagement>
   <build>
