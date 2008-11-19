@@ -4,10 +4,10 @@
   <groupId>net.sourceforge.jdatepicker</groupId>
   <artifactId>jdatepicker</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.4-SNAPSHOT</version>
   <name>jdatepicker</name>
-  <url>http://www.pepperbytes.net/opensource/jdatepicker</url>
+  <version>1.0.4-SNAPSHOT</version>
   <description>JDatePicker and JDatePanel is a Java Swing component. It is designed with the Model View Controller pattern and it uses the Java Calendar object as the model. The component may be used via a popup control or embedded on a panel.</description>
+  <url>http://www.pepperbytes.net/opensource/jdatepicker</url>
   <licenses>
     <license>
       <name>The BSD License</name>
@@ -18,8 +18,8 @@
   <scm>
     <connection>scm:svn:https://jdatepicker.svn.sourceforge.net/svnroot/jdatepicker</connection>
     <developerConnection>scm:svn:https://jdatepicker.svn.sourceforge.net/svnroot/jdatepicker</developerConnection>
-    <tag>1.0.4</tag>
-    <url>https://jdatepicker.svn.sourceforge.net/svnroot/jdatepicker</url>
+    <tag>HEAD</tag>
+    <url>https://jdatepicker.svn.sourceforge.net</url>
   </scm>
   <dependencies>
     <dependency>
