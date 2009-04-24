@@ -566,6 +566,7 @@ public class JDatePanel extends JPanel {
 		if (dayTable == null) {
 			dayTable = new javax.swing.JTable();
 			dayTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+      dayTable.setRowHeight(18); 
 			//dayTable.setOpaque(false);
 			dayTable.setPreferredSize(new java.awt.Dimension(100,80));
 			dayTable.setModel(getCalenderModel());
@@ -888,8 +889,8 @@ public class JDatePanel extends JPanel {
 	 */
 	private  void initialize() {
 		this.setLayout(new java.awt.BorderLayout());
-		this.setSize(200, 160);
-		this.setPreferredSize(new java.awt.Dimension(200,160));
+		this.setSize(200,220);
+		this.setPreferredSize(new java.awt.Dimension(200,220));
 		this.setBackground(java.awt.SystemColor.activeCaptionText);
 		this.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black,1));
 		this.setOpaque(false);
