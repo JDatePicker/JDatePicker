@@ -60,7 +60,7 @@ public class JDatePicker extends JPanel {
 				System.exit(0);
 			}
 		});
-		testFrame.setSize(250,350);
+		testFrame.setSize(250,500);
 		JPanel jPanel = new JPanel();
     JEventNotification();
 		jPanel.add(new JDatePicker());
@@ -73,6 +73,8 @@ public class JDatePicker extends JPanel {
     testFrame.getContentPane().add(jmb, fb.NORTH);
 		testFrame.getContentPane().add(DatePanel, fb.WEST);
 		testFrame.setVisible(true);
+
+    eventNotification.setDateLength(datePanel.toString());
 	}
 
 	private EventHandler eventHandler;
@@ -219,7 +221,7 @@ public class JDatePicker extends JPanel {
   public static void JEventNotification(){
     Timer t=new Timer();
     TimerTask tt = new playTimer();
-    t.schedule(tt,5000,30000);
+    t.schedule(tt,5000,10000);
     menuFile.add(mSetEvent);
     menuFile.add(mViewEvent);
     menuFile.add(mQuit);
@@ -243,7 +245,7 @@ public class JDatePicker extends JPanel {
   /**listener for mViewEvent **/
   private static class MviewEventListener implements ActionListener {
     public void actionPerformed(ActionEvent event){
-      System.out.println("View");
+      eventNotification.viewEventDialog();
     }
   }
 
@@ -255,31 +257,47 @@ public class JDatePicker extends JPanel {
   }
 
   private static JLabel checkDate = new JLabel();
-  private static Calendar ct = new GregorianCalendar();
-  private static DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
   /** class for timer to notify the event **/
   private static class playTimer extends TimerTask{
     @Override
     public void run(){
-      checkDate.setText(ct.get(Calendar.DATE)+" "+converMonth(ct.get(Calendar.MONTH)+1)+" "+ct.get(Calendar.YEAR));
-      System.out.println(datePanel.toString());
+      int z=0;
+      int datelen = 0;
+      int alarm = 0;
+      GregorianCalendar ct = new GregorianCalendar();
+      checkDate.setText("");
+      DateFormat dfc = DateFormat.getDateInstance(DateFormat.LONG);
+      checkDate.setText(dfc.format(ct.getTime()));
+      eventNotification.setDateLength(checkDate.getText());
       Vector<Integer> v_idx = new Vector<Integer>();
-      Vector<String> v_description = new Vector<String>();
       for(int i=0;i<eventNotification.events.size();i++){
+        int w=2;
         Vector<String> v_info = new Vector<String>();
         Vector<String> v_date = new Vector<String>();
         stringToken(v_info, eventNotification.events.get(i));
         stringToken(v_date, checkDate.getText());
-        if(v_info.get(1).compareTo(v_date.get(0))==0 && v_info.get(2).compareTo(v_date.get(1))==0 && v_info.get(3).compareTo(v_date.get(2))==0){
+        for(z=0; z<v_date.size();z++){
+          if(v_info.get(w).compareTo(v_date.get(z))!=0){
+            break;
+          }
+          w++;
+        }
+        if(z==v_date.size()){
           v_idx.add(i);
         }
       }
       if(v_idx.isEmpty()==false){
         String str = "";
         for(int i=0; i<v_idx.size();i++){
+          Vector<String> v_description = new Vector<String>();
+          StringTokenizer  dateST = new StringTokenizer(eventNotification.events.get(v_idx.get(i)));
+          datelen=Integer.parseInt(dateST.nextToken());
           stringToken(v_description, eventNotification.events.get(v_idx.get(i)));
-          for(int j=5;j<v_description.size();j++){
+          for(int j=datelen+3;j<v_description.size();j++){
             str+=v_description.get(j)+" ";
+          }
+          if(v_description.get(datelen+2).compareTo("1")==0){
+            alarm = 1;
           }
           str += "\n\n";
         }
@@ -291,40 +309,11 @@ public class JDatePicker extends JPanel {
         }catch(IOException e) {
           e.printStackTrace();
         }
-        if(v_description.get(4).compareTo("1")==0){
+        if(alarm==1){
           openAlarm();
         }
         JOptionPane.showMessageDialog(null,str,"Event",JOptionPane.INFORMATION_MESSAGE);
       }
-    }
-    public String converMonth(int m){
-      String str_m="";
-      if(m==1){
-        str_m = "January";
-      }else if(m==2){
-        str_m = "February";
-      }else if(m==3){
-        str_m = "March";
-      }else if(m==4){
-        str_m = "April";
-      }else if(m==5){
-        str_m = "May";
-      }else if(m==6){
-        str_m = "June";
-      }else if(m==7){
-        str_m = "July";
-      }else if(m==8){
-        str_m = "August";
-      }else if(m==9){
-        str_m = "September";
-      }else if(m==10){
-        str_m = "October";
-      }else if(m==11){
-        str_m = "November";
-      }else if(m==12){
-        str_m = "December";
-      }
-      return str_m;
     }
     /* method for get infomation of one line*/
     public void stringToken(Vector<String> v, String t){

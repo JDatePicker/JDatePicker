@@ -42,6 +42,7 @@ public class EventNotification extends JPanel{
 
   private int selectedRow=0;
   private Boolean edit = false;
+  private int dateLength=0;
 
   public EventNotification(){
     super();
@@ -193,7 +194,7 @@ public class EventNotification extends JPanel{
   private class applyListener implements ActionListener {
     public void actionPerformed(ActionEvent event){
       String str = "";
-      str = id.getText().substring(10, id.getText().length()) + " " + JLdate.getText().substring(19,JLdate.getText().length())+" ";
+      str = dateLength +" "+ id.getText().substring(10, id.getText().length()) + " " + JLdate.getText().substring(19,JLdate.getText().length())+" ";
       if(acb.isSelected()==true){
         str += "1 ";
       }else{
@@ -235,7 +236,7 @@ public class EventNotification extends JPanel{
   private class setEventOKListener implements ActionListener {
     public void actionPerformed(ActionEvent event){
       String str = "";
-      str = id.getText().substring(10, id.getText().length()) + " " + JLdate.getText().substring(19,JLdate.getText().length())+" ";
+      str =dateLength +" "+ id.getText().substring(10, id.getText().length()) + " " + JLdate.getText().substring(19,JLdate.getText().length())+" ";
       if(acb.isSelected()==true){
         str += "1 ";
       }else{
@@ -293,6 +294,16 @@ public class EventNotification extends JPanel{
       fireTableCellUpdated(row, col);
     }
   }
+
+  public void setDateLength(String str_date){
+    StringTokenizer stdate = new StringTokenizer(str_date);
+    int i=0;
+    while (stdate.hasMoreTokens()){
+      String str_t = stdate.nextToken();
+      i++;
+    }
+    dateLength = i;
+  }
   
   public void addTable(){
     tm = new MyTableModel();
@@ -302,30 +313,35 @@ public class EventNotification extends JPanel{
       Vector<String> rd = new Vector<String>();
       StringTokenizer  st = new StringTokenizer(events.get(i)); //need identify
       int j=0;
+      int len = 3;
       String str = "";
       while(st.hasMoreTokens()){
         if(j==0){
+          len = Integer.parseInt(st.nextToken())+1;
+        }
+        if(j==1){
           rd.add(st.nextToken());
-        }else if(j>=1 && j<=3){
-          if(j==3){
+        }else if(j>=2 && j<=len){
+          if(j==len){
             str += st.nextToken();
             rd.add(str);
             str="";
           }else{
             str += st.nextToken()+" ";
           }
-        }else if(j==4){
+        }else if(j==len+1){
           if(st.nextToken().compareTo("1")==0){
             rd.add("Yes");
           }else{
             rd.add("No");
           }
-        }else if(j>=5){
+        }else if(j>=len+2){
           str+=st.nextToken()+" ";
         }
         j++;
       }
       rd.add(str);
+
       for(j=0; j<rd.size();j++){
         tm.setValueAt((Object)rd.get(j),i,j);
       }
@@ -338,6 +354,7 @@ public class EventNotification extends JPanel{
     setEventDia = new JDialog(null,"Set Event",Dialog.ModalityType.APPLICATION_MODAL);
     if(events.size()>0){
       StringTokenizer  st = new StringTokenizer(events.get(events.size()-1));
+      String str = st.nextToken();
       nextID = Integer.parseInt(st.nextToken())+1;
     }else{
       nextID = 0;
