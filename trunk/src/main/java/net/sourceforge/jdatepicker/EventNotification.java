@@ -9,6 +9,14 @@ import java.util.*;
 import java.lang.String; 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * @author Yue Huang
+ *
+ * Created on 29-April-2009
+ *
+ * least modified 14-May-2009
+ */
+
 public class EventNotification extends JPanel{
   public Vector<String> events = new Vector<String>();
   private JButton setEvent = new JButton("Set Enevt");

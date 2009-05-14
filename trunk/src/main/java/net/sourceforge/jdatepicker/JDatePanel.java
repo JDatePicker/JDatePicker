@@ -34,11 +34,11 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 /**
- * @author Juan Heyns
+ * @author Juan Heyns, Yue Huang
  * Created on 26-Mar-2004
  * Refactored on 21-Jun-2004
  * Refactored on 8-Jul-2004
- *
+ * least modified 14-May-2009
  */
 public class JDatePanel extends JPanel {
 	

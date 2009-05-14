@@ -38,11 +38,11 @@ import java.io.*;
 
 
 /**
- * @author Juan Heyns
+ * @author Juan Heyns, Yue Huang
  *
  * Created on 25-Mar-2004
  * Refactored 21-Jun-2004
- * 
+ * least modified 14-May-2009
  */
 public class JDatePicker extends JPanel {
 	
