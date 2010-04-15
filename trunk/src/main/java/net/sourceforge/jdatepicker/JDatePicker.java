@@ -1,12 +1,11 @@
 package net.sourceforge.jdatepicker;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,15 +13,30 @@ import java.awt.event.HierarchyBoundsListener;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Calendar;
-import java.util.Date;
+import java.io.IOException;
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.StringTokenizer;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Vector;
 
-import javax.swing.*;
+import javax.sound.midi.Instrument;
+import javax.sound.midi.MidiChannel;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
+import javax.sound.midi.Soundbank;
+import javax.sound.midi.Synthesizer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Popup;
@@ -30,11 +44,8 @@ import javax.swing.PopupFactory;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.util.Timer;
-import java.util.*;
-import java.lang.String;
-import javax.sound.midi.*;
-import java.io.*;
+
+import net.sourceforge.jdatepicker.events.EventNotification;
 
 
 /**
@@ -134,6 +145,14 @@ public class JDatePicker extends JPanel {
 		addHierarchyBoundsListener(eventHandler);
 		datePanel.addChangeListener(eventHandler);
 		datePanel.addActionListener(eventHandler);
+	}
+	
+	public void setDateFormat(DateFormat dateFormat) {
+		datePanel.setDateFormat(dateFormat);
+	}
+	
+	public DateFormat getDateFormat() {
+		return datePanel.getDateFormat();
 	}
 	
 	/**

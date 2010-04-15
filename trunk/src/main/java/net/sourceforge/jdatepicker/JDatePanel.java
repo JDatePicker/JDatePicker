@@ -33,6 +33,9 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import net.sourceforge.jdatepicker.graphics.JNextIcon;
+import net.sourceforge.jdatepicker.graphics.JPreviousIcon;
+
 /**
  * @author Juan Heyns, Yue Huang
  * Created on 26-Mar-2004
@@ -457,11 +460,14 @@ public class JDatePanel extends JPanel {
 
 	private boolean showYearButtons = false;
 	
+	private DateFormat dateFormat;
+	
 	/**
 	 * This is the default constructor
 	 */
 	public JDatePanel() {
 		super();
+		dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
 		initialize();
 	}
 	
@@ -472,7 +478,14 @@ public class JDatePanel extends JPanel {
 		getYearSpinner().setFont(font);
 		dayTable.setFont(font);
 		dayTable.setRowHeight(size*2);
-		//getDayTable().
+	}
+
+	public DateFormat getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(DateFormat dateFormat) {
+		this.dateFormat = dateFormat;
 	}
 
 	/**
@@ -724,13 +737,9 @@ public class JDatePanel extends JPanel {
 	}
 	
 	/**
-
 	 * This method initializes northPanel	
-
 	 * 	
-
 	 * @return javax.swing.JPanel	
-
 	 */    
 	private javax.swing.JPanel getNorthPanel() {
 		if (northPanel == null) {
@@ -919,8 +928,7 @@ public class JDatePanel extends JPanel {
 	 * Prints out the selectedDate in long format
 	 */
 	public String toString(){
-		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG);
-		return df.format(calendarModel.getCalendarClone().getTime());
+		return dateFormat.format(calendarModel.getCalendarClone().getTime());
 	}
 
 	/**
