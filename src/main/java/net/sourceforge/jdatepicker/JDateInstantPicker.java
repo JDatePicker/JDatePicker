@@ -50,7 +50,7 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.BOTH;
-		dateTextField = new JTextField(dateInstantPanel.toString());
+		dateTextField = new JTextField(dateInstantPanel.getStringValue());
 		gridbag.setConstraints(dateTextField, c);
 		dateTextField.setEditable(false);
 		dateTextField.setHorizontalAlignment(JTextField.CENTER);
@@ -140,7 +140,7 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 	 */
 	private void hidePopup() {
 		if (popup != null) {
-			dateTextField.setText(dateInstantPanel.toString());
+			dateTextField.setText(dateInstantPanel.getStringValue());
 			popup.hide();
 			popup = null;		
 		}
@@ -175,7 +175,7 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 
 		public void stateChanged(ChangeEvent arg0) {
 			if (arg0.getSource()==dateInstantPanel)
-				dateTextField.setText(dateInstantPanel.toString());
+				dateTextField.setText(dateInstantPanel.getStringValue());
 		}
 		
 	}
