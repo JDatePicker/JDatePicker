@@ -41,7 +41,7 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 
 	private static final long serialVersionUID = -2299249311312882915L;
 
-	protected GregorianCalendarModel calendarModel;
+	protected InternalCalendarModel internalModel;
 
 	private HashSet<ActionListener> actionListeners;
 	private HashSet<ChangeListener> changeListeners;
@@ -56,7 +56,7 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 	private JPanel nextButtonPanel;
 	private JTable dayTable;
 	private JTableHeader dayTableHeader;
-	private CalendarTableCellRenderer dayTableCellRenderer;
+	private InternalTableCellRenderer dayTableCellRenderer;
 	private JLabel monthLabel;
 	private JLabel todayLabel;
 	private JPopupMenu monthPopupMenu;
@@ -239,9 +239,9 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 		return dayTable;
 	}
 	
-	private CalendarTableCellRenderer getDayTableCellRenderer() {
+	private InternalTableCellRenderer getDayTableCellRenderer() {
 		if (dayTableCellRenderer == null) {
-			dayTableCellRenderer = new CalendarTableCellRenderer();
+			dayTableCellRenderer = new InternalTableCellRenderer();
 		}
 		return dayTableCellRenderer;
 	}
@@ -442,12 +442,12 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 		return i18nStrings;
 	}
 
-	private GregorianCalendarModel getCalenderModel() {
-		if (calendarModel == null) {
-			calendarModel = new GregorianCalendarModel();
-			calendarModel.addChangeListener(internalEventHandler);
+	private InternalCalendarModel getCalenderModel() {
+		if (internalModel == null) {
+			internalModel = new InternalCalendarModel(Calendar.getInstance());
+			internalModel.addChangeListener(internalEventHandler);
 		}
-		return calendarModel;
+		return internalModel;
 	}
 
 	/**
@@ -484,7 +484,7 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == nextMonthButton){
-				GregorianCalendar cal = (GregorianCalendar)calendarModel.getCalendar();
+				GregorianCalendar cal = (GregorianCalendar)internalModel.getCalendar();
 				int day = cal.get(Calendar.DATE);
 				cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH)+1,1);
 				if (day > cal.getActualMaximum(Calendar.DAY_OF_MONTH)){
@@ -493,10 +493,10 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 				else {
 					cal.set(Calendar.DATE,day);
 				}
-				calendarModel.setCalendar(cal);
+				internalModel.setCalendar(cal);
 			}
 			else if (arg0.getSource() == previousMonthButton){
-				GregorianCalendar cal = (GregorianCalendar)calendarModel.getCalendar();
+				GregorianCalendar cal = (GregorianCalendar)internalModel.getCalendar();
 				int day = cal.get(Calendar.DATE);
 				cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH)-1,1);
 				if (day > cal.getActualMaximum(Calendar.DAY_OF_MONTH)){
@@ -505,21 +505,21 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 				else {
 					cal.set(Calendar.DATE,day);
 				}
-				calendarModel.setCalendar(cal);
+				internalModel.setCalendar(cal);
 			}
 			else if (arg0.getSource() == nextYearButton) {
-				GregorianCalendar cal = (GregorianCalendar)calendarModel.getCalendar();
+				GregorianCalendar cal = (GregorianCalendar)internalModel.getCalendar();
 				cal.set(cal.get(Calendar.YEAR) + 1, cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
-				calendarModel.setCalendar(cal);
+				internalModel.setCalendar(cal);
 			}
 			else if (arg0.getSource() == previousYearButton) {
-				GregorianCalendar cal = (GregorianCalendar)calendarModel.getCalendar();
+				GregorianCalendar cal = (GregorianCalendar)internalModel.getCalendar();
 				cal.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
-				calendarModel.setCalendar(cal);
+				internalModel.setCalendar(cal);
 			} else {
 				for (int month=0; month<monthPopupMenuItems.length; month++) {
 					if (arg0.getSource() == monthPopupMenuItems[month]){
-						GregorianCalendar cal = (GregorianCalendar)calendarModel.getCalendar();
+						GregorianCalendar cal = (GregorianCalendar)internalModel.getCalendar();
 						int day = cal.get(Calendar.DATE);
 						cal.set(cal.get(Calendar.YEAR),month,1);
 						if (day > cal.getActualMaximum(Calendar.DAY_OF_MONTH)){
@@ -528,7 +528,7 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 						else {
 							cal.set(Calendar.DATE,day);
 						}
-						calendarModel.setCalendar(cal);
+						internalModel.setCalendar(cal);
 					}
 				}
 			}
@@ -540,14 +540,14 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 				monthPopupMenu.show((Component) arg0.getSource(),arg0.getX(),arg0.getY());
 			}
 			else if (arg0.getSource() == todayLabel){
-				calendarModel.setCalendar(Calendar.getInstance());
+				internalModel.setCalendar(Calendar.getInstance());
 				fireActionPerformed();
 			}
 			else if (arg0.getSource() == dayTable){
 				int row = dayTable.getSelectedRow();
 				int col = dayTable.getSelectedColumn();
 				if (row >= 0 && row <= 5) {
-					Integer date = (Integer)calendarModel.getValueAt(row, col);
+					Integer date = (Integer)internalModel.getValueAt(row, col);
 //TODO					calendarModel.setCalendar(Calendar.DAY_OF_MONTH, date.intValue());
 					fireActionPerformed();
 				}
@@ -567,7 +567,7 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 		}
 
 		public void stateChanged(ChangeEvent arg0) {
-			if (arg0.getSource()==calendarModel){
+			if (arg0.getSource()==internalModel){
 				Iterator i = changeListeners.iterator();
 				while (i.hasNext()){
 					ChangeListener cl = (ChangeListener) i.next();
@@ -582,11 +582,11 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 	/**
 	 * This inner class renders the table of the days TODO Refactor
 	 */
-	private class CalendarTableCellRenderer extends DefaultTableCellRenderer {
+	private class InternalTableCellRenderer extends DefaultTableCellRenderer {
 
 		private static final long serialVersionUID = -2341614459632756921L;
 
-		public CalendarTableCellRenderer() {
+		public InternalTableCellRenderer() {
 
 		}
 
@@ -601,7 +601,7 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 				return label;
 			}
 
-			GregorianCalendar cal = (GregorianCalendar) calendarModel.getCalendar();
+			GregorianCalendar cal = (GregorianCalendar) internalModel.getCalendar();
 			Integer day = (Integer) arg1;
 			Calendar today = new GregorianCalendar();
 			int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -609,8 +609,8 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 			// Setting Foreground
 			if (cal.get(Calendar.DATE) == day.intValue()) {
 				if (today.get(Calendar.DATE) == day.intValue()
-						&& today.get(Calendar.MONTH) == calendarModel.getCalendar().get(Calendar.MONTH)
-						&& today.get(Calendar.YEAR) == calendarModel.getCalendar().get(Calendar.YEAR)) {
+						&& today.get(Calendar.MONTH) == internalModel.getCalendar().get(Calendar.MONTH)
+						&& today.get(Calendar.YEAR) == internalModel.getCalendar().get(Calendar.YEAR)) {
 					label.setForeground(Color.RED);
 				} else {
 					label.setForeground(Color.WHITE);
@@ -630,8 +630,8 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 				}
 			} else {
 				if (today.get(Calendar.DATE) == day.intValue()
-						&& today.get(Calendar.MONTH) == calendarModel.getCalendar().get(Calendar.MONTH)
-						&& today.get(Calendar.YEAR) == calendarModel.getCalendar().get(Calendar.YEAR)) {
+						&& today.get(Calendar.MONTH) == internalModel.getCalendar().get(Calendar.MONTH)
+						&& today.get(Calendar.YEAR) == internalModel.getCalendar().get(Calendar.YEAR)) {
 					label.setForeground(Color.RED);
 				} else {
 					label.setForeground(Color.BLACK);
@@ -654,80 +654,105 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 	 * This model represents the selected date, it is used by the table and year spinner
 	 * TODO has to be refactored
 	 */
-	protected class GregorianCalendarModel implements TableModel, SpinnerModel {
+	protected class InternalCalendarModel implements TableModel, SpinnerModel {
 
-		private GregorianCalendar calendar;
-		
-		private HashSet<ChangeListener> changeListeners;			// spinner
-		private HashSet<TableModelListener> tableModelListeners;	// table
-		private ArrayList<JLabel> monthLabels;						// labels
+		private Calendar value;
+		private HashSet<ChangeListener> spinnerChangeListeners;
+		private HashSet<TableModelListener> tableModelListeners;
+		private ArrayList<JLabel> monthLabels;
 
-		public GregorianCalendarModel(){
-			calendar = new GregorianCalendar();
-			changeListeners = new HashSet<ChangeListener>();
-			tableModelListeners = new HashSet<TableModelListener>();
-			monthLabels = new ArrayList<JLabel>();
+		public InternalCalendarModel(Calendar value){
+			this.value = value;
+			this.spinnerChangeListeners = new HashSet<ChangeListener>();
+			this.tableModelListeners = new HashSet<TableModelListener>();
+			this.monthLabels = new ArrayList<JLabel>();
 		}
 
+		/**
+		 * Get a clone of the value.
+		 * 
+		 * @return
+		 */
+		public Calendar getCalendar(){
+			return (Calendar) value.clone();
+		}
+
+		/**
+		 * Set the value.
+		 * 
+		 * @param calendar
+		 */
+		public void setCalendar(Calendar calendar){
+			calendar.setTime(calendar.getTime());
+			fireCalendarInvalidated();
+		}
+
+		/**
+		 * Part of SpinnerModel, year
+		 */
 		public void addChangeListener(ChangeListener arg0) {
-			changeListeners.add(arg0);
+			spinnerChangeListeners.add(arg0);
 		}
 
-		public void addMonthLabel(JLabel label){
-			monthLabels.add(label);
-			fireMonthTextFieldsUpdate();
+		/**
+		 * Part of SpinnerModel, year
+		 */
+		public void removeChangeListener(ChangeListener arg0) {
+			spinnerChangeListeners.remove(arg0);
 		}
 
+		/**
+		 * Part of SpinnerModel, year
+		 */
+		public Object getNextValue() {
+			return Integer.toString(getCalendar().get(Calendar.YEAR)+1);
+		}
+
+		/**
+		 * Part of SpinnerModel, year
+		 */
+		public Object getPreviousValue() {
+			return Integer.toString(getCalendar().get(Calendar.YEAR)-1);
+		}
+
+		/**
+		 * Part of SpinnerModel, year
+		 */
+		public void setValue(Object integer) {
+			value.set(Calendar.YEAR, (Integer)integer);
+		}
+
+		/**
+		 * Part of SpinnerModel, year
+		 */
+		public Object getValue() {
+			return Integer.toString(getCalendar().get(Calendar.YEAR));
+		}
+
+		/**
+		 * Part of TableModel, day
+		 */
 		public void addTableModelListener(TableModelListener arg0) {
 			tableModelListeners.add(arg0);
 		}
 
-		public void addTodayLabel(JLabel label) {
-			DateFormat df1 = DateFormat.getDateInstance(DateFormat.MEDIUM);
-			label.setText("Today: " + df1.format(new Date()));
+		/**
+		 * Part of TableModel, day
+		 */
+		public void removeTableModelListener(TableModelListener arg0) {
+			tableModelListeners.remove(arg0);
 		}
 
-		private void fireCalendarChanged(){
-			//notify the spinner view of a change
-			for (ChangeListener cl : changeListeners) {
-				cl.stateChanged(new ChangeEvent(this));
-			}
-		}
-
-		public void fireCalendarInvalidated(){
-			fireCalendarChanged();
-			fireTableModelEvent();
-			fireMonthTextFieldsUpdate();
-		}
-
-		private void fireMonthTextFieldsUpdate(){
-			//change monthLabel text
-			for (JLabel label: monthLabels){
-				DateFormatSymbols df = new DateFormatSymbols();
-				label.setText(df.getMonths()[calendar.get(Calendar.MONTH)]);
-			}
-		}
-
-		private void fireTableModelEvent(){
-			//notify the table view of a change
-			for (TableModelListener tl : tableModelListeners){
-				tl.tableChanged(new TableModelEvent(this));
-			}
-		}
-
-		public Calendar getCalendar(){
-			return (Calendar) calendar.clone();
-		}
-
-		@SuppressWarnings("unchecked")
-		public Class getColumnClass(int arg0) {
-			return Integer.class;
-		}
-
+		/**
+		 * Part of TableModel, day
+		 */
 		public int getColumnCount() {
 			return 7;
 		}
 
+		/**
+		 * Part of TableModel, day
+		 */
 		public String getColumnName(int arg0) {
 			String name = "";
 			switch (arg0){
@@ -756,53 +781,92 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 			return name;
 		}
 
-		public Object getNextValue() {
-			return Integer.toString(getCalendar().get(Calendar.YEAR)+1);
+		/**
+		 * Part of TableModel, day
+		 */
+		@SuppressWarnings("unchecked")
+		public Class getColumnClass(int arg0) {
+			return Integer.class;
 		}
 
-		public Object getPreviousValue() {
-			return Integer.toString(getCalendar().get(Calendar.YEAR)-1);
-		}
-
+		/**
+		 * Part of TableModel, day
+		 */
 		public int getRowCount() {
 			return 6;
 		}
 
-		public Object getValue() {
-			return Integer.toString(getCalendar().get(Calendar.YEAR));
+		/**
+		 * Part of TableModel, day
+		 */
+		public boolean isCellEditable(int arg0, int arg1) {
+			return false;
 		}
 
+		/**
+		 * Part of TableModel, day
+		 */
+		public void setValueAt(Object arg0, int arg1, int arg2) {
+		}
+		
+		/**
+		 * Part of TableModel, day
+		 */
 		public Object getValueAt(int arg0, int arg1) {
-			Calendar firstDayOfMonth = (Calendar) calendar.clone();
+			Calendar firstDayOfMonth = (Calendar) value.clone();
 			firstDayOfMonth.set(Calendar.DATE, 1);
 			int DOW = firstDayOfMonth.get(Calendar.DAY_OF_WEEK);
 			int value = arg1 - DOW + arg0*7 + 2;
 			return new Integer(value);
 		}
 
-		public boolean isCellEditable(int arg0, int arg1) {
-			return false;
-		}
 
-		public void removeChangeListener(ChangeListener arg0) {
-			changeListeners.remove(arg0);
-		}
-
-		public void removeTableModelListener(TableModelListener arg0) {
-			tableModelListeners.remove(arg0);
-		}
-
-		public void setCalendar(Calendar calendar){
-			calendar.setTime(calendar.getTime());
-			fireCalendarInvalidated();
-		}
-
-		public void setValue(Object arg0) {
-		}
-
-		public void setValueAt(Object arg0, int arg1, int arg2) {
-		}
 		
+		
+		/**
+		 * Notify the spinner view of a change
+		 */
+		private void fireCalendarChanged(){
+			for (ChangeListener cl : spinnerChangeListeners) {
+				cl.stateChanged(new ChangeEvent(this));
+			}
+		}
+
+		private void fireMonthTextFieldsUpdate(){
+			//change monthLabel text
+			for (JLabel label: monthLabels){
+				DateFormatSymbols df = new DateFormatSymbols();
+				label.setText(df.getMonths()[value.get(Calendar.MONTH)]);
+			}
+		}
+
+		public void fireCalendarInvalidated(){
+			fireCalendarChanged();
+			fireTableModelEvent();
+			fireMonthTextFieldsUpdate();
+		}
+
+		private void fireTableModelEvent(){
+			//notify the table view of a change
+			for (TableModelListener tl : tableModelListeners){
+				tl.tableChanged(new TableModelEvent(this));
+			}
+		}
+
+		
+		
+		
+		
+		public void addMonthLabel(JLabel label){
+			monthLabels.add(label);
+			fireMonthTextFieldsUpdate();
+		}
+
+		public void addTodayLabel(JLabel label) {
+			DateFormat df1 = DateFormat.getDateInstance(DateFormat.MEDIUM);
+			label.setText("Today: " + df1.format(new Date()));
+		}
+
 	}
 	
 }

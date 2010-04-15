@@ -25,17 +25,17 @@ public class JDateInstantPanel_UtilDate extends JDateInstantPanel<Date> {
 	public void setValue(Date value) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(value);
-		calendarModel.setCalendar(calendar);
+		internalModel.setCalendar(calendar);
 	}
 	
 	public Date getValue() {
-		Calendar calendar = calendarModel.getCalendar();
+		Calendar calendar = internalModel.getCalendar();
 		return calendar.getTime();
 	}
 	
 	public String getStringValue() {
 		SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-		return format.format(calendarModel.getCalendar().getTime());
+		return format.format(internalModel.getCalendar().getTime());
 	}
 
 	public void setStringValue(String value) throws ParseException {
@@ -43,7 +43,7 @@ public class JDateInstantPanel_UtilDate extends JDateInstantPanel<Date> {
 		Date date = format.parse(value);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-		calendarModel.setCalendar(calendar);
+		internalModel.setCalendar(calendar);
 	}
 
 }
