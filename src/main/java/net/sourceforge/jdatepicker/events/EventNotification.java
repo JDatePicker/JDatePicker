@@ -1,4 +1,4 @@
-package net.sourceforge.jdatepicker;
+package net.sourceforge.jdatepicker.events;
 
 import java.awt.*;
 import java.awt.event.*;
