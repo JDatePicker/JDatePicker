@@ -2,6 +2,7 @@ package net.sourceforge.jdatepicker;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -43,6 +44,7 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 	private HashSet<ChangeListener> changeListeners;
 	private Properties i18nStrings;
 	private boolean showYearButtons;
+	private boolean doubleClickAction;
 	
 	protected InternalCalendarModel internalModel;
 	private InternalView internalView;
@@ -50,14 +52,16 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 
 	protected JDateInstantPanel() {
 		showYearButtons = false;
+		doubleClickAction = true;
 		actionListeners = new HashSet<ActionListener>();
 		changeListeners = new HashSet<ChangeListener>();
 		i18nStrings = new Properties(); //TODO default strings
 		
 		internalModel = new InternalCalendarModel(Calendar.getInstance());
-		internalView = new InternalView();
 		internalController = new InternalController();
+		internalView = new InternalView();
 		
+		setLayout(new GridLayout(1, 1));
 		add(internalView);
 	}
 
@@ -105,7 +109,7 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 	}
 
 	/**
-	 * Sets the visibilty of the Year navigation buttons.
+	 * Sets the visibilty of the Year navigation buttons. Defaults to false.
 	 * 
 	 * @param showYearButtons
 	 */
@@ -121,6 +125,26 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 	 */
 	public boolean isShowYearButtons() {
 		return this.showYearButtons;
+	}
+
+	/**
+	 * This changes the behaviour of the control to require a double click on
+	 * actionable clicks. If this is set the ActionEvent will only be thrown
+	 * when double clicked on a date. Defaults to true.
+	 * 
+	 * @param doubleClickAction
+	 */
+	public void setDoubleClickAction(boolean doubleClickAction) {
+		this.doubleClickAction = doubleClickAction;
+	}
+
+	/**
+	 * Is a double click required to throw a ActionEvent.
+	 * 
+	 * @return
+	 */
+	public boolean isDoubleClickAction() {
+		return doubleClickAction;
 	}
 
 	/**
@@ -183,10 +207,9 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 		 */
 		private void initialise() {
 			this.setLayout(new java.awt.BorderLayout());
-			this.setSize(200,220);
-			this.setPreferredSize(new java.awt.Dimension(200,220));
+			this.setSize(200, 180);
+			this.setPreferredSize(new java.awt.Dimension(200, 180));
 			this.setBackground(java.awt.SystemColor.activeCaptionText);
-			this.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black,1));
 			this.setOpaque(false);
 			this.add(getNorthPanel(), java.awt.BorderLayout.NORTH);
 			this.add(getSouthPanel(), java.awt.BorderLayout.SOUTH);
@@ -653,6 +676,13 @@ public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstan
 					Integer date = (Integer) internalModel.getValueAt(row, col);
 					cal.set(Calendar.DATE, date);
 					internalModel.setCalendar(cal);
+					
+					if (doubleClickAction && arg0.getClickCount() == 2) {
+						fireActionPerformed();
+					}
+					if (!doubleClickAction) {
+						fireActionPerformed();
+					}
 				}
 			}
 		}
