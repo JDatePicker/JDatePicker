@@ -55,10 +55,11 @@ public interface JDateInstantComponent<T> {
 	 * @throws ParseException 
 	 */
 	public void setStringValue(String value) throws ParseException;
-	
+
 	/**
 	 * Adds an ActionListener. The actionListener is notified when a user clicks
-	 * on a date.
+	 * on a date. Deliberately selecting a date will trigger this event, not
+	 * scrolling which fires a ChangeEvent for ChangeListeners.
 	 * 
 	 * @param actionListener
 	 */
@@ -73,8 +74,10 @@ public interface JDateInstantComponent<T> {
 	public void removeActionListener(ActionListener actionListener);
 
 	/**
-	 * Adds a ChangeListener. ChangeListeners will be notified when the selected
-	 * date is changed.
+	 * Adds a ChangeListener. ChangeListeners will be notified when the internal
+	 * state of the control changes. This means that as a user scrolls through
+	 * dates the internal model changes, which fires a ChangeEvent each time it
+	 * changes.
 	 * 
 	 * @param changeListener
 	 */
