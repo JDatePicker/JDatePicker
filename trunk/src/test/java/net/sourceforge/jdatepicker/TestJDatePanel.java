@@ -25,58 +25,33 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.util_calendar;
+package net.sourceforge.jdatepicker;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Calendar;
-import java.util.Date;
 
-import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 
-import net.sourceforge.jdatepicker.JDateInstantPicker;
+import net.sourceforge.jdatepicker.utilcalendar.JDatePickerBuilder;
 
-/**
- * Created 16 April 2010
- * 
- * @author Juan Heyns
- */
-public class JDateInstantPicker_UtilCalendar extends JDateInstantPicker<Calendar> {
+public class TestJDatePanel {
 
-	private static final long serialVersionUID = 4502592170240575115L;
+	public static void main(String[] args) {
+		JFrame testFrame = new JFrame();
+		JDatePanel<Calendar> panel = JDatePickerBuilder.buildJDateInstantPanel();
+		panel.setShowYearButtons(true);
+		testFrame.getContentPane().add(panel);
+		panel.setShowYearButtons(false);
+		panel.setShowYearButtons(true);
 
-	protected JDateInstantPicker_UtilCalendar() {
-		super(new JDateInstantPanel_UtilCalendar());
-	}
-
-	@Override
-	protected JFormattedTextField.AbstractFormatter createDefaultFormatter() {
-		return new JFormattedTextField.AbstractFormatter() {
-			
-			private static final long serialVersionUID = 4784639521455547590L;
-			
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			
-			@Override
-			public String valueToString(Object value) throws ParseException {
-				Calendar cal = (Calendar)value;
-				if (cal == null) {
-					return "";
-				}
-				return format.format(cal.getTime());
+		testFrame.setSize(300,300);
+		testFrame.addWindowFocusListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent arg0) {
+				System.exit(0);
 			}
-			
-			@Override
-			public Object stringToValue(String text) throws ParseException {
-				if (text == null || text.equals("")) {
-					return null;
-				}
-				Date date = format.parse(text);
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(date);
-				return calendar;
-			}
-		};
+		});
+		testFrame.setVisible(true);
 	}
 
 }

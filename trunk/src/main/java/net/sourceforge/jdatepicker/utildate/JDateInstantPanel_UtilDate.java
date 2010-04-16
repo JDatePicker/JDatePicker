@@ -25,19 +25,19 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.util_date;
+package net.sourceforge.jdatepicker.utildate;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.jdatepicker.JDateInstantPanel;
+import net.sourceforge.jdatepicker.JDatePanel;
 
 /**
  * Created 16 April 2010
  * 
  * @author Juan Heyns
  */
-public class JDateInstantPanel_UtilDate extends JDateInstantPanel<Date> {
+public class JDateInstantPanel_UtilDate extends JDatePanel<Date> {
 
 	private static final long serialVersionUID = 6667146004567102532L;
 	
