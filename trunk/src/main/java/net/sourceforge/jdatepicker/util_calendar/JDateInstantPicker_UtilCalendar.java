@@ -9,6 +9,11 @@ import javax.swing.JFormattedTextField;
 
 import net.sourceforge.jdatepicker.JDateInstantPicker;
 
+/**
+ * Created 16 April 2010
+ * 
+ * @author Juan Heyns
+ */
 public class JDateInstantPicker_UtilCalendar extends JDateInstantPicker<Calendar> {
 
 	private static final long serialVersionUID = 4502592170240575115L;

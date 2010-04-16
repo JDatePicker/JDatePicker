@@ -13,6 +13,8 @@ import javax.swing.event.ChangeListener;
  * Since the first version of JDatePicker generics was added to Java and
  * JodaTime emerged as a important date handling library in the Java community.
  * 
+ * Created 16 April 2010
+ * 
  * @author Juan Heyns
  */
 public interface JDateInstantComponent<T> {

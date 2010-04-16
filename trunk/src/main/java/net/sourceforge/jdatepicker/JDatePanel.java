@@ -42,6 +42,8 @@ import net.sourceforge.jdatepicker.graphics.JPreviousIcon;
  * Refactored on 21-Jun-2004
  * Refactored on 8-Jul-2004
  * least modified 14-May-2009
+ * 
+ * @deprecated
  */
 public class JDatePanel extends JPanel {
 	

@@ -5,6 +5,11 @@ import java.util.Date;
 
 import net.sourceforge.jdatepicker.JDateInstantPanel;
 
+/**
+ * Created 16 April 2010
+ * 
+ * @author Juan Heyns
+ */
 public class JDateInstantPanel_UtilDate extends JDateInstantPanel<Date> {
 
 	private static final long serialVersionUID = 6667146004567102532L;

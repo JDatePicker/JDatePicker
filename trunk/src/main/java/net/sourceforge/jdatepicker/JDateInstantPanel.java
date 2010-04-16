@@ -36,6 +36,18 @@ import javax.swing.table.TableModel;
 import net.sourceforge.jdatepicker.graphics.JNextIcon;
 import net.sourceforge.jdatepicker.graphics.JPreviousIcon;
 
+/**
+ * Created on 26 Mar 2004
+ * Refactored on 21 Jun 2004
+ * Refactored on 8 Jul 2004
+ * Refactored 14 May 2009
+ * Refactored 16 April 2010
+ * 
+ * @author Juan Heyns
+ * @author JC Oosthuizen
+ * @author Yue Huang
+ * @param <T>
+ */
 public abstract class JDateInstantPanel<T> extends JPanel implements JDateInstantComponent<T> {
 
 	private static final long serialVersionUID = -2299249311312882915L;
