@@ -44,7 +44,7 @@ import javax.swing.event.ChangeListener;
  * 
  * @author Juan Heyns
  */
-public interface JDateInstantComponent<T> {
+public interface JDateComponent<T> {
 	
 	/**
 	 * Returns the value of the currently represented date in the component.

@@ -27,30 +27,41 @@ or implied, of Juan Heyns.
 */
 package net.sourceforge.jdatepicker;
 
+import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Calendar;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
 
-import net.sourceforge.jdatepicker.util_calendar.JDatePickerBuilder;
+import net.sourceforge.jdatepicker.utilcalendar.JDatePickerBuilder;
 
-public class TestJDateInstantPanel {
-
+public class TestJDatePicker {
+	
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception e) { }
 		JFrame testFrame = new JFrame();
-		JDateInstantPanel<Calendar> panel = JDatePickerBuilder.buildJDateInstantPanel();
-		panel.setShowYearButtons(true);
-		testFrame.getContentPane().add(panel);
-		panel.setShowYearButtons(false);
-		panel.setShowYearButtons(true);
-
-		testFrame.setSize(300,300);
-		testFrame.addWindowFocusListener(new WindowAdapter(){
+		testFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent arg0) {
 				System.exit(0);
 			}
 		});
+		testFrame.setSize(500, 500);
+		JPanel jPanel = new JPanel();
+		JDatePicker<Calendar> picker = JDatePickerBuilder.buildJDateInstantPicker();
+		picker.setTextEditable(true);
+		picker.getJDateInstantPanel().setShowYearButtons(true);
+		jPanel.add(picker);
+		JPanel DatePanel = new JPanel();
+		DatePanel.setLayout(new BorderLayout());
+		DatePanel.add(jPanel, BorderLayout.WEST);
+		BorderLayout fb = new BorderLayout();
+		testFrame.setLayout(fb);
+		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
 		testFrame.setVisible(true);
 	}
 

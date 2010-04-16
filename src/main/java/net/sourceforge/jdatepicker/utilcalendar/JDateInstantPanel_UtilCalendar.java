@@ -25,43 +25,31 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package net.sourceforge.jdatepicker.utilcalendar;
 
-import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Calendar;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
+import net.sourceforge.jdatepicker.JDatePanel;
 
-import net.sourceforge.jdatepicker.util_calendar.JDatePickerBuilder;
+/**
+ * Created 16 April 2010
+ * 
+ * @author Juan Heyns
+ */
+public class JDateInstantPanel_UtilCalendar extends JDatePanel<Calendar> {
 
-public class TestJDateInstantPicker {
+	private static final long serialVersionUID = 4316625319919804165L;
 	
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (Exception e) { }
-		JFrame testFrame = new JFrame();
-		testFrame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent arg0) {
-				System.exit(0);
-			}
-		});
-		testFrame.setSize(500, 500);
-		JPanel jPanel = new JPanel();
-		JDateInstantPicker<Calendar> picker = JDatePickerBuilder.buildJDateInstantPicker();
-		picker.setTextEditable(true);
-		jPanel.add(picker);
-		JPanel DatePanel = new JPanel();
-		DatePanel.setLayout(new BorderLayout());
-		DatePanel.add(jPanel, BorderLayout.WEST);
-		BorderLayout fb = new BorderLayout();
-		testFrame.setLayout(fb);
-		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
-		testFrame.setVisible(true);
+	public JDateInstantPanel_UtilCalendar() {
+		super();
+	}
+	
+	public void setValue(Calendar value) {
+		internalModel.setCalendar(value);
+	}
+	
+	public Calendar getValue() {
+		return internalModel.getCalendar();
 	}
 
 }

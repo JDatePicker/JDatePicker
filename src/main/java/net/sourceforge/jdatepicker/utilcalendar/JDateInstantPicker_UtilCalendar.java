@@ -25,26 +25,59 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.util_calendar;
+package net.sourceforge.jdatepicker.utilcalendar;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 
-import net.sourceforge.jdatepicker.JDateInstantPanel;
-import net.sourceforge.jdatepicker.JDateInstantPicker;
+import javax.swing.JFormattedTextField;
+
+import net.sourceforge.jdatepicker.JDatePicker;
+import net.sourceforge.jdatepicker.util.JDatePickerUtil;
 
 /**
  * Created 16 April 2010
  * 
  * @author Juan Heyns
  */
-public class JDatePickerBuilder {
-	
-	public static JDateInstantPanel<Calendar> buildJDateInstantPanel() {
-		return new JDateInstantPanel_UtilCalendar();
+public class JDateInstantPicker_UtilCalendar extends JDatePicker<Calendar> {
+
+	private static final long serialVersionUID = 4502592170240575115L;
+
+	protected JDateInstantPicker_UtilCalendar() {
+		super(new JDateInstantPanel_UtilCalendar());
 	}
-	
-	public static JDateInstantPicker<Calendar> buildJDateInstantPicker() {
-		return new JDateInstantPicker_UtilCalendar();
+
+	@Override
+	protected JFormattedTextField.AbstractFormatter createDefaultFormatter() {
+		return new JFormattedTextField.AbstractFormatter() {
+			
+			private static final long serialVersionUID = 4784639521455547590L;
+			
+			DateFormat format = JDatePickerUtil.getMediumDateFormat();
+			
+			@Override
+			public String valueToString(Object value) throws ParseException {
+				Calendar cal = (Calendar)value;
+				if (cal == null) {
+					return "";
+				}
+				return format.format(cal.getTime());
+			}
+			
+			@Override
+			public Object stringToValue(String text) throws ParseException {
+				if (text == null || text.equals("")) {
+					return null;
+				}
+				Date date = format.parse(text);
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(date);
+				return calendar;
+			}
+		};
 	}
 
 }
