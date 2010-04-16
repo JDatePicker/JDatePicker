@@ -15,8 +15,8 @@ import javax.swing.table.AbstractTableModel;
  * Created on 29-April-2009
  *
  * least modified 14-May-2009
+ * @deprecated
  */
-
 public class EventNotification extends JPanel{
   public Vector<String> events = new Vector<String>();
   private JButton setEvent = new JButton("Set Enevt");

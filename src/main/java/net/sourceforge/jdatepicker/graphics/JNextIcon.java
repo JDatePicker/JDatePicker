@@ -5,6 +5,11 @@ import java.awt.Graphics;
 
 import javax.swing.Icon;
 
+/**
+ * Created on 26 Mar 2004
+ * 
+ * @author Juan Heyns
+ */
 public class JNextIcon implements Icon {
 	
 	protected int width;

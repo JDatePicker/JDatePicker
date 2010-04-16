@@ -54,6 +54,8 @@ import net.sourceforge.jdatepicker.events.EventNotification;
  * Created on 25-Mar-2004
  * Refactored 21-Jun-2004
  * least modified 14-May-2009
+ * 
+ * @deprecated
  */
 public class JDatePicker extends JPanel {
 	
