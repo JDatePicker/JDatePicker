@@ -9,11 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.HierarchyBoundsListener;
 import java.awt.event.HierarchyEvent;
-import java.text.ParseException;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Popup;
@@ -26,12 +26,13 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 	private static final long serialVersionUID = 2814777654384974503L;
 	
 	private Popup popup;
-	private JTextField dateTextField;
+	private JFormattedTextField dateTextField;
 	private JButton editButton;
 	
 	private JDateInstantPanel<T> dateInstantPanel;
-	
 	private InternalEventHandler internalEventHandler;
+
+	private JFormattedTextField.AbstractFormatter dateFormat;
 
 	protected JDateInstantPicker(JDateInstantPanel<T> dateInstantPanel) {
 		this.dateInstantPanel = dateInstantPanel;
@@ -40,6 +41,7 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 		popup = null;
 		dateInstantPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		internalEventHandler = new InternalEventHandler();
+		dateFormat = createDefaultFormatter();
 
 		//Create Layout
 		GridBagLayout gridbag = new GridBagLayout();
@@ -50,7 +52,8 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.BOTH;
-		dateTextField = new JTextField(dateInstantPanel.getStringValue());
+		dateTextField = new JFormattedTextField(dateFormat);
+		dateTextField.setValue(dateInstantPanel.getValue());
 		gridbag.setConstraints(dateTextField, c);
 		dateTextField.setEditable(false);
 		dateTextField.setHorizontalAlignment(JTextField.CENTER);
@@ -77,7 +80,7 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 		dateInstantPanel.addChangeListener(internalEventHandler);
 		dateInstantPanel.addActionListener(internalEventHandler);
 	}	
-	
+
 	public void addActionListener(ActionListener actionListener) {
 		dateInstantPanel.addActionListener(actionListener);
 	}
@@ -110,16 +113,60 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 		return dateInstantPanel.getValue();
 	}
 	
-	public void setStringValue(String value) throws ParseException {
-		dateInstantPanel.setStringValue(value);
+	/**
+	 * You are able to set the format of the date being displayed on the label.
+	 * Formatting is described at:
+	 * 
+	 * http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
+	 * 
+	 * @param dateFormat
+	 */
+	public void setDateFormat(JFormattedTextField.AbstractFormatter dateFormat) {
+		this.dateFormat = dateFormat;
 	}
 	
-	public String getStringValue() {
-		return dateInstantPanel.getStringValue();
+	/**
+	 * Get the set date format.
+	 * 
+	 * @return
+	 */
+	public JFormattedTextField.AbstractFormatter getDateFormat() {
+		return dateFormat;
+	}
+	
+	/**
+	 * Needs to be implemented for each type of date object.
+	 * 
+	 * @return
+	 */
+	protected abstract JFormattedTextField.AbstractFormatter createDefaultFormatter();
+
+	/**
+	 * Is the text component editable or not. Defaults to false.
+	 * 
+	 * @param editable
+	 */
+	public void setTextEditable(boolean editable) {
+		dateTextField.setEditable(editable);
+	}
+	
+	/**
+	 * Is the text component editable or not.
+	 * 
+	 * @return
+	 */
+	public boolean isTextEditable() {
+		return dateTextField.isEditable();
 	}
 
-	public void setDateFormat(String dateFormat) {
-		dateInstantPanel.setDateFormat(dateFormat);
+	/**
+	 * Get the panel which draws the calendar, you can set additional settings
+	 * here.
+	 * 
+	 * @return
+	 */
+	public JDateInstantPanel<T> getJDateInstantPanel() {
+		return dateInstantPanel;
 	}
 
 	/**
@@ -140,9 +187,9 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 	 */
 	private void hidePopup() {
 		if (popup != null) {
-			dateTextField.setText(dateInstantPanel.getStringValue());
+			dateTextField.setValue(dateInstantPanel.getValue());
 			popup.hide();
-			popup = null;		
+			popup = null;
 		}
 	}
 
@@ -160,7 +207,7 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 		}
 
 		public void actionPerformed(ActionEvent arg0) {
-			if (arg0.getSource()==editButton){
+			if (arg0.getSource() == editButton){
 				if (popup == null) {
 					showPopup();
 				}
@@ -168,14 +215,15 @@ public abstract class JDateInstantPicker<T> extends JPanel implements JDateInsta
 					hidePopup();
 				}
 			} 
-			else if (arg0.getSource()==dateInstantPanel){
+			else if (arg0.getSource() == dateInstantPanel){
 				hidePopup();
 			}
 		}
 
 		public void stateChanged(ChangeEvent arg0) {
-			if (arg0.getSource()==dateInstantPanel)
-				dateTextField.setText(dateInstantPanel.getStringValue());
+			if (arg0.getSource() == dateInstantPanel) {
+				dateTextField.setValue(dateInstantPanel.getValue());
+			}
 		}
 		
 	}

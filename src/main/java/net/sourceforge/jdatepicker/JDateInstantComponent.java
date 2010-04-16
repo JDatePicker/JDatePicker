@@ -1,7 +1,6 @@
 package net.sourceforge.jdatepicker;
 
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.util.Properties;
 
 import javax.swing.event.ChangeListener;
@@ -40,21 +39,6 @@ public interface JDateInstantComponent<T> {
 	 * @param value
 	 */
 	public void setValue(T value);
-
-	/**
-	 * Get a string represetation of the value, using the formatting string set.
-	 * 
-	 * @return
-	 */
-	public String getStringValue();
-	
-	/**
-	 * Set the value based on a string value.
-	 * 
-	 * @param value
-	 * @throws ParseException 
-	 */
-	public void setStringValue(String value) throws ParseException;
 
 	/**
 	 * Adds an ActionListener. The actionListener is notified when a user clicks
@@ -105,14 +89,5 @@ public interface JDateInstantComponent<T> {
 	 */
 	public void setI18nStrings(Properties i18nStrings);
 
-	/**
-	 * You are able to set the format of the date being displayed on the label.
-	 * Formatting is described at:
-	 * 
-	 * http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
-	 * 
-	 * @param dateFormat
-	 */
-	public void setDateFormat(String dateFormat);
-	
+
 }
