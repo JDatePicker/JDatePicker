@@ -40,7 +40,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import javax.swing.SpringLayout;
@@ -100,7 +99,6 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 		dateTextField = new JFormattedTextField((dateFormat!=null) ? dateFormat : createDefaultFormatter());
 		dateTextField.setValue(dateInstantPanel.getValue());
 		dateTextField.setEditable(false);
-		dateTextField.setHorizontalAlignment(JTextField.CENTER);
 		add(dateTextField);
         layout.putConstraint(SpringLayout.WEST, dateTextField, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, dateTextField);
