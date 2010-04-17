@@ -31,17 +31,17 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Calendar;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
-
-import net.sourceforge.jdatepicker.utilcalendar.JDatePickerBuilder;
 
 public class TestJDatePanel {
 
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
-		JDatePanel<Calendar> panel = JDatePickerBuilder.buildJDateInstantPanel();
+		@SuppressWarnings("unchecked")
+		JDatePanel<Calendar> panel = JDateComponentFactory.getInstance(Calendar.class).createJDatePanel();
 		panel.setShowYearButtons(true);
-		testFrame.getContentPane().add(panel);
+		testFrame.getContentPane().add((JComponent)panel);
 		panel.setShowYearButtons(false);
 		panel.setShowYearButtons(true);
 

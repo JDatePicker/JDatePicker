@@ -8,6 +8,7 @@ Issues: 1.2.0
 - Defect: Clearing date is not possible, set value = null (Simon Gibbs <simon.gibbs@cantorva.com>)
 - Defect: Sizing on Ubuntu needs to be tested, reports it shows too small (Yue Huang <u4214110@anu.edu.au>)
 - Defect: Resizing panel does not resize the text in the table
+- Defect: When a panel is removed below the popup it still shows.
 
 Testing required 1.2.0
 - Different L&F needs to be tested
