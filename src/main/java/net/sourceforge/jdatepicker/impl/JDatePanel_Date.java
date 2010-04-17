@@ -25,26 +25,35 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.utilcalendar;
+package net.sourceforge.jdatepicker.impl;
 
 import java.util.Calendar;
+import java.util.Date;
 
-import net.sourceforge.jdatepicker.JDatePanel;
-import net.sourceforge.jdatepicker.JDatePicker;
+import net.sourceforge.jdatepicker.AbstractJDatePanel;
 
 /**
  * Created 16 April 2010
  * 
  * @author Juan Heyns
  */
-public class JDatePickerBuilder {
+public class JDatePanel_Date extends AbstractJDatePanel<Date> {
+
+	private static final long serialVersionUID = 6667146004567102532L;
 	
-	public static JDatePanel<Calendar> buildJDateInstantPanel() {
-		return new JDateInstantPanel_UtilCalendar();
+	public JDatePanel_Date() {
+		super();
+	}
+
+	public void setValue(Date value) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(value);
+		internalModel.setCalendar(calendar);
 	}
 	
-	public static JDatePicker<Calendar> buildJDateInstantPicker() {
-		return new JDateInstantPicker_UtilCalendar();
+	public Date getValue() {
+		Calendar calendar = internalModel.getCalendar();
+		return calendar.getTime();
 	}
 
 }

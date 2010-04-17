@@ -25,31 +25,36 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.utilcalendar;
+package net.sourceforge.jdatepicker.impl;
 
 import java.util.Calendar;
 
+import javax.swing.JFormattedTextField.AbstractFormatter;
+
+import net.sourceforge.jdatepicker.JDateComponentFactory;
 import net.sourceforge.jdatepicker.JDatePanel;
+import net.sourceforge.jdatepicker.JDatePicker;
 
 /**
  * Created 16 April 2010
  * 
  * @author Juan Heyns
  */
-public class JDateInstantPanel_UtilCalendar extends JDatePanel<Calendar> {
+public class JDateComponentFactory_Calendar extends JDateComponentFactory<Calendar> {
+	
+	@Override
+	public JDatePanel<Calendar> createJDatePanel() {
+		return new JDatePanel_Calendar();
+	}
 
-	private static final long serialVersionUID = 4316625319919804165L;
-	
-	public JDateInstantPanel_UtilCalendar() {
-		super();
+	@Override
+	public JDatePicker<Calendar> createJDatePicker() {
+		return new JDatePicker_Calendar();
 	}
-	
-	public void setValue(Calendar value) {
-		internalModel.setCalendar(value);
-	}
-	
-	public Calendar getValue() {
-		return internalModel.getCalendar();
+
+	@Override
+	public JDatePicker<Calendar> createJDatePicker(AbstractFormatter dateFormatter) {
+		return new JDatePicker_Calendar(dateFormatter);
 	}
 
 }

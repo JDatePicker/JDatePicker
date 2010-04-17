@@ -25,16 +25,15 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.utilcalendar;
+package net.sourceforge.jdatepicker.impl;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JFormattedTextField;
 
-import net.sourceforge.jdatepicker.JDatePicker;
+import net.sourceforge.jdatepicker.AbstractJDatePicker;
 import net.sourceforge.jdatepicker.util.JDatePickerUtil;
 
 /**
@@ -42,29 +41,33 @@ import net.sourceforge.jdatepicker.util.JDatePickerUtil;
  * 
  * @author Juan Heyns
  */
-public class JDateInstantPicker_UtilCalendar extends JDatePicker<Calendar> {
+public class JDatePicker_Date extends AbstractJDatePicker<Date> {
 
-	private static final long serialVersionUID = 4502592170240575115L;
+	private static final long serialVersionUID = 7627038762758043844L;
 
-	protected JDateInstantPicker_UtilCalendar() {
-		super(new JDateInstantPanel_UtilCalendar());
+	public JDatePicker_Date() {
+		super(new JDatePanel_Date());
+	}
+
+	public JDatePicker_Date(JFormattedTextField.AbstractFormatter dateFormatter) {
+		super(new JDatePanel_Date(), dateFormatter);
 	}
 
 	@Override
 	protected JFormattedTextField.AbstractFormatter createDefaultFormatter() {
 		return new JFormattedTextField.AbstractFormatter() {
 			
-			private static final long serialVersionUID = 4784639521455547590L;
+			private static final long serialVersionUID = 4784119521455547555L;
 			
 			DateFormat format = JDatePickerUtil.getMediumDateFormat();
 			
 			@Override
 			public String valueToString(Object value) throws ParseException {
-				Calendar cal = (Calendar)value;
-				if (cal == null) {
+				Date date = (Date)value;
+				if (date == null) {
 					return "";
 				}
-				return format.format(cal.getTime());
+				return format.format(date);
 			}
 			
 			@Override
@@ -73,9 +76,7 @@ public class JDateInstantPicker_UtilCalendar extends JDatePicker<Calendar> {
 					return null;
 				}
 				Date date = format.parse(text);
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(date);
-				return calendar;
+				return date;
 			}
 		};
 	}

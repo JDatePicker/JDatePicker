@@ -32,11 +32,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Calendar;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
-
-import net.sourceforge.jdatepicker.utilcalendar.JDatePickerBuilder;
 
 public class TestJDatePicker {
 	
@@ -52,10 +51,11 @@ public class TestJDatePicker {
 		});
 		testFrame.setSize(500, 500);
 		JPanel jPanel = new JPanel();
-		JDatePicker<Calendar> picker = JDatePickerBuilder.buildJDateInstantPicker();
+		@SuppressWarnings("unchecked")
+		JDatePicker<Calendar> picker = JDateComponentFactory.getInstance(Calendar.class).createJDatePicker();
 		picker.setTextEditable(true);
 		picker.getJDateInstantPanel().setShowYearButtons(true);
-		jPanel.add(picker);
+		jPanel.add((JComponent)picker);
 		JPanel DatePanel = new JPanel();
 		DatePanel.setLayout(new BorderLayout());
 		DatePanel.add(jPanel, BorderLayout.WEST);
