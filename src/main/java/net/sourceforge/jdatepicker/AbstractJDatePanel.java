@@ -92,7 +92,7 @@ public abstract class AbstractJDatePanel<T> extends JPanel implements JDatePanel
 
 	protected AbstractJDatePanel() {
 		showYearButtons = false;
-		doubleClickAction = true;
+		doubleClickAction = false;
 		actionListeners = new HashSet<ActionListener>();
 		changeListeners = new HashSet<ChangeListener>();
 		i18nStrings = new Properties(getDefaultStrings());
