@@ -19,7 +19,7 @@ public interface JDatePanel<T> extends JDateComponent<T> {
 	/**
 	 * This changes the behaviour of the control to require a double click on
 	 * actionable clicks. If this is set the ActionEvent will only be thrown
-	 * when double clicked on a date. Defaults to true.
+	 * when double clicked on a date. Defaults to false.
 	 * 
 	 * @param doubleClickAction
 	 */
