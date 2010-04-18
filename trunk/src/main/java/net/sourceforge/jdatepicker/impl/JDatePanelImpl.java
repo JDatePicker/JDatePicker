@@ -60,7 +60,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import net.sourceforge.jdatepicker.JDateModel;
+import net.sourceforge.jdatepicker.DateModel;
 import net.sourceforge.jdatepicker.JDatePanel;
 import net.sourceforge.jdatepicker.graphics.JNextIcon;
 import net.sourceforge.jdatepicker.graphics.JPreviousIcon;
@@ -92,18 +92,22 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	private InternalView internalView;
 	private InternalController internalController;
 
-	public JDatePanelImpl(JDateModel<?> model) {
+	public JDatePanelImpl(DateModel<?> model) {
 		showYearButtons = false;
 		doubleClickAction = false;
 		actionListeners = new HashSet<ActionListener>();
 		i18nStrings = new Properties(getDefaultStrings());
 		
-		internalModel = new InternalCalendarModel((model != null) ? model : new CalendarJDateModel());
+		internalModel = new InternalCalendarModel((model != null) ? model : createDefaultDateModel());
 		internalController = new InternalController();
 		internalView = new InternalView();
 		
 		setLayout(new GridLayout(1, 1));
 		add(internalView);
+	}
+	
+	protected DateModel<?> createDefaultDateModel() {
+		return new CalendarDateModel();
 	}
 	
 	private Properties getDefaultStrings() {
@@ -174,7 +178,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	/* (non-Javadoc)
 	 * @see net.sourceforge.jdatepicker.JDateComponent#getModel()
 	 */
-	public JDateModel<?> getModel() {
+	public DateModel<?> getModel() {
 		return internalModel.getModel();
 	}
 
@@ -713,18 +717,18 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	 */
 	protected class InternalCalendarModel implements TableModel, SpinnerModel, ChangeListener {
 
-		private JDateModel<?> model;
+		private DateModel<?> model;
 		private HashSet<ChangeListener> spinnerChangeListeners;
 		private HashSet<TableModelListener> tableModelListeners;
 
-		public InternalCalendarModel(JDateModel<?> model){
+		public InternalCalendarModel(DateModel<?> model){
 			this.spinnerChangeListeners = new HashSet<ChangeListener>();
 			this.tableModelListeners = new HashSet<TableModelListener>();
 			this.model = model;
 			model.addChangeListener(this);
 		}
 		
-		public JDateModel<?> getModel() {
+		public DateModel<?> getModel() {
 			return model;
 		}
 		

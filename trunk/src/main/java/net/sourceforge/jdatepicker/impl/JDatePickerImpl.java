@@ -46,7 +46,7 @@ import javax.swing.SpringLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import net.sourceforge.jdatepicker.JDateModel;
+import net.sourceforge.jdatepicker.DateModel;
 import net.sourceforge.jdatepicker.JDatePanel;
 import net.sourceforge.jdatepicker.JDatePicker;
 
@@ -145,7 +145,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		return dateInstantPanel.getI18nStrings();
 	}
 
-	public JDateModel<?> getModel() {
+	public DateModel<?> getModel() {
 		return dateInstantPanel.getModel();
 	}
 	
