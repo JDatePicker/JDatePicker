@@ -36,11 +36,15 @@ import javax.swing.JFormattedTextField;
 
 import net.sourceforge.jdatepicker.util.JDatePickerUtil;
 
-public class DefaultFormatter extends JFormattedTextField.AbstractFormatter {
+public class DateComponentFormatter extends JFormattedTextField.AbstractFormatter {
 	
 	private static final long serialVersionUID = 5997312768041129127L;
 	
-	DateFormat format = JDatePickerUtil.getMediumDateFormat();
+	DateFormat format;
+	
+	public DateComponentFormatter(){
+		format = JDatePickerUtil.getMediumDateFormat();
+	}
 	
 	@Override
 	public String valueToString(Object value) throws ParseException {
