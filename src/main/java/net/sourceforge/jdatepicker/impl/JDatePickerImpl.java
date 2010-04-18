@@ -127,6 +127,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 
 		//Add event listeners
 		addHierarchyBoundsListener(internalEventHandler);
+//TODO		addAncestorListener(listener)
 		button.addActionListener(internalEventHandler);
 		formattedTextField.addPropertyChangeListener("value", internalEventHandler);
 		datePanel.addActionListener(internalEventHandler);
@@ -254,14 +255,12 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 
 		public void stateChanged(ChangeEvent arg0) {
 			if (arg0.getSource() == datePanel.getModel()) {
-				System.out.println(arg0);
 				DateModel<?> model = datePanel.getModel();
 				setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay());
 			}
 		}
 
 		public void propertyChange(PropertyChangeEvent evt) {
-			System.out.println(evt);
 			Calendar value = (Calendar)formattedTextField.getValue();
 			datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
 		}
