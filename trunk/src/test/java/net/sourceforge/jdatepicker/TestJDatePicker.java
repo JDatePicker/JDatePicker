@@ -30,7 +30,6 @@ package net.sourceforge.jdatepicker;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Calendar;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -51,10 +50,9 @@ public class TestJDatePicker {
 		});
 		testFrame.setSize(500, 500);
 		JPanel jPanel = new JPanel();
-		@SuppressWarnings("unchecked")
-		JDatePicker<Calendar> picker = JDateComponentFactory.getInstance(Calendar.class).createJDatePicker();
+		JDatePicker picker = JDateComponentFactory.createJDatePicker();
 		picker.setTextEditable(true);
-		picker.getJDateInstantPanel().setShowYearButtons(true);
+		picker.setShowYearButtons(true);
 		jPanel.add((JComponent)picker);
 		JPanel DatePanel = new JPanel();
 		DatePanel.setLayout(new BorderLayout());

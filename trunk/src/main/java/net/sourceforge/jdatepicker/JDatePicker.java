@@ -2,7 +2,7 @@ package net.sourceforge.jdatepicker;
 
 import javax.swing.JFormattedTextField;
 
-public interface JDatePicker<T> extends JDateComponent<T> {
+public interface JDatePicker extends JDatePanel {
 
 	/**
 	 * Is the text component editable or not. Defaults to false.
@@ -31,14 +31,6 @@ public interface JDatePicker<T> extends JDateComponent<T> {
 	 * @return
 	 */
 	public abstract boolean getButtonFocusable();
-
-	/**
-	 * Get the panel which draws the calendar, you can set additional settings
-	 * here.
-	 * 
-	 * @return
-	 */
-	public abstract JDatePanel<T> getJDateInstantPanel();
 
 	/**
 	 * Get the formatted text field which is used internally to display the date

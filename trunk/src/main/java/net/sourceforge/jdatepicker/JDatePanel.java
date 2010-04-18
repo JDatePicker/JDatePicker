@@ -1,6 +1,6 @@
 package net.sourceforge.jdatepicker;
 
-public interface JDatePanel<T> extends JDateComponent<T> {
+public interface JDatePanel extends JDateComponent {
 
 	/**
 	 * Sets the visibilty of the Year navigation buttons. Defaults to false.
