@@ -107,7 +107,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	}
 	
 	protected DateModel<?> createDefaultDateModel() {
-		return new CalendarDateModel();
+		return new UtilCalendarModel();
 	}
 	
 	private Properties getDefaultStrings() {

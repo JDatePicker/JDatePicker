@@ -28,18 +28,19 @@ or implied, of Juan Heyns.
 package net.sourceforge.jdatepicker.impl;
 
 import java.util.Calendar;
+import java.util.Date;
 
-import net.sourceforge.jdatepicker.AbstractJDateModel;
+import net.sourceforge.jdatepicker.AbstractDateModel;
 
-public class CalendarDateModel extends AbstractJDateModel<java.util.Calendar> {
-	
+public class UtilDateModel extends AbstractDateModel<java.util.Date> {
+
 	private Calendar value;
 	
-	public CalendarDateModel() {
+	public UtilDateModel() {
 		this(null);
 	}
 	
-	public CalendarDateModel(Calendar value) {
+	public UtilDateModel(Date value) {
 		setValue(value);
 		setToMidnight();
 	}
@@ -56,8 +57,8 @@ public class CalendarDateModel extends AbstractJDateModel<java.util.Calendar> {
 		return value.get(Calendar.YEAR);
 	}
 	
-	public Calendar getValue() {
-		return (Calendar) value.clone();
+	public Date getValue() {
+		return (Date) value.clone();
 	}
 	
 	public void addDay(int add) {
@@ -96,11 +97,13 @@ public class CalendarDateModel extends AbstractJDateModel<java.util.Calendar> {
 		fireChangeEvent();
 	}
 
-	public void setValue(Calendar value) {
-		if (value == null) {
-			value = Calendar.getInstance();
+	public void setValue(Date dateValue) {
+		Calendar calValue = Calendar.getInstance();
+		if (dateValue != null) {
+			calValue.setTime(dateValue);
 		}
-		this.value = value;
+		this.value = calValue;
+		
 		setToMidnight();
 		fireChangeEvent();
 	}
