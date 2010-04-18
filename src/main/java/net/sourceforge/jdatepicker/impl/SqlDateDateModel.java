@@ -25,43 +25,72 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package net.sourceforge.jdatepicker.impl;
 
-import java.util.HashSet;
+import java.sql.Date;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import net.sourceforge.jdatepicker.AbstractJDateModel;
 
-/**
- * Created 18 April 2010
- * 
- * @author Juan Heyns
- *
- * @param <T>
- */
-public abstract class AbstractJDateModel<T> implements DateModel<T> {
-	
-	private HashSet<ChangeListener> changeListeners;
+public class SqlDateDateModel extends AbstractJDateModel<java.sql.Date> {
 
-	protected AbstractJDateModel() {
-		changeListeners = new HashSet<ChangeListener>();		
-	}
-	
-	public void addChangeListener(ChangeListener changeListener) {
-		changeListeners.add(changeListener);
+	public void addDay(int add) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void removeChangeListener(ChangeListener changeListener) {
-		changeListeners.remove(changeListener);
+	public void addMonth(int add) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	/**
-	 * Called internally when changeListeners should be notified.
-	 */
-	protected void fireChangeEvent() {
-		for (ChangeListener changeListener : changeListeners) {
-			changeListener.stateChanged(new ChangeEvent(this));
-		}
+	public void addYear(int add) {
+		// TODO Auto-generated method stub
+		
 	}
-	
+
+	public int getDay() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getMonth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getYear() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void setDate(int year, int month, int day) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setDay(int day) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setMonth(int month) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setYear(int year) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Date getValue() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setValue(Date value) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
