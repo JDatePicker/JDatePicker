@@ -1,36 +1,69 @@
 package net.sourceforge.jdatepicker;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.swing.JFormattedTextField;
 
-import net.sourceforge.jdatepicker.impl.JDateComponentFactory_Calendar;
-import net.sourceforge.jdatepicker.impl.JDateComponentFactory_Date;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 
-public abstract class JDateComponentFactory<T> {
+/**
+ * Created 18 April 2010
+ * 
+ * @author Juan Heyns
+ */
+public class JDateComponentFactory {
 	
-	@SuppressWarnings("unchecked")
-	public static JDateComponentFactory getInstance(Class<?> clazz) throws IllegalArgumentException {
-		JDateComponentFactory<?> result = null;
-		if (clazz.equals(Calendar.class)) {
-			result = new JDateComponentFactory_Calendar();
-		} 
-		else if (clazz.equals(Date.class)) {
-			result = new JDateComponentFactory_Date();
-		}
-		else {
-			throw new IllegalArgumentException(clazz.getSimpleName() + " is not supported.");
-		}
-		return result;
+	/**
+	 * Create with default model and formatter.
+	 * 
+	 * @return
+	 */
+	public static JDatePicker createJDatePicker() {
+		return new JDatePickerImpl(new JDatePanelImpl(null), null);
 	}
 	
-	protected JDateComponentFactory() { }
+	/**
+	 * Create with default formatter.
+	 * 
+	 * @return
+	 */
+	public static JDatePicker createJDatePicker(JDateModel<?> model) {
+		return new JDatePickerImpl(new JDatePanelImpl(model), null);
+	}
 	
-	public abstract JDatePicker<T> createJDatePicker();
+	/**
+	 * Create with default model.
+	 * 
+	 * @return
+	 */
+	public static JDatePicker createJDatePicker(JFormattedTextField.AbstractFormatter dateFormatter) {
+		return new JDatePickerImpl(new JDatePanelImpl(null), dateFormatter);
+	}
 	
-	public abstract JDatePicker<T> createJDatePicker(JFormattedTextField.AbstractFormatter dateFormatter);
+	/**
+	 * Create specifying model and formatter.
+	 * 
+	 * @return
+	 */
+	public static JDatePicker createJDatePicker(JDateModel<?> model, JFormattedTextField.AbstractFormatter dateFormatter) {
+		return new JDatePickerImpl(new JDatePanelImpl(model), dateFormatter);
+	}
 	
-	public abstract JDatePanel<T> createJDatePanel();
+	/**
+	 * Create with default model.
+	 * 
+	 * @return
+	 */
+	public static JDatePanel createJDatePanel() {
+		return new JDatePanelImpl(null);
+	}
+	
+	/**
+	 * Create specifying model.
+	 * 
+	 * @return
+	 */
+	public static JDatePanel createJDatePanel(JDateModel<?> model) {
+		return new JDatePanelImpl(model);
+	}
 	
 }

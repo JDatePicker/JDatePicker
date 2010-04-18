@@ -29,7 +29,6 @@ package net.sourceforge.jdatepicker;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Calendar;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -38,8 +37,7 @@ public class TestJDatePanel {
 
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
-		@SuppressWarnings("unchecked")
-		JDatePanel<Calendar> panel = JDateComponentFactory.getInstance(Calendar.class).createJDatePanel();
+		JDatePanel panel = JDateComponentFactory.createJDatePanel();
 		panel.setShowYearButtons(true);
 		testFrame.getContentPane().add((JComponent)panel);
 		panel.setShowYearButtons(false);

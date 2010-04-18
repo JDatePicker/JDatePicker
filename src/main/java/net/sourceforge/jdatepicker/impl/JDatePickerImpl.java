@@ -25,7 +25,7 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package net.sourceforge.jdatepicker.impl;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,6 +46,10 @@ import javax.swing.SpringLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import net.sourceforge.jdatepicker.JDateModel;
+import net.sourceforge.jdatepicker.JDatePanel;
+import net.sourceforge.jdatepicker.JDatePicker;
+
 
 /**
  * Created on 25 Mar 2004
@@ -58,7 +62,7 @@ import javax.swing.event.ChangeListener;
  * @author Yue Huang
  * @param <T>
  */
-public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePicker<T> {
+public class JDatePickerImpl extends JPanel implements JDatePicker {
 
 	private static final long serialVersionUID = 2814777654384974503L;
 	
@@ -66,10 +70,10 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 	private JFormattedTextField dateTextField;
 	private JButton editButton;
 	
-	private AbstractJDatePanel<T> dateInstantPanel;
+	private JDatePanelImpl dateInstantPanel;
 	private InternalEventHandler internalEventHandler;
 
-	protected AbstractJDatePicker(AbstractJDatePanel<T> dateInstantPanel) {
+	public JDatePickerImpl(JDatePanelImpl dateInstantPanel) {
 		this(dateInstantPanel, null);
 	}
 	
@@ -82,7 +86,7 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 	 * @param dateInstantPanel
 	 * @param dateFormat
 	 */
-	protected AbstractJDatePicker(AbstractJDatePanel<T> dateInstantPanel, JFormattedTextField.AbstractFormatter dateFormat) {
+	public JDatePickerImpl(JDatePanelImpl dateInstantPanel, JFormattedTextField.AbstractFormatter dateFormat) {
 		this.dateInstantPanel = dateInstantPanel;
 
 		//Initialise Variables
@@ -96,8 +100,9 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 
         //Create and Add Components
 		//Add and Configure TextField
-		dateTextField = new JFormattedTextField((dateFormat!=null) ? dateFormat : createDefaultFormatter());
-		dateTextField.setValue(dateInstantPanel.getValue());
+//		dateTextField = new JFormattedTextField((dateFormat!=null) ? dateFormat : createDefaultFormatter());
+        dateTextField = new JFormattedTextField();
+		dateTextField.setValue(dateInstantPanel.getModel());
 		dateTextField.setEditable(false);
 		add(dateTextField);
         layout.putConstraint(SpringLayout.WEST, dateTextField, 0, SpringLayout.WEST, this);
@@ -120,7 +125,7 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 		//Add event listeners
 		editButton.addActionListener(internalEventHandler);
 		addHierarchyBoundsListener(internalEventHandler);
-		dateInstantPanel.addChangeListener(internalEventHandler);
+		dateInstantPanel.getModel().addChangeListener(internalEventHandler);
 		dateInstantPanel.addActionListener(internalEventHandler);
 	}	
 
@@ -132,14 +137,6 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 		dateInstantPanel.removeActionListener(actionListener);
 	}
 
-	public void addChangeListener(ChangeListener changeListener) {
-		dateInstantPanel.addChangeListener(changeListener);
-	}
-
-	public void removeChangeListener(ChangeListener changeListener) {
-		dateInstantPanel.removeChangeListener(changeListener);
-	}
-
 	public void setI18nStrings(Properties i18nStrings) {
 		dateInstantPanel.setI18nStrings(i18nStrings);
 	}
@@ -148,12 +145,8 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 		return dateInstantPanel.getI18nStrings();
 	}
 
-	public void setValue(T value) {
-		dateInstantPanel.setValue(value);
-	}
-	
-	public T getValue() {
-		return dateInstantPanel.getValue();
+	public JDateModel<?> getModel() {
+		return dateInstantPanel.getModel();
 	}
 	
 	/* (non-Javadoc)
@@ -187,7 +180,7 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 	/* (non-Javadoc)
 	 * @see net.sourceforge.jdatepicker.JDatePicker#getJDateInstantPanel()
 	 */
-	public JDatePanel<T> getJDateInstantPanel() {
+	public JDatePanel getJDateInstantPanel() {
 		return dateInstantPanel;
 	}
 
@@ -199,21 +192,13 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 	}
 
 	/**
-	 * Needs to be implemented for each type of date object.
-	 * 
-	 * @return
-	 */
-	protected abstract JFormattedTextField.AbstractFormatter createDefaultFormatter();
-
-	/**
 	 * Called internally to popup the dates.
 	 */
-	@SuppressWarnings("unchecked")
 	private void showPopup() {
 		if (popup == null){
-			if (dateTextField.isEditable() && dateTextField.getValue() != null) {
-				dateInstantPanel.setValue((T)dateTextField.getValue());
-			}
+//TODO			if (dateTextField.isEditable() && dateTextField.getValue() != null) {
+//				dateInstantPanel.getModel() setModel(dateTextField.getValue());
+//			}
 			PopupFactory fac = new PopupFactory();
 			Point xy = getLocationOnScreen();
 			dateInstantPanel.setVisible(true); 
@@ -227,7 +212,7 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 	 */
 	private void hidePopup() {
 		if (popup != null) {
-			dateTextField.setValue(dateInstantPanel.getValue());
+			dateTextField.setValue(dateInstantPanel.getModel());
 			popup.hide();
 			popup = null;
 		}
@@ -262,9 +247,29 @@ public abstract class AbstractJDatePicker<T> extends JPanel implements JDatePick
 
 		public void stateChanged(ChangeEvent arg0) {
 			if (arg0.getSource() == dateInstantPanel) {
-				dateTextField.setValue(dateInstantPanel.getValue());
+				dateTextField.setValue(dateInstantPanel.getModel());
 			}
 		}
+		
+	}
+
+	public boolean isDoubleClickAction() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isShowYearButtons() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setDoubleClickAction(boolean doubleClickAction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setShowYearButtons(boolean showYearButtons) {
+		// TODO Auto-generated method stub
 		
 	}
 	
