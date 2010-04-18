@@ -28,69 +28,91 @@ or implied, of Juan Heyns.
 package net.sourceforge.jdatepicker.impl;
 
 import java.sql.Date;
+import java.util.Calendar;
 
-import net.sourceforge.jdatepicker.AbstractJDateModel;
+import net.sourceforge.jdatepicker.AbstractDateModel;
 
-public class SqlDateDateModel extends AbstractJDateModel<java.sql.Date> {
+public class SqlDateModel extends AbstractDateModel<java.sql.Date> {
 
-	public void addDay(int add) {
-		// TODO Auto-generated method stub
-		
+	private Calendar value;
+	
+	public SqlDateModel() {
+		this(null);
 	}
-
-	public void addMonth(int add) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void addYear(int add) {
-		// TODO Auto-generated method stub
-		
+	
+	public SqlDateModel(Date value) {
+		setValue(value);
+		setToMidnight();
 	}
 
 	public int getDay() {
-		// TODO Auto-generated method stub
-		return 0;
+		return value.get(Calendar.DATE);
 	}
-
+	
 	public int getMonth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return value.get(Calendar.MONTH);
+	}
+	
+	public int getYear() {
+		return value.get(Calendar.YEAR);
+	}
+	
+	public Date getValue() {
+		return (Date) value.clone();
+	}
+	
+	public void addDay(int add) {
+		value.add(Calendar.DATE, add);
+		fireChangeEvent();
 	}
 
-	public int getYear() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void addMonth(int add) {
+		value.add(Calendar.MONTH, add);
+		fireChangeEvent();
+	}
+
+	public void addYear(int add) {
+		value.add(Calendar.YEAR, add);
+		fireChangeEvent();
 	}
 
 	public void setDate(int year, int month, int day) {
-		// TODO Auto-generated method stub
-		
+		value.set(year, month, day);
+		fireChangeEvent();
 	}
 
 	public void setDay(int day) {
-		// TODO Auto-generated method stub
-		
+		value.set(Calendar.DATE, day);
+		fireChangeEvent();
 	}
 
 	public void setMonth(int month) {
-		// TODO Auto-generated method stub
-		
+		value.set(Calendar.MONTH, month);
+		fireChangeEvent();
 	}
 
 	public void setYear(int year) {
-		// TODO Auto-generated method stub
-		
+		value.set(Calendar.YEAR, year);
+		setToMidnight();
+		fireChangeEvent();
 	}
 
-	public Date getValue() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setValue(Date dateValue) {
+		Calendar calValue = Calendar.getInstance();
+		if (dateValue != null) {
+			calValue.setTime(dateValue);
+		}
+		this.value = calValue;
+		
+		setToMidnight();
+		fireChangeEvent();
 	}
 
-	public void setValue(Date value) {
-		// TODO Auto-generated method stub
-		
+	private void setToMidnight() {
+		value.set(Calendar.HOUR, 0);
+		value.set(Calendar.MINUTE, 0);
+		value.set(Calendar.SECOND, 0);
+		value.set(Calendar.MILLISECOND, 0);
 	}
 
 }

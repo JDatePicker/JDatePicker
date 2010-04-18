@@ -31,6 +31,9 @@ import javax.swing.JFormattedTextField;
 
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.SqlDateModel;
+import net.sourceforge.jdatepicker.impl.UtilCalendarModel;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 /**
  * Created 18 April 2010
@@ -91,6 +94,50 @@ public class JDateComponentFactory {
 	 */
 	public static JDatePanel createJDatePanel(DateModel<?> model) {
 		return new JDatePanelImpl(model);
+	}
+	
+	/**
+	 * Create a DateModel based on the type of the value.
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public static DateModel<?> createDateModel(Object value) {
+		Class<?> clazz = value.getClass();
+		
+		DateModel<?> result = null;
+		if (clazz.equals(java.util.Calendar.class)) {
+			result = new UtilCalendarModel((java.util.Calendar)value);
+		}
+		if (clazz.equals(java.util.Date.class)) {
+			result = new UtilDateModel((java.util.Date)value);
+		}
+		if (clazz.equals(java.sql.Date.class)) {
+			result = new SqlDateModel((java.sql.Date)value);
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * Create a DateModel initialised to today, based on the clazz type.
+	 * 
+	 * @param clazz
+	 * @return
+	 */
+	public static DateModel<?> createDateModel(Class<?> clazz) {
+		DateModel<?> result = null;
+		if (clazz.equals(java.util.Calendar.class)) {
+			result = new UtilCalendarModel();
+		}
+		if (clazz.equals(java.util.Date.class)) {
+			result = new UtilDateModel();
+		}
+		if (clazz.equals(java.sql.Date.class)) {
+			result = new SqlDateModel();
+		}
+		
+		return result;
 	}
 	
 }
