@@ -27,7 +27,6 @@ or implied, of Juan Heyns.
 */
 package net.sourceforge.jdatepicker;
 
-import javax.swing.JFormattedTextField;
 
 public interface JDatePicker extends JDatePanel {
 
@@ -58,13 +57,5 @@ public interface JDatePicker extends JDatePanel {
 	 * @return
 	 */
 	public abstract boolean getButtonFocusable();
-
-	/**
-	 * Get the formatted text field which is used internally to display the date
-	 * on the form.
-	 * 
-	 * @return
-	 */
-	public abstract JFormattedTextField getJFormattedTextField();
 
 }

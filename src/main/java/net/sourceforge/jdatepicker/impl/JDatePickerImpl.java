@@ -205,9 +205,6 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	 */
 	private void showPopup() {
 		if (popup == null){
-//TODO			if (dateTextField.isEditable() && dateTextField.getValue() != null) {
-//				dateInstantPanel.getModel() setModel(dateTextField.getValue());
-//			}
 			PopupFactory fac = new PopupFactory();
 			Point xy = getLocationOnScreen();
 			datePanel.setVisible(true); 
@@ -261,8 +258,10 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		}
 
 		public void propertyChange(PropertyChangeEvent evt) {
-			Calendar value = (Calendar)formattedTextField.getValue();
-			datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
+			if (formattedTextField.isEditable() && formattedTextField.getValue() != null) {
+				Calendar value = (Calendar)formattedTextField.getValue();
+				datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
+			}
 		}
 		
 	}
