@@ -34,6 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.HierarchyBoundsListener;
 import java.awt.event.HierarchyEvent;
+import java.util.Calendar;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -100,9 +101,9 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 
         //Create and Add Components
 		//Add and Configure TextField
-//		dateTextField = new JFormattedTextField((dateFormat!=null) ? dateFormat : createDefaultFormatter());
-        dateTextField = new JFormattedTextField();
-		dateTextField.setValue(dateInstantPanel.getModel());
+		dateTextField = new JFormattedTextField((dateFormat!=null) ? dateFormat : createDefaultFormatter());
+		DateModel<?> model = dateInstantPanel.getModel();
+		setDateTextFieldValue(model.getYear(), model.getMonth(), model.getDay());
 		dateTextField.setEditable(false);
 		add(dateTextField);
         layout.putConstraint(SpringLayout.WEST, dateTextField, 0, SpringLayout.WEST, this);
@@ -128,6 +129,10 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		dateInstantPanel.getModel().addChangeListener(internalEventHandler);
 		dateInstantPanel.addActionListener(internalEventHandler);
 	}	
+	
+	protected JFormattedTextField.AbstractFormatter createDefaultFormatter() {
+		return new DefaultFormatter();
+	}
 
 	public void addActionListener(ActionListener actionListener) {
 		dateInstantPanel.addActionListener(actionListener);
@@ -212,7 +217,6 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	 */
 	private void hidePopup() {
 		if (popup != null) {
-			dateTextField.setValue(dateInstantPanel.getModel());
 			popup.hide();
 			popup = null;
 		}
@@ -246,9 +250,8 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		}
 
 		public void stateChanged(ChangeEvent arg0) {
-			if (arg0.getSource() == dateInstantPanel) {
-				dateTextField.setValue(dateInstantPanel.getModel());
-			}
+			DateModel<?> model = dateInstantPanel.getModel();
+			setDateTextFieldValue(model.getYear(), model.getMonth(), model.getDay());
 		}
 		
 	}
@@ -271,6 +274,13 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	public void setShowYearButtons(boolean showYearButtons) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void setDateTextFieldValue(int year, int month, int day) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(year, month, day, 0, 0, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		dateTextField.setValue(calendar);
 	}
 	
 }
