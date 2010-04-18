@@ -58,7 +58,7 @@ public class SqlDateModel extends AbstractDateModel<java.sql.Date> {
 	}
 	
 	public Date getValue() {
-		return (Date) value.clone();
+		return new Date(value.getTimeInMillis());
 	}
 	
 	public void addDay(int add) {

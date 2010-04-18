@@ -58,7 +58,7 @@ public class UtilDateModel extends AbstractDateModel<java.util.Date> {
 	}
 	
 	public Date getValue() {
-		return (Date) value.clone();
+		return (Date)value.getTime().clone();
 	}
 	
 	public void addDay(int add) {
