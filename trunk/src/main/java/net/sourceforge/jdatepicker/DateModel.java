@@ -27,6 +27,8 @@ or implied, of Juan Heyns.
 */
 package net.sourceforge.jdatepicker;
 
+import java.beans.PropertyChangeListener;
+
 import javax.swing.event.ChangeListener;
 
 /**
@@ -140,4 +142,26 @@ public interface DateModel<T> {
 	 */
 	public void setValue(T value);
 	
+    /**
+     * Adds a PropertyChangeListener to the list of bean listeners.
+     * The listener is registered for all bound properties of the target bean.
+     *
+     * @param listener      the PropertyChangeListener to be added
+     *
+     * @see #removePropertyChangeListener(PropertyChangeListener)
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener);
+
+
+    /**
+     * Removes a PropertyChangeListener from the list of bean listeners.
+     * This method should be used to remove PropertyChangeListeners that
+     * were registered for all bound properties of the target bean.
+     * 
+     * @param listener      the PropertyChangeListener to be removed
+     *
+     * @see #addPropertyChangeListener(PropertyChangeListener)
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener);
+
 }
