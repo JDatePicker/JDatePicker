@@ -61,53 +61,94 @@ public class UtilDateModel extends AbstractDateModel<java.util.Date> {
 		return (Date)value.getTime().clone();
 	}
 	
+	public void setDay(int day) {
+		int oldDayValue = this.value.get(Calendar.DATE);
+		Date oldValue = getValue();
+		value.set(Calendar.DATE, day);
+		fireChangeEvent();
+		firePropertyChange("day", oldDayValue, this.value.get(Calendar.DATE));
+		firePropertyChange("value", oldValue, getValue());
+	}
+
 	public void addDay(int add) {
+		int oldDayValue = this.value.get(Calendar.DATE);
+		Date oldValue = getValue();
 		value.add(Calendar.DATE, add);
 		fireChangeEvent();
+		firePropertyChange("day", oldDayValue, this.value.get(Calendar.DATE));
+		firePropertyChange("value", oldValue, getValue());
+	}
+	
+	public void setMonth(int month) {
+		int oldMonthValue = this.value.get(Calendar.MONTH);
+		Date oldValue = getValue();
+		value.set(Calendar.MONTH, month);
+		fireChangeEvent();
+		firePropertyChange("month", oldMonthValue, this.value.get(Calendar.MONTH));
+		firePropertyChange("value", oldValue, getValue());
 	}
 
 	public void addMonth(int add) {
+		int oldMonthValue = this.value.get(Calendar.MONTH);
+		Date oldValue = getValue();
 		value.add(Calendar.MONTH, add);
 		fireChangeEvent();
+		firePropertyChange("month", oldMonthValue, this.value.get(Calendar.MONTH));
+		firePropertyChange("value", oldValue, getValue());
+	}
+	
+	public void setYear(int year) {
+		int oldYearValue = this.value.get(Calendar.YEAR);
+		Date oldValue = getValue();
+		value.set(Calendar.YEAR, year);
+		fireChangeEvent();
+		firePropertyChange("year", oldYearValue, this.value.get(Calendar.YEAR));
+		firePropertyChange("value", oldValue, getValue());
 	}
 
 	public void addYear(int add) {
+		int oldYearValue = this.value.get(Calendar.YEAR);
+		Date oldValue = getValue();
 		value.add(Calendar.YEAR, add);
 		fireChangeEvent();
+		firePropertyChange("year", oldYearValue, this.value.get(Calendar.YEAR));
+		firePropertyChange("value", oldValue, getValue());
 	}
-
-	public void setDate(int year, int month, int day) {
-		value.set(year, month, day);
-		fireChangeEvent();
-	}
-
-	public void setDay(int day) {
-		value.set(Calendar.DATE, day);
-		fireChangeEvent();
-	}
-
-	public void setMonth(int month) {
-		value.set(Calendar.MONTH, month);
-		fireChangeEvent();
-	}
-
-	public void setYear(int year) {
-		value.set(Calendar.YEAR, year);
-		setToMidnight();
-		fireChangeEvent();
-	}
-
+	
 	public void setValue(Date dateValue) {
 		Calendar calValue = Calendar.getInstance();
 		if (dateValue != null) {
 			calValue.setTime(dateValue);
 		}
+		else {
+			this.value = calValue;
+		}
+		int oldYearValue = this.value.get(Calendar.YEAR);
+		int oldMonthValue = this.value.get(Calendar.MONTH);
+		int oldDayValue = this.value.get(Calendar.DATE);
+		Date oldValue = getValue();
 		this.value = calValue;
-		
 		setToMidnight();
 		fireChangeEvent();
+		firePropertyChange("year", oldYearValue, this.value.get(Calendar.YEAR));
+		firePropertyChange("month", oldMonthValue, this.value.get(Calendar.MONTH));
+		firePropertyChange("day", oldDayValue, this.value.get(Calendar.DATE));
+		firePropertyChange("value", oldValue, getValue());
 	}
-
+	
+	public void setDate(int year, int month, int day) {
+		int oldYearValue = this.value.get(Calendar.YEAR);
+		int oldMonthValue = this.value.get(Calendar.MONTH);
+		int oldDayValue = this.value.get(Calendar.DATE);
+		Date oldValue = getValue();
+		value.set(year, month, day);
+		fireChangeEvent();
+		firePropertyChange("year", oldYearValue, this.value.get(Calendar.YEAR));
+		firePropertyChange("month", oldMonthValue, this.value.get(Calendar.MONTH));
+		firePropertyChange("day", oldDayValue, this.value.get(Calendar.DATE));
+		firePropertyChange("value", oldValue, getValue());
+	}
+	
 	private void setToMidnight() {
 		value.set(Calendar.HOUR, 0);
 		value.set(Calendar.MINUTE, 0);

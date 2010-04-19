@@ -27,6 +27,8 @@ or implied, of Juan Heyns.
 */
 package net.sourceforge.jdatepicker;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 
 import javax.swing.event.ChangeEvent;
@@ -42,26 +44,51 @@ import javax.swing.event.ChangeListener;
 public abstract class AbstractDateModel<T> implements DateModel<T> {
 	
 	private HashSet<ChangeListener> changeListeners;
+	private HashSet<PropertyChangeListener> propertyChangeListeners;
 
 	protected AbstractDateModel() {
-		changeListeners = new HashSet<ChangeListener>();		
+		changeListeners = new HashSet<ChangeListener>();	
+		propertyChangeListeners = new HashSet<PropertyChangeListener>();
 	}
 	
-	public void addChangeListener(ChangeListener changeListener) {
+	public synchronized void addChangeListener(ChangeListener changeListener) {
 		changeListeners.add(changeListener);
 	}
 
-	public void removeChangeListener(ChangeListener changeListener) {
+	public synchronized void removeChangeListener(ChangeListener changeListener) {
 		changeListeners.remove(changeListener);
 	}
 
 	/**
 	 * Called internally when changeListeners should be notified.
 	 */
-	protected void fireChangeEvent() {
+	protected synchronized void fireChangeEvent() {
 		for (ChangeListener changeListener : changeListeners) {
 			changeListener.stateChanged(new ChangeEvent(this));
 		}
 	}
 	
+    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeListeners.add(listener);
+    }
+
+    public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeListeners.remove(listener);
+    }
+
+	/**
+	 * Called internally pass an PropertyChangeEvent to any registered
+	 * listeners. No event is fired if the given event's old and new values are
+	 * equal and non-null.
+	 */
+	protected synchronized void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+		if (oldValue != null && newValue != null && oldValue.equals(newValue)) {
+		    return;
+		}
+	
+		for (PropertyChangeListener listener : propertyChangeListeners) {
+			listener.propertyChange(new PropertyChangeEvent(this, propertyName, oldValue, newValue));
+		}
+    }
+
 }
