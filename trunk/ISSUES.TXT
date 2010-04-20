@@ -5,10 +5,11 @@ Resolved issues: 1.2.0 Beta
 - Internationalisation: Strings extracted and it can be set via Properties (Juan Heyns <jheyns@chillisoup.com>)
 
 Issues: 1.2.0
-- Defect: Clearing date is not possible, set value = null (Simon Gibbs <simon.gibbs@cantorva.com>)
+- Defect: Clearing date is not possible, set value = null (Simon Gibbs <simon.gibbs@cantorva.com>) - ADD NONE TO PANEL
 - Defect: Sizing on Ubuntu needs to be tested, reports it shows too small (Yue Huang <u4214110@anu.edu.au>)
 - Defect: Resizing panel does not resize the text in the table
 - Defect: When a panel is removed below the popup it still shows.
+- Defect: The strings are not reloaded when set.
 
 Testing required 1.2.0
 - Different L&F needs to be tested
@@ -16,6 +17,9 @@ Testing required 1.2.0
 Enhancements outstanding 1.2.0
 - JGoodies Binding integration, demo
 - JodaTime DateMidnight version implementation
+- Ability to limit the selectable dates with a lower and/or upper boundary
+- Further limitation of selectable days, for example no weekend days
+- Time controls
 
 Possible Future Enhancements, maybe 1.3.0
 - Date range selection (intervals)
