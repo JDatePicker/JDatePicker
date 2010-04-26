@@ -59,6 +59,7 @@ import net.sourceforge.jdatepicker.JDatePicker;
  * Refactored 21 Jun 2004
  * Refactored 14 May 2009
  * Refactored 16 April 2010
+ * Updated 26 April 2010
  * 
  * @author Juan Heyns
  * @author JC Oosthuizen
@@ -105,7 +106,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		//Add and Configure TextField
 		formattedTextField = new JFormattedTextField((formatter!=null) ? formatter : createDefaultFormatter());
 		DateModel<?> model = datePanel.getModel();
-		setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay());
+		setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
 		formattedTextField.setEditable(false);		
 		add(formattedTextField);
         layout.putConstraint(SpringLayout.WEST, formattedTextField, 0, SpringLayout.WEST, this);
@@ -253,7 +254,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		public void stateChanged(ChangeEvent arg0) {
 			if (arg0.getSource() == datePanel.getModel()) {
 				DateModel<?> model = datePanel.getModel();
-				setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay());
+				setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
 			}
 		}
 
@@ -261,6 +262,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 			if (formattedTextField.isEditable() && formattedTextField.getValue() != null) {
 				Calendar value = (Calendar)formattedTextField.getValue();
 				datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
+				datePanel.getModel().setSelected(true);
 			}
 		}
 		
@@ -282,11 +284,16 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		datePanel.setShowYearButtons(showYearButtons);
 	}
 	
-	private void setTextFieldValue(JFormattedTextField textField, int year, int month, int day) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(year, month, day, 0, 0, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		textField.setValue(calendar);
+	private void setTextFieldValue(JFormattedTextField textField, int year, int month, int day, boolean isSelected) {
+		if (!isSelected) {
+			textField.setValue(null);
+		}
+		else {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(year, month, day, 0, 0, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			textField.setValue(calendar);
+		}
 	}
 	
 }
