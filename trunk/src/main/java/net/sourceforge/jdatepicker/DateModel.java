@@ -33,6 +33,7 @@ import javax.swing.event.ChangeListener;
 
 /**
  * Created 18 April 2010
+ * Updated 26 April 2010
  * 
  * @author Juan Heyns
  *
@@ -141,6 +142,20 @@ public interface DateModel<T> {
 	 * @param value
 	 */
 	public void setValue(T value);
+	
+	/**
+	 * Is the value selected or is it not.
+	 * 
+	 * @return
+	 */
+	public boolean isSelected();
+	
+	/**
+	 * Set the value as selected.
+	 * 
+	 * @param selected
+	 */
+	public void setSelected(boolean selected);
 	
     /**
      * Adds a PropertyChangeListener to the list of bean listeners.

@@ -37,13 +37,15 @@ import javax.swing.event.ChangeListener;
 
 /**
  * Created 18 April 2010
+ * Updated 26 April 2010
  * 
  * @author Juan Heyns
  *
  * @param <T>
  */
 public abstract class AbstractDateModel<T> implements DateModel<T> {
-	
+
+	private boolean selected;
 	private Calendar calendarValue;
 	private HashSet<ChangeListener> changeListeners;
 	private HashSet<PropertyChangeListener> propertyChangeListeners;
@@ -51,6 +53,8 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
 	protected AbstractDateModel() {
 		changeListeners = new HashSet<ChangeListener>();	
 		propertyChangeListeners = new HashSet<PropertyChangeListener>();
+		selected = false;
+		calendarValue = Calendar.getInstance();
 	}
 	
 	public synchronized void addChangeListener(ChangeListener changeListener) {
@@ -98,6 +102,9 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
 	}
 	
 	public T getValue() {
+		if (!selected) {
+			return null;
+		}
 		T value = fromCalendar(calendarValue);
 		return value;
 	}
@@ -157,23 +164,27 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
 	}
 	
 	public void setValue(T value) {
-		if (this.calendarValue == null) {
-			this.calendarValue = Calendar.getInstance();
-		}
-		if (value == null) {
-			value = fromCalendar(Calendar.getInstance());
-		}
 		int oldYearValue = this.calendarValue.get(Calendar.YEAR);
 		int oldMonthValue = this.calendarValue.get(Calendar.MONTH);
 		int oldDayValue = this.calendarValue.get(Calendar.DATE);
 		T oldValue = getValue();
-		this.calendarValue = toCalendar(value);
-		setToMidnight();
+		boolean oldSelectedValue = isSelected();
+		
+		if (value != null) {
+			this.calendarValue = toCalendar(value);
+			setToMidnight();
+			selected = true;
+		}
+		else {
+			selected = false;
+		}
+		
 		fireChangeEvent();
 		firePropertyChange("year", oldYearValue, this.calendarValue.get(Calendar.YEAR));
 		firePropertyChange("month", oldMonthValue, this.calendarValue.get(Calendar.MONTH));
 		firePropertyChange("day", oldDayValue, this.calendarValue.get(Calendar.DATE));
 		firePropertyChange("value", oldValue, this.calendarValue);
+		firePropertyChange("selected", oldSelectedValue, this.selected);
 	}
 	
 	public void setDate(int year, int month, int day) {
@@ -187,6 +198,17 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
 		firePropertyChange("month", oldMonthValue, this.calendarValue.get(Calendar.MONTH));
 		firePropertyChange("day", oldDayValue, this.calendarValue.get(Calendar.DATE));
 		firePropertyChange("value", oldValue, this.calendarValue);
+	}
+	
+	public boolean isSelected() {
+		return selected;
+	}
+	
+	public void setSelected(boolean selected) {
+		boolean oldSelectedValue = isSelected();
+		this.selected = selected; 
+		fireChangeEvent();
+		firePropertyChange("selected", oldSelectedValue, this.selected);
 	}
 
 	private void setToMidnight() {

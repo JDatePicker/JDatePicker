@@ -73,6 +73,7 @@ import net.sourceforge.jdatepicker.util.JDatePickerUtil;
  * Refactored 14 May 2009
  * Refactored 16 April 2010
  * Updated 18 April 2010
+ * Updated 26 April 2010
  * 
  * @author Juan Heyns
  * @author JC Oosthuizen
@@ -575,52 +576,59 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 
 			if (row == -1) {
 				label.setForeground(new Color(10, 36, 106));
-				label.setBackground(Color.WHITE);
+				label.setBackground(Color.LIGHT_GRAY);
 				label.setHorizontalAlignment(JLabel.CENTER);
 				return label;
 			}
 
 			
-			Calendar cal = Calendar.getInstance();
-			cal.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), internalModel.getModel().getDay());
-			Calendar today = Calendar.getInstance();
-			Integer day = (Integer) arg1;
-			int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+			Calendar todayCal = Calendar.getInstance();
+			Calendar selectedCal = Calendar.getInstance();
+			selectedCal.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), internalModel.getModel().getDay());
+			
+			int cellDayValue = (Integer) arg1;
+			int lastDayOfMonth = selectedCal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-			// Setting Foreground
-			if (cal.get(Calendar.DATE) == day.intValue()) {
-				if (today.get(Calendar.DATE) == day.intValue() 
-						&& today.get(Calendar.MONTH) == internalModel.getModel().getMonth()
-						&& today.get(Calendar.YEAR) == internalModel.getModel().getYear()) {
-					label.setForeground(Color.RED);
-				} else {
-					label.setForeground(Color.WHITE);
-				}
-			} else if (day.intValue() < 1 || day.intValue() > lastDay) {
+			// Other month
+			if (cellDayValue < 1 || cellDayValue > lastDayOfMonth) {
 				label.setForeground(Color.LIGHT_GRAY);
-				if (day.intValue() > lastDay) {
-					label.setText(Integer.toString(day.intValue() - lastDay));
-				} else {
+				label.setBackground(Color.WHITE);
+				
+				//Past end of month
+				if (cellDayValue > lastDayOfMonth) {
+					label.setText(Integer.toString(cellDayValue - lastDayOfMonth));
+				} 
+				//Before start of month
+				else {
 					Calendar lastMonth = new GregorianCalendar();
-					lastMonth.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) - 1, 1);
+					lastMonth.set(selectedCal.get(Calendar.YEAR), selectedCal.get(Calendar.MONTH) - 1, 1);
 					int lastDayLastMonth = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
-					label.setText(Integer.toString(lastDayLastMonth + day.intValue()));
-				}
-			} else {
-				if (today.get(Calendar.DATE) == day.intValue()
-						&& today.get(Calendar.MONTH) == internalModel.getModel().getMonth()
-						&& today.get(Calendar.YEAR) == internalModel.getModel().getYear()) {
-					label.setForeground(Color.RED);
-				} else {
-					label.setForeground(Color.BLACK);
+					label.setText(Integer.toString(lastDayLastMonth + cellDayValue));
 				}
 			}
-
-			// Setting background
-			if (cal.get(Calendar.DATE) == day.intValue()) {
-				label.setBackground(new Color(10, 36, 106));
-			} else {
+			//This month
+			else { 
+				label.setForeground(Color.BLACK);
 				label.setBackground(Color.WHITE);
+				
+				//Today
+				if (todayCal.get(Calendar.DATE) == cellDayValue
+						&& todayCal.get(Calendar.MONTH) == internalModel.getModel().getMonth()
+						&& todayCal.get(Calendar.YEAR) == internalModel.getModel().getYear()) {
+					label.setForeground(Color.RED);
+					//Selected
+					if (internalModel.getModel().isSelected() && selectedCal.get(Calendar.DATE) == cellDayValue) {
+						label.setBackground(new Color(10, 36, 106));
+					}
+				}
+				//Other day
+				else {
+					//Selected
+					if (internalModel.getModel().isSelected() && selectedCal.get(Calendar.DATE) == cellDayValue) {
+						label.setForeground(Color.WHITE);
+						label.setBackground(new Color(10, 36, 106));
+					}
+				}
 			}
 
 			return label;
@@ -683,6 +691,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				if (row >= 0 && row <= 5) {
 					Integer date = (Integer) internalModel.getValueAt(row, col);
 					internalModel.getModel().setDay(date);
+					internalModel.getModel().setSelected(true);
 					
 					if (doubleClickAction && arg0.getClickCount() == 2) {
 						fireActionPerformed();
