@@ -118,6 +118,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		defaults.put("messages.previousMonth", "Previous month");
 		defaults.put("messages.nextYear", "Next year");
 		defaults.put("messages.previousYear", "Previous year");
+		defaults.put("messages.clear", "Clear");
 		
 		return defaults;
 	}
@@ -203,6 +204,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		private InternalTableCellRenderer dayTableCellRenderer;
 		private JLabel monthLabel;
 		private JLabel todayLabel;
+		private JLabel noneLabel;
 		private JPopupMenu monthPopupMenu;
 		private JMenuItem[] monthPopupMenuItems;
 		private JButton nextMonthButton;
@@ -329,9 +331,25 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				//southPanel.setOpaque(false);
 				southPanel.setBackground(Color.WHITE);
 				southPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(3,3,3,3));
-				southPanel.add(getTodayLabel(), java.awt.BorderLayout.CENTER);
+				southPanel.add(getTodayLabel(), java.awt.BorderLayout.WEST);
+				southPanel.add(getNoneLabel(), java.awt.BorderLayout.EAST);
 			}
 			return southPanel;
+		}
+
+		/**
+		 * This method initializes todayLabel	
+		 * 	
+		 * @return javax.swing.JLabel	
+		 */    
+		private JLabel getNoneLabel() {
+			if (noneLabel == null) {
+				noneLabel = new javax.swing.JLabel();
+				noneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+				noneLabel.addMouseListener(internalController);
+				noneLabel.setText(i18nStrings.getProperty("messages.clear"));
+			}
+			return noneLabel;
 		}
 
 		/**
@@ -672,11 +690,12 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		}
 
 		/**
-		 * Mouse click on monthLabel pops up a table. Mouse click on todayLabel
-		 * sets the value of the internal model to today. Mouse click on day
-		 * table will set the day to the value.
+		 * Mouse down on monthLabel pops up a table. Mouse down on todayLabel
+		 * sets the value of the internal model to today. Mouse down on day
+		 * table will set the day to the value. Mouse down on none label will
+		 * clear the date.
 		 */
-		public void mouseClicked(MouseEvent arg0) {
+		public void mousePressed(MouseEvent arg0) {
 			if (arg0.getSource() == internalView.getMonthLabel()) {
 				internalView.getMonthPopupMenu().setLightWeightPopupEnabled(false);
 				internalView.getMonthPopupMenu().show((Component) arg0.getSource(), arg0.getX(), arg0.getY());
@@ -701,15 +720,25 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 					}
 				}
 			}
+			else if (arg0.getSource() == internalView.getNoneLabel()) {
+				internalModel.getModel().setSelected(false);
+				
+				if (doubleClickAction && arg0.getClickCount() == 2) {
+					fireActionPerformed();
+				}
+				if (!doubleClickAction) {
+					fireActionPerformed();
+				}
+			}
+		}
+		
+		public void mouseClicked(MouseEvent arg0) {
 		}
 	
 		public void mouseEntered(MouseEvent arg0) {
 		}
 
 		public void mouseExited(MouseEvent arg0) {
-		}
-
-		public void mousePressed(MouseEvent arg0) {
 		}
 
 		public void mouseReleased(MouseEvent arg0) {
