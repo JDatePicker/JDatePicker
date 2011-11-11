@@ -1,0 +1,94 @@
+--- JDatePanelImpl.java	2010-04-26 17:02:02.000000000 +0200
++++ /home/martin/programs/java/JDatePicker/src/net/sourceforge/jdatepicker/impl/JDatePanelImpl.java	2010-08-23 22:38:21.837888822 +0200
+@@ -299,6 +299,32 @@
+ 			if (monthLabel == null) {
+ 				monthLabel = new javax.swing.JLabel();
+ 				monthLabel.setForeground(java.awt.SystemColor.activeCaptionText);
++
++                                /* On Linux activeCaption is dark blue and
++                                 * activeCaptionText is black. So it's not
++                                 * possible reading the months name.
++                                 *
++                                 * This little code tries to trigger this and
++                                 * chooses a better color.
++                                 */
++
++                                Color c_text = java.awt.SystemColor.activeCaptionText;
++                                Color c_background = java.awt.SystemColor.activeCaption;
++
++                                int diff = 0;
++
++                                diff += c_text.getBlue() - c_background.getBlue();
++                                diff += c_text.getGreen() - c_background.getGreen();
++                                diff += c_text.getRed() - c_background.getRed();                                
++
++                                if( Math.abs(diff) < 200 ) {
++                                    if( c_text.equals(Color.BLACK) )
++                                        monthLabel.setForeground(Color.LIGHT_GRAY);
++                                    else
++                                        monthLabel.setForeground(c_text.brighter());
++                                }
++
++
+ 				monthLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+ 				monthLabel.addMouseListener(internalController);
+ 				updateMonthLabel();
+@@ -588,6 +614,7 @@
+ 
+ 		private static final long serialVersionUID = -2341614459632756921L;
+ 
++        @Override
+ 		public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean isSelected, boolean hasFocus, int row, int col) {
+ 			JLabel label = (JLabel) super.getTableCellRendererComponent(arg0, arg1, isSelected, hasFocus, row, col);
+ 			label.setHorizontalAlignment(JLabel.CENTER);
+@@ -758,12 +785,16 @@
+ 		private DateModel<?> model;
+ 		private HashSet<ChangeListener> spinnerChangeListeners;
+ 		private HashSet<TableModelListener> tableModelListeners;
++                private int first_day_of_week;
+ 
+ 		public InternalCalendarModel(DateModel<?> model){
+ 			this.spinnerChangeListeners = new HashSet<ChangeListener>();
+ 			this.tableModelListeners = new HashSet<TableModelListener>();
+ 			this.model = model;
+ 			model.addChangeListener(this);
++
++                        GregorianCalendar gcal = new GregorianCalendar();
++                        first_day_of_week = gcal.getFirstDayOfWeek();
+ 		}
+ 		
+ 		public DateModel<?> getModel() {
+@@ -839,7 +870,13 @@
+ 		public String getColumnName(int arg0) {
+ 			DateFormatSymbols df = new DateFormatSymbols();
+ 			String[] shortDays = df.getShortWeekdays();
+-			return shortDays[arg0 + 1];
++
++                        int current_day = arg0 + first_day_of_week;
++
++                        if( current_day >= shortDays.length)
++                            current_day -= 7;
++
++			return shortDays[current_day];
+ 		}
+ 
+ 		/**
+@@ -863,7 +900,18 @@
+ 		public Object getValueAt(int arg0, int arg1) {
+ 			Calendar firstDayOfMonth = Calendar.getInstance();
+ 			firstDayOfMonth.set(model.getYear(), model.getMonth(), 1);
++                        
+ 			int DOW = firstDayOfMonth.get(Calendar.DAY_OF_WEEK);
++
++                        /* Support for european calendar style. Monday is the first day of the week */
++                        if( first_day_of_week == 2 )
++                        {
++                            DOW += 6;
++
++                            if( DOW > 7 )
++                                DOW -=7;
++                        }
++
+ 			int value = arg1 - DOW + arg0*7 + 2;
+ 			return new Integer(value);
+ 		}
