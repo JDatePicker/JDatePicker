@@ -29,7 +29,6 @@ package net.sourceforge.jdatepicker;
 
 import javax.swing.JFormattedTextField;
 
-import net.sourceforge.jdatepicker.graphics.ColorTheme;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.SqlDateModel;
@@ -38,64 +37,63 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 /**
  * Created 18 April 2010
- * Updated 15 June 2012
  * 
  * @author Juan Heyns
  */
 public class JDateComponentFactory {
 	
 	/**
-	 * Create a JDatePicker with all defaults. The object can be cast JComponent.
+	 * Create with default model and formatter.
 	 * 
 	 * @return
 	 */
 	public static JDatePicker createJDatePicker() {
-		return new JDatePickerImpl(new JDatePanelImpl(null, null), null);
+		return new JDatePickerImpl(new JDatePanelImpl(null), null);
 	}
 	
 	/**
-	 * Create a JDatePicker with custom data model. The object can be cast JComponent.
+	 * Create with default formatter.
 	 * 
 	 * @return
 	 */
 	public static JDatePicker createJDatePicker(DateModel<?> model) {
-		return new JDatePickerImpl(new JDatePanelImpl(model, null), null);
+		return new JDatePickerImpl(new JDatePanelImpl(model), null);
 	}
 	
 	/**
-	 * Create a JDatePicker with all custom properties, leave a property as null to set to default. The object can be cast JComponent. 
+	 * Create with default model.
 	 * 
 	 * @return
 	 */
-	public static JDatePicker createJDatePicker(DateModel<?> model, ColorTheme colorTheme, JFormattedTextField.AbstractFormatter dateFormatter) {
-		return new JDatePickerImpl(new JDatePanelImpl(model, colorTheme), dateFormatter);
+	public static JDatePicker createJDatePicker(JFormattedTextField.AbstractFormatter dateFormatter) {
+		return new JDatePickerImpl(new JDatePanelImpl(null), dateFormatter);
 	}
 	
 	/**
-	 * Create a JDatePanel with all defaults. The object can be cast JComponent.
+	 * Create specifying model and formatter.
+	 * 
+	 * @return
+	 */
+	public static JDatePicker createJDatePicker(DateModel<?> model, JFormattedTextField.AbstractFormatter dateFormatter) {
+		return new JDatePickerImpl(new JDatePanelImpl(model), dateFormatter);
+	}
+	
+	/**
+	 * Create with default model.
 	 * 
 	 * @return
 	 */
 	public static JDatePanel createJDatePanel() {
-		return new JDatePanelImpl(null, null);
+		return new JDatePanelImpl(null);
 	}
 	
 	/**
-	 * Create a JDatePanel with custom data model. The object can be cast JComponent.
+	 * Create specifying model.
 	 * 
 	 * @return
 	 */
 	public static JDatePanel createJDatePanel(DateModel<?> model) {
-		return new JDatePanelImpl(model, null);
-	}
-	
-	/**
-	 * Create a JDatePanel with all custom properties, leave a property as null to set to default. The object can be cast JComponent. 
-	 * 
-	 * @return
-	 */
-	public static JDatePanel createJDatePanel(DateModel<?> model, ColorTheme colorTheme) {
-		return new JDatePanelImpl(model, colorTheme);
+		return new JDatePanelImpl(model);
 	}
 	
 	/**

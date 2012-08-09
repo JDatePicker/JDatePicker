@@ -1,10 +1,3 @@
-Open issues: 1.4.0 Beta
-- Documentation: Requests have been made for user documentation to be provided. A one pager PDF usage guide will suffice (Juan Heyns <jheyns@chillisoup.com>)
-- Apply Patches: European calendar support, with monday as the first day of the week (Juan Heyns <jheyns@chillisoup.com>)
-- Feature Request: Add an icon to the button to open the calendar (Juan Heyns <jheyns@chillisoup.com>)
-- Repackage: Package all files in one download on SF.net (Juan Heyns <jheyns@chillisoup.com>)
-- Implement some of the features outstanding relating to JGoodies / JodaTime
-
 Resolved issues: 1.2.0 Beta
 - Defect: When scrolling past the year with the next month button (Juan Heyns <jheyns@chillisoup.com>)
 - Defect: Previous month button goes back two months (Juan Heyns <jheyns@chillisoup.com>)
@@ -28,6 +21,6 @@ Enhancements outstanding 1.2.0
 - Further limitation of selectable days, for example no weekend days
 - Time controls
 
-Possible Future Enhancements, maybe 1.4.0
+Possible Future Enhancements, maybe 1.3.0
 - Date range selection (intervals)
 - Make it a full JComponent not JPanel
