@@ -50,7 +50,7 @@ public class TestJDatePicker {
 		});
 		testFrame.setSize(500, 500);
 		JPanel jPanel = new JPanel();
-		JDatePicker picker = JDateComponentFactory.createJDatePicker();
+		JDatePicker picker = new JDateComponentFactory().createJDatePicker();
 		picker.setTextEditable(true);
 		picker.setShowYearButtons(true);
 //		picker.getModel().setSelected(true);

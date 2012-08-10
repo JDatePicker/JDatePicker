@@ -37,7 +37,6 @@ import java.awt.event.HierarchyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -60,6 +59,7 @@ import net.sourceforge.jdatepicker.JDatePicker;
  * Refactored 14 May 2009
  * Refactored 16 April 2010
  * Updated 26 April 2010
+ * Updated 10 August 2012
  * 
  * @author Juan Heyns
  * @author JC Oosthuizen
@@ -77,10 +77,6 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	private JDatePanelImpl datePanel;
 	private InternalEventHandler internalEventHandler;
 
-	public JDatePickerImpl(JDatePanelImpl dateInstantPanel) {
-		this(dateInstantPanel, null);
-	}
-	
 	/**
 	 * You are able to set the format of the date being displayed on the label.
 	 * Formatting is described at:
@@ -104,7 +100,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 
         //Create and Add Components
 		//Add and Configure TextField
-		formattedTextField = new JFormattedTextField((formatter!=null) ? formatter : createDefaultFormatter());
+		formattedTextField = new JFormattedTextField(formatter);
 		DateModel<?> model = datePanel.getModel();
 		setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
 		formattedTextField.setEditable(false);		
@@ -135,24 +131,12 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		datePanel.getModel().addChangeListener(internalEventHandler);
 	}	
 	
-	protected JFormattedTextField.AbstractFormatter createDefaultFormatter() {
-		return new DateComponentFormatter();
-	}
-
 	public void addActionListener(ActionListener actionListener) {
 		datePanel.addActionListener(actionListener);
 	}
 
 	public void removeActionListener(ActionListener actionListener) {
 		datePanel.removeActionListener(actionListener);
-	}
-
-	public void setI18nStrings(Properties i18nStrings) {
-		datePanel.setI18nStrings(i18nStrings);
-	}
-	
-	public Properties getI18nStrings() {
-		return datePanel.getI18nStrings();
 	}
 
 	public DateModel<?> getModel() {
