@@ -27,8 +27,16 @@ or implied, of Juan Heyns.
 */
 package net.sourceforge.jdatepicker;
 
+import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
 import javax.swing.JFormattedTextField;
 
+import net.sourceforge.jdatepicker.impl.DateComponentFormatter;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.SqlDateModel;
@@ -37,63 +45,127 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 /**
  * Created 18 April 2010
+ * Updated 10 August 2012
  * 
  * @author Juan Heyns
  */
 public class JDateComponentFactory {
 	
+	private Class<? extends DateModel<?>> dateModelClass;
+	private JFormattedTextField.AbstractFormatter dateFormatter;
+	private Properties i18nStrings;
+	
 	/**
-	 * Create with default model and formatter.
-	 * 
-	 * @return
+	 * Create a factory which will construct widgets with the default date model
+	 * (UtilCalendarModel), date formatter (DateComponentFormatter) and
+	 * i18nStrings (English).
 	 */
-	public static JDatePicker createJDatePicker() {
-		return new JDatePickerImpl(new JDatePanelImpl(null), null);
+	public JDateComponentFactory() {
+		this(null, null, null);
 	}
 	
 	/**
-	 * Create with default formatter.
+	 * Create a factory which will construct widgets with the provided date
+	 * model, date formatter and i18nStrings.
 	 * 
-	 * @return
+	 * @param dateModelClass
+	 * @param dateFormatter
+	 * @param i18nStrings
 	 */
-	public static JDatePicker createJDatePicker(DateModel<?> model) {
-		return new JDatePickerImpl(new JDatePanelImpl(model), null);
+	public JDateComponentFactory(Class<? extends DateModel<?>> dateModelClass, JFormattedTextField.AbstractFormatter dateFormatter, Locale locale) {
+		if (dateModelClass == null) {
+			this.dateModelClass = getDefaultDateModelClass();
+		}
+		else {
+			this.dateModelClass = dateModelClass;
+		}
+		
+		if (dateFormatter == null) {
+			this.dateFormatter = getDefaultDateFormatter();
+		}
+		else {
+			this.dateFormatter = dateFormatter;
+		}
+		
+		if (locale == null) {
+			this.i18nStrings = getI18nStrings(Locale.getDefault());
+		}
+		else {
+			this.i18nStrings = getI18nStrings(locale);
+		}
 	}
 	
 	/**
-	 * Create with default model.
+	 * Get the default class for the date model.
 	 * 
 	 * @return
 	 */
-	public static JDatePicker createJDatePicker(JFormattedTextField.AbstractFormatter dateFormatter) {
-		return new JDatePickerImpl(new JDatePanelImpl(null), dateFormatter);
+	protected Class<? extends DateModel<?>> getDefaultDateModelClass() {
+		return UtilCalendarModel.class;
 	}
 	
 	/**
-	 * Create specifying model and formatter.
+	 * Get the default date formatter.
 	 * 
 	 * @return
 	 */
-	public static JDatePicker createJDatePicker(DateModel<?> model, JFormattedTextField.AbstractFormatter dateFormatter) {
-		return new JDatePickerImpl(new JDatePanelImpl(model), dateFormatter);
+	protected JFormattedTextField.AbstractFormatter getDefaultDateFormatter() {
+		return new DateComponentFormatter();
 	}
+
+	/**
+	 * Get the translations for the specified locale.
+	 * 
+	 * @return
+	 */
+	protected Properties getI18nStrings(Locale locale) {
+		ResourceBundle resourceBundle = null;
+		try {
+			resourceBundle = ResourceBundle.getBundle("net.sourceforge.jdatepicker.i18n.Text", locale);
+		}
+		catch (MissingResourceException mre) {
+			System.out.println("Could not load translations for locale:" + locale + " will load locale:" + Locale.ENGLISH);
+			resourceBundle = ResourceBundle.getBundle("net.sourceforge.jdatepicker.i18n.Text", Locale.ENGLISH);
+		}
+
+		return convertToProperties(resourceBundle);
+	}
+
+	/**
+	 * Convert to the properties object which is used internally by the widgets.
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	private Properties convertToProperties(ResourceBundle resource) {
+		Properties properties = new Properties();
+		Enumeration<String> keys = resource.getKeys();
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+			properties.put(key, resource.getString(key));
+		}
+		return properties;
+	}	
 	
 	/**
-	 * Create with default model.
+	 * Create a DateModel initialised to today, based on the clazz type.
 	 * 
+	 * @param clazz
 	 * @return
 	 */
-	public static JDatePanel createJDatePanel() {
-		return new JDatePanelImpl(null);
-	}
-	
-	/**
-	 * Create specifying model.
-	 * 
-	 * @return
-	 */
-	public static JDatePanel createJDatePanel(DateModel<?> model) {
-		return new JDatePanelImpl(model);
+	private DateModel<?> createDateModel(Class<? extends DateModel<?>> clazz) {
+		DateModel<?> result = null;
+		if (clazz.equals(net.sourceforge.jdatepicker.impl.UtilCalendarModel.class)) {
+			result = new UtilCalendarModel(Calendar.getInstance());
+		}
+		if (clazz.equals(net.sourceforge.jdatepicker.impl.UtilDateModel.class)) {
+			result = new UtilDateModel(new java.util.Date());
+		}
+		if (clazz.equals(net.sourceforge.jdatepicker.impl.SqlDateModel.class)) {
+			result = new SqlDateModel(new java.sql.Date(System.currentTimeMillis()));
+		}
+		
+		return result;
 	}
 	
 	/**
@@ -102,7 +174,7 @@ public class JDateComponentFactory {
 	 * @param value
 	 * @return
 	 */
-	public static DateModel<?> createDateModel(Object value) {
+	private static DateModel<?> createDateModel(Object value) {
 		Class<?> clazz = value.getClass();
 		
 		DateModel<?> result = null;
@@ -120,24 +192,54 @@ public class JDateComponentFactory {
 	}
 	
 	/**
-	 * Create a DateModel initialised to today, based on the clazz type.
+	 * Create with factory dateModel, i18nStrings and dateFormatter.
 	 * 
-	 * @param clazz
 	 * @return
 	 */
-	public static DateModel<?> createDateModel(Class<?> clazz) {
-		DateModel<?> result = null;
-		if (clazz.equals(java.util.Calendar.class)) {
-			result = new UtilCalendarModel();
+	public JDatePicker createJDatePicker() {
+		DateModel<?> model = createDateModel(dateModelClass);
+		return new JDatePickerImpl(new JDatePanelImpl(model, i18nStrings), dateFormatter);
+	}
+	
+	/**
+	 * Create by specifying the initial value of the widget.
+	 * 
+	 * @param model
+	 * @param i18n
+	 * @param format
+	 * @return
+	 */
+	public JDatePicker createJDatePicker(Object value) {
+		if (value == null) {
+			throw new IllegalArgumentException("Value may not be null.");
 		}
-		if (clazz.equals(java.util.Date.class)) {
-			result = new UtilDateModel();
+		DateModel<?> model = createDateModel(value);
+		return new JDatePickerImpl(new JDatePanelImpl(model, i18nStrings), dateFormatter);
+	}
+	
+	/**
+	 * Create with factory dateModel, i18nStrings and dateFormatter.
+	 * 
+	 * @return
+	 */
+	public JDatePanel createJDatePanel() {
+		DateModel<?> model = createDateModel(dateModelClass);
+		return new JDatePanelImpl(model, i18nStrings);
+	}
+	
+	/**
+	 * Create by specifying the initial value of the widget.
+	 * 
+	 * @param model
+	 * @param i18n
+	 * @return
+	 */
+	public JDatePanel createJDatePanel(Object value) {
+		if (value == null) {
+			throw new IllegalArgumentException("Value may not be null.");
 		}
-		if (clazz.equals(java.sql.Date.class)) {
-			result = new SqlDateModel();
-		}
-		
-		return result;
+		DateModel<?> model = createDateModel(value);
+		return new JDatePanelImpl(model, i18nStrings);
 	}
 	
 }

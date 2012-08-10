@@ -74,6 +74,7 @@ import net.sourceforge.jdatepicker.util.JDatePickerUtil;
  * Refactored 16 April 2010
  * Updated 18 April 2010
  * Updated 26 April 2010
+ * Updated 10 August 2012
  * 
  * @author Juan Heyns
  * @author JC Oosthuizen
@@ -93,13 +94,13 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	private InternalView internalView;
 	private InternalController internalController;
 
-	public JDatePanelImpl(DateModel<?> model) {
+	public JDatePanelImpl(DateModel<?> model, Properties i18nStrings) {
 		showYearButtons = false;
 		doubleClickAction = false;
 		actionListeners = new HashSet<ActionListener>();
-		i18nStrings = new Properties(getDefaultStrings());
+		this.i18nStrings = i18nStrings;
 		
-		internalModel = new InternalCalendarModel((model != null) ? model : createDefaultDateModel());
+		internalModel = new InternalCalendarModel(model);
 		internalController = new InternalController();
 		internalView = new InternalView();
 		
@@ -107,22 +108,6 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		add(internalView);
 	}
 	
-	protected DateModel<?> createDefaultDateModel() {
-		return new UtilCalendarModel();
-	}
-	
-	private Properties getDefaultStrings() {
-		Properties defaults = new Properties();
-		defaults.put("messages.today", "Today");
-		defaults.put("messages.nextMonth", "Next month");
-		defaults.put("messages.previousMonth", "Previous month");
-		defaults.put("messages.nextYear", "Next year");
-		defaults.put("messages.previousYear", "Previous year");
-		defaults.put("messages.clear", "Clear");
-		
-		return defaults;
-	}
-
 	public void addActionListener(ActionListener actionListener) {
 		actionListeners.add(actionListener);
 	}
@@ -138,14 +123,6 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		for (ActionListener actionListener : actionListeners) {
 			actionListener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Date selected"));
 		}
-	}
-
-	public void setI18nStrings(Properties i18nStrings) {
-		this.i18nStrings = i18nStrings;
-	}
-	
-	public Properties getI18nStrings() {
-		return i18nStrings;
 	}
 
 	/* (non-Javadoc)

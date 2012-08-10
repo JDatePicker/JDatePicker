@@ -28,7 +28,6 @@ or implied, of Juan Heyns.
 package net.sourceforge.jdatepicker;
 
 import java.awt.event.ActionListener;
-import java.util.Properties;
 
 /**
  * This interface is implemented by all components which represent a date by day
@@ -40,6 +39,7 @@ import java.util.Properties;
  * 
  * Created 16 April 2010
  * Updated 18 April 2010
+ * Updated 10 August 2012
  * 
  * @author Juan Heyns
  */
@@ -73,19 +73,5 @@ public interface JDateComponent {
 	 * @param arg
 	 */
 	public void removeActionListener(ActionListener actionListener);
-
-	/**
-	 * Gets the currently set internationalised strings of the component.
-	 * 
-	 * @return
-	 */
-	public Properties getI18nStrings();
-	
-	/**
-	 * Sets internationalised the strings of the component.
-	 * 
-	 * @param strings
-	 */
-	public void setI18nStrings(Properties i18nStrings);
 
 }
