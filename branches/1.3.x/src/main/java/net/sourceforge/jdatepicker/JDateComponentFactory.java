@@ -30,7 +30,6 @@ package net.sourceforge.jdatepicker;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Locale;
-import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -119,15 +118,7 @@ public class JDateComponentFactory {
 	 * @return
 	 */
 	protected Properties getI18nStrings(Locale locale) {
-		ResourceBundle resourceBundle = null;
-		try {
-			resourceBundle = ResourceBundle.getBundle("net.sourceforge.jdatepicker.i18n.Text", locale);
-		}
-		catch (MissingResourceException mre) {
-			System.out.println("Could not load translations for locale:" + locale + " will load locale:" + Locale.ENGLISH);
-			resourceBundle = ResourceBundle.getBundle("net.sourceforge.jdatepicker.i18n.Text", Locale.ENGLISH);
-		}
-
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("net.sourceforge.jdatepicker.i18n.Text", locale);
 		return convertToProperties(resourceBundle);
 	}
 
