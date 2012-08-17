@@ -25,15 +25,30 @@ public class TestJDatePickerI18n {
 		});
 		testFrame.setSize(500, 500);
 		JPanel jPanel = new JPanel();
-		Properties i18n = new Properties();
-		i18n.put("messages.today", "Vandag");
-		i18n.put("messages.nextMonth", "Volgende maand");
-		i18n.put("messages.previousMonth", "Vorige maand");
-		i18n.put("messages.nextYear", "Volgende jaar");
-		i18n.put("messages.previousYear", "Vorige jaar");
-		i18n.put("messages.clear", "Herstel");
 		
-		Locale.setDefault(Locale.FRENCH);
+		
+		System.out.println("Fully supported locales:");
+		System.out.println(new Locale("nl"));
+		System.out.println(new Locale("en"));
+		System.out.println(new Locale("de"));
+		System.out.println(new Locale("it"));
+		System.out.println(new Locale("ja"));
+		System.out.println(new Locale("ko"));
+		System.out.println(new Locale("pt"));
+		System.out.println(new Locale("es"));
+		System.out.println(new Locale("sv"));
+		System.out.println(new Locale("th"));
+		
+		System.out.println("Resizing locales (needs work):");
+		System.out.println(new Locale("zh"));
+		System.out.println(new Locale("fr"));
+		
+		System.out.println("RTL locales (needs work):");
+		System.out.println(new Locale("ar"));
+		System.out.println(new Locale("he"));
+		
+		
+		Locale.setDefault(new Locale("th"));
 		JDatePicker picker = new JDateComponentFactory().createJDatePicker();
 		picker.setTextEditable(true);
 		picker.setShowYearButtons(true);
