@@ -33,6 +33,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
@@ -41,6 +44,8 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Properties;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -75,6 +80,7 @@ import net.sourceforge.jdatepicker.util.JDatePickerUtil;
  * Updated 18 April 2010
  * Updated 26 April 2010
  * Updated 15 June 2012
+ * Updated 10 August 2012
  * 
  * @author Juan Heyns
  * @author JC Oosthuizen
@@ -86,7 +92,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	private static final long serialVersionUID = -2299249311312882915L;
 	
 	private HashSet<ActionListener> actionListeners;
-	
+
 	private Properties i18nStrings;
 	private boolean showYearButtons;
 	private boolean doubleClickAction;
@@ -96,15 +102,15 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	private InternalView internalView;
 	private InternalController internalController;
 
-	public JDatePanelImpl(DateModel<?> model, ColorTheme theme) {
-		actionListeners = new HashSet<ActionListener>();
-		
-		i18nStrings = new Properties(getDefaultStrings());
+	public JDatePanelImpl(DateModel<?> model, Properties i18nStrings, ColorTheme theme) {
 		showYearButtons = false;
 		doubleClickAction = false;
-		colorTheme = theme != null ? theme : createDefaultColorTheme();
+		actionListeners = new HashSet<ActionListener>();
+
+		this.i18nStrings = i18nStrings;
+		colorTheme = theme;
 		
-		internalModel = new InternalCalendarModel((model != null) ? model : createDefaultDateModel());
+		internalModel = new InternalCalendarModel(model);
 		internalController = new InternalController();
 		internalView = new InternalView();
 		
@@ -112,26 +118,6 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		add(internalView);
 	}
 	
-	protected DateModel<?> createDefaultDateModel() {
-		return new UtilCalendarModel();
-	}
-	
-	protected ColorTheme createDefaultColorTheme() {
-		return new ColorTheme() {};
-	}
-	
-	private Properties getDefaultStrings() {
-		Properties defaults = new Properties();
-		defaults.put("messages.today", "Today");
-		defaults.put("messages.nextMonth", "Next month");
-		defaults.put("messages.previousMonth", "Previous month");
-		defaults.put("messages.nextYear", "Next year");
-		defaults.put("messages.previousYear", "Previous year");
-		defaults.put("messages.clear", "Clear");
-		
-		return defaults;
-	}
-
 	public void addActionListener(ActionListener actionListener) {
 		actionListeners.add(actionListener);
 	}
@@ -149,31 +135,38 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		}
 	}
 
-	public void setI18nStrings(Properties i18nStrings) {
-		this.i18nStrings = i18nStrings;
-	}
-	
-	public Properties getI18nStrings() {
-		return i18nStrings;
-	}
-
+	/* (non-Javadoc)
+	 * @see net.sourceforge.jdatepicker.JDatePanel#setShowYearButtons(boolean)
+	 */
 	public void setShowYearButtons(boolean showYearButtons) {
 		this.showYearButtons = showYearButtons;
 		internalView.updateShowYearButtons();
 	}
 
+	/* (non-Javadoc)
+	 * @see net.sourceforge.jdatepicker.JDatePanel#isShowYearButtons()
+	 */
 	public boolean isShowYearButtons() {
 		return this.showYearButtons;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.sourceforge.jdatepicker.JDatePanel#setDoubleClickAction(boolean)
+	 */
 	public void setDoubleClickAction(boolean doubleClickAction) {
 		this.doubleClickAction = doubleClickAction;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.sourceforge.jdatepicker.JDatePanel#isDoubleClickAction()
+	 */
 	public boolean isDoubleClickAction() {
 		return doubleClickAction;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.sourceforge.jdatepicker.JDateComponent#getModel()
+	 */
 	public DateModel<?> getModel() {
 		return internalModel.getModel();
 	}
@@ -341,7 +334,16 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				noneLabel.setForeground(colorTheme.fgTodaySelector());
 				noneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 				noneLabel.addMouseListener(internalController);
-				noneLabel.setText(i18nStrings.getProperty("messages.clear"));
+				
+				InputStream stream = this.getClass().getResourceAsStream( "/net/sourceforge/jdatepicker/graphics/clear.png" );
+				BufferedImage image;
+				try {
+					image = ImageIO.read( stream );
+					noneLabel.setIcon(new ImageIcon(image));
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			return noneLabel;
 		}
@@ -359,7 +361,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				todayLabel.addMouseListener(internalController);
 				
 				DateFormat df1 = JDatePickerUtil.getMediumDateFormat();
-				todayLabel.setText(i18nStrings.getProperty("messages.today") + ": " + df1.format(new Date()));
+				todayLabel.setText(i18nStrings.getProperty("text.today") + ": " + df1.format(new Date()));
 			}
 			return todayLabel;
 		}
@@ -482,7 +484,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				nextMonthButton.setFocusable(false);
 				nextMonthButton.setOpaque(true);
 				nextMonthButton.addActionListener(internalController);
-				nextMonthButton.setToolTipText(i18nStrings.getProperty("messages.nextMonth"));
+				nextMonthButton.setToolTipText(i18nStrings.getProperty("text.month"));
 			}
 			return nextMonthButton;
 		}
@@ -501,7 +503,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				nextYearButton.setFocusable(false);
 				nextYearButton.setOpaque(true);
 				nextYearButton.addActionListener(internalController);
-				nextYearButton.setToolTipText(i18nStrings.getProperty("messages.nextYear"));
+				nextYearButton.setToolTipText(i18nStrings.getProperty("text.year"));
 			}
 			return nextYearButton;
 		}
@@ -520,7 +522,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				previousMonthButton.setFocusable(false);
 				previousMonthButton.setOpaque(true);
 				previousMonthButton.addActionListener(internalController);
-				previousMonthButton.setToolTipText(i18nStrings.getProperty("messages.previousMonth"));
+				previousMonthButton.setToolTipText(i18nStrings.getProperty("text.month"));
 			}
 			return previousMonthButton;
 		}
@@ -539,7 +541,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				previousYearButton.setFocusable(false);
 				previousYearButton.setOpaque(true);
 				previousYearButton.addActionListener(internalController);
-				previousYearButton.setToolTipText(i18nStrings.getProperty("messages.previousYear"));
+				previousYearButton.setToolTipText(i18nStrings.getProperty("text.year"));
 			}
 			return previousYearButton;
 		}
@@ -909,5 +911,5 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		}
 
 	}
-
+	
 }
