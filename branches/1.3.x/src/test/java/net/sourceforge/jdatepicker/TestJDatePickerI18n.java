@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Locale;
-import java.util.Properties;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -26,29 +25,7 @@ public class TestJDatePickerI18n {
 		testFrame.setSize(500, 500);
 		JPanel jPanel = new JPanel();
 		
-		
-		System.out.println("Fully supported locales:");
-		System.out.println(new Locale("nl"));
-		System.out.println(new Locale("en"));
-		System.out.println(new Locale("de"));
-		System.out.println(new Locale("it"));
-		System.out.println(new Locale("ja"));
-		System.out.println(new Locale("ko"));
-		System.out.println(new Locale("pt"));
-		System.out.println(new Locale("es"));
-		System.out.println(new Locale("sv"));
-		System.out.println(new Locale("th"));
-		
-		System.out.println("Resizing locales (needs work):");
-		System.out.println(new Locale("zh"));
-		System.out.println(new Locale("fr"));
-		
-		System.out.println("RTL locales (needs work):");
-		System.out.println(new Locale("ar"));
-		System.out.println(new Locale("he"));
-		
-		
-		Locale.setDefault(new Locale("th"));
+		Locale.setDefault(new Locale("pt"));
 		JDatePicker picker = new JDateComponentFactory().createJDatePicker();
 		picker.setTextEditable(true);
 		picker.setShowYearButtons(true);
