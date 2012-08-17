@@ -37,7 +37,7 @@ public class TestJDatePanel {
 
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
-		JDatePanel panel = JDateComponentFactory.createJDatePanel();
+		JDatePanel panel = new JDateComponentFactory().createJDatePanel();
 		panel.setShowYearButtons(true);
 		testFrame.getContentPane().add((JComponent)panel);
 		panel.setShowYearButtons(false);

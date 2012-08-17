@@ -58,5 +58,5 @@ public interface JDatePanel extends JDateComponent {
 	 * @return
 	 */
 	public abstract boolean isDoubleClickAction();
-	
+
 }
