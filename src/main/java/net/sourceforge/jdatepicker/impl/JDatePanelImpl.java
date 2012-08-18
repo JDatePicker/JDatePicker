@@ -93,26 +93,28 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	
 	private HashSet<ActionListener> actionListeners;
 
-	private Properties i18nStrings;
+	private Properties texts;
+	private ColorTheme colors;
+	
 	private boolean showYearButtons;
 	private boolean doubleClickAction;
-	private ColorTheme colorTheme;
 	
 	private InternalCalendarModel internalModel;
 	private InternalView internalView;
 	private InternalController internalController;
 
-	public JDatePanelImpl(DateModel<?> model, Properties i18nStrings, ColorTheme theme) {
-		showYearButtons = false;
-		doubleClickAction = false;
+	public JDatePanelImpl(DateModel<?> model, Properties texts, ColorTheme colors) {
 		actionListeners = new HashSet<ActionListener>();
 
-		this.i18nStrings = i18nStrings;
-		colorTheme = theme;
+		this.texts = texts;
+		this.colors = colors;
+		
+		showYearButtons = false;
+		doubleClickAction = false;
 		
 		internalModel = new InternalCalendarModel(model);
-		internalController = new InternalController();
 		internalView = new InternalView();
+		internalController = new InternalController();
 		
 		setLayout(new GridLayout(1, 1));
 		add(internalView);
@@ -252,7 +254,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				northPanel.setLayout(new java.awt.BorderLayout());
 				northPanel.setName("");
 				northPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(3,3,3,3));
-				northPanel.setBackground(colorTheme.bgMonthSelector());
+				northPanel.setBackground(colors.bgMonthSelector());
 				northPanel.add(getPreviousButtonPanel(), java.awt.BorderLayout.WEST);
 				northPanel.add(getNextButtonPanel(), java.awt.BorderLayout.EAST);
 				northPanel.add(getNorthCenterPanel(), java.awt.BorderLayout.CENTER);
@@ -285,7 +287,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		private JLabel getMonthLabel() {
 			if (monthLabel == null) {
 				monthLabel = new javax.swing.JLabel();
-				monthLabel.setForeground(colorTheme.fgMonthSelector());
+				monthLabel.setForeground(colors.fgMonthSelector());
 				monthLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 				monthLabel.addMouseListener(internalController);
 				updateMonthLabel();
@@ -315,7 +317,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			if (southPanel == null) {
 				southPanel = new javax.swing.JPanel();
 				southPanel.setLayout(new java.awt.BorderLayout());
-				southPanel.setBackground(colorTheme.bgTodaySelector());
+				southPanel.setBackground(colors.bgTodaySelector());
 				southPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(3,3,3,3));
 				southPanel.add(getTodayLabel(), java.awt.BorderLayout.WEST);
 				southPanel.add(getNoneLabel(), java.awt.BorderLayout.EAST);
@@ -331,7 +333,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		private JLabel getNoneLabel() {
 			if (noneLabel == null) {
 				noneLabel = new javax.swing.JLabel();
-				noneLabel.setForeground(colorTheme.fgTodaySelector());
+				noneLabel.setForeground(colors.fgTodaySelector());
 				noneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 				noneLabel.addMouseListener(internalController);
 				
@@ -356,12 +358,12 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		private JLabel getTodayLabel() {
 			if (todayLabel == null) {
 				todayLabel = new javax.swing.JLabel();
-				todayLabel.setForeground(colorTheme.fgTodaySelector());
+				todayLabel.setForeground(colors.fgTodaySelector());
 				todayLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 				todayLabel.addMouseListener(internalController);
 				
 				DateFormat df1 = JDatePickerUtil.getMediumDateFormat();
-				todayLabel.setText(i18nStrings.getProperty("text.today") + ": " + df1.format(new Date()));
+				todayLabel.setText(texts.getProperty("text.today") + ": " + df1.format(new Date()));
 			}
 			return todayLabel;
 		}
@@ -395,7 +397,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				dayTable.setPreferredSize(new java.awt.Dimension(100,80));
 				dayTable.setModel(internalModel);
 				dayTable.setShowGrid(true);
-				dayTable.setGridColor(colorTheme.bgGrid());
+				dayTable.setGridColor(colors.bgGrid());
 				dayTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				dayTable.setCellSelectionEnabled(true);
 				dayTable.setRowSelectionAllowed(true);
@@ -484,7 +486,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				nextMonthButton.setFocusable(false);
 				nextMonthButton.setOpaque(true);
 				nextMonthButton.addActionListener(internalController);
-				nextMonthButton.setToolTipText(i18nStrings.getProperty("text.month"));
+				nextMonthButton.setToolTipText(texts.getProperty("text.month"));
 			}
 			return nextMonthButton;
 		}
@@ -503,7 +505,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				nextYearButton.setFocusable(false);
 				nextYearButton.setOpaque(true);
 				nextYearButton.addActionListener(internalController);
-				nextYearButton.setToolTipText(i18nStrings.getProperty("text.year"));
+				nextYearButton.setToolTipText(texts.getProperty("text.year"));
 			}
 			return nextYearButton;
 		}
@@ -522,7 +524,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				previousMonthButton.setFocusable(false);
 				previousMonthButton.setOpaque(true);
 				previousMonthButton.addActionListener(internalController);
-				previousMonthButton.setToolTipText(i18nStrings.getProperty("text.month"));
+				previousMonthButton.setToolTipText(texts.getProperty("text.month"));
 			}
 			return previousMonthButton;
 		}
@@ -541,7 +543,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				previousYearButton.setFocusable(false);
 				previousYearButton.setOpaque(true);
 				previousYearButton.addActionListener(internalController);
-				previousYearButton.setToolTipText(i18nStrings.getProperty("text.year"));
+				previousYearButton.setToolTipText(texts.getProperty("text.year"));
 			}
 			return previousYearButton;
 		}
@@ -593,8 +595,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			label.setHorizontalAlignment(JLabel.CENTER);
 
 			if (row == -1) {
-				label.setForeground(colorTheme.fgGridHeader());
-				label.setBackground(colorTheme.bgGridHeader());
+				label.setForeground(colors.fgGridHeader());
+				label.setBackground(colors.bgGridHeader());
 				label.setHorizontalAlignment(JLabel.CENTER);
 				return label;
 			}
@@ -609,8 +611,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 
 			// Other month
 			if (cellDayValue < 1 || cellDayValue > lastDayOfMonth) {
-				label.setForeground(colorTheme.fgGridOtherMonth());
-				label.setBackground(colorTheme.bgGrid());
+				label.setForeground(colors.fgGridOtherMonth());
+				label.setBackground(colors.bgGrid());
 				
 				//Past end of month
 				if (cellDayValue > lastDayOfMonth) {
@@ -626,26 +628,26 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			}
 			//This month
 			else { 
-				label.setForeground(colorTheme.fgGridThisMonth());
-				label.setBackground(colorTheme.bgGrid());
+				label.setForeground(colors.fgGridThisMonth());
+				label.setBackground(colors.bgGrid());
 				
 				//Today
 				if (todayCal.get(Calendar.DATE) == cellDayValue
 						&& todayCal.get(Calendar.MONTH) == internalModel.getModel().getMonth()
 						&& todayCal.get(Calendar.YEAR) == internalModel.getModel().getYear()) {
-					label.setForeground(colorTheme.fgGridToday());
+					label.setForeground(colors.fgGridToday());
 					//Selected
 					if (internalModel.getModel().isSelected() && selectedCal.get(Calendar.DATE) == cellDayValue) {
-						label.setForeground(colorTheme.fgGridTodaySelected());
-						label.setBackground(colorTheme.bgGridTodaySelected());
+						label.setForeground(colors.fgGridTodaySelected());
+						label.setBackground(colors.bgGridTodaySelected());
 					}
 				}
 				//Other day
 				else {
 					//Selected
 					if (internalModel.getModel().isSelected() && selectedCal.get(Calendar.DATE) == cellDayValue) {
-						label.setForeground(colorTheme.fgGridSelected());
-						label.setBackground(colorTheme.bgGridSelected());
+						label.setForeground(colors.fgGridSelected());
+						label.setBackground(colors.bgGridSelected());
 					}
 				}
 			}

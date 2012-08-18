@@ -51,15 +51,20 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
  */
 public class JDateComponentFactory {
 	
-	private Class<? extends DateModel<?>> dateModelClass;
-	private JFormattedTextField.AbstractFormatter dateFormatter;
-	private Properties i18nStrings;
-	private ColorTheme colorTheme;
+	private Class<? extends DateModel<?>> defaultModelClass;
+	private JFormattedTextField.AbstractFormatter defaultFormatter;
+	private Properties defaultTexts;
+	private ColorTheme defaultColors;
+	
+	private Class<? extends DateModel<?>> modelClass;
+	private JFormattedTextField.AbstractFormatter formatter;
+	private Properties texts;
+	private ColorTheme colors;
 	
 	/**
 	 * Create a factory which will construct widgets with the default date model
 	 * (UtilCalendarModel), date formatter (DateComponentFormatter) and
-	 * i18nStrings (English).
+	 * i18nStrings (English) and colors.
 	 */
 	public JDateComponentFactory() {
 		this(null, null, null, null);
@@ -67,40 +72,22 @@ public class JDateComponentFactory {
 	
 	/**
 	 * Create a factory which will construct widgets with the provided date
-	 * model, date formatter and i18nStrings.
+	 * model, date formatter, i18nStrings or colors.
 	 * 
-	 * @param dateModelClass
-	 * @param dateFormatter
-	 * @param i18nStrings
+	 * @param modelClass
+	 * @param formatter
+	 * @param locale
+	 * @param colors
 	 */
-	public JDateComponentFactory(Class<? extends DateModel<?>> dateModelClass, JFormattedTextField.AbstractFormatter dateFormatter, Locale locale, ColorTheme colors) {
-		if (dateModelClass == null) {
-			this.dateModelClass = getDefaultDateModelClass();
-		}
-		else {
-			this.dateModelClass = dateModelClass;
-		}
-		
-		if (dateFormatter == null) {
-			this.dateFormatter = getDefaultDateFormatter();
-		}
-		else {
-			this.dateFormatter = dateFormatter;
-		}
-		
-		if (locale == null) {
-			this.i18nStrings = getI18nStrings(Locale.getDefault());
-		}
-		else {
-			this.i18nStrings = getI18nStrings(locale);
-		}
-		
-		if (colors == null) {
-			this.colorTheme = getDefaultColorTheme();
-		}
-		else {
-			this.colorTheme = colors;
-		}
+	public JDateComponentFactory(Class<? extends DateModel<?>> modelClass, JFormattedTextField.AbstractFormatter formatter, Locale locale, ColorTheme colors) {
+		this.defaultModelClass = createDefaultModelClass();
+		this.defaultFormatter = createDefaultFormatter();
+		this.defaultTexts = createTexts(Locale.getDefault());
+		this.defaultColors = createDefaultColors();
+		this.modelClass = modelClass == null ? this.defaultModelClass : modelClass;
+		this.formatter = formatter == null ? this.defaultFormatter : formatter;
+		this.texts = locale == null ? this.defaultTexts : createTexts(locale);
+		this.colors = colors == null ? this.defaultColors : colors;
 	}
 	
 	/**
@@ -108,7 +95,7 @@ public class JDateComponentFactory {
 	 * 
 	 * @return
 	 */
-	protected Class<? extends DateModel<?>> getDefaultDateModelClass() {
+	protected Class<? extends DateModel<?>> createDefaultModelClass() {
 		return UtilCalendarModel.class;
 	}
 	
@@ -117,7 +104,7 @@ public class JDateComponentFactory {
 	 * 
 	 * @return
 	 */
-	protected JFormattedTextField.AbstractFormatter getDefaultDateFormatter() {
+	protected JFormattedTextField.AbstractFormatter createDefaultFormatter() {
 		return new DateComponentFormatter();
 	}
 
@@ -126,9 +113,9 @@ public class JDateComponentFactory {
 	 * 
 	 * @return
 	 */
-	protected Properties getI18nStrings(Locale locale) {
+	protected Properties createTexts(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("net.sourceforge.jdatepicker.i18n.Text", locale);
-		return convertToProperties(resourceBundle);
+		return toProperties(resourceBundle);
 	}
 
 	/**
@@ -137,17 +124,22 @@ public class JDateComponentFactory {
 	 * @param resource
 	 * @return
 	 */
-	private Properties convertToProperties(ResourceBundle resource) {
-		Properties properties = new Properties();
+	private Properties toProperties(ResourceBundle resource) {
+		Properties result = new Properties();
 		Enumeration<String> keys = resource.getKeys();
 		while (keys.hasMoreElements()) {
 			String key = keys.nextElement();
-			properties.put(key, resource.getString(key));
+			result.put(key, resource.getString(key));
 		}
-		return properties;
+		return result;
 	}	
 	
-	protected ColorTheme getDefaultColorTheme() {
+	/**
+	 * Create a default color scheme.
+	 * 
+	 * @return
+	 */
+	protected ColorTheme createDefaultColors() {
 		return new ColorTheme() {};
 	}
 	
@@ -157,7 +149,7 @@ public class JDateComponentFactory {
 	 * @param clazz
 	 * @return
 	 */
-	private DateModel<?> createDateModel(Class<? extends DateModel<?>> clazz) {
+	private DateModel<?> createModel(Class<? extends DateModel<?>> clazz) {
 		DateModel<?> result = null;
 		if (clazz.equals(net.sourceforge.jdatepicker.impl.UtilCalendarModel.class)) {
 			result = new UtilCalendarModel(Calendar.getInstance());
@@ -178,7 +170,7 @@ public class JDateComponentFactory {
 	 * @param value
 	 * @return
 	 */
-	private static DateModel<?> createDateModel(Object value) {
+	private DateModel<?> createModel(Object value) {
 		Class<?> clazz = value.getClass();
 		
 		DateModel<?> result = null;
@@ -201,8 +193,8 @@ public class JDateComponentFactory {
 	 * @return
 	 */
 	public JDatePicker createJDatePicker() {
-		DateModel<?> model = createDateModel(dateModelClass);
-		return new JDatePickerImpl(new JDatePanelImpl(model, i18nStrings, colorTheme), dateFormatter);
+		DateModel<?> model = createModel(modelClass);
+		return new JDatePickerImpl(new JDatePanelImpl(model, texts, colors), formatter);
 	}
 	
 	/**
@@ -217,8 +209,8 @@ public class JDateComponentFactory {
 		if (value == null) {
 			throw new IllegalArgumentException("Value may not be null.");
 		}
-		DateModel<?> model = createDateModel(value);
-		return new JDatePickerImpl(new JDatePanelImpl(model, i18nStrings, colorTheme), dateFormatter);
+		DateModel<?> model = createModel(value);
+		return new JDatePickerImpl(new JDatePanelImpl(model, texts, colors), formatter);
 	}
 	
 	/**
@@ -227,8 +219,8 @@ public class JDateComponentFactory {
 	 * @return
 	 */
 	public JDatePanel createJDatePanel() {
-		DateModel<?> model = createDateModel(dateModelClass);
-		return new JDatePanelImpl(model, i18nStrings, colorTheme);
+		DateModel<?> model = createModel(modelClass);
+		return new JDatePanelImpl(model, texts, colors);
 	}
 	
 	/**
@@ -242,8 +234,8 @@ public class JDateComponentFactory {
 		if (value == null) {
 			throw new IllegalArgumentException("Value may not be null.");
 		}
-		DateModel<?> model = createDateModel(value);
-		return new JDatePanelImpl(model, i18nStrings, colorTheme);
+		DateModel<?> model = createModel(value);
+		return new JDatePanelImpl(model, texts, colors);
 	}
 	
 }
