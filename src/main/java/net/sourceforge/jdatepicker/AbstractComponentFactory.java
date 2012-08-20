@@ -45,13 +45,13 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
  */
 public abstract class AbstractComponentFactory<T> {
 	
-	private JFormattedTextField.AbstractFormatter defaultFormatter;
 	private Properties defaultTexts;
 	private DefaultColorTheme defaultColors;
+	private JFormattedTextField.AbstractFormatter defaultFormatter;
 	
-	private JFormattedTextField.AbstractFormatter formatter;
 	private Properties texts;
 	private DefaultColorTheme colors;
+	private JFormattedTextField.AbstractFormatter formatter;
 	
 	/**
 	 * Create a factory which will construct widgets with the default date model
@@ -71,13 +71,13 @@ public abstract class AbstractComponentFactory<T> {
 	 * @param locale
 	 * @param colors
 	 */
-	public AbstractComponentFactory(JFormattedTextField.AbstractFormatter formatter, Locale locale, DefaultColorTheme colors) {
-		this.defaultFormatter = createDefaultFormatter();
+	public AbstractComponentFactory(Locale locale, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
 		this.defaultTexts = createTexts(Locale.getDefault());
 		this.defaultColors = createDefaultColors();
-		this.formatter = formatter == null ? this.defaultFormatter : formatter;
+		this.defaultFormatter = createDefaultFormatter();
 		this.texts = locale == null ? this.defaultTexts : createTexts(locale);
 		this.colors = colors == null ? this.defaultColors : colors;
+		this.formatter = formatter == null ? this.defaultFormatter : formatter;
 	}
 	
 	/**
