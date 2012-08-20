@@ -28,7 +28,6 @@ or implied, of Juan Heyns.
 package net.sourceforge.jdatepicker;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -37,7 +36,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import net.sourceforge.jdatepicker.graphics.ColorTheme;
 
 public class TestJDatePicker {
 	
@@ -53,7 +51,7 @@ public class TestJDatePicker {
 		});
 		testFrame.setSize(500, 500);
 		JPanel jPanel = new JPanel();
-		JDatePicker picker = new JDateComponentFactory().createJDatePicker();
+		JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
 //		new ColorTheme() {
 //
 //			public Color fgMonthSelector() { return Color.WHITE; }

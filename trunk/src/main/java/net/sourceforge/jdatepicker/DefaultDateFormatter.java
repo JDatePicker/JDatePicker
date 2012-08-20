@@ -25,15 +25,48 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.util;
+package net.sourceforge.jdatepicker;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
-public class JDatePickerUtil {
+import javax.swing.JFormattedTextField;
+
+public class DefaultDateFormatter extends JFormattedTextField.AbstractFormatter {
 	
-	public static DateFormat getMediumDateFormat() {
+	private static final long serialVersionUID = 5997312768041129127L;
+	
+	DateFormat format;
+	
+	public DefaultDateFormatter(){
+		format = getMediumDateFormat();
+	}
+	
+	public DateFormat getMediumDateFormat() {
 		return SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);
+	}
+	
+	@Override
+	public String valueToString(Object value) throws ParseException {
+		Calendar cal = (Calendar)value;
+		if (cal == null) {
+			return "";
+		}
+		return format.format(cal.getTime());
+	}
+	
+	@Override
+	public Object stringToValue(String text) throws ParseException {
+		if (text == null || text.equals("")) {
+			return null;
+		}
+		Date date = format.parse(text);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar;
 	}
 	
 }

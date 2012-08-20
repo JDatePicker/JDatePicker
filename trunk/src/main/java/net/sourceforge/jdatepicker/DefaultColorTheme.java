@@ -25,7 +25,7 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.graphics;
+package net.sourceforge.jdatepicker;
 
 import java.awt.Color;
 import java.awt.SystemColor;
@@ -35,7 +35,7 @@ import java.awt.SystemColor;
  * 
  * @author Juan Heyns
  */
-public abstract class ColorTheme {
+public abstract class DefaultColorTheme {
 	
 	public Color fgMonthSelector() { return SystemColor.activeCaptionText; }
 	public Color bgMonthSelector() { return SystemColor.activeCaption; }
