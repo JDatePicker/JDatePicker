@@ -33,11 +33,12 @@ import java.awt.event.WindowEvent;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+
 public class TestJDatePanel {
 
 	public static void main(String[] args) {
 		JFrame testFrame = new JFrame();
-		JDatePanel panel = new JDateComponentFactory().createJDatePanel();
+		JDatePanel panel = new DefaultComponentFactory().createJDatePanel();
 		panel.setShowYearButtons(true);
 		testFrame.getContentPane().add((JComponent)panel);
 		panel.setShowYearButtons(false);

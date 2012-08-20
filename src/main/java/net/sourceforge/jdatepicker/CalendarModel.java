@@ -39,7 +39,7 @@ import javax.swing.event.ChangeListener;
  *
  * @param <T>
  */
-public interface DateModel<T> {
+public interface CalendarModel<T> {
 
 	/**
 	 * Adds a ChangeListener. ChangeListeners will be notified when the internal

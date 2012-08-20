@@ -43,14 +43,14 @@ import javax.swing.event.ChangeListener;
  *
  * @param <T>
  */
-public abstract class AbstractDateModel<T> implements DateModel<T> {
+public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 
 	private boolean selected;
 	private Calendar calendarValue;
 	private HashSet<ChangeListener> changeListeners;
 	private HashSet<PropertyChangeListener> propertyChangeListeners;
 
-	protected AbstractDateModel() {
+	protected AbstractCalendarModel() {
 		changeListeners = new HashSet<ChangeListener>();	
 		propertyChangeListeners = new HashSet<PropertyChangeListener>();
 		selected = false;

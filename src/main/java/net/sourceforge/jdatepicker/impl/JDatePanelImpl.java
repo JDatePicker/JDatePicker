@@ -36,10 +36,9 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DateFormat;
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Properties;
@@ -47,6 +46,7 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -64,12 +64,11 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import net.sourceforge.jdatepicker.DateModel;
+import net.sourceforge.jdatepicker.CalendarModel;
+import net.sourceforge.jdatepicker.DefaultColorTheme;
 import net.sourceforge.jdatepicker.JDatePanel;
-import net.sourceforge.jdatepicker.graphics.ColorTheme;
 import net.sourceforge.jdatepicker.graphics.JNextIcon;
 import net.sourceforge.jdatepicker.graphics.JPreviousIcon;
-import net.sourceforge.jdatepicker.util.JDatePickerUtil;
 
 /**
  * Created on 26 Mar 2004
@@ -94,7 +93,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	private HashSet<ActionListener> actionListeners;
 
 	private Properties texts;
-	private ColorTheme colors;
+	private DefaultColorTheme colors;
+	private JFormattedTextField.AbstractFormatter formatter;
 	
 	private boolean showYearButtons;
 	private boolean doubleClickAction;
@@ -103,11 +103,12 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	private InternalView internalView;
 	private InternalController internalController;
 
-	public JDatePanelImpl(DateModel<?> model, Properties texts, ColorTheme colors) {
+	public JDatePanelImpl(CalendarModel<?> model, Properties texts, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
 		actionListeners = new HashSet<ActionListener>();
 
 		this.texts = texts;
 		this.colors = colors;
+		this.formatter = formatter;
 		
 		showYearButtons = false;
 		doubleClickAction = false;
@@ -169,8 +170,16 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	/* (non-Javadoc)
 	 * @see net.sourceforge.jdatepicker.JDateComponent#getModel()
 	 */
-	public DateModel<?> getModel() {
+	public CalendarModel<?> getModel() {
 		return internalModel.getModel();
+	}
+
+	public JFormattedTextField.AbstractFormatter getFormatter() {
+		return formatter;
+	}
+
+	public void setFormatter(JFormattedTextField.AbstractFormatter formatter) {
+		this.formatter = formatter;
 	}
 
 	/**
@@ -361,9 +370,12 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				todayLabel.setForeground(colors.fgTodaySelector());
 				todayLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 				todayLabel.addMouseListener(internalController);
-				
-				DateFormat df1 = JDatePickerUtil.getMediumDateFormat();
-				todayLabel.setText(texts.getProperty("text.today") + ": " + df1.format(new Date()));
+				try {
+					todayLabel.setText(texts.getProperty("text.today") + ": " + formatter.valueToString(Calendar.getInstance()));
+				} 
+				catch (ParseException e) {
+					e.printStackTrace();
+				}
 			}
 			return todayLabel;
 		}
@@ -758,18 +770,18 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	 */
 	protected class InternalCalendarModel implements TableModel, SpinnerModel, ChangeListener {
 
-		private DateModel<?> model;
+		private CalendarModel<?> model;
 		private HashSet<ChangeListener> spinnerChangeListeners;
 		private HashSet<TableModelListener> tableModelListeners;
 
-		public InternalCalendarModel(DateModel<?> model){
+		public InternalCalendarModel(CalendarModel<?> model){
 			this.spinnerChangeListeners = new HashSet<ChangeListener>();
 			this.tableModelListeners = new HashSet<TableModelListener>();
 			this.model = model;
 			model.addChangeListener(this);
 		}
 		
-		public DateModel<?> getModel() {
+		public CalendarModel<?> getModel() {
 			return model;
 		}
 		

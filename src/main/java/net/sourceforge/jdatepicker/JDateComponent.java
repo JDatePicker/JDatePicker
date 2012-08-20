@@ -55,7 +55,7 @@ public interface JDateComponent {
 	 * 
 	 * @return
 	 */
-	public DateModel<?> getModel();
+	public CalendarModel<?> getModel();
 
 	/**
 	 * Adds an ActionListener. The actionListener is notified when a user clicks

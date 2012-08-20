@@ -48,7 +48,7 @@ import javax.swing.SpringLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import net.sourceforge.jdatepicker.DateModel;
+import net.sourceforge.jdatepicker.CalendarModel;
 import net.sourceforge.jdatepicker.JDatePanel;
 import net.sourceforge.jdatepicker.JDatePicker;
 
@@ -86,7 +86,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	 * @param datePanel
 	 * @param formatter
 	 */
-	public JDatePickerImpl(JDatePanelImpl datePanel, JFormattedTextField.AbstractFormatter formatter) {
+	public JDatePickerImpl(JDatePanelImpl datePanel) {
 		this.datePanel = datePanel;
 
 		//Initialise Variables
@@ -100,8 +100,8 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 
         //Create and Add Components
 		//Add and Configure TextField
-		formattedTextField = new JFormattedTextField(formatter);
-		DateModel<?> model = datePanel.getModel();
+		formattedTextField = new JFormattedTextField(datePanel.getFormatter());
+		CalendarModel<?> model = datePanel.getModel();
 		setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
 		formattedTextField.setEditable(false);		
 		add(formattedTextField);
@@ -139,7 +139,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		datePanel.removeActionListener(actionListener);
 	}
 
-	public DateModel<?> getModel() {
+	public CalendarModel<?> getModel() {
 		return datePanel.getModel();
 	}
 	
@@ -237,7 +237,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 
 		public void stateChanged(ChangeEvent arg0) {
 			if (arg0.getSource() == datePanel.getModel()) {
-				DateModel<?> model = datePanel.getModel();
+				CalendarModel<?> model = datePanel.getModel();
 				setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
 			}
 		}
