@@ -100,8 +100,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	private boolean doubleClickAction;
 	
 	private InternalCalendarModel internalModel;
-	private InternalView internalView;
 	private InternalController internalController;
+	private InternalView internalView;
 
 	public JDatePanelImpl(CalendarModel<?> model, Properties texts, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
 		actionListeners = new HashSet<ActionListener>();
@@ -114,8 +114,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		doubleClickAction = false;
 		
 		internalModel = new InternalCalendarModel(model);
-		internalView = new InternalView();
 		internalController = new InternalController();
+		internalView = new InternalView();
 		
 		setLayout(new GridLayout(1, 1));
 		add(internalView);
