@@ -25,6 +25,6 @@ Features
 User comments
 -------------
 
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
 > Nice component, it simple!! Just a read a little of code and easy!! Thanks
-> jthan24
+![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
+ - jthan24
