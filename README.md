@@ -34,51 +34,51 @@ Features
 User reviews
 ------------
 
-> Nice component, it simple!! Just a read a little of code and easy!! Thanks
+> Nice component, it simple!! Just a read a little of code and easy!! Thanks(sic) ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
 
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) jthan24
-
-
-> gracias
-
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) adriandavis
+jthan24
 
 
-> Works, very small, no complaints.
+> gracias ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
 
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) kalebhartman
-
-
-> great program jdatepicker, thanks.
-
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) elliotmartinez
+adriandavis
 
 
-> Recomendo
+> Works, very small, no complaints. ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
 
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) evanrodrigues
-
-
-> Great product jdatepicker
-
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) ianzimmerman
+kalebhartman
 
 
-> Great work !
+> great program jdatepicker, thanks. ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
 
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) markthomas55
-
-
-> The best open source Swing calendar widget. Dashbov project has become a much better tool thanks to him. Congratulations.
-
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) evertonbg
+elliotmartinez
 
 
-> The JDatePicker is really eary(sic) to use.
+> Recomendo ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
 
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) micheal822
+evanrodrigues
 
 
-> For some strange reason, there just ain't really a lot of decent, Open Source date pickers available for the Java platform. JDatePicker is making up for this ;)
+> Great product jdatepicker ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
 
-![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png) demaniak
+ianzimmerman
+
+
+> Great work ! ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
+
+markthomas55
+
+
+> The best open source Swing calendar widget. Dashbov project has become a much better tool thanks to him. Congratulations. ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
+
+evertonbg
+
+
+> The JDatePicker is really eary(sic) to use. ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
+
+micheal822
+
+
+> For some strange reason, there just ain't really a lot of decent, Open Source date pickers available for the Java platform. JDatePicker is making up for this ;) ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
+
+demaniak
