@@ -1,7 +1,6 @@
 Open issues: 1.4.0 Beta
 - Documentation: Requests have been made for user documentation to be provided. A one pager PDF usage guide will suffice (Juan Heyns <jheyns@chillisoup.com>)
 - Apply Patches: European calendar support, with monday as the first day of the week (Juan Heyns <jheyns@chillisoup.com>)
-- Feature Request: Add an icon to the button to open the calendar (Juan Heyns <jheyns@chillisoup.com>)
 - Repackage: Package all files in one download on SF.net (Juan Heyns <jheyns@chillisoup.com>)
 - Implement some of the features outstanding relating to JGoodies / JodaTime
 
