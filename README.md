@@ -82,3 +82,11 @@ micheal822
 > For some strange reason, there just ain't really a lot of decent, Open Source date pickers available for the Java platform. JDatePicker is making up for this ;) ![Five stars](https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/stars.png)
 
 demaniak
+
+About
+-----
+This project started in April 2004 before there existed so many swing components for date selection. Back in the day sourceforge.net was a popular source code hosting service. But since then github.com emerged, since git is the latest craze the project has now moved here.
+
+Forks and pull requests are welcome. Also please submit issues on the github issue page, this is the preferred way of getting help.
+
+Hopefully we can get central maven repo going again, but first, we will need to get a new version out into the wild, it's been a while.
