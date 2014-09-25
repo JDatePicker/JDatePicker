@@ -85,14 +85,14 @@ demaniak
 
 About
 -----
-This project started in April 2004 before there existed so many swing components for date selection. It was used in a commercial application so BSD license was chosen because it is quite business friendly.
+This project started in April 2004 before many of the currently available components for date selection of the current day. It was originally developed to be used in a commercial application, therefore a BSD license was a good fit.
 
-It has since become quite popular (5 stars on sourceforge & around 370 downloads per week there). It is hard to guage how many downloads from maven central repo. If your project is using it, let me know and will make a mention here somewhere.
+The widget has since become quite popular (5 stars on sourceforge & around 370 downloads per week from sf.net). However, there may be many more downloads from the maven central repo, it is hard to guage exactly how many. If your project is using it, let me know and will make a mention on jdatepicker.org.
 
-Back in the day sourceforge.net was a popular source code hosting service. But since then github.com emerged, since git is the latest craze the project has now moved here.
+Way back in the day, sourceforge.net was a popular source code hosting service, it has served its purpose well. I am thankful for the many years of the free service enjoyed there. But since then github.com emerged, with a easier workflow for open source projects. For these reasons the project has finally moved to github.com.
 
-Forks and pull requests are welcome. Also please submit issues on the github issue page, this is the preferred way of getting help. The mailing list never really took off because of the low volume of communication.
+Forks and pull requests are absolutely welcomed. Also please submit issues on the github issue page, this is the preferred way of getting help. 
 
-Hopefully we can get central maven repo going again, but first, we will need to get a new version out into the wild, it's been a while.
+Older binaries are still available on the maven central repo. Future binary versions will also be distributed there again.
 
-If you would like to make a large donation, you are welcome. But in my experience it is very unlikely that this project will make a difference to my pocket, so I do it for the benefit of everyone else out there. So use it freely and enjoy!
+So use it freely and enjoy! You can check for more information at jdatepicker.org.
