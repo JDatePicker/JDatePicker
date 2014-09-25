@@ -5,6 +5,8 @@ JDatePicker
 
 JDatePicker and JDatePanel is an set of advanced DatePicker controls for Java Swing applications. The MVC design enables us to display any date object such as Joda-Time DateMidnight. The date picker also works well with JGoodies Binding.
 
+News and other information can be found at: http://jdatepicker.org
+
 Screenshots
 -----------
 
