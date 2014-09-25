@@ -39,6 +39,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
@@ -279,5 +280,23 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 			textField.setValue(calendar);
 		}
 	}
-	
+
+	@Override
+	public Icon getButtonIcon() {
+		return button.getIcon();
+	}
+
+	@Override
+	public void setButtonIcon(Icon icon) {
+		// use icon
+		button.setIcon(icon);
+
+		if(icon == null) {
+			// reset to caption
+			button.setText("...");
+		} else {
+			// remove text
+			button.setText("");
+		}
+	}
 }

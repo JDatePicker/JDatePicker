@@ -27,6 +27,8 @@ or implied, of Juan Heyns.
 */
 package net.sourceforge.jdatepicker;
 
+import javax.swing.Icon;
+
 
 public interface JDatePicker extends JDatePanel {
 
@@ -58,4 +60,17 @@ public interface JDatePicker extends JDatePanel {
 	 */
 	public abstract boolean getButtonFocusable();
 
+	/**
+	 * The icon on the button.
+	 * 
+	 * @return Icon on Button
+	 */
+	public abstract Icon getButtonIcon();
+
+	/**
+	 * Sets the image on the button.
+	 * 
+	 * @param icon the icon to use
+	 */
+	public abstract void setButtonIcon(Icon icon);
 }
