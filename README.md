@@ -85,8 +85,14 @@ demaniak
 
 About
 -----
-This project started in April 2004 before there existed so many swing components for date selection. Back in the day sourceforge.net was a popular source code hosting service. But since then github.com emerged, since git is the latest craze the project has now moved here.
+This project started in April 2004 before there existed so many swing components for date selection. It was used in a commercial application so BSD license was chosen because it is quite business friendly.
 
-Forks and pull requests are welcome. Also please submit issues on the github issue page, this is the preferred way of getting help.
+It has since become quite popular (5 stars on sourceforge & around 370 downloads per week there). It is hard to guage how many downloads from maven central repo. If your project is using it, let me know and will make a mention here somewhere.
+
+Back in the day sourceforge.net was a popular source code hosting service. But since then github.com emerged, since git is the latest craze the project has now moved here.
+
+Forks and pull requests are welcome. Also please submit issues on the github issue page, this is the preferred way of getting help. The mailing list never really took off because of the low volume of communication.
 
 Hopefully we can get central maven repo going again, but first, we will need to get a new version out into the wild, it's been a while.
+
+If you would like to make a large donation, you are welcome. But in my experience it is very unlikely that this project will make a difference to my pocket, so I do it for the benefit of everyone else out there. So use it freely and enjoy!
