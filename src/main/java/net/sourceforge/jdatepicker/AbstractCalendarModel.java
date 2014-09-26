@@ -44,6 +44,11 @@ import javax.swing.event.ChangeListener;
  * @param <T>
  */
 public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
+	public static final String PROPERTY_YEAR = "year";
+	public static final String PROPERTY_MONTH = "month";
+	public static final String PROPERTY_DAY = "day";
+	public static final String PROPERTY_VALUE = "value";
+	public static final String PROPERTY_SELECTED = "selected";
 
 	private boolean selected;
 	private Calendar calendarValue;
@@ -114,8 +119,8 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		T oldValue = getValue();
 		calendarValue.set(Calendar.DATE, day);
 		fireChangeEvent();
-		firePropertyChange("day", oldDayValue, this.calendarValue.get(Calendar.DATE));
-		firePropertyChange("value", oldValue, getValue());
+		firePropertyChange(PROPERTY_DAY, oldDayValue, this.calendarValue.get(Calendar.DATE));
+		firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
 	}
 
 	public void addDay(int add) {
@@ -123,8 +128,8 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		T oldValue = getValue();
 		calendarValue.add(Calendar.DATE, add);
 		fireChangeEvent();
-		firePropertyChange("day", oldDayValue, this.calendarValue.get(Calendar.DATE));
-		firePropertyChange("value", oldValue, getValue());
+		firePropertyChange(PROPERTY_DAY, oldDayValue, this.calendarValue.get(Calendar.DATE));
+		firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
 	}
 	
 	public void setMonth(int month) {
@@ -132,8 +137,8 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		T oldValue = getValue();
 		calendarValue.set(Calendar.MONTH, month);
 		fireChangeEvent();
-		firePropertyChange("month", oldMonthValue, this.calendarValue.get(Calendar.MONTH));
-		firePropertyChange("value", oldValue, getValue());
+		firePropertyChange(PROPERTY_MONTH, oldMonthValue, this.calendarValue.get(Calendar.MONTH));
+		firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
 	}
 
 	public void addMonth(int add) {
@@ -141,8 +146,8 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		T oldValue = getValue();
 		calendarValue.add(Calendar.MONTH, add);
 		fireChangeEvent();
-		firePropertyChange("month", oldMonthValue, this.calendarValue.get(Calendar.MONTH));
-		firePropertyChange("value", oldValue, getValue());
+		firePropertyChange(PROPERTY_MONTH, oldMonthValue, this.calendarValue.get(Calendar.MONTH));
+		firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
 	}
 	
 	public void setYear(int year) {
@@ -150,8 +155,8 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		T oldValue = getValue();
 		calendarValue.set(Calendar.YEAR, year);
 		fireChangeEvent();
-		firePropertyChange("year", oldYearValue, this.calendarValue.get(Calendar.YEAR));
-		firePropertyChange("value", oldValue, getValue());
+		firePropertyChange(PROPERTY_YEAR, oldYearValue, this.calendarValue.get(Calendar.YEAR));
+		firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
 	}
 
 	public void addYear(int add) {
@@ -159,8 +164,8 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		T oldValue = getValue();
 		calendarValue.add(Calendar.YEAR, add);
 		fireChangeEvent();
-		firePropertyChange("year", oldYearValue, this.calendarValue.get(Calendar.YEAR));
-		firePropertyChange("value", oldValue, getValue());
+		firePropertyChange(PROPERTY_YEAR, oldYearValue, this.calendarValue.get(Calendar.YEAR));
+		firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
 	}
 	
 	public void setValue(T value) {
@@ -180,10 +185,10 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		}
 		
 		fireChangeEvent();
-		firePropertyChange("year", oldYearValue, this.calendarValue.get(Calendar.YEAR));
-		firePropertyChange("month", oldMonthValue, this.calendarValue.get(Calendar.MONTH));
-		firePropertyChange("day", oldDayValue, this.calendarValue.get(Calendar.DATE));
-		firePropertyChange("value", oldValue, getValue());
+		firePropertyChange(PROPERTY_YEAR, oldYearValue, this.calendarValue.get(Calendar.YEAR));
+		firePropertyChange(PROPERTY_MONTH, oldMonthValue, this.calendarValue.get(Calendar.MONTH));
+		firePropertyChange(PROPERTY_DAY, oldDayValue, this.calendarValue.get(Calendar.DATE));
+		firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
 		firePropertyChange("selected", oldSelectedValue, this.selected);
 	}
 	
@@ -194,10 +199,10 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		T oldValue = getValue();
 		calendarValue.set(year, month, day);
 		fireChangeEvent();
-		firePropertyChange("year", oldYearValue, this.calendarValue.get(Calendar.YEAR));
-		firePropertyChange("month", oldMonthValue, this.calendarValue.get(Calendar.MONTH));
-		firePropertyChange("day", oldDayValue, this.calendarValue.get(Calendar.DATE));
-		firePropertyChange("value", oldValue, getValue());
+		firePropertyChange(PROPERTY_YEAR, oldYearValue, this.calendarValue.get(Calendar.YEAR));
+		firePropertyChange(PROPERTY_MONTH, oldMonthValue, this.calendarValue.get(Calendar.MONTH));
+		firePropertyChange(PROPERTY_DAY, oldDayValue, this.calendarValue.get(Calendar.DATE));
+		firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
 	}
 	
 	public boolean isSelected() {
@@ -209,8 +214,8 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		boolean oldSelectedValue = isSelected();
 		this.selected = selected; 
 		fireChangeEvent();
-		firePropertyChange("value", oldValue, getValue());
-		firePropertyChange("selected", oldSelectedValue, this.selected);
+		firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
+		firePropertyChange(PROPERTY_SELECTED, oldSelectedValue, this.selected);
 	}
 
 	private void setToMidnight() {
