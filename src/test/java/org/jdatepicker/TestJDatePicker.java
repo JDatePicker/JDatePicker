@@ -25,38 +25,46 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package org.jdatepicker;
 
-public interface JDatePanel extends JDateComponent {
+import org.jdatepicker.JDateComponentFactory;
+import org.jdatepicker.JDatePicker;
 
-	/**
-	 * Sets the visibilty of the Year navigation buttons. Defaults to false.
-	 * 
-	 * @param showYearButtons
-	 */
-	public abstract void setShowYearButtons(boolean showYearButtons);
+import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-	/**
-	 * Is the year navigation buttons active.
-	 * 
-	 * @return visiblity of the year
-	 */
-	public abstract boolean isShowYearButtons();
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
 
-	/**
-	 * This changes the behaviour of the control to require a double click on
-	 * actionable clicks. If this is set the ActionEvent will only be thrown
-	 * when double clicked on a date. Defaults to false.
-	 * 
-	 * @param doubleClickAction
-	 */
-	public abstract void setDoubleClickAction(boolean doubleClickAction);
-
-	/**
-	 * Is a double click required to throw a ActionEvent.
-	 * 
-	 * @return
-	 */
-	public abstract boolean isDoubleClickAction();
+public class TestJDatePicker {
+	
+	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception e) { }
+		JFrame testFrame = new JFrame();
+		testFrame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent arg0) {
+				System.exit(0);
+			}
+		});
+		testFrame.setSize(500, 500);
+		JPanel jPanel = new JPanel();
+		JDatePicker picker = new JDateComponentFactory().createJDatePicker();
+		picker.setTextEditable(true);
+		picker.setShowYearButtons(true);
+//		picker.getModel().setSelected(true);
+		jPanel.add((JComponent)picker);
+		JPanel DatePanel = new JPanel();
+		DatePanel.setLayout(new BorderLayout());
+		DatePanel.add(jPanel, BorderLayout.WEST);
+		BorderLayout fb = new BorderLayout();
+		testFrame.setLayout(fb);
+		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
+		testFrame.setVisible(true);
+	}
 
 }

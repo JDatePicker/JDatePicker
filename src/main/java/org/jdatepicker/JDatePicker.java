@@ -25,15 +25,37 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.util;
+package org.jdatepicker;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
-public class JDatePickerUtil {
-	
-	public static DateFormat getMediumDateFormat() {
-		return SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);
-	}
-	
+public interface JDatePicker extends JDatePanel {
+
+	/**
+	 * Is the text component editable or not. Defaults to false.
+	 * 
+	 * @param editable
+	 */
+	public abstract void setTextEditable(boolean editable);
+
+	/**
+	 * Is the text component editable or not.
+	 * 
+	 * @return
+	 */
+	public abstract boolean isTextEditable();
+
+	/**
+	 * Sets the button to be focusable. Defaults to true.
+	 * 
+	 * @param focusable
+	 */
+	public abstract void setButtonFocusable(boolean focusable);
+
+	/**
+	 * Is the button focusable.
+	 * 
+	 * @return
+	 */
+	public abstract boolean getButtonFocusable();
+
 }

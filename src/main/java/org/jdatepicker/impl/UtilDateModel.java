@@ -25,45 +25,34 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.impl;
+package org.jdatepicker.impl;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.swing.JFormattedTextField;
+import org.jdatepicker.AbstractDateModel;
 
-import net.sourceforge.jdatepicker.util.JDatePickerUtil;
+public class UtilDateModel extends AbstractDateModel<java.util.Date> {
 
-public class DateComponentFormatter extends JFormattedTextField.AbstractFormatter {
-	
-	private static final long serialVersionUID = 5997312768041129127L;
-	
-	DateFormat format;
-	
-	public DateComponentFormatter(){
-		format = JDatePickerUtil.getMediumDateFormat();
+	public UtilDateModel() {
+		this(null);
 	}
 	
+	public UtilDateModel(Date value) {
+		super();
+		setValue(value);
+	}
+
 	@Override
-	public String valueToString(Object value) throws ParseException {
-		Calendar cal = (Calendar)value;
-		if (cal == null) {
-			return "";
-		}
-		return format.format(cal.getTime());
+	protected Date fromCalendar(Calendar from) {
+		return new Date(from.getTimeInMillis());
 	}
-	
+
 	@Override
-	public Object stringToValue(String text) throws ParseException {
-		if (text == null || text.equals("")) {
-			return null;
-		}
-		Date date = format.parse(text);
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		return calendar;
+	protected Calendar toCalendar(Date from) {
+		Calendar to = Calendar.getInstance();
+		to.setTime(from);
+		return to;
 	}
-	
+
 }

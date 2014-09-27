@@ -25,7 +25,7 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package org.jdatepicker;
 
 import java.util.Calendar;
 import java.util.Enumeration;
@@ -35,12 +35,12 @@ import java.util.ResourceBundle;
 
 import javax.swing.JFormattedTextField;
 
-import net.sourceforge.jdatepicker.impl.DateComponentFormatter;
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.SqlDateModel;
-import net.sourceforge.jdatepicker.impl.UtilCalendarModel;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.SqlDateModel;
+import org.jdatepicker.impl.UtilCalendarModel;
+import org.jdatepicker.impl.UtilDateModel;
 
 /**
  * Created 18 April 2010
@@ -118,7 +118,7 @@ public class JDateComponentFactory {
 	 * @return
 	 */
 	protected Properties getI18nStrings(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle("net.sourceforge.jdatepicker.i18n.Text", locale);
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("org.jdatepicker.i18n.Text", locale);
 		return convertToProperties(resourceBundle);
 	}
 
@@ -146,13 +146,13 @@ public class JDateComponentFactory {
 	 */
 	private DateModel<?> createDateModel(Class<? extends DateModel<?>> clazz) {
 		DateModel<?> result = null;
-		if (clazz.equals(net.sourceforge.jdatepicker.impl.UtilCalendarModel.class)) {
+		if (clazz.equals(org.jdatepicker.impl.UtilCalendarModel.class)) {
 			result = new UtilCalendarModel(Calendar.getInstance());
 		}
-		if (clazz.equals(net.sourceforge.jdatepicker.impl.UtilDateModel.class)) {
+		if (clazz.equals(org.jdatepicker.impl.UtilDateModel.class)) {
 			result = new UtilDateModel(new java.util.Date());
 		}
-		if (clazz.equals(net.sourceforge.jdatepicker.impl.SqlDateModel.class)) {
+		if (clazz.equals(org.jdatepicker.impl.SqlDateModel.class)) {
 			result = new SqlDateModel(new java.sql.Date(System.currentTimeMillis()));
 		}
 		

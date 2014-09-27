@@ -25,43 +25,53 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package org.jdatepicker;
 
-import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-
-public class TestJDatePicker {
+/**
+ * This interface is implemented by all components which represent a date by day
+ * granularity. T will be one of the following org.joda.time.DateMidnight,
+ * java.util.Date or java.util.Calendar.
+ * 
+ * Since the first version of JDatePicker generics was added to Java and
+ * JodaTime emerged as a important date handling library in the Java community.
+ * 
+ * Created 16 April 2010
+ * Updated 18 April 2010
+ * Updated 10 August 2012
+ * 
+ * @author Juan Heyns
+ */
+public interface JDateComponent {
 	
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (Exception e) { }
-		JFrame testFrame = new JFrame();
-		testFrame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent arg0) {
-				System.exit(0);
-			}
-		});
-		testFrame.setSize(500, 500);
-		JPanel jPanel = new JPanel();
-		JDatePicker picker = new JDateComponentFactory().createJDatePicker();
-		picker.setTextEditable(true);
-		picker.setShowYearButtons(true);
-//		picker.getModel().setSelected(true);
-		jPanel.add((JComponent)picker);
-		JPanel DatePanel = new JPanel();
-		DatePanel.setLayout(new BorderLayout());
-		DatePanel.add(jPanel, BorderLayout.WEST);
-		BorderLayout fb = new BorderLayout();
-		testFrame.setLayout(fb);
-		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
-		testFrame.setVisible(true);
-	}
+	/**
+	 * Returns the value of the currently represented date in the component.
+	 * Depending on the version of the library used this type will one of the
+	 * following:
+	 * - java.util.Calendar
+	 * - org.joda.time.DateMidnight
+	 * - java.util.Date
+	 * 
+	 * @return
+	 */
+	public DateModel<?> getModel();
+
+	/**
+	 * Adds an ActionListener. The actionListener is notified when a user clicks
+	 * on a date. Deliberately selecting a date will trigger this event, not
+	 * scrolling which fires a ChangeEvent for ChangeListeners.
+	 * 
+	 * @param actionListener
+	 */
+	public void addActionListener(ActionListener actionListener);
+
+	/**
+	 * Removes the ActionListener. The actionListener is notified when a user
+	 * clicks on a date.
+	 * 
+	 * @param arg
+	 */
+	public void removeActionListener(ActionListener actionListener);
 
 }

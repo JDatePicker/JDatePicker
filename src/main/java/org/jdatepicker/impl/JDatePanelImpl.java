@@ -25,7 +25,7 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.impl;
+package org.jdatepicker.impl;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -65,11 +65,11 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import net.sourceforge.jdatepicker.DateModel;
-import net.sourceforge.jdatepicker.JDatePanel;
-import net.sourceforge.jdatepicker.graphics.JNextIcon;
-import net.sourceforge.jdatepicker.graphics.JPreviousIcon;
-import net.sourceforge.jdatepicker.util.JDatePickerUtil;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDatePanel;
+import org.jdatepicker.graphics.JNextIcon;
+import org.jdatepicker.graphics.JPreviousIcon;
+import org.jdatepicker.util.JDatePickerUtil;
 
 /**
  * Created on 26 Mar 2004
@@ -131,7 +131,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePanel#setShowYearButtons(boolean)
+	 * @see org.jdatepicker.JDatePanel#setShowYearButtons(boolean)
 	 */
 	public void setShowYearButtons(boolean showYearButtons) {
 		this.showYearButtons = showYearButtons;
@@ -139,28 +139,28 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePanel#isShowYearButtons()
+	 * @see org.jdatepicker.JDatePanel#isShowYearButtons()
 	 */
 	public boolean isShowYearButtons() {
 		return this.showYearButtons;
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePanel#setDoubleClickAction(boolean)
+	 * @see org.jdatepicker.JDatePanel#setDoubleClickAction(boolean)
 	 */
 	public void setDoubleClickAction(boolean doubleClickAction) {
 		this.doubleClickAction = doubleClickAction;
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePanel#isDoubleClickAction()
+	 * @see org.jdatepicker.JDatePanel#isDoubleClickAction()
 	 */
 	public boolean isDoubleClickAction() {
 		return doubleClickAction;
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDateComponent#getModel()
+	 * @see org.jdatepicker.JDateComponent#getModel()
 	 */
 	public DateModel<?> getModel() {
 		return internalModel.getModel();
@@ -330,7 +330,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				noneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 				noneLabel.addMouseListener(internalController);
 				
-				InputStream stream = this.getClass().getResourceAsStream( "/net/sourceforge/jdatepicker/graphics/clear.png" );
+				InputStream stream = this.getClass().getResourceAsStream( "/org/jdatepicker/graphics/clear.png" );
 				BufferedImage image;
 				try {
 					image = ImageIO.read( stream );

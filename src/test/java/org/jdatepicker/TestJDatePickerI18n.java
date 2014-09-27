@@ -1,4 +1,7 @@
-package net.sourceforge.jdatepicker;
+package org.jdatepicker;
+
+import org.jdatepicker.JDateComponentFactory;
+import org.jdatepicker.JDatePicker;
 
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;

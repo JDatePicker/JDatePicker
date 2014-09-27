@@ -25,53 +25,45 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package org.jdatepicker.impl;
 
-import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
-/**
- * This interface is implemented by all components which represent a date by day
- * granularity. T will be one of the following org.joda.time.DateMidnight,
- * java.util.Date or java.util.Calendar.
- * 
- * Since the first version of JDatePicker generics was added to Java and
- * JodaTime emerged as a important date handling library in the Java community.
- * 
- * Created 16 April 2010
- * Updated 18 April 2010
- * Updated 10 August 2012
- * 
- * @author Juan Heyns
- */
-public interface JDateComponent {
+import javax.swing.JFormattedTextField;
+
+import org.jdatepicker.util.JDatePickerUtil;
+
+public class DateComponentFormatter extends JFormattedTextField.AbstractFormatter {
 	
-	/**
-	 * Returns the value of the currently represented date in the component.
-	 * Depending on the version of the library used this type will one of the
-	 * following:
-	 * - java.util.Calendar
-	 * - org.joda.time.DateMidnight
-	 * - java.util.Date
-	 * 
-	 * @return
-	 */
-	public DateModel<?> getModel();
-
-	/**
-	 * Adds an ActionListener. The actionListener is notified when a user clicks
-	 * on a date. Deliberately selecting a date will trigger this event, not
-	 * scrolling which fires a ChangeEvent for ChangeListeners.
-	 * 
-	 * @param actionListener
-	 */
-	public void addActionListener(ActionListener actionListener);
-
-	/**
-	 * Removes the ActionListener. The actionListener is notified when a user
-	 * clicks on a date.
-	 * 
-	 * @param arg
-	 */
-	public void removeActionListener(ActionListener actionListener);
-
+	private static final long serialVersionUID = 5997312768041129127L;
+	
+	DateFormat format;
+	
+	public DateComponentFormatter(){
+		format = JDatePickerUtil.getMediumDateFormat();
+	}
+	
+	@Override
+	public String valueToString(Object value) throws ParseException {
+		Calendar cal = (Calendar)value;
+		if (cal == null) {
+			return "";
+		}
+		return format.format(cal.getTime());
+	}
+	
+	@Override
+	public Object stringToValue(String text) throws ParseException {
+		if (text == null || text.equals("")) {
+			return null;
+		}
+		Date date = format.parse(text);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar;
+	}
+	
 }

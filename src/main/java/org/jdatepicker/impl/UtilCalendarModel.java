@@ -25,11 +25,11 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.impl;
+package org.jdatepicker.impl;
 
 import java.util.Calendar;
 
-import net.sourceforge.jdatepicker.AbstractDateModel;
+import org.jdatepicker.AbstractDateModel;
 
 public class UtilCalendarModel extends AbstractDateModel<java.util.Calendar> {
 	

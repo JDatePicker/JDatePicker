@@ -25,37 +25,38 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package org.jdatepicker;
 
-
-public interface JDatePicker extends JDatePanel {
+public interface JDatePanel extends JDateComponent {
 
 	/**
-	 * Is the text component editable or not. Defaults to false.
+	 * Sets the visibilty of the Year navigation buttons. Defaults to false.
 	 * 
-	 * @param editable
+	 * @param showYearButtons
 	 */
-	public abstract void setTextEditable(boolean editable);
+	public abstract void setShowYearButtons(boolean showYearButtons);
 
 	/**
-	 * Is the text component editable or not.
+	 * Is the year navigation buttons active.
+	 * 
+	 * @return visiblity of the year
+	 */
+	public abstract boolean isShowYearButtons();
+
+	/**
+	 * This changes the behaviour of the control to require a double click on
+	 * actionable clicks. If this is set the ActionEvent will only be thrown
+	 * when double clicked on a date. Defaults to false.
+	 * 
+	 * @param doubleClickAction
+	 */
+	public abstract void setDoubleClickAction(boolean doubleClickAction);
+
+	/**
+	 * Is a double click required to throw a ActionEvent.
 	 * 
 	 * @return
 	 */
-	public abstract boolean isTextEditable();
-
-	/**
-	 * Sets the button to be focusable. Defaults to true.
-	 * 
-	 * @param focusable
-	 */
-	public abstract void setButtonFocusable(boolean focusable);
-
-	/**
-	 * Is the button focusable.
-	 * 
-	 * @return
-	 */
-	public abstract boolean getButtonFocusable();
+	public abstract boolean isDoubleClickAction();
 
 }

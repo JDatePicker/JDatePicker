@@ -25,31 +25,34 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package org.jdatepicker.impl;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.sql.Date;
+import java.util.Calendar;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
+import org.jdatepicker.AbstractDateModel;
 
-public class TestJDatePanel {
+public class SqlDateModel extends AbstractDateModel<java.sql.Date> {
 
-	public static void main(String[] args) {
-		JFrame testFrame = new JFrame();
-		JDatePanel panel = new JDateComponentFactory().createJDatePanel();
-		panel.setShowYearButtons(true);
-		testFrame.getContentPane().add((JComponent)panel);
-		panel.setShowYearButtons(false);
-		panel.setShowYearButtons(true);
+	public SqlDateModel() {
+		this(null);
+	}
+	
+	public SqlDateModel(Date value) {
+		super();
+		setValue(value);
+	}
 
-		testFrame.setSize(300,300);
-		testFrame.addWindowFocusListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent arg0) {
-				System.exit(0);
-			}
-		});
-		testFrame.setVisible(true);
+	@Override
+	protected Date fromCalendar(Calendar from) {
+		return new Date(from.getTimeInMillis());
+	}
+
+	@Override
+	protected Calendar toCalendar(Date from) {
+		Calendar to = Calendar.getInstance();
+		to.setTime(from);
+		return to;
 	}
 
 }
