@@ -39,6 +39,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
@@ -213,16 +214,16 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	 */
 	private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener {
 
-		public void ancestorMoved(HierarchyEvent arg0) {
+		public void ancestorMoved(HierarchyEvent event) {
 			hidePopup();
 		}
 
-		public void ancestorResized(HierarchyEvent arg0) {
+		public void ancestorResized(HierarchyEvent event) {
 			hidePopup();
 		}
 
-		public void actionPerformed(ActionEvent arg0) {
-			if (arg0.getSource() == button){
+		public void actionPerformed(ActionEvent event) {
+			if (event.getSource() == button){
 				if (popup == null) {
 					showPopup();
 				}
@@ -230,19 +231,19 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 					hidePopup();
 				}
 			} 
-			else if (arg0.getSource() == datePanel){
+			else if (event.getSource() == datePanel){
 				hidePopup();
 			}
 		}
 
-		public void stateChanged(ChangeEvent arg0) {
-			if (arg0.getSource() == datePanel.getModel()) {
+		public void stateChanged(ChangeEvent event) {
+			if (event.getSource() == datePanel.getModel()) {
 				CalendarModel<?> model = datePanel.getModel();
 				setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
 			}
 		}
 
-		public void propertyChange(PropertyChangeEvent evt) {
+		public void propertyChange(PropertyChangeEvent event) {
 			if (formattedTextField.isEditable() && formattedTextField.getValue() != null) {
 				Calendar value = (Calendar)formattedTextField.getValue();
 				datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
@@ -279,5 +280,23 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 			textField.setValue(calendar);
 		}
 	}
-	
+
+	@Override
+	public Icon getButtonIcon() {
+		return button.getIcon();
+	}
+
+	@Override
+	public void setButtonIcon(Icon icon) {
+		// use icon
+		button.setIcon(icon);
+
+		if(icon == null) {
+			// reset to caption
+			button.setText("...");
+		} else {
+			// remove text
+			button.setText("");
+		}
+	}
 }
