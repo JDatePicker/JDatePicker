@@ -159,9 +159,10 @@ public abstract class AbstractComponentFactory<T> {
 	 * @return
 	 */
 	public JDatePicker createJDatePicker(T value) {
-		if (value == null) {
-			throw new IllegalArgumentException("Value may not be null.");
-		}
+		// TODO why don't allow null values? working great though...
+//		if (value == null) {
+//			throw new IllegalArgumentException("Value may not be null.");
+//		}
 		CalendarModel<T> model = createModel(value);
 		return new JDatePickerImpl(new JDatePanelImpl(model, texts, colors, formatter));
 	}
