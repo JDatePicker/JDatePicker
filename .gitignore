@@ -1,5 +1,8 @@
-/bin
-/target
-/.settings
-/.classpath
-/.project
+bin
+target
+.settings
+.classpath
+.project
+*.iml
+*.ipr
+*.iws
