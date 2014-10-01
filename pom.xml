@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdatepicker</groupId>
   <artifactId>jdatepicker</artifactId>
+  <version>SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>jdatepicker</name>
-  <version>SNAPSHOT</version>
   <description>JDatePicker and JDatePanel is a Java Swing component. It is designed with the Model View Controller pattern and it uses the Java Calendar object as the model. The component may be used via a popup control or embedded on a panel.</description>
-  <url>http://www.pepperbytes.net/opensource/jdatepicker</url>
+  <url>http://jdatepicker.org</url>
   <licenses>
     <license>
       <name>Simplified BSD License</name>
@@ -16,11 +16,17 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:svn:https://jdatepicker.svn.sourceforge.net/svnroot/jdatepicker</connection>
-    <developerConnection>scm:svn:https://jdatepicker.svn.sourceforge.net/svnroot/jdatepicker</developerConnection>
-    <tag>HEAD</tag>
-    <url>https://jdatepicker.svn.sourceforge.net</url>
+    <connection>scm:git:git://github.com/JDatePicker/JDatePicker.git</connection>
+    <developerConnection>scm:git:git@github.com:JDatePicker/JDatePicker.git</developerConnection>
+    <url>http://github.com/JDatePicker/JDatePicker</url>
   </scm>
+  <developers>
+    <developer>
+      <id>juanheyns</id>
+      <name>Juan Heyns</name>
+      <email>juanheyns@gmail.com</email>
+    </developer>
+  </developers>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -29,12 +35,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <distributionManagement>
-    <repository>
-      <id>ssh-repository-jdatepicker</id>
-      <url>scpexe://web.sourceforge.net/home/groups/j/jd/jdatepicker/htdocs/repo</url>
-    </repository>
-  </distributionManagement>
   <build>
 	<pluginManagement>
 	  <plugins>
