@@ -299,4 +299,12 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 			button.setText("");
 		}
 	}
+
+	@Override
+	public void setVisible(boolean aFlag) {
+		if (!aFlag) {
+			hidePopup();
+		}
+		super.setVisible(aFlag);
+	}
 }
