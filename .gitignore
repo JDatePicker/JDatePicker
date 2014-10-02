@@ -1,6 +1,7 @@
 .classpath
 .project
 .settings
+bin
 target
 *.iml
 *.ipr

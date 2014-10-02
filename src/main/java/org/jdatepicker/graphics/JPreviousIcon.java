@@ -39,6 +39,7 @@ import javax.swing.Icon;
  * @author Juan Heyns
  */
 public class JPreviousIcon implements Icon {
+
 	protected int width;
 	protected int height;
 
