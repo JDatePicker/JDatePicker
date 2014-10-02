@@ -25,38 +25,53 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package org.jdatepicker;
 
-public interface JDatePanel extends JDateComponent {
+import java.awt.event.ActionListener;
 
+/**
+ * This interface is implemented by all components which represent a date by day
+ * granularity. T will be one of the following org.joda.time.DateMidnight,
+ * java.util.Date or java.util.Calendar.
+ * 
+ * Since the first version of JDatePicker generics was added to Java and
+ * JodaTime emerged as a important date handling library in the Java community.
+ * 
+ * Created 16 April 2010
+ * Updated 18 April 2010
+ * Updated 10 August 2012
+ * 
+ * @author Juan Heyns
+ */
+public interface JDateComponent {
+	
 	/**
-	 * Sets the visibilty of the Year navigation buttons. Defaults to false.
-	 * 
-	 * @param showYearButtons
-	 */
-	public abstract void setShowYearButtons(boolean showYearButtons);
-
-	/**
-	 * Is the year navigation buttons active.
-	 * 
-	 * @return visiblity of the year
-	 */
-	public abstract boolean isShowYearButtons();
-
-	/**
-	 * This changes the behaviour of the control to require a double click on
-	 * actionable clicks. If this is set the ActionEvent will only be thrown
-	 * when double clicked on a date. Defaults to false.
-	 * 
-	 * @param doubleClickAction
-	 */
-	public abstract void setDoubleClickAction(boolean doubleClickAction);
-
-	/**
-	 * Is a double click required to throw a ActionEvent.
+	 * Returns the value of the currently represented date in the component.
+	 * Depending on the version of the library used this type will one of the
+	 * following:
+	 * - java.util.Calendar
+	 * - org.joda.time.DateMidnight
+	 * - java.util.Date
 	 * 
 	 * @return
 	 */
-	public abstract boolean isDoubleClickAction();
+	public CalendarModel<?> getModel();
+
+	/**
+	 * Adds an ActionListener. The actionListener is notified when a user clicks
+	 * on a date. Deliberately selecting a date will trigger this event, not
+	 * scrolling which fires a ChangeEvent for ChangeListeners.
+	 * 
+	 * @param actionListener
+	 */
+	public void addActionListener(ActionListener actionListener);
+
+	/**
+	 * Removes the ActionListener. The actionListener is notified when a user
+	 * clicks on a date.
+	 * 
+	 * @param arg
+	 */
+	public void removeActionListener(ActionListener actionListener);
 
 }

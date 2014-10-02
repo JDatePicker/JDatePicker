@@ -1,4 +1,4 @@
-package net.sourceforge.jdatepicker;
+package org.jdatepicker;
 
 import java.util.Calendar;
 

@@ -1,8 +1,8 @@
-bin
-target
-.settings
 .classpath
 .project
+.settings
+bin
+target
 *.iml
 *.ipr
 *.iws

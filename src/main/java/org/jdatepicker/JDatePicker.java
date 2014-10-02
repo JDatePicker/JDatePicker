@@ -25,53 +25,52 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package org.jdatepicker;
 
-import java.awt.event.ActionListener;
+import javax.swing.Icon;
 
-/**
- * This interface is implemented by all components which represent a date by day
- * granularity. T will be one of the following org.joda.time.DateMidnight,
- * java.util.Date or java.util.Calendar.
- * 
- * Since the first version of JDatePicker generics was added to Java and
- * JodaTime emerged as a important date handling library in the Java community.
- * 
- * Created 16 April 2010
- * Updated 18 April 2010
- * Updated 10 August 2012
- * 
- * @author Juan Heyns
- */
-public interface JDateComponent {
-	
+
+public interface JDatePicker extends JDatePanel {
+
 	/**
-	 * Returns the value of the currently represented date in the component.
-	 * Depending on the version of the library used this type will one of the
-	 * following:
-	 * - java.util.Calendar
-	 * - org.joda.time.DateMidnight
-	 * - java.util.Date
+	 * Is the text component editable or not. Defaults to false.
+	 * 
+	 * @param editable
+	 */
+	public abstract void setTextEditable(boolean editable);
+
+	/**
+	 * Is the text component editable or not.
 	 * 
 	 * @return
 	 */
-	public CalendarModel<?> getModel();
+	public abstract boolean isTextEditable();
 
 	/**
-	 * Adds an ActionListener. The actionListener is notified when a user clicks
-	 * on a date. Deliberately selecting a date will trigger this event, not
-	 * scrolling which fires a ChangeEvent for ChangeListeners.
+	 * Sets the button to be focusable. Defaults to true.
 	 * 
-	 * @param actionListener
+	 * @param focusable
 	 */
-	public void addActionListener(ActionListener actionListener);
+	public abstract void setButtonFocusable(boolean focusable);
 
 	/**
-	 * Removes the ActionListener. The actionListener is notified when a user
-	 * clicks on a date.
+	 * Is the button focusable.
 	 * 
-	 * @param arg
+	 * @return
 	 */
-	public void removeActionListener(ActionListener actionListener);
+	public abstract boolean getButtonFocusable();
 
+	/**
+	 * The icon on the button.
+	 * 
+	 * @return Icon on Button
+	 */
+	public abstract Icon getButtonIcon();
+
+	/**
+	 * Sets the image on the button.
+	 * 
+	 * @param icon the icon to use
+	 */
+	public abstract void setButtonIcon(Icon icon);
 }

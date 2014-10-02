@@ -25,7 +25,7 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker;
+package org.jdatepicker;
 
 import java.util.Enumeration;
 import java.util.Locale;
@@ -34,8 +34,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.JFormattedTextField;
 
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
 
 /**
  * Created 18 April 2010
@@ -95,7 +95,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * @return
 	 */
 	protected Properties createTexts(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle("net.sourceforge.jdatepicker.i18n.Text", locale);
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("org.jdatepicker.i18n.Text", locale);
 		return toProperties(resourceBundle);
 	}
 

@@ -25,7 +25,7 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package net.sourceforge.jdatepicker.impl;
+package org.jdatepicker.impl;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -49,9 +49,9 @@ import javax.swing.SpringLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import net.sourceforge.jdatepicker.CalendarModel;
-import net.sourceforge.jdatepicker.JDatePanel;
-import net.sourceforge.jdatepicker.JDatePicker;
+import org.jdatepicker.CalendarModel;
+import org.jdatepicker.JDatePanel;
+import org.jdatepicker.JDatePicker;
 
 
 /**
@@ -145,42 +145,42 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePicker#setTextEditable(boolean)
+	 * @see org.jdatepicker.JDatePicker#setTextEditable(boolean)
 	 */
 	public void setTextEditable(boolean editable) {
 		formattedTextField.setEditable(editable);
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePicker#isTextEditable()
+	 * @see org.jdatepicker.JDatePicker#isTextEditable()
 	 */
 	public boolean isTextEditable() {
 		return formattedTextField.isEditable();
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePicker#setButtonFocusable(boolean)
+	 * @see org.jdatepicker.JDatePicker#setButtonFocusable(boolean)
 	 */
 	public void setButtonFocusable(boolean focusable) {
 		button.setFocusable(focusable);
 	}
 	
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePicker#getButtonFocusable()
+	 * @see org.jdatepicker.JDatePicker#getButtonFocusable()
 	 */
 	public boolean getButtonFocusable() {
 		return button.isFocusable();
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePicker#getJDateInstantPanel()
+	 * @see org.jdatepicker.JDatePicker#getJDateInstantPanel()
 	 */
 	public JDatePanel getJDateInstantPanel() {
 		return datePanel;
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.jdatepicker.JDatePicker#getJFormattedTextField()
+	 * @see org.jdatepicker.JDatePicker#getJFormattedTextField()
 	 */
 	public JFormattedTextField getJFormattedTextField() {
 		return formattedTextField;
