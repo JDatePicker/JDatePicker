@@ -30,6 +30,7 @@ package org.jdatepicker;
 import java.util.Set;
 
 import javax.swing.Icon;
+import javax.swing.JTextField;
 
 import org.jdatepicker.constraints.DateSelectionConstraint;
 
@@ -77,5 +78,19 @@ public interface JDatePicker extends JDatePanel {
 	 * @param icon the icon to use
 	 */
 	public abstract void setButtonIcon(Icon icon);
+
+	/**
+	 * Returns the size of the underlying textfield
+	 * 
+	 * @return Columns
+	 */
+	public abstract int getTextfieldColumns();
+
+	/**
+	 * Sets the size of the underlying textfield in columns
+	 * 
+	 * @param columns {@link JTextField#setColumns(int)}
+	 */
+	public abstract void setTextfieldColumns(int columns);
 
 }

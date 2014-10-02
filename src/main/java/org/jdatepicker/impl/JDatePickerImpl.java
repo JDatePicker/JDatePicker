@@ -340,4 +340,13 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	public Set<DateSelectionConstraint> getDateSelectionConstraints() {
 		return datePanel.getDateSelectionConstraints();
 	}
+
+	public int getTextfieldColumns() {
+		return formattedTextField.getColumns();
+	}
+
+	public void setTextfieldColumns(int columns) {
+		formattedTextField.setColumns(columns);
+	}
+	
 }
