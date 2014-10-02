@@ -299,4 +299,12 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 			button.setText("");
 		}
 	}
+
+	public int getTextfieldColumns() {
+		return formattedTextField.getColumns();
+	}
+
+	public void setTextfieldColumns(int columns) {
+		formattedTextField.setColumns(columns);
+	}
 }
