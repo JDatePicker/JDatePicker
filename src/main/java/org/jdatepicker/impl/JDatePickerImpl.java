@@ -281,12 +281,10 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		}
 	}
 
-	@Override
 	public Icon getButtonIcon() {
 		return button.getIcon();
 	}
 
-	@Override
 	public void setButtonIcon(Icon icon) {
 		// use icon
 		button.setIcon(icon);
