@@ -881,7 +881,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			Calendar firstDayOfMonth = Calendar.getInstance();
 			firstDayOfMonth.set(model.getYear(), model.getMonth(), 1);
 			int DOW = firstDayOfMonth.get(Calendar.DAY_OF_WEEK);
-			int value = arg1 - DOW + arg0*7 + 1 + firstDayOfWeek;
+			int value = arg1 - DOW + arg0*7 + 1 + (firstDayOfWeek % 7);
 			return new Integer(value);
 		}
 		
