@@ -98,6 +98,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	
 	private boolean showYearButtons;
 	private boolean doubleClickAction;
+	private int firstDayOfWeek;
 	
 	private InternalCalendarModel internalModel;
 	private InternalController internalController;
@@ -112,6 +113,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		
 		showYearButtons = false;
 		doubleClickAction = false;
+		firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
 		
 		internalModel = new InternalCalendarModel(model);
 		internalController = new InternalController();
@@ -854,7 +856,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		public String getColumnName(int arg0) {
 			DateFormatSymbols df = new DateFormatSymbols();
 			String[] shortDays = df.getShortWeekdays();
-			return shortDays[arg0 + 1];
+			return shortDays[1 + (arg0 + firstDayOfWeek - 1) % 7];
 		}
 
 		/**
@@ -879,7 +881,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			Calendar firstDayOfMonth = Calendar.getInstance();
 			firstDayOfMonth.set(model.getYear(), model.getMonth(), 1);
 			int DOW = firstDayOfMonth.get(Calendar.DAY_OF_WEEK);
-			int value = arg1 - DOW + arg0*7 + 2;
+			int value = arg1 - DOW + arg0*7 + 1 + firstDayOfWeek;
 			return new Integer(value);
 		}
 		
