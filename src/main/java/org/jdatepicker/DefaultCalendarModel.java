@@ -50,6 +50,9 @@ public class DefaultCalendarModel extends AbstractCalendarModel<java.util.Calend
 	protected Calendar toCalendar(Calendar from) {
 		return (Calendar)from.clone();
 	}
-	
+
+	public Calendar toCalendar() {
+		return getValue();
+	}
 }
 

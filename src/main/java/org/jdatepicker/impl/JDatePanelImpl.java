@@ -39,9 +39,11 @@ import java.io.InputStream;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -67,6 +69,7 @@ import javax.swing.table.TableModel;
 import org.jdatepicker.CalendarModel;
 import org.jdatepicker.DefaultColorTheme;
 import org.jdatepicker.JDatePanel;
+import org.jdatepicker.constraints.DateSelectionConstraint;
 import org.jdatepicker.graphics.JNextIcon;
 import org.jdatepicker.graphics.JPreviousIcon;
 
@@ -91,6 +94,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	private static final long serialVersionUID = -2299249311312882915L;
 	
 	private HashSet<ActionListener> actionListeners;
+	private HashSet<DateSelectionConstraint> dateConstraints;
 
 	private Properties texts;
 	private DefaultColorTheme colors;
@@ -105,6 +109,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 
 	public JDatePanelImpl(CalendarModel<?> model, Properties texts, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
 		actionListeners = new HashSet<ActionListener>();
+		dateConstraints = new HashSet<DateSelectionConstraint>();
 
 		this.texts = texts;
 		this.colors = colors;
@@ -724,7 +729,16 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 				int col = internalView.getDayTable().getSelectedColumn();
 				if (row >= 0 && row <= 5) {
 					Integer date = (Integer) internalModel.getValueAt(row, col);
+					
+					// check constraints
+					int oldDay = internalModel.getModel().getDay();
 					internalModel.getModel().setDay(date);
+					if (!checkConstraints(internalModel.getModel().toCalendar())) {
+						// rollback
+						internalModel.getModel().setDay(oldDay);
+						return;
+					}
+
 					internalModel.getModel().setSelected(true);
 					
 					if (doubleClickAction && arg0.getClickCount() == 2) {
@@ -925,5 +939,29 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		}
 
 	}
-	
+
+	public void addDateSelectionConstraint(DateSelectionConstraint constraint) {
+		dateConstraints.add(constraint);
+	}
+
+	public void removeDateSelectionConstraint(DateSelectionConstraint constraint) {
+		dateConstraints.remove(constraint);
+	}
+
+	public void removeAllDateSelectionConstraints() {
+		dateConstraints.clear();
+	}
+
+	public Set<DateSelectionConstraint> getDateSelectionConstraints() {
+		return Collections.unmodifiableSet(dateConstraints);
+	}
+
+	boolean checkConstraints(Calendar value) {
+		for (DateSelectionConstraint constraint : dateConstraints) {
+			if (!constraint.isValidSelection(value)) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

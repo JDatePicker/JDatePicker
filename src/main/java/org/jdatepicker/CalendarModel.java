@@ -28,6 +28,7 @@ or implied, of Juan Heyns.
 package org.jdatepicker;
 
 import java.beans.PropertyChangeListener;
+import java.util.Calendar;
 
 import javax.swing.event.ChangeListener;
 
@@ -179,4 +180,5 @@ public interface CalendarModel<T> {
      */
     public void removePropertyChangeListener(PropertyChangeListener listener);
 
+    Calendar toCalendar();
 }
