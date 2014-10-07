@@ -24,41 +24,37 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
-*/
+ */
 package org.jdatepicker;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.BorderLayout;
+import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
-
-public class TestJDatePanel {
+public class TestIssue26 {
 
 	public static void main(String[] args) {
-		// Test 1: Monday is the first day of week (Germany)
-//		Locale.setDefault(Locale.GERMAN);
-
-//		// Test 2: Saturday is the first day of week (Saudi Arabia)
-//		Locale.setDefault(Locale.forLanguageTag("ar-sa"));
-
-//		// Test 3: Sunday is the first day of week (US)
-//		Locale.setDefault(Locale.US);
+		Locale.setDefault(Locale.forLanguageTag("ar-sa"));
 		
 		JFrame testFrame = new JFrame();
-		JDatePanel panel = new DefaultComponentFactory().createJDatePanel();
-		panel.setShowYearButtons(true);
-		testFrame.getContentPane().add((JComponent)panel);
-		panel.setShowYearButtons(false);
-		panel.setShowYearButtons(true);
+		testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		testFrame.setSize(500, 500);
+		JPanel jPanel = new JPanel();
+		JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+		picker.setTextEditable(true);
+		picker.setShowYearButtons(true);
+		jPanel.add((JComponent) picker);
 
-		testFrame.setSize(300,300);
-		testFrame.addWindowFocusListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent arg0) {
-				System.exit(0);
-			}
-		});
+		JPanel DatePanel = new JPanel();
+		DatePanel.setLayout(new BorderLayout());
+		DatePanel.add(jPanel, BorderLayout.WEST);
+		BorderLayout fb = new BorderLayout();
+		testFrame.setLayout(fb);
+		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
 		testFrame.setVisible(true);
 	}
 
