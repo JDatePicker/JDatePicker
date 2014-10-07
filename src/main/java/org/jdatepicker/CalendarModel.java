@@ -28,7 +28,6 @@ or implied, of Juan Heyns.
 package org.jdatepicker;
 
 import java.beans.PropertyChangeListener;
-import java.util.Calendar;
 
 import javax.swing.event.ChangeListener;
 
@@ -56,7 +55,7 @@ public interface CalendarModel<T> {
 	 * Removes the specified ChangeListener. ChangeListeners will be notified
 	 * when the selected date is changed.
 	 * 
-	 * @param arg
+	 * @param changeListener
 	 */
 	public void removeChangeListener(ChangeListener changeListener);
 
@@ -180,5 +179,4 @@ public interface CalendarModel<T> {
      */
     public void removePropertyChangeListener(PropertyChangeListener listener);
 
-    Calendar toCalendar();
 }

@@ -1,9 +1,12 @@
 package org.jdatepicker.constraints;
 
+import org.jdatepicker.CalendarModel;
+
 import java.util.Calendar;
 import java.util.Date;
 
 public class RangeConstraint implements DateSelectionConstraint {
+
 	private final Calendar after;
 	private final Calendar before;
 
@@ -45,13 +48,25 @@ public class RangeConstraint implements DateSelectionConstraint {
 		}
 	}
 
-	public boolean isValidSelection(Calendar value) {
+	public boolean isValidSelection(CalendarModel model) {
 		boolean result = true;
 
-		if (after != null) {
+		if (model.isSelected() && after != null) {
+            Calendar value = Calendar.getInstance();
+            value.set(model.getYear(), model.getMonth(), model.getDay());
+            value.set(Calendar.HOUR, 0);
+            value.set(Calendar.MINUTE, 0);
+            value.set(Calendar.SECOND, 0);
+            value.set(Calendar.MILLISECOND, 0);
 			result &= value.after(after);
 		}
-		if (before != null) {
+		if (model.isSelected() && before != null) {
+            Calendar value = Calendar.getInstance();
+            value.set(model.getYear(), model.getMonth(), model.getDay());
+            value.set(Calendar.HOUR, 0);
+            value.set(Calendar.MINUTE, 0);
+            value.set(Calendar.SECOND, 0);
+            value.set(Calendar.MILLISECOND, 0);
 			result &= value.before(before);
 		}
 

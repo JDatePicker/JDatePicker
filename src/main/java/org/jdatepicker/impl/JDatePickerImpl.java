@@ -50,9 +50,7 @@ import javax.swing.SpringLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jdatepicker.CalendarModel;
-import org.jdatepicker.JDatePanel;
-import org.jdatepicker.JDatePicker;
+import org.jdatepicker.*;
 import org.jdatepicker.constraints.DateSelectionConstraint;
 
 
@@ -67,7 +65,6 @@ import org.jdatepicker.constraints.DateSelectionConstraint;
  * @author Juan Heyns
  * @author JC Oosthuizen
  * @author Yue Huang
- * @param <T>
  */
 public class JDatePickerImpl extends JPanel implements JDatePicker {
 
@@ -87,7 +84,6 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	 * http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
 	 * 
 	 * @param datePanel
-	 * @param formatter
 	 */
 	public JDatePickerImpl(JDatePanelImpl datePanel) {
 		this.datePanel = datePanel;
@@ -248,8 +244,9 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (formattedTextField.isEditable() && formattedTextField.getValue() != null) {
 				Calendar value = (Calendar)formattedTextField.getValue();
+                CalendarModel model = new DefaultCalendarModel(value);
 				// check constraints
-				if (!datePanel.checkConstraints(value)) {
+				if (!datePanel.checkConstraints(model)) {
 					// rollback
 					formattedTextField.setValue(evt.getOldValue());
 					return;
@@ -289,12 +286,10 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		}
 	}
 
-	@Override
 	public Icon getButtonIcon() {
 		return button.getIcon();
 	}
 
-	@Override
 	public void setButtonIcon(Icon icon) {
 		// use icon
 		button.setIcon(icon);

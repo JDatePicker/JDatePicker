@@ -47,6 +47,7 @@ public abstract class DefaultColorTheme {
 	public Color fgGridOtherMonth() { return Color.LIGHT_GRAY; }
 	public Color fgGridToday() { return Color.RED; }
 	public Color bgGrid() { return Color.WHITE; }
+    public Color bgGridNotSelectable() { return new Color(240, 240, 240); }
 
 	public Color fgGridSelected() { return Color.WHITE; }
 	public Color bgGridSelected() { return new Color(10, 36, 106); }
