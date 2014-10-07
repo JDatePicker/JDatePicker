@@ -24,35 +24,40 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
-*/
+ */
 package org.jdatepicker;
 
+import java.awt.BorderLayout;
 import java.util.Calendar;
 
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
-public class DefaultCalendarModel extends AbstractCalendarModel<java.util.Calendar> {
-	
-	public DefaultCalendarModel() {
-		this(null);
-	}
-	
-	public DefaultCalendarModel(Calendar value) {
-		super();
-		setValue(value);
+import org.jdatepicker.constraints.RangeConstraint;
+
+public class TestIssue4 {
+
+	public static void main(String[] args) {
+		JFrame testFrame = new JFrame();
+		testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		testFrame.setSize(500, 500);
+		JPanel jPanel = new JPanel();
+		JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+		picker.setTextEditable(true);
+		picker.setShowYearButtons(true);
+		picker.addDateSelectionConstraint(new RangeConstraint(null, Calendar
+				.getInstance()));
+		jPanel.add((JComponent) picker);
+
+		JPanel DatePanel = new JPanel();
+		DatePanel.setLayout(new BorderLayout());
+		DatePanel.add(jPanel, BorderLayout.WEST);
+		BorderLayout fb = new BorderLayout();
+		testFrame.setLayout(fb);
+		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
+		testFrame.setVisible(true);
 	}
 
-	@Override
-	protected Calendar fromCalendar(Calendar from) {
-		return (Calendar)from.clone();
-	}
-
-	@Override
-	protected Calendar toCalendar(Calendar from) {
-		return (Calendar)from.clone();
-	}
-
-	public Calendar toCalendar() {
-		return getValue();
-	}
 }
-

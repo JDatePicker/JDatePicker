@@ -37,6 +37,7 @@ import java.awt.event.HierarchyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -52,6 +53,7 @@ import javax.swing.event.ChangeListener;
 import org.jdatepicker.CalendarModel;
 import org.jdatepicker.JDatePanel;
 import org.jdatepicker.JDatePicker;
+import org.jdatepicker.constraints.DateSelectionConstraint;
 
 
 /**
@@ -246,6 +248,12 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (formattedTextField.isEditable() && formattedTextField.getValue() != null) {
 				Calendar value = (Calendar)formattedTextField.getValue();
+				// check constraints
+				if (!datePanel.checkConstraints(value)) {
+					// rollback
+					formattedTextField.setValue(evt.getOldValue());
+					return;
+				}
 				datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
 				datePanel.getModel().setSelected(true);
 			}
@@ -298,5 +306,21 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 			// remove text
 			button.setText("");
 		}
+	}
+
+	public void addDateSelectionConstraint(DateSelectionConstraint constraint) {
+		datePanel.addDateSelectionConstraint(constraint);
+	}
+
+	public void removeDateSelectionConstraint(DateSelectionConstraint constraint) {
+		datePanel.removeDateSelectionConstraint(constraint);
+	}
+
+	public void removeAllDateSelectionConstraints() {
+		datePanel.removeAllDateSelectionConstraints();
+	}
+
+	public Set<DateSelectionConstraint> getDateSelectionConstraints() {
+		return datePanel.getDateSelectionConstraints();
 	}
 }

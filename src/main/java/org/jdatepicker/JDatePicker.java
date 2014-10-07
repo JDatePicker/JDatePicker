@@ -27,7 +27,11 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker;
 
+import java.util.Set;
+
 import javax.swing.Icon;
+
+import org.jdatepicker.constraints.DateSelectionConstraint;
 
 
 public interface JDatePicker extends JDatePanel {
@@ -73,4 +77,32 @@ public interface JDatePicker extends JDatePanel {
 	 * @param icon the icon to use
 	 */
 	public abstract void setButtonIcon(Icon icon);
+
+	/**
+	 * Adds an constraint on selectable dates.
+	 * 
+	 * @param constraint
+	 *            the constraint to check on selection
+	 */
+	void addDateSelectionConstraint(DateSelectionConstraint constraint);
+
+	/**
+	 * Removes an constraint on selectable dates.
+	 * 
+	 * @param constraint
+	 *            the constraint to check on selection
+	 */
+	void removeDateSelectionConstraint(DateSelectionConstraint constraint);
+
+	/**
+	 * Removes all registered date selection constraints.
+	 */
+	void removeAllDateSelectionConstraints();
+	
+	/**
+	 * Get all registered date selection constraints.
+	 * 
+	 * @return An immutable Set of all constraints.
+	 */
+	Set<DateSelectionConstraint> getDateSelectionConstraints();
 }
