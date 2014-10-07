@@ -63,31 +63,4 @@ public interface JDatePanel extends JDateComponent {
 	 */
 	public abstract boolean isDoubleClickAction();
 
-	/**
-	 * Adds an constraint on selectable dates.
-	 * 
-	 * @param constraint
-	 *            the constraint to check on selection
-	 */
-	void addDateSelectionConstraint(DateSelectionConstraint constraint);
-
-	/**
-	 * Removes an constraint on selectable dates.
-	 * 
-	 * @param constraint
-	 *            the constraint to check on selection
-	 */
-	void removeDateSelectionConstraint(DateSelectionConstraint constraint);
-
-	/**
-	 * Removes all registered date selection constraints.
-	 */
-	void removeAllDateSelectionConstraints();
-	
-	/**
-	 * Get all registered date selection constraints.
-	 * 
-	 * @return An immutable Set of all constraints.
-	 */
-	Set<DateSelectionConstraint> getDateSelectionConstraints();
 }

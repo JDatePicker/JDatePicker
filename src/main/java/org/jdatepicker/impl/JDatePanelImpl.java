@@ -67,6 +67,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import org.jdatepicker.CalendarModel;
+import org.jdatepicker.DefaultCalendarModel;
 import org.jdatepicker.DefaultColorTheme;
 import org.jdatepicker.JDatePanel;
 import org.jdatepicker.constraints.DateSelectionConstraint;
@@ -87,7 +88,6 @@ import org.jdatepicker.graphics.JPreviousIcon;
  * @author Juan Heyns
  * @author JC Oosthuizen
  * @author Yue Huang
- * @param <T>
  */
 public class JDatePanelImpl extends JPanel implements JDatePanel {
 
@@ -629,7 +629,12 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			// Other month
 			if (cellDayValue < 1 || cellDayValue > lastDayOfMonth) {
 				label.setForeground(colors.fgGridOtherMonth());
-				label.setBackground(colors.bgGrid());
+
+                Calendar calForDay = Calendar.getInstance();
+                calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
+                CalendarModel modelForDay = new DefaultCalendarModel(calForDay);
+                label.setBackground(checkConstraints(modelForDay) ? colors.bgGrid() : colors.bgGridNotSelectable());
+
 				
 				//Past end of month
 				if (cellDayValue > lastDayOfMonth) {
@@ -646,7 +651,11 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			//This month
 			else { 
 				label.setForeground(colors.fgGridThisMonth());
-				label.setBackground(colors.bgGrid());
+
+                Calendar calForDay = Calendar.getInstance();
+                calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
+                CalendarModel modelForDay = new DefaultCalendarModel(calForDay);
+                label.setBackground(checkConstraints(modelForDay) ? colors.bgGrid() : colors.bgGridNotSelectable());
 				
 				//Today
 				if (todayCal.get(Calendar.DATE) == cellDayValue
@@ -733,7 +742,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 					// check constraints
 					int oldDay = internalModel.getModel().getDay();
 					internalModel.getModel().setDay(date);
-					if (!checkConstraints(internalModel.getModel().toCalendar())) {
+					if (!checkConstraints(internalModel.getModel())) {
 						// rollback
 						internalModel.getModel().setDay(oldDay);
 						return;
@@ -956,12 +965,13 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		return Collections.unmodifiableSet(dateConstraints);
 	}
 
-	boolean checkConstraints(Calendar value) {
+	boolean checkConstraints(CalendarModel model) {
 		for (DateSelectionConstraint constraint : dateConstraints) {
-			if (!constraint.isValidSelection(value)) {
+			if (!constraint.isValidSelection(model)) {
 				return false;
 			}
 		}
 		return true;
 	}
+
 }
