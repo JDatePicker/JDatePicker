@@ -27,26 +27,16 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker.impl;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.HierarchyBoundsListener;
-import java.awt.event.HierarchyEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Set;
 
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JPanel;
-import javax.swing.Popup;
-import javax.swing.PopupFactory;
-import javax.swing.SpringLayout;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -128,7 +118,9 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		formattedTextField.addPropertyChangeListener("value", internalEventHandler);
 		datePanel.addActionListener(internalEventHandler);
 		datePanel.getModel().addChangeListener(internalEventHandler);
-	}	
+        long eventMask = MouseEvent.MOUSE_PRESSED;
+        Toolkit.getDefaultToolkit().addAWTEventListener(internalEventHandler, eventMask);
+	}
 	
 	public void addActionListener(ActionListener actionListener) {
 		datePanel.addActionListener(actionListener);
@@ -191,7 +183,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		if (popup == null){
 			PopupFactory fac = new PopupFactory();
 			Point xy = getLocationOnScreen();
-			datePanel.setVisible(true); 
+			datePanel.setVisible(true);
 			popup = fac.getPopup(this, datePanel, (int) xy.getX(), (int) (xy.getY()+this.getHeight()));
 			popup.show();
 		}
@@ -210,7 +202,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	/**
 	 * This internal class hides the public event methods from the outside 
 	 */
-	private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener {
+	private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener, AWTEventListener {
 
 		public void ancestorMoved(HierarchyEvent arg0) {
 			hidePopup();
@@ -255,8 +247,38 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 				datePanel.getModel().setSelected(true);
 			}
 		}
-		
-	}
+
+        public void eventDispatched(AWTEvent event) {
+            if (MouseEvent.MOUSE_CLICKED == event.getID()) {
+                if (event.getSource() != button) {
+                    ArrayList components = getAllComponents(datePanel);
+                    boolean clickInPopup = false;
+                    for (int i = 0; i < components.size(); i++) {
+                        if (event.getSource() == components.get(i)) {
+                            clickInPopup = true;
+                        }
+                    }
+                    if (!clickInPopup) {
+                        hidePopup();
+                    }
+                }
+            }
+        }
+
+    }
+
+    private ArrayList getAllComponents(Component component) {
+        ArrayList children = new ArrayList();
+        children.add(component);
+        if (component instanceof Container) {
+            Container container = (Container)component;
+            Component[] components = container.getComponents();
+            for (int i = 0; i < components.length; i++) {
+                children.addAll(getAllComponents(components[i]));
+            }
+        }
+        return children;
+    }
 
 	public boolean isDoubleClickAction() {
 		return datePanel.isDoubleClickAction();
