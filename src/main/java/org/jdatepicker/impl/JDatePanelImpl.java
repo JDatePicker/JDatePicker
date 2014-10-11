@@ -842,7 +842,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		 * Part of SpinnerModel, year
 		 */
 		public void setValue(Object text) {
-			model.setYear(new Integer((String)text));
+            String year = (String)text;
+			model.setYear(Integer.parseInt(year));
 		}
 
 		/**
@@ -905,7 +906,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			firstDayOfMonth.set(model.getYear(), model.getMonth(), 1);
 			int DOW = firstDayOfMonth.get(Calendar.DAY_OF_WEEK);
 			int value = arg1 - DOW + arg0*7 + 1 + (firstDayOfWeek % 7);
-			return new Integer(value);
+			return Integer.valueOf(value);
 		}
 		
 		/**
