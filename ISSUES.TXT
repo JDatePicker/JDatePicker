@@ -1,1 +1,0 @@
-Captured issues in https://github.com/JDatePicker/JDatePicker/issues
