@@ -45,10 +45,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
  */
 public abstract class AbstractComponentFactory<T> {
 	
-	private Properties defaultTexts;
-	private DefaultColorTheme defaultColors;
-	private JFormattedTextField.AbstractFormatter defaultFormatter;
-	
 	private Properties texts;
 	private DefaultColorTheme colors;
 	private JFormattedTextField.AbstractFormatter formatter;
@@ -66,18 +62,17 @@ public abstract class AbstractComponentFactory<T> {
 	 * Create a factory which will construct widgets with the provided date
 	 * model, date formatter, i18nStrings or colors.
 	 * 
-	 * @param modelClass
-	 * @param formatter
 	 * @param locale
 	 * @param colors
+     * @param formatter
 	 */
 	public AbstractComponentFactory(Locale locale, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
-		this.defaultTexts = createTexts(Locale.getDefault());
-		this.defaultColors = createDefaultColors();
-		this.defaultFormatter = createDefaultFormatter();
-		this.texts = locale == null ? this.defaultTexts : createTexts(locale);
-		this.colors = colors == null ? this.defaultColors : colors;
-		this.formatter = formatter == null ? this.defaultFormatter : formatter;
+        Properties defaultTexts = createTexts(Locale.getDefault());
+        DefaultColorTheme defaultColors = createDefaultColors();
+        JFormattedTextField.AbstractFormatter defaultFormatter = createDefaultFormatter();
+		this.texts = locale == null ? defaultTexts : createTexts(locale);
+		this.colors = colors == null ? defaultColors : colors;
+		this.formatter = formatter == null ? defaultFormatter : formatter;
 	}
 	
 	/**
@@ -127,7 +122,6 @@ public abstract class AbstractComponentFactory<T> {
 	/**
 	 * Create a DateModel initialised to today, based on the clazz type.
 	 * 
-	 * @param clazz
 	 * @return
 	 */
 	protected abstract CalendarModel<T> createModel();
@@ -153,9 +147,7 @@ public abstract class AbstractComponentFactory<T> {
 	/**
 	 * Create by specifying the initial value of the widget.
 	 * 
-	 * @param model
-	 * @param i18n
-	 * @param format
+	 * @param value
 	 * @return
 	 */
 	public JDatePicker createJDatePicker(T value) {
@@ -179,8 +171,7 @@ public abstract class AbstractComponentFactory<T> {
 	/**
 	 * Create by specifying the initial value of the widget.
 	 * 
-	 * @param model
-	 * @param i18n
+	 * @param value
 	 * @return
 	 */
 	public JDatePanel createJDatePanel(T value) {

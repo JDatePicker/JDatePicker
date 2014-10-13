@@ -64,7 +64,6 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	private JButton button;
 	
 	private JDatePanelImpl datePanel;
-	private InternalEventHandler internalEventHandler;
 
 	/**
 	 * You are able to set the format of the date being displayed on the label.
@@ -80,7 +79,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		//Initialise Variables
 		popup = null;
 		datePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		internalEventHandler = new InternalEventHandler();
+        InternalEventHandler internalEventHandler = new InternalEventHandler();
 
 		//Create Layout
 		SpringLayout layout = new SpringLayout();
