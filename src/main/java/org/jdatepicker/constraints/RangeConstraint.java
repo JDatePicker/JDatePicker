@@ -84,26 +84,34 @@ public class RangeConstraint implements DateSelectionConstraint {
 	}
 
 	@Override
-	// Generated with eclipse depending on: after, before
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) {
+            return true;
+        }
+		if (obj == null) {
+            return false;
+        }
+		if (getClass() != obj.getClass()) {
+            return false;
+        }
 
 		RangeConstraint other = (RangeConstraint) obj;
 		if (after == null) {
-			if (other.after != null)
-				return false;
-		} else if (!after.equals(other.after))
-			return false;
+			if (other.after != null) {
+                return false;
+            }
+		}
+        else if (!after.equals(other.after)) {
+            return false;
+        }
 		if (before == null) {
-			if (other.before != null)
-				return false;
-		} else if (!before.equals(other.before))
-			return false;
+			if (other.before != null) {
+                return false;
+            }
+		}
+        else if (!before.equals(other.before)) {
+            return false;
+        }
 		return true;
 	}
 

@@ -39,7 +39,7 @@ public class DefaultDateFormatter extends JFormattedTextField.AbstractFormatter 
 	
 	private static final long serialVersionUID = 5997312768041129127L;
 	
-	DateFormat format;
+	private DateFormat format;
 	
 	public DefaultDateFormatter(){
 		format = getMediumDateFormat();

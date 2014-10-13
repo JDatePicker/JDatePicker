@@ -31,9 +31,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.*;
@@ -199,7 +198,89 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		}
 	}
 
-	/**
+    private Set getAllComponents(Component component) {
+        Set children = new HashSet();
+        children.add(component);
+        if (component instanceof Container) {
+            Container container = (Container)component;
+            Component[] components = container.getComponents();
+            for (int i = 0; i < components.length; i++) {
+                children.addAll(getAllComponents(components[i]));
+            }
+        }
+        return children;
+    }
+
+    public boolean isDoubleClickAction() {
+        return datePanel.isDoubleClickAction();
+    }
+
+    public boolean isShowYearButtons() {
+        return datePanel.isShowYearButtons();
+    }
+
+    public void setDoubleClickAction(boolean doubleClickAction) {
+        datePanel.setDoubleClickAction(doubleClickAction);
+    }
+
+    public void setShowYearButtons(boolean showYearButtons) {
+        datePanel.setShowYearButtons(showYearButtons);
+    }
+
+    private void setTextFieldValue(JFormattedTextField textField, int year, int month, int day, boolean isSelected) {
+        if (!isSelected) {
+            textField.setValue(null);
+        }
+        else {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day, 0, 0, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            textField.setValue(calendar);
+        }
+    }
+
+    public Icon getButtonIcon() {
+        return button.getIcon();
+    }
+
+    public void setButtonIcon(Icon icon) {
+        // use icon
+        button.setIcon(icon);
+
+        if(icon == null) {
+            // reset to caption
+            button.setText("...");
+        } else {
+            // remove text
+            button.setText("");
+        }
+    }
+
+    public void addDateSelectionConstraint(DateSelectionConstraint constraint) {
+        datePanel.addDateSelectionConstraint(constraint);
+    }
+
+    public void removeDateSelectionConstraint(DateSelectionConstraint constraint) {
+        datePanel.removeDateSelectionConstraint(constraint);
+    }
+
+    public void removeAllDateSelectionConstraints() {
+        datePanel.removeAllDateSelectionConstraints();
+    }
+
+    public Set<DateSelectionConstraint> getDateSelectionConstraints() {
+        return datePanel.getDateSelectionConstraints();
+    }
+
+    public int getTextfieldColumns() {
+        return formattedTextField.getColumns();
+    }
+
+    public void setTextfieldColumns(int columns) {
+        formattedTextField.setColumns(columns);
+    }
+
+    /**
 	 * This internal class hides the public event methods from the outside 
 	 */
 	private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener, AWTEventListener {
@@ -249,104 +330,20 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		}
 
         public void eventDispatched(AWTEvent event) {
-            if (MouseEvent.MOUSE_CLICKED == event.getID()) {
-                if (event.getSource() != button) {
-                    ArrayList components = getAllComponents(datePanel);
-                    boolean clickInPopup = false;
-                    for (int i = 0; i < components.size(); i++) {
-                        if (event.getSource() == components.get(i)) {
-                            clickInPopup = true;
-                        }
+            if (MouseEvent.MOUSE_CLICKED == event.getID() && event.getSource() != button) {
+                Set components = getAllComponents(datePanel);
+                boolean clickInPopup = false;
+                for (Object component: components) {
+                    if (event.getSource() == component) {
+                        clickInPopup = true;
                     }
-                    if (!clickInPopup) {
-                        hidePopup();
-                    }
+                }
+                if (!clickInPopup) {
+                    hidePopup();
                 }
             }
         }
 
     }
 
-    private ArrayList getAllComponents(Component component) {
-        ArrayList children = new ArrayList();
-        children.add(component);
-        if (component instanceof Container) {
-            Container container = (Container)component;
-            Component[] components = container.getComponents();
-            for (int i = 0; i < components.length; i++) {
-                children.addAll(getAllComponents(components[i]));
-            }
-        }
-        return children;
-    }
-
-	public boolean isDoubleClickAction() {
-		return datePanel.isDoubleClickAction();
-	}
-
-	public boolean isShowYearButtons() {
-		return datePanel.isShowYearButtons();
-	}
-
-	public void setDoubleClickAction(boolean doubleClickAction) {
-		datePanel.setDoubleClickAction(doubleClickAction);
-	}
-
-	public void setShowYearButtons(boolean showYearButtons) {
-		datePanel.setShowYearButtons(showYearButtons);
-	}
-	
-	private void setTextFieldValue(JFormattedTextField textField, int year, int month, int day, boolean isSelected) {
-		if (!isSelected) {
-			textField.setValue(null);
-		}
-		else {
-			Calendar calendar = Calendar.getInstance();
-			calendar.set(year, month, day, 0, 0, 0);
-			calendar.set(Calendar.MILLISECOND, 0);
-			textField.setValue(calendar);
-		}
-	}
-
-	public Icon getButtonIcon() {
-		return button.getIcon();
-	}
-
-	public void setButtonIcon(Icon icon) {
-		// use icon
-		button.setIcon(icon);
-
-		if(icon == null) {
-			// reset to caption
-			button.setText("...");
-		} else {
-			// remove text
-			button.setText("");
-		}
-	}
-
-	public void addDateSelectionConstraint(DateSelectionConstraint constraint) {
-		datePanel.addDateSelectionConstraint(constraint);
-	}
-
-	public void removeDateSelectionConstraint(DateSelectionConstraint constraint) {
-		datePanel.removeDateSelectionConstraint(constraint);
-	}
-
-	public void removeAllDateSelectionConstraints() {
-		datePanel.removeAllDateSelectionConstraints();
-	}
-
-	public Set<DateSelectionConstraint> getDateSelectionConstraints() {
-		return datePanel.getDateSelectionConstraints();
-	}
-
-	public int getTextfieldColumns() {
-		return formattedTextField.getColumns();
-	}
-
-	public void setTextfieldColumns(int columns) {
-		formattedTextField.setColumns(columns);
-	}
-	
 }

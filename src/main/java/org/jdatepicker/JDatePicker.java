@@ -27,13 +27,7 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker;
 
-import java.util.Set;
-
 import javax.swing.Icon;
-import javax.swing.JTextField;
-
-import org.jdatepicker.constraints.DateSelectionConstraint;
-
 
 public interface JDatePicker extends JDatePanel {
 
@@ -42,55 +36,55 @@ public interface JDatePicker extends JDatePanel {
 	 * 
 	 * @param editable
 	 */
-	public abstract void setTextEditable(boolean editable);
+	void setTextEditable(boolean editable);
 
 	/**
 	 * Is the text component editable or not.
 	 * 
 	 * @return
 	 */
-	public abstract boolean isTextEditable();
+	boolean isTextEditable();
 
 	/**
 	 * Sets the button to be focusable. Defaults to true.
 	 * 
 	 * @param focusable
 	 */
-	public abstract void setButtonFocusable(boolean focusable);
+	void setButtonFocusable(boolean focusable);
 
 	/**
 	 * Is the button focusable.
 	 * 
 	 * @return
 	 */
-	public abstract boolean getButtonFocusable();
+	boolean getButtonFocusable();
 
 	/**
 	 * The icon on the button.
 	 * 
 	 * @return Icon on Button
 	 */
-	public abstract Icon getButtonIcon();
+	Icon getButtonIcon();
 
 	/**
 	 * Sets the image on the button.
 	 * 
 	 * @param icon the icon to use
 	 */
-	public abstract void setButtonIcon(Icon icon);
+	void setButtonIcon(Icon icon);
 
 	/**
 	 * Returns the size of the underlying textfield
 	 * 
 	 * @return Columns
 	 */
-	public abstract int getTextfieldColumns();
+	int getTextfieldColumns();
 
 	/**
 	 * Sets the size of the underlying textfield in columns
 	 * 
 	 * @param columns {@link JTextField#setColumns(int)}
 	 */
-	public abstract void setTextfieldColumns(int columns);
+	void setTextfieldColumns(int columns);
 
 }

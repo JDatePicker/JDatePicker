@@ -93,8 +93,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 
 	private static final long serialVersionUID = -2299249311312882915L;
 	
-	private HashSet<ActionListener> actionListeners;
-	private HashSet<DateSelectionConstraint> dateConstraints;
+	private Set<ActionListener> actionListeners;
+	private Set<DateSelectionConstraint> dateConstraints;
 
 	private Properties texts;
 	private DefaultColorTheme colors;
@@ -189,7 +189,32 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		this.formatter = formatter;
 	}
 
-	/**
+    public void addDateSelectionConstraint(DateSelectionConstraint constraint) {
+        dateConstraints.add(constraint);
+    }
+
+    public void removeDateSelectionConstraint(DateSelectionConstraint constraint) {
+        dateConstraints.remove(constraint);
+    }
+
+    public void removeAllDateSelectionConstraints() {
+        dateConstraints.clear();
+    }
+
+    public Set<DateSelectionConstraint> getDateSelectionConstraints() {
+        return Collections.unmodifiableSet(dateConstraints);
+    }
+
+    boolean checkConstraints(CalendarModel model) {
+        for (DateSelectionConstraint constraint : dateConstraints) {
+            if (!constraint.isValidSelection(model)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
 	 * Logically grouping the view controls under this internal class. 
 	 * 
 	 * @author Juan Heyns
@@ -796,8 +821,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	protected class InternalCalendarModel implements TableModel, SpinnerModel, ChangeListener {
 
 		private CalendarModel<?> model;
-		private HashSet<ChangeListener> spinnerChangeListeners;
-		private HashSet<TableModelListener> tableModelListeners;
+		private Set<ChangeListener> spinnerChangeListeners;
+		private Set<TableModelListener> tableModelListeners;
 
 		public InternalCalendarModel(CalendarModel<?> model){
 			this.spinnerChangeListeners = new HashSet<ChangeListener>();
@@ -950,31 +975,6 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			fireValueChanged();
 		}
 
-	}
-
-	public void addDateSelectionConstraint(DateSelectionConstraint constraint) {
-		dateConstraints.add(constraint);
-	}
-
-	public void removeDateSelectionConstraint(DateSelectionConstraint constraint) {
-		dateConstraints.remove(constraint);
-	}
-
-	public void removeAllDateSelectionConstraints() {
-		dateConstraints.clear();
-	}
-
-	public Set<DateSelectionConstraint> getDateSelectionConstraints() {
-		return Collections.unmodifiableSet(dateConstraints);
-	}
-
-	boolean checkConstraints(CalendarModel model) {
-		for (DateSelectionConstraint constraint : dateConstraints) {
-			if (!constraint.isValidSelection(model)) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 }

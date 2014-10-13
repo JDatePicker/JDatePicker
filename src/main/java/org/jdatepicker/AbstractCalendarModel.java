@@ -31,6 +31,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -52,8 +53,8 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 
 	private boolean selected;
 	private Calendar calendarValue;
-	private HashSet<ChangeListener> changeListeners;
-	private HashSet<PropertyChangeListener> propertyChangeListeners;
+	private Set<ChangeListener> changeListeners;
+	private Set<PropertyChangeListener> propertyChangeListeners;
 
 	protected AbstractCalendarModel() {
 		changeListeners = new HashSet<ChangeListener>();	
@@ -110,8 +111,7 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 		if (!selected) {
 			return null;
 		}
-		T value = fromCalendar(calendarValue);
-		return value;
+		return fromCalendar(calendarValue);
 	}
 	
 	public void setDay(int day) {
