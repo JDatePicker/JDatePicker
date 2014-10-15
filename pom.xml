@@ -54,11 +54,7 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.1</version>
           <configuration>
-            <compilerVersion>${maven.compiler.compilerVersion}</compilerVersion>
-            <encoding>${project.build.sourceEncoding}</encoding>
             <fork>true</fork>
-            <source>${maven.compiler.source}</source>
-            <target>${maven.compiler.target}</target>
             <verbose>true</verbose>
           </configuration>
         </plugin>
