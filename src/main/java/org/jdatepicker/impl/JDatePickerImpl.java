@@ -65,6 +65,10 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	
 	private JDatePanelImpl datePanel;
 
+    public JDatePickerImpl() {
+        this(new JDatePanelImpl());
+    }
+
 	/**
 	 * You are able to set the format of the date being displayed on the label.
 	 * Formatting is described at:

@@ -38,12 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -66,10 +61,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import org.jdatepicker.CalendarModel;
-import org.jdatepicker.DefaultCalendarModel;
-import org.jdatepicker.DefaultColorTheme;
-import org.jdatepicker.JDatePanel;
+import org.jdatepicker.*;
 import org.jdatepicker.constraints.DateSelectionConstraint;
 import org.jdatepicker.graphics.JNextIcon;
 import org.jdatepicker.graphics.JPreviousIcon;
@@ -107,6 +99,13 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	private InternalCalendarModel internalModel;
 	private InternalController internalController;
 	private InternalView internalView;
+
+    public JDatePanelImpl() {
+        this(new DefaultComponentFactory().createModel(),
+             new DefaultComponentFactory().createTexts(Locale.getDefault()),
+             new DefaultComponentFactory().createDefaultColors(),
+             new DefaultComponentFactory().createDefaultFormatter());
+    }
 
 	public JDatePanelImpl(CalendarModel<?> model, Properties texts, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
 		actionListeners = new HashSet<ActionListener>();

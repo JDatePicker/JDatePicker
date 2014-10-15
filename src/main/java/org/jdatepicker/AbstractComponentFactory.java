@@ -80,7 +80,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * 
 	 * @return
 	 */
-	protected JFormattedTextField.AbstractFormatter createDefaultFormatter() {
+	public JFormattedTextField.AbstractFormatter createDefaultFormatter() {
 		return new DefaultDateFormatter();
 	}
 
@@ -89,7 +89,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * 
 	 * @return
 	 */
-	protected Properties createTexts(Locale locale) {
+	public Properties createTexts(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("org.jdatepicker.i18n.Text", locale);
 		return toProperties(resourceBundle);
 	}
@@ -115,7 +115,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * 
 	 * @return
 	 */
-	protected DefaultColorTheme createDefaultColors() {
+	public DefaultColorTheme createDefaultColors() {
 		return new DefaultColorTheme() {};
 	}
 	
@@ -124,7 +124,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * 
 	 * @return
 	 */
-	protected abstract CalendarModel<T> createModel();
+	public abstract CalendarModel<T> createModel();
 
 	/**
 	 * Create a DateModel based on the type of the value.
@@ -132,7 +132,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * @param value
 	 * @return
 	 */
-	protected abstract CalendarModel<T> createModel(T value);
+	public abstract CalendarModel<T> createModel(T value);
 
 	/**
 	 * Create with factory dateModel, i18nStrings and dateFormatter.
