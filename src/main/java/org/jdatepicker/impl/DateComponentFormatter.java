@@ -41,12 +41,8 @@ public class DateComponentFormatter extends JFormattedTextField.AbstractFormatte
 	
 	private DateFormat format;
 	
-	public DateComponentFormatter(){
-		format = getMediumDateFormat();
-	}
-	
-	public DateFormat getMediumDateFormat() {
-		return SimpleDateFormat.getDateInstance(SimpleDateFormat.MEDIUM);
+	public DateComponentFormatter(DateFormat format){
+		this.format = format;
 	}
 	
 	@Override

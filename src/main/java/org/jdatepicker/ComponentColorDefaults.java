@@ -35,7 +35,7 @@ import java.awt.SystemColor;
  * 
  * @author Juan Heyns
  */
-public abstract class DefaultColorTheme {
+public class ComponentColorDefaults {
 	
 	public Color fgMonthSelector() { return SystemColor.activeCaptionText; }
 	public Color bgMonthSelector() { return SystemColor.activeCaption; }

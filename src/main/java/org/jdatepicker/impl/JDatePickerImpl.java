@@ -91,7 +91,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 
         //Create and Add Components
 		//Add and Configure TextField
-		formattedTextField = new JFormattedTextField(datePanel.getFormatter());
+		formattedTextField = new JFormattedTextField(new DateComponentFormatter(ComponentManager.getInstance().getComponentFormatDefaults().getSelectedDateFormat()));
 		DateModel<?> model = datePanel.getModel();
 		setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
 		formattedTextField.setEditable(false);		
@@ -100,8 +100,17 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
         layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, formattedTextField);
 
 		//Add and Configure Button
-		button = new JButton("...");
+		button = new JButton();
 		button.setFocusable(true);
+        Icon icon = ComponentManager.getInstance().getComponentIconDefaults().getPopupButtonIcon();
+        button.setIcon(icon);
+        if(icon == null) {
+            // reset to caption
+            button.setText("...");
+        } else {
+            // remove text
+            button.setText("");
+        }
 		add(button);
         layout.putConstraint(SpringLayout.WEST, button, 1, SpringLayout.EAST, formattedTextField);
         layout.putConstraint(SpringLayout.EAST, this, 0, SpringLayout.EAST, button);
@@ -171,13 +180,6 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		return datePanel;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jdatepicker.JDatePicker#getJFormattedTextField()
-	 */
-	public JFormattedTextField getJFormattedTextField() {
-		return formattedTextField;
-	}
-
 	/**
 	 * Called internally to popup the dates.
 	 */
@@ -239,23 +241,6 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
             calendar.set(year, month, day, 0, 0, 0);
             calendar.set(Calendar.MILLISECOND, 0);
             textField.setValue(calendar);
-        }
-    }
-
-    public Icon getButtonIcon() {
-        return button.getIcon();
-    }
-
-    public void setButtonIcon(Icon icon) {
-        // use icon
-        button.setIcon(icon);
-
-        if(icon == null) {
-            // reset to caption
-            button.setText("...");
-        } else {
-            // remove text
-            button.setText("");
         }
     }
 

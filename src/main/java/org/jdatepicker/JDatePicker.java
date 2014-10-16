@@ -60,20 +60,6 @@ public interface JDatePicker extends JDatePanel {
 	boolean getButtonFocusable();
 
 	/**
-	 * The icon on the button.
-	 * 
-	 * @return Icon on Button
-	 */
-	Icon getButtonIcon();
-
-	/**
-	 * Sets the image on the button.
-	 * 
-	 * @param icon the icon to use
-	 */
-	void setButtonIcon(Icon icon);
-
-	/**
 	 * Returns the size of the underlying textfield
 	 * 
 	 * @return Columns
