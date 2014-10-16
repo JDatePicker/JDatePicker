@@ -49,113 +49,113 @@ public interface DateModel<T> {
 	 * 
 	 * @param changeListener
 	 */
-	public void addChangeListener(ChangeListener changeListener);
+	void addChangeListener(ChangeListener changeListener);
 
 	/**
 	 * Removes the specified ChangeListener. ChangeListeners will be notified
 	 * when the selected date is changed.
 	 * 
-	 * @param arg
+	 * @param changeListener
 	 */
-	public void removeChangeListener(ChangeListener changeListener);
+	void removeChangeListener(ChangeListener changeListener);
 
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
 	 * @return
 	 */
-	public int getYear();
+	int getYear();
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
 	 * @return
 	 */
-	public void setYear(int year);
+	void setYear(int year);
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
 	 * @return
 	 */
-	public int getMonth();
+	int getMonth();
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
 	 * @return
 	 */
-	public void setMonth(int month);
+	void setMonth(int month);
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
 	 * @return
 	 */
-	public int getDay();
+	int getDay();
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
 	 * @return
 	 */
-	public void setDay(int day);
+	void setDay(int day);
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
 	 * @return
 	 */
-	public void setDate(int year, int month, int day);
+	void setDate(int year, int month, int day);
 	
 	/**
 	 * Add or substract number of years.
 	 * 
 	 * @param add
 	 */
-	public void addYear(int add);
+	void addYear(int add);
 	
 	/**
 	 * Add or substract number of months.
 	 * 
 	 * @param add
 	 */
-	public void addMonth(int add);
+	void addMonth(int add);
 	
 	/**
 	 * Add or substract number of day.
 	 * 
 	 * @param add
 	 */
-	public void addDay(int add);
+	void addDay(int add);
 
 	/**
 	 * Get the value this model represents.
 	 * 
 	 * @return
 	 */
-	public T getValue();
+	T getValue();
 
 	/**
 	 * Set the value this model represents.
 	 * 
 	 * @param value
 	 */
-	public void setValue(T value);
+	void setValue(T value);
 	
 	/**
 	 * Is the value selected or is it not.
 	 * 
 	 * @return
 	 */
-	public boolean isSelected();
+	boolean isSelected();
 	
 	/**
 	 * Set the value as selected.
 	 * 
 	 * @param selected
 	 */
-	public void setSelected(boolean selected);
+	void setSelected(boolean selected);
 	
     /**
      * Adds a PropertyChangeListener to the list of bean listeners.
@@ -165,7 +165,7 @@ public interface DateModel<T> {
      *
      * @see #removePropertyChangeListener(PropertyChangeListener)
      */
-    public void addPropertyChangeListener(PropertyChangeListener listener);
+    void addPropertyChangeListener(PropertyChangeListener listener);
 
 
     /**
@@ -177,6 +177,6 @@ public interface DateModel<T> {
      *
      * @see #addPropertyChangeListener(PropertyChangeListener)
      */
-    public void removePropertyChangeListener(PropertyChangeListener listener);
+    void removePropertyChangeListener(PropertyChangeListener listener);
 
 }

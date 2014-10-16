@@ -34,14 +34,14 @@ public interface JDatePanel extends JDateComponent {
 	 * 
 	 * @param showYearButtons
 	 */
-	public abstract void setShowYearButtons(boolean showYearButtons);
+	void setShowYearButtons(boolean showYearButtons);
 
 	/**
 	 * Is the year navigation buttons active.
 	 * 
 	 * @return visiblity of the year
 	 */
-	public abstract boolean isShowYearButtons();
+	boolean isShowYearButtons();
 
 	/**
 	 * This changes the behaviour of the control to require a double click on
@@ -50,13 +50,13 @@ public interface JDatePanel extends JDateComponent {
 	 * 
 	 * @param doubleClickAction
 	 */
-	public abstract void setDoubleClickAction(boolean doubleClickAction);
+	void setDoubleClickAction(boolean doubleClickAction);
 
 	/**
 	 * Is a double click required to throw a ActionEvent.
 	 * 
 	 * @return
 	 */
-	public abstract boolean isDoubleClickAction();
+	boolean isDoubleClickAction();
 
 }

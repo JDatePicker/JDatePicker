@@ -40,11 +40,11 @@ import javax.swing.Icon;
  */
 public class JNextIcon implements Icon {
 	
-	protected int width;
-	protected int height;
+        private int width;
+        private int height;
 
-	protected int[] xPoints = new int[3];
-	protected int[] yPoints = new int[3];
+        private int[] xPoints = new int[3];
+        private int[] yPoints = new int[3];
 	
 	private boolean doubleArrow;
 

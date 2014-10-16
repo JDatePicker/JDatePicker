@@ -27,11 +27,12 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker.impl;
 
-import java.util.Calendar;
-
 import org.jdatepicker.AbstractDateModel;
 
-public class UtilCalendarModel extends AbstractDateModel<java.util.Calendar> {
+import java.util.Calendar;
+
+
+public class UtilCalendarModel extends AbstractDateModel<Calendar> {
 	
 	public UtilCalendarModel() {
 		this(null);
@@ -51,6 +52,6 @@ public class UtilCalendarModel extends AbstractDateModel<java.util.Calendar> {
 	protected Calendar toCalendar(Calendar from) {
 		return (Calendar)from.clone();
 	}
-	
+
 }
 

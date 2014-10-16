@@ -1,3 +1,5 @@
+# BSD Licence
+
 Copyright 2004 Juan Heyns. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are

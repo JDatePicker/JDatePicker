@@ -35,27 +35,27 @@ public interface JDatePicker extends JDatePanel {
 	 * 
 	 * @param editable
 	 */
-	public abstract void setTextEditable(boolean editable);
+	void setTextEditable(boolean editable);
 
 	/**
 	 * Is the text component editable or not.
 	 * 
 	 * @return
 	 */
-	public abstract boolean isTextEditable();
+	boolean isTextEditable();
 
 	/**
 	 * Sets the button to be focusable. Defaults to true.
 	 * 
 	 * @param focusable
 	 */
-	public abstract void setButtonFocusable(boolean focusable);
+	void setButtonFocusable(boolean focusable);
 
 	/**
 	 * Is the button focusable.
 	 * 
 	 * @return
 	 */
-	public abstract boolean getButtonFocusable();
+	boolean getButtonFocusable();
 
 }
