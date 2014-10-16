@@ -34,6 +34,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JFormattedTextField;
 
+import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 
@@ -43,7 +44,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
  * 
  * @author Juan Heyns
  */
-public abstract class AbstractComponentFactory<T> {
+public abstract class JDateComponentFactory<T> {
 	
 	private Properties texts;
 	private DefaultColorTheme colors;
@@ -54,7 +55,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * (UtilCalendarModel), date formatter (DateComponentFormatter) and
 	 * i18nStrings (English) and colors.
 	 */
-	public AbstractComponentFactory() {
+	public JDateComponentFactory() {
 		this(null, null, null);
 	}
 	
@@ -66,7 +67,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * @param colors
      * @param formatter
 	 */
-	public AbstractComponentFactory(Locale locale, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
+	public JDateComponentFactory(Locale locale, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
         Properties defaultTexts = createTexts(Locale.getDefault());
         DefaultColorTheme defaultColors = createDefaultColors();
         JFormattedTextField.AbstractFormatter defaultFormatter = createDefaultFormatter();
@@ -81,7 +82,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * @return
 	 */
 	public JFormattedTextField.AbstractFormatter createDefaultFormatter() {
-		return new DefaultDateFormatter();
+		return new DateComponentFormatter();
 	}
 
 	/**
@@ -124,7 +125,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * 
 	 * @return
 	 */
-	public abstract CalendarModel<T> createModel();
+	public abstract DateModel<T> createModel();
 
 	/**
 	 * Create a DateModel based on the type of the value.
@@ -132,7 +133,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * @param value
 	 * @return
 	 */
-	public abstract CalendarModel<T> createModel(T value);
+	public abstract DateModel<T> createModel(T value);
 
 	/**
 	 * Create with factory dateModel, i18nStrings and dateFormatter.
@@ -140,7 +141,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * @return
 	 */
 	public JDatePicker createJDatePicker() {
-		CalendarModel<T> model = createModel();
+		DateModel<T> model = createModel();
 		return new JDatePickerImpl(new JDatePanelImpl(model, texts, colors, formatter));
 	}
 	
@@ -154,7 +155,7 @@ public abstract class AbstractComponentFactory<T> {
 		if (value == null) {
 			throw new IllegalArgumentException("Value may not be null.");
 		}
-		CalendarModel<T> model = createModel(value);
+		DateModel<T> model = createModel(value);
 		return new JDatePickerImpl(new JDatePanelImpl(model, texts, colors, formatter));
 	}
 	
@@ -164,7 +165,7 @@ public abstract class AbstractComponentFactory<T> {
 	 * @return
 	 */
 	public JDatePanel createJDatePanel() {
-		CalendarModel<T> model = createModel();
+		DateModel<T> model = createModel();
 		return new JDatePanelImpl(model, texts, colors, formatter);
 	}
 	
@@ -178,7 +179,7 @@ public abstract class AbstractComponentFactory<T> {
 		if (value == null) {
 			throw new IllegalArgumentException("Value may not be null.");
 		}
-		CalendarModel<T> model = createModel(value);
+		DateModel<T> model = createModel(value);
 		return new JDatePanelImpl(model, texts, colors, formatter);
 	}
 	

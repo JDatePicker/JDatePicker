@@ -107,7 +107,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
              new DefaultComponentFactory().createDefaultFormatter());
     }
 
-	public JDatePanelImpl(CalendarModel<?> model, Properties texts, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
+	public JDatePanelImpl(DateModel<?> model, Properties texts, DefaultColorTheme colors, JFormattedTextField.AbstractFormatter formatter) {
 		actionListeners = new HashSet<ActionListener>();
 		dateConstraints = new HashSet<DateSelectionConstraint>();
 
@@ -176,7 +176,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	/* (non-Javadoc)
 	 * @see org.jdatepicker.JDateComponent#getModel()
 	 */
-	public CalendarModel<?> getModel() {
+	public DateModel<?> getModel() {
 		return internalModel.getModel();
 	}
 
@@ -204,7 +204,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         return Collections.unmodifiableSet(dateConstraints);
     }
 
-    boolean checkConstraints(CalendarModel model) {
+    boolean checkConstraints(DateModel model) {
         for (DateSelectionConstraint constraint : dateConstraints) {
             if (!constraint.isValidSelection(model)) {
                 return false;
@@ -658,7 +658,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 
                 Calendar calForDay = Calendar.getInstance();
                 calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
-                CalendarModel modelForDay = new DefaultCalendarModel(calForDay);
+                DateModel modelForDay = new UtilCalendarModel(calForDay);
                 label.setBackground(checkConstraints(modelForDay) ? colors.bgGrid() : colors.bgGridNotSelectable());
 
 				
@@ -680,7 +680,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 
                 Calendar calForDay = Calendar.getInstance();
                 calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
-                CalendarModel modelForDay = new DefaultCalendarModel(calForDay);
+                DateModel modelForDay = new UtilCalendarModel(calForDay);
                 label.setBackground(checkConstraints(modelForDay) ? colors.bgGrid() : colors.bgGridNotSelectable());
 				
 				//Today
@@ -819,18 +819,18 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	 */
 	protected class InternalCalendarModel implements TableModel, SpinnerModel, ChangeListener {
 
-		private CalendarModel<?> model;
+		private DateModel<?> model;
 		private Set<ChangeListener> spinnerChangeListeners;
 		private Set<TableModelListener> tableModelListeners;
 
-		public InternalCalendarModel(CalendarModel<?> model){
+		public InternalCalendarModel(DateModel<?> model){
 			this.spinnerChangeListeners = new HashSet<ChangeListener>();
 			this.tableModelListeners = new HashSet<TableModelListener>();
 			this.model = model;
 			model.addChangeListener(this);
 		}
 		
-		public CalendarModel<?> getModel() {
+		public DateModel<?> getModel() {
 			return model;
 		}
 		

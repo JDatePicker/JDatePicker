@@ -1,12 +1,12 @@
 package org.jdatepicker.constraints;
 
-import org.jdatepicker.CalendarModel;
+import org.jdatepicker.DateModel;
 
 import java.util.Calendar;
 
 public class WeekdayConstraint implements DateSelectionConstraint {
 
-	public boolean isValidSelection(CalendarModel model) {
+	public boolean isValidSelection(DateModel model) {
         if (model.isSelected()) {
             Calendar value = Calendar.getInstance();
             value.set(model.getYear(), model.getMonth(), model.getDay());

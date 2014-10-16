@@ -44,7 +44,7 @@ import javax.swing.event.ChangeListener;
  *
  * @param <T>
  */
-public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
+public abstract class AbstractDateModel<T> implements DateModel<T> {
 	public static final String PROPERTY_YEAR = "year";
 	public static final String PROPERTY_MONTH = "month";
 	public static final String PROPERTY_DAY = "day";
@@ -56,7 +56,7 @@ public abstract class AbstractCalendarModel<T> implements CalendarModel<T> {
 	private Set<ChangeListener> changeListeners;
 	private Set<PropertyChangeListener> propertyChangeListeners;
 
-	protected AbstractCalendarModel() {
+	protected AbstractDateModel() {
 		changeListeners = new HashSet<ChangeListener>();	
 		propertyChangeListeners = new HashSet<PropertyChangeListener>();
 		selected = false;

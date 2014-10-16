@@ -1,17 +1,19 @@
 package org.jdatepicker;
 
+import org.jdatepicker.impl.UtilCalendarModel;
+
 import java.util.Calendar;
 
-public class DefaultComponentFactory extends AbstractComponentFactory<Calendar> {
+public class DefaultComponentFactory extends JDateComponentFactory<Calendar> {
 	
 	@Override
-	public CalendarModel<Calendar> createModel() {
-		return (CalendarModel<Calendar>) new DefaultCalendarModel(Calendar.getInstance());
+	public DateModel<Calendar> createModel() {
+		return (DateModel<Calendar>) new UtilCalendarModel(Calendar.getInstance());
 	}
 
 	@Override
-	public CalendarModel<Calendar> createModel(Calendar value) {
-		return (CalendarModel<Calendar>) new DefaultCalendarModel(value);
+	public DateModel<Calendar> createModel(Calendar value) {
+		return (DateModel<Calendar>) new UtilCalendarModel(value);
 	}
 
 }

@@ -1,6 +1,6 @@
 package org.jdatepicker.constraints;
 
-import org.jdatepicker.CalendarModel;
+import org.jdatepicker.DateModel;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -48,7 +48,7 @@ public class RangeConstraint implements DateSelectionConstraint {
 		}
 	}
 
-	public boolean isValidSelection(CalendarModel model) {
+	public boolean isValidSelection(DateModel model) {
 		boolean result = true;
 
 		if (model.isSelected() && after != null) {

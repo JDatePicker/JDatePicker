@@ -25,7 +25,7 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package org.jdatepicker;
+package org.jdatepicker.impl;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,13 +35,13 @@ import java.util.Date;
 
 import javax.swing.JFormattedTextField;
 
-public class DefaultDateFormatter extends JFormattedTextField.AbstractFormatter {
+public class DateComponentFormatter extends JFormattedTextField.AbstractFormatter {
 	
 	private static final long serialVersionUID = 5997312768041129127L;
 	
 	private DateFormat format;
 	
-	public DefaultDateFormatter(){
+	public DateComponentFormatter(){
 		format = getMediumDateFormat();
 	}
 	

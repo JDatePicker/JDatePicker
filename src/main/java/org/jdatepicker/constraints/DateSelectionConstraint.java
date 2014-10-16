@@ -1,9 +1,9 @@
 package org.jdatepicker.constraints;
 
-import org.jdatepicker.CalendarModel;
+import org.jdatepicker.DateModel;
 
 public interface DateSelectionConstraint {
 
-	boolean isValidSelection(CalendarModel model);
+	boolean isValidSelection(DateModel model);
 
 }

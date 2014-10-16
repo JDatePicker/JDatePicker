@@ -92,7 +92,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
         //Create and Add Components
 		//Add and Configure TextField
 		formattedTextField = new JFormattedTextField(datePanel.getFormatter());
-		CalendarModel<?> model = datePanel.getModel();
+		DateModel<?> model = datePanel.getModel();
 		setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
 		formattedTextField.setEditable(false);		
 		add(formattedTextField);
@@ -132,7 +132,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		datePanel.removeActionListener(actionListener);
 	}
 
-	public CalendarModel<?> getModel() {
+	public DateModel<?> getModel() {
 		return datePanel.getModel();
 	}
 	
@@ -320,7 +320,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 
 		public void stateChanged(ChangeEvent arg0) {
 			if (arg0.getSource() == datePanel.getModel()) {
-				CalendarModel<?> model = datePanel.getModel();
+				DateModel<?> model = datePanel.getModel();
 				setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
 			}
 		}
@@ -328,7 +328,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (formattedTextField.isEditable() && formattedTextField.getValue() != null) {
 				Calendar value = (Calendar)formattedTextField.getValue();
-                CalendarModel model = new DefaultCalendarModel(value);
+                DateModel model = new UtilCalendarModel(value);
 				// check constraints
 				if (!datePanel.checkConstraints(model)) {
 					// rollback

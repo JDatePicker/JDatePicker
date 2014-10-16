@@ -25,18 +25,20 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package org.jdatepicker;
+package org.jdatepicker.impl;
+
+import org.jdatepicker.AbstractDateModel;
 
 import java.util.Calendar;
 
 
-public class DefaultCalendarModel extends AbstractCalendarModel<java.util.Calendar> {
+public class UtilCalendarModel extends AbstractDateModel<Calendar> {
 	
-	public DefaultCalendarModel() {
+	public UtilCalendarModel() {
 		this(null);
 	}
 	
-	public DefaultCalendarModel(Calendar value) {
+	public UtilCalendarModel(Calendar value) {
 		super();
 		setValue(value);
 	}
