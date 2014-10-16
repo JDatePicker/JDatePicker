@@ -39,6 +39,15 @@ import javax.swing.JFrame;
 public class TestJDatePanel {
 
 	public static void main(String[] args) {
+		// Test 1: Monday is the first day of week (Germany)
+//		Locale.setDefault(Locale.GERMAN);
+
+//		// Test 2: Saturday is the first day of week (Saudi Arabia)
+//		Locale.setDefault(Locale.forLanguageTag("ar-sa"));
+
+//		// Test 3: Sunday is the first day of week (US)
+//		Locale.setDefault(Locale.US);
+		
 		JFrame testFrame = new JFrame();
 		JDatePanel panel = new JDateComponentFactory().createJDatePanel();
 		panel.setShowYearButtons(true);

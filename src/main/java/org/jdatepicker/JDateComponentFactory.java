@@ -69,7 +69,7 @@ public class JDateComponentFactory {
 	 * 
 	 * @param dateModelClass
 	 * @param dateFormatter
-	 * @param i18nStrings
+	 * @param locale
 	 */
 	public JDateComponentFactory(Class<? extends DateModel<?>> dateModelClass, JFormattedTextField.AbstractFormatter dateFormatter, Locale locale) {
 		if (dateModelClass == null) {
@@ -108,7 +108,7 @@ public class JDateComponentFactory {
 	 * 
 	 * @return
 	 */
-	protected JFormattedTextField.AbstractFormatter getDefaultDateFormatter() {
+	public JFormattedTextField.AbstractFormatter getDefaultDateFormatter() {
 		return new DateComponentFormatter();
 	}
 
@@ -117,7 +117,7 @@ public class JDateComponentFactory {
 	 * 
 	 * @return
 	 */
-	protected Properties getI18nStrings(Locale locale) {
+	public Properties getI18nStrings(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("org.jdatepicker.i18n.Text", locale);
 		return convertToProperties(resourceBundle);
 	}
@@ -144,7 +144,7 @@ public class JDateComponentFactory {
 	 * @param clazz
 	 * @return
 	 */
-	private DateModel<?> createDateModel(Class<? extends DateModel<?>> clazz) {
+	public DateModel<?> createDateModel(Class<? extends DateModel<?>> clazz) {
 		DateModel<?> result = null;
 		if (clazz.equals(org.jdatepicker.impl.UtilCalendarModel.class)) {
 			result = new UtilCalendarModel(Calendar.getInstance());
@@ -165,7 +165,7 @@ public class JDateComponentFactory {
 	 * @param value
 	 * @return
 	 */
-	private static DateModel<?> createDateModel(Object value) {
+	public static DateModel<?> createDateModel(Object value) {
 		Class<?> clazz = value.getClass();
 		
 		DateModel<?> result = null;
@@ -189,15 +189,13 @@ public class JDateComponentFactory {
 	 */
 	public JDatePicker createJDatePicker() {
 		DateModel<?> model = createDateModel(dateModelClass);
-		return new JDatePickerImpl(new JDatePanelImpl(model, i18nStrings), dateFormatter);
+		return new JDatePickerImpl(new JDatePanelImpl(model, i18nStrings, new DefaultColorTheme() {}, dateFormatter), dateFormatter);
 	}
 	
 	/**
 	 * Create by specifying the initial value of the widget.
 	 * 
-	 * @param model
-	 * @param i18n
-	 * @param format
+	 * @param value
 	 * @return
 	 */
 	public JDatePicker createJDatePicker(Object value) {
@@ -205,7 +203,7 @@ public class JDateComponentFactory {
 			throw new IllegalArgumentException("Value may not be null.");
 		}
 		DateModel<?> model = createDateModel(value);
-		return new JDatePickerImpl(new JDatePanelImpl(model, i18nStrings), dateFormatter);
+		return new JDatePickerImpl(new JDatePanelImpl(model, i18nStrings, new DefaultColorTheme() {}, dateFormatter), dateFormatter);
 	}
 	
 	/**
@@ -215,14 +213,13 @@ public class JDateComponentFactory {
 	 */
 	public JDatePanel createJDatePanel() {
 		DateModel<?> model = createDateModel(dateModelClass);
-		return new JDatePanelImpl(model, i18nStrings);
+		return new JDatePanelImpl(model, i18nStrings, new DefaultColorTheme() {}, dateFormatter);
 	}
 	
 	/**
 	 * Create by specifying the initial value of the widget.
 	 * 
-	 * @param model
-	 * @param i18n
+	 * @param value
 	 * @return
 	 */
 	public JDatePanel createJDatePanel(Object value) {
@@ -230,7 +227,7 @@ public class JDateComponentFactory {
 			throw new IllegalArgumentException("Value may not be null.");
 		}
 		DateModel<?> model = createDateModel(value);
-		return new JDatePanelImpl(model, i18nStrings);
+		return new JDatePanelImpl(model, i18nStrings, new DefaultColorTheme() {}, dateFormatter);
 	}
 	
 }

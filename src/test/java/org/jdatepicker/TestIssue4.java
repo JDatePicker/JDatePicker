@@ -24,67 +24,40 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
-*/
+ */
 package org.jdatepicker;
 
-import javax.swing.Icon;
+import java.awt.BorderLayout;
+import java.util.Calendar;
 
-public interface JDatePicker extends JDatePanel {
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
-	/**
-	 * Is the text component editable or not. Defaults to false.
-	 * 
-	 * @param editable
-	 */
-	void setTextEditable(boolean editable);
+import org.jdatepicker.constraints.RangeConstraint;
 
-	/**
-	 * Is the text component editable or not.
-	 * 
-	 * @return
-	 */
-	boolean isTextEditable();
+public class TestIssue4 {
 
-	/**
-	 * Sets the button to be focusable. Defaults to true.
-	 * 
-	 * @param focusable
-	 */
-	void setButtonFocusable(boolean focusable);
+	public static void main(String[] args) {
+		JFrame testFrame = new JFrame();
+		testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		testFrame.setSize(500, 500);
+		JPanel jPanel = new JPanel();
+		JDatePicker picker = new JDateComponentFactory().createJDatePicker();
+		picker.setTextEditable(true);
+		picker.setShowYearButtons(true);
+		picker.addDateSelectionConstraint(new RangeConstraint(null, Calendar
+				.getInstance()));
+		jPanel.add((JComponent) picker);
 
-	/**
-	 * Is the button focusable.
-	 * 
-	 * @return
-	 */
-	boolean getButtonFocusable();
-
-	/**
-	 * The icon on the button.
-	 * 
-	 * @return Icon on Button
-	 */
-	Icon getButtonIcon();
-
-	/**
-	 * Sets the image on the button.
-	 * 
-	 * @param icon the icon to use
-	 */
-	void setButtonIcon(Icon icon);
-
-	/**
-	 * Returns the size of the underlying textfield
-	 * 
-	 * @return Columns
-	 */
-	int getTextfieldColumns();
-
-	/**
-	 * Sets the size of the underlying textfield in columns
-	 * 
-	 * @param columns {@link JTextField#setColumns(int)}
-	 */
-	void setTextfieldColumns(int columns);
+		JPanel DatePanel = new JPanel();
+		DatePanel.setLayout(new BorderLayout());
+		DatePanel.add(jPanel, BorderLayout.WEST);
+		BorderLayout fb = new BorderLayout();
+		testFrame.setLayout(fb);
+		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
+		testFrame.setVisible(true);
+	}
 
 }
