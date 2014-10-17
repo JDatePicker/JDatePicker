@@ -27,7 +27,7 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker;
 
-import javax.swing.Icon;
+import javax.swing.JTextField;
 
 public interface JDatePicker extends JDatePanel {
 

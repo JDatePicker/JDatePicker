@@ -1,8 +1,8 @@
 package org.jdatepicker;
 
-import org.jdatepicker.impl.UtilCalendarModel;
-
 import java.util.Calendar;
+
+import org.jdatepicker.impl.UtilCalendarModel;
 
 public class DefaultComponentFactory extends JDateComponentFactory<Calendar> {
 	

@@ -27,14 +27,6 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker;
 
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.ResourceBundle;
-
-import javax.swing.JFormattedTextField;
-
-import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 

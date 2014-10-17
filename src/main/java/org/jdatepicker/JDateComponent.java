@@ -27,10 +27,10 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker;
 
-import org.jdatepicker.constraints.DateSelectionConstraint;
-
 import java.awt.event.ActionListener;
 import java.util.Set;
+
+import org.jdatepicker.constraints.DateSelectionConstraint;
 
 /**
  * This interface is implemented by all components which represent a date by day
