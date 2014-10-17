@@ -49,22 +49,22 @@ public abstract class JDateComponentFactory<T> {
 	/**
 	 * Create a DateModel initialised to today, based on the clazz type.
 	 * 
-	 * @return
+	 * @return A new model
 	 */
 	public abstract DateModel<T> createModel();
 
 	/**
 	 * Create a DateModel based on the type of the value.
 	 * 
-	 * @param value
-	 * @return
+	 * @param value value
+	 * @return A new model
 	 */
 	public abstract DateModel<T> createModel(T value);
 
 	/**
 	 * Create with factory dateModel, i18nStrings and dateFormatter.
 	 * 
-	 * @return
+	 * @return A new Datepicker
 	 */
 	public JDatePicker createJDatePicker() {
 		DateModel<T> model = createModel();
@@ -74,8 +74,8 @@ public abstract class JDateComponentFactory<T> {
 	/**
 	 * Create by specifying the initial value of the widget.
 	 * 
-	 * @param value
-	 * @return
+	 * @param value value
+	 * @return A new Datepicker
 	 */
 	public JDatePicker createJDatePicker(T value) {
 		if (value == null) {
@@ -88,7 +88,7 @@ public abstract class JDateComponentFactory<T> {
 	/**
 	 * Create with factory dateModel, i18nStrings and dateFormatter.
 	 * 
-	 * @return
+	 * @return A new Datepanel
 	 */
 	public JDatePanel createJDatePanel() {
 		DateModel<T> model = createModel();
@@ -98,8 +98,8 @@ public abstract class JDateComponentFactory<T> {
 	/**
 	 * Create by specifying the initial value of the widget.
 	 * 
-	 * @param value
-	 * @return
+	 * @param value value
+	 * @return A new Datepanel
 	 */
 	public JDatePanel createJDatePanel(T value) {
 		if (value == null) {

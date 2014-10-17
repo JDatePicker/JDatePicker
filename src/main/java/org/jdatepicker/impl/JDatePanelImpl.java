@@ -285,7 +285,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		/**
 		 * This method initializes northPanel	
 		 * 	
-		 * @return javax.swing.JPanel	
+		 * @return javax.swing.JPanel The north panel
 		 */    
 		private JPanel getNorthPanel() {
 			if (northPanel == null) {

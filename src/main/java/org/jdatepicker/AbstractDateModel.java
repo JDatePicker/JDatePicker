@@ -42,7 +42,7 @@ import javax.swing.event.ChangeListener;
  * 
  * @author Juan Heyns
  *
- * @param <T>
+ * @param <T> The type of this model (e.g. java.util.Date, java.util.Calendar)
  */
 public abstract class AbstractDateModel<T> implements DateModel<T> {
 	public static final String PROPERTY_YEAR = "year";

@@ -96,7 +96,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	 * 
 	 * http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
 	 * 
-	 * @param datePanel
+	 * @param datePanel The DatePanel to use
 	 */
 	public JDatePickerImpl(JDatePanelImpl datePanel) {
 		this.datePanel = datePanel;
