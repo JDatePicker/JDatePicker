@@ -30,13 +30,13 @@ package org.jdatepicker;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.joda.time.LocalDate;
 
 /**
  * Created 18 April 2010 Updated 26 April 2010
@@ -117,7 +117,7 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
     }
 
     public LocalDate getLocalDate() {
-        return LocalDate.of(this.getYear(), this.getMonth(), this.getDay());
+        return new LocalDate(this.getYear(), this.getMonth(), this.getDay());
     }
 
     public void setDay(int day) {
@@ -217,7 +217,7 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
     }
 
     public void setLocalDate(LocalDate date) {
-        setDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+        setDate(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth());
     }
 
     public boolean isSelected() {
