@@ -33,14 +33,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.util.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -735,6 +731,15 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			else if (arg0.getSource() == internalView.getTodayLabel()) {
 				Calendar today = Calendar.getInstance();
 				internalModel.getModel().setDate(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE));
+				
+				internalModel.getModel().setSelected(true);
+                                
+				if (doubleClickAction && arg0.getClickCount() == 2) {
+					fireActionPerformed();
+				}
+				if (!doubleClickAction) {
+					fireActionPerformed();
+				}
 			} 
 			else if (arg0.getSource() == internalView.getDayTable()) {
 				int row = internalView.getDayTable().getSelectedRow();
