@@ -30,6 +30,7 @@ package org.jdatepicker;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -113,6 +114,10 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
             return null;
         }
         return fromCalendar(calendarValue);
+    }
+
+    public LocalDate getLocalDate() {
+        return LocalDate.of(this.getYear(), this.getMonth(), this.getDay());
     }
 
     public void setDay(int day) {
@@ -209,6 +214,10 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
         firePropertyChange(PROPERTY_MONTH, oldMonthValue, this.calendarValue.get(Calendar.MONTH));
         firePropertyChange(PROPERTY_DAY, oldDayValue, this.calendarValue.get(Calendar.DATE));
         firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
+    }
+
+    public void setLocalDate(LocalDate date) {
+        setDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth());
     }
 
     public boolean isSelected() {
