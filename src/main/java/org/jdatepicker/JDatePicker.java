@@ -69,7 +69,7 @@ public interface JDatePicker extends JDatePanel {
 	/**
 	 * Sets the size of the underlying textfield in columns
 	 * 
-	 * @param columns {@link JTextField#setColumns(int)}
+	 * @param columns 
 	 */
 	void setTextfieldColumns(int columns);
 

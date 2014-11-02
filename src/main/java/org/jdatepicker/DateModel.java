@@ -68,8 +68,6 @@ public interface DateModel<T> {
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
-	 * 
-	 * @return
 	 */
 	void setYear(int year);
 	
@@ -83,7 +81,6 @@ public interface DateModel<T> {
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
-	 * @return
 	 */
 	void setMonth(int month);
 	
@@ -96,15 +93,12 @@ public interface DateModel<T> {
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
-	 * 
-	 * @return
 	 */
 	void setDay(int day);
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
-	 * @return
 	 */
 	void setDate(int year, int month, int day);
 	

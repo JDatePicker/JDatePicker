@@ -735,6 +735,15 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 			else if (arg0.getSource() == internalView.getTodayLabel()) {
 				Calendar today = Calendar.getInstance();
 				internalModel.getModel().setDate(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE));
+				
+				internalModel.getModel().setSelected(true);
+                                
+				if (doubleClickAction && arg0.getClickCount() == 2) {
+					fireActionPerformed();
+				}
+				if (!doubleClickAction) {
+					fireActionPerformed();
+				}
 			} 
 			else if (arg0.getSource() == internalView.getDayTable()) {
 				int row = internalView.getDayTable().getSelectedRow();
