@@ -117,6 +117,9 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
     }
 
     public LocalDate getLocalDate() {
+        if (!selected) {
+            return null;
+        }
         return new LocalDate(this.getYear(), this.getMonth(), this.getDay());
     }
 
@@ -217,6 +220,10 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
     }
 
     public void setLocalDate(LocalDate date) {
+        if (date == null) {
+            setSelected(false);
+            return;
+        }
         setDate(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth());
     }
 
