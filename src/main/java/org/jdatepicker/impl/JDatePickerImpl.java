@@ -34,7 +34,6 @@ import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -281,7 +280,6 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	 * This internal class hides the public event methods from the outside 
 	 */
 	private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener, AWTEventListener {
-		final AtomicBoolean ignoreFurtherPropertyEvents = new AtomicBoolean(false);
 
 		public void ancestorMoved(HierarchyEvent arg0) {
 			hidePopup();
@@ -313,35 +311,35 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		}
 
 		public void propertyChange(PropertyChangeEvent evt) {
-			if (formattedTextField.isEditable() && formattedTextField.getValue() != null) {
-				Calendar value = (Calendar)formattedTextField.getValue();
+            // Short circuit if the following cases are found
+            if (evt.getOldValue() == null && evt.getNewValue() == null) {
+                return;
+            }
+            if (evt.getOldValue() != null && evt.getOldValue().equals(evt.getNewValue())) {
+                return;
+            }
+            if (!formattedTextField.isEditable()) {
+                return;
+            }
+            
+            // If the field is editable and we need to parse the date entered
+			if (evt.getNewValue() != null) {
+				Calendar value = (Calendar)evt.getNewValue();
                 DateModel model = new UtilCalendarModel(value);
 				// check constraints
 				if (!datePanel.checkConstraints(model)) {
 					// rollback
-					formattedTextField.setValue(evt.getOldValue());
+                    formattedTextField.setValue(evt.getOldValue());
 					return;
 				}
 				datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
 				datePanel.getModel().setSelected(true);
 			}
 
-			// Fix for issue #31: Clearing textfield does not fire change event
-			if (formattedTextField.isEditable()
-					&& evt.getNewValue() == null
-					&& ignoreFurtherPropertyEvents.compareAndSet(false, true)) {
-				// explicitly set model value to null to fire event
-				getModel().setValue(null);
-
-				// reset flag to handle further events.
-				//
-				// invokeLater so that no oldValue = null --> newValue = null
-				// events are fired.
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						ignoreFurtherPropertyEvents.set(false);
-					}
-				});
+			// Clearing textfield will also fire change event
+			if (evt.getNewValue() == null) {
+				// Set model value unselected, this will fire an event
+				getModel().setSelected(false);
 			}
 		}
 
