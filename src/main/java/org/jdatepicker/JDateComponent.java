@@ -27,10 +27,10 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker;
 
-import org.jdatepicker.constraints.DateSelectionConstraint;
-
 import java.awt.event.ActionListener;
 import java.util.Set;
+
+import org.jdatepicker.constraints.DateSelectionConstraint;
 
 /**
  * This interface is implemented by all components which represent a date by day
@@ -56,7 +56,7 @@ public interface JDateComponent {
 	 * - org.joda.time.DateMidnight
 	 * - java.util.Date
 	 * 
-	 * @return
+	 * @return A new Model
 	 */
 	DateModel<?> getModel();
 
@@ -65,7 +65,7 @@ public interface JDateComponent {
 	 * on a date. Deliberately selecting a date will trigger this event, not
 	 * scrolling which fires a ChangeEvent for ChangeListeners.
 	 * 
-	 * @param actionListener
+	 * @param actionListener The listener to add
 	 */
 	void addActionListener(ActionListener actionListener);
 
@@ -73,7 +73,7 @@ public interface JDateComponent {
 	 * Removes the ActionListener. The actionListener is notified when a user
 	 * clicks on a date.
 	 * 
-	 * @param actionListener
+	 * @param actionListener The listener to remove
 	 */
 	void removeActionListener(ActionListener actionListener);
 
@@ -81,16 +81,14 @@ public interface JDateComponent {
     /**
      * Adds an constraint on selectable dates.
      *
-     * @param constraint
-     *            the constraint to check on selection
+     * @param constraint the constraint to add
      */
     void addDateSelectionConstraint(DateSelectionConstraint constraint);
 
     /**
      * Removes an constraint on selectable dates.
      *
-     * @param constraint
-     *            the constraint to check on selection
+     * @param constraint the constraint to remove
      */
     void removeDateSelectionConstraint(DateSelectionConstraint constraint);
 

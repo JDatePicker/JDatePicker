@@ -32,7 +32,7 @@ public interface JDatePanel extends JDateComponent {
 	/**
 	 * Sets the visibilty of the Year navigation buttons. Defaults to false.
 	 * 
-	 * @param showYearButtons
+	 * @param showYearButtons show the button?
 	 */
 	void setShowYearButtons(boolean showYearButtons);
 
@@ -45,17 +45,15 @@ public interface JDatePanel extends JDateComponent {
 
 	/**
 	 * This changes the behaviour of the control to require a double click on
-	 * actionable clicks. If this is set the ActionEvent will only be thrown
+	 * actionable clicks. If this is set the ActionEvent will only be fired
 	 * when double clicked on a date. Defaults to false.
 	 * 
-	 * @param doubleClickAction
+	 * @param doubleClickAction use double clicks?
 	 */
 	void setDoubleClickAction(boolean doubleClickAction);
 
 	/**
-	 * Is a double click required to throw a ActionEvent.
-	 * 
-	 * @return
+	 * @return Is a double click required to fire a ActionEvent.
 	 */
 	boolean isDoubleClickAction();
 

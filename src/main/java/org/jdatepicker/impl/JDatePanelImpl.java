@@ -33,15 +33,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.TableModelEvent;
@@ -51,7 +60,13 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import org.jdatepicker.*;
+import org.jdatepicker.ComponentColorDefaults;
+import org.jdatepicker.ComponentIconDefaults;
+import org.jdatepicker.ComponentManager;
+import org.jdatepicker.ComponentTextDefaults;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.DefaultComponentFactory;
+import org.jdatepicker.JDatePanel;
 import org.jdatepicker.constraints.DateSelectionConstraint;
 
 /**
@@ -177,7 +192,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         return Collections.unmodifiableSet(dateConstraints);
     }
 
-    protected boolean checkConstraints(DateModel model) {
+    protected boolean checkConstraints(DateModel<?> model) {
         for (DateSelectionConstraint constraint : dateConstraints) {
             if (!constraint.isValidSelection(model)) {
                 return false;
@@ -270,7 +285,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		/**
 		 * This method initializes northPanel	
 		 * 	
-		 * @return javax.swing.JPanel	
+		 * @return javax.swing.JPanel The north panel
 		 */    
 		private JPanel getNorthPanel() {
 			if (northPanel == null) {
@@ -635,7 +650,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 
                 Calendar calForDay = Calendar.getInstance();
                 calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
-                DateModel modelForDay = new UtilCalendarModel(calForDay);
+                DateModel<Calendar> modelForDay = new UtilCalendarModel(calForDay);
                 label.setBackground(checkConstraints(modelForDay) ? getColors().bgGrid() : getColors().bgGridNotSelectable());
 
 				
@@ -657,7 +672,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 
                 Calendar calForDay = Calendar.getInstance();
                 calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
-                DateModel modelForDay = new UtilCalendarModel(calForDay);
+                DateModel<Calendar> modelForDay = new UtilCalendarModel(calForDay);
                 label.setBackground(checkConstraints(modelForDay) ? getColors().bgGrid() : getColors().bgGridNotSelectable());
 				
 				//Today

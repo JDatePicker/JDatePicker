@@ -1,13 +1,15 @@
 package org.jdatepicker;
 
-import org.jdatepicker.graphics.JNextIcon;
-import org.jdatepicker.graphics.JPreviousIcon;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
+import org.jdatepicker.graphics.JNextIcon;
+import org.jdatepicker.graphics.JPreviousIcon;
 
 /**
  * Created by jheyns on 2014/10/16.

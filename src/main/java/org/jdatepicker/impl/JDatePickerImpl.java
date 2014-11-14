@@ -27,19 +27,40 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker.impl;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.HierarchyBoundsListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JPanel;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
+import javax.swing.SpringLayout;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jdatepicker.*;
+import org.jdatepicker.ComponentManager;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDatePanel;
+import org.jdatepicker.JDatePicker;
 import org.jdatepicker.constraints.DateSelectionConstraint;
 
 
@@ -75,7 +96,7 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 	 * 
 	 * http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
 	 * 
-	 * @param datePanel
+	 * @param datePanel The DatePanel to use
 	 */
 	public JDatePickerImpl(JDatePanelImpl datePanel) {
 		this.datePanel = datePanel;
@@ -203,8 +224,8 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 		}
 	}
 
-    private Set getAllComponents(Component component) {
-        Set children = new HashSet();
+    private Set<Component> getAllComponents(Component component) {
+        Set<Component> children = new HashSet<Component>();
         children.add(component);
         if (component instanceof Container) {
             Container container = (Container)component;
@@ -345,9 +366,9 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
 
         public void eventDispatched(AWTEvent event) {
             if (MouseEvent.MOUSE_CLICKED == event.getID() && event.getSource() != button) {
-                Set components = getAllComponents(datePanel);
+                Set<Component> components = getAllComponents(datePanel);
                 boolean clickInPopup = false;
-                for (Object component: components) {
+                for (Component component: components) {
                     if (event.getSource() == component) {
                         clickInPopup = true;
                     }

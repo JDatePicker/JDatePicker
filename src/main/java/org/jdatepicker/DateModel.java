@@ -37,7 +37,7 @@ import javax.swing.event.ChangeListener;
  * 
  * @author Juan Heyns
  *
- * @param <T>
+ * @param <T> The type of this model (e.g. java.util.Date, java.util.Calendar)
  */
 public interface DateModel<T> {
 
@@ -47,7 +47,7 @@ public interface DateModel<T> {
 	 * dates the internal model changes, which fires a ChangeEvent each time it
 	 * changes.
 	 * 
-	 * @param changeListener
+	 * @param changeListener The changelistener to add.
 	 */
 	void addChangeListener(ChangeListener changeListener);
 
@@ -55,105 +55,105 @@ public interface DateModel<T> {
 	 * Removes the specified ChangeListener. ChangeListeners will be notified
 	 * when the selected date is changed.
 	 * 
-	 * @param changeListener
+	 * @param changeListener The changelistener to remove.
 	 */
 	void removeChangeListener(ChangeListener changeListener);
 
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
-	 * @return
+	 * @return year
 	 */
 	int getYear();
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
-	 * @return
+	 * @param year year
 	 */
 	void setYear(int year);
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
-	 * @return
+	 * @return month
 	 */
 	int getMonth();
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
-	 * @return
+	 * @param month month
 	 */
 	void setMonth(int month);
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
-	 * @return
+	 * @return day
 	 */
 	int getDay();
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
-	 * @return
+	 * @param day day
 	 */
 	void setDay(int day);
 	
 	/**
 	 * Getters and setters which represent a gregorian date.
 	 * 
-	 * @return
+	 * @param year year
+	 * @param month month
+	 * @param day day
 	 */
 	void setDate(int year, int month, int day);
 	
 	/**
 	 * Add or substract number of years.
 	 * 
-	 * @param add
+	 * @param add years
 	 */
 	void addYear(int add);
 	
 	/**
 	 * Add or substract number of months.
 	 * 
-	 * @param add
+	 * @param add months
 	 */
 	void addMonth(int add);
 	
 	/**
 	 * Add or substract number of day.
 	 * 
-	 * @param add
+	 * @param add days
 	 */
 	void addDay(int add);
 
 	/**
 	 * Get the value this model represents.
 	 * 
-	 * @return
+	 * @return current value
 	 */
 	T getValue();
 
 	/**
 	 * Set the value this model represents.
 	 * 
-	 * @param value
+	 * @param value new value
 	 */
 	void setValue(T value);
 	
 	/**
-	 * Is the value selected or is it not.
-	 * 
-	 * @return
+	 * @return Is the value selected or is it not.
 	 */
 	boolean isSelected();
 	
 	/**
 	 * Set the value as selected.
 	 * 
-	 * @param selected
+	 * @param selected select this value?
 	 */
 	void setSelected(boolean selected);
 	
@@ -161,7 +161,7 @@ public interface DateModel<T> {
      * Adds a PropertyChangeListener to the list of bean listeners.
      * The listener is registered for all bound properties of the target bean.
      *
-     * @param listener      the PropertyChangeListener to be added
+     * @param listener The PropertyChangeListener to be added
      *
      * @see #removePropertyChangeListener(PropertyChangeListener)
      */
@@ -173,7 +173,7 @@ public interface DateModel<T> {
      * This method should be used to remove PropertyChangeListeners that
      * were registered for all bound properties of the target bean.
      * 
-     * @param listener      the PropertyChangeListener to be removed
+     * @param listener The PropertyChangeListener to be removed
      *
      * @see #addPropertyChangeListener(PropertyChangeListener)
      */

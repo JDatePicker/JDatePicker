@@ -27,9 +27,6 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker;
 
-import org.jdatepicker.DefaultComponentFactory;
-import org.jdatepicker.JDatePicker;
-
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
