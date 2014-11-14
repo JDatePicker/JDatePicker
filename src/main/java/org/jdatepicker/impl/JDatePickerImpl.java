@@ -78,51 +78,51 @@ import org.jdatepicker.constraints.DateSelectionConstraint;
  */
 public class JDatePickerImpl extends JPanel implements JDatePicker {
 
-	private static final long serialVersionUID = 2814777654384974503L;
-	
-	private Popup popup;
-	private JFormattedTextField formattedTextField;
-	private JButton button;
-	
-	private JDatePanelImpl datePanel;
+    private static final long serialVersionUID = 2814777654384974503L;
+    
+    private Popup popup;
+    private JFormattedTextField formattedTextField;
+    private JButton button;
+    
+    private JDatePanelImpl datePanel;
 
     public JDatePickerImpl() {
         this(new JDatePanelImpl());
     }
 
-	/**
-	 * You are able to set the format of the date being displayed on the label.
-	 * Formatting is described at:
-	 * 
-	 * http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
-	 * 
-	 * @param datePanel The DatePanel to use
-	 */
-	public JDatePickerImpl(JDatePanelImpl datePanel) {
-		this.datePanel = datePanel;
+    /**
+     * You are able to set the format of the date being displayed on the label.
+     * Formatting is described at:
+     * 
+     * http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
+     * 
+     * @param datePanel The DatePanel to use
+     */
+    public JDatePickerImpl(JDatePanelImpl datePanel) {
+        this.datePanel = datePanel;
 
-		//Initialise Variables
-		popup = null;
-		datePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        //Initialise Variables
+        popup = null;
+        datePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         InternalEventHandler internalEventHandler = new InternalEventHandler();
 
-		//Create Layout
-		SpringLayout layout = new SpringLayout();
+        //Create Layout
+        SpringLayout layout = new SpringLayout();
         setLayout(layout);
 
         //Create and Add Components
-		//Add and Configure TextField
-		formattedTextField = new JFormattedTextField(new DateComponentFormatter(ComponentManager.getInstance().getComponentFormatDefaults().getSelectedDateFormat()));
-		DateModel<?> model = datePanel.getModel();
-		setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
-		formattedTextField.setEditable(false);		
-		add(formattedTextField);
+        //Add and Configure TextField
+        formattedTextField = new JFormattedTextField(new DateComponentFormatter(ComponentManager.getInstance().getComponentFormatDefaults().getSelectedDateFormat()));
+        DateModel<?> model = datePanel.getModel();
+        setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
+        formattedTextField.setEditable(false);        
+        add(formattedTextField);
         layout.putConstraint(SpringLayout.WEST, formattedTextField, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, formattedTextField);
 
-		//Add and Configure Button
-		button = new JButton();
-		button.setFocusable(true);
+        //Add and Configure Button
+        button = new JButton();
+        button.setFocusable(true);
         Icon icon = ComponentManager.getInstance().getComponentIconDefaults().getPopupButtonIcon();
         button.setIcon(icon);
         if(icon == null) {
@@ -132,97 +132,97 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
             // remove text
             button.setText("");
         }
-		add(button);
+        add(button);
         layout.putConstraint(SpringLayout.WEST, button, 1, SpringLayout.EAST, formattedTextField);
         layout.putConstraint(SpringLayout.EAST, this, 0, SpringLayout.EAST, button);
         layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, button);
-		
-		//Do layout formatting
-		int h = (int)button.getPreferredSize().getHeight();
-		int w = (int)datePanel.getPreferredSize().getWidth();
-		button.setPreferredSize(new Dimension(h, h));
-		formattedTextField.setPreferredSize(new Dimension(w-h-1, h));
+        
+        //Do layout formatting
+        int h = (int)button.getPreferredSize().getHeight();
+        int w = (int)datePanel.getPreferredSize().getWidth();
+        button.setPreferredSize(new Dimension(h, h));
+        formattedTextField.setPreferredSize(new Dimension(w-h-1, h));
 
-		//Add event listeners
-		addHierarchyBoundsListener(internalEventHandler);
-//TODO		addAncestorListener(listener)
-		button.addActionListener(internalEventHandler);
-		formattedTextField.addPropertyChangeListener("value", internalEventHandler);
-		datePanel.addActionListener(internalEventHandler);
-		datePanel.getModel().addChangeListener(internalEventHandler);
+        //Add event listeners
+        addHierarchyBoundsListener(internalEventHandler);
+//TODO        addAncestorListener(listener)
+        button.addActionListener(internalEventHandler);
+        formattedTextField.addPropertyChangeListener("value", internalEventHandler);
+        datePanel.addActionListener(internalEventHandler);
+        datePanel.getModel().addChangeListener(internalEventHandler);
         long eventMask = MouseEvent.MOUSE_PRESSED;
         Toolkit.getDefaultToolkit().addAWTEventListener(internalEventHandler, eventMask);
-	}
-	
-	public void addActionListener(ActionListener actionListener) {
-		datePanel.addActionListener(actionListener);
-	}
+    }
+    
+    public void addActionListener(ActionListener actionListener) {
+        datePanel.addActionListener(actionListener);
+    }
 
-	public void removeActionListener(ActionListener actionListener) {
-		datePanel.removeActionListener(actionListener);
-	}
+    public void removeActionListener(ActionListener actionListener) {
+        datePanel.removeActionListener(actionListener);
+    }
 
-	public DateModel<?> getModel() {
-		return datePanel.getModel();
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.jdatepicker.JDatePicker#setTextEditable(boolean)
-	 */
-	public void setTextEditable(boolean editable) {
-		formattedTextField.setEditable(editable);
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.jdatepicker.JDatePicker#isTextEditable()
-	 */
-	public boolean isTextEditable() {
-		return formattedTextField.isEditable();
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.jdatepicker.JDatePicker#setButtonFocusable(boolean)
-	 */
-	public void setButtonFocusable(boolean focusable) {
-		button.setFocusable(focusable);
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.jdatepicker.JDatePicker#getButtonFocusable()
-	 */
-	public boolean getButtonFocusable() {
-		return button.isFocusable();
-	}
+    public DateModel<?> getModel() {
+        return datePanel.getModel();
+    }
+    
+    /* (non-Javadoc)
+     * @see org.jdatepicker.JDatePicker#setTextEditable(boolean)
+     */
+    public void setTextEditable(boolean editable) {
+        formattedTextField.setEditable(editable);
+    }
+    
+    /* (non-Javadoc)
+     * @see org.jdatepicker.JDatePicker#isTextEditable()
+     */
+    public boolean isTextEditable() {
+        return formattedTextField.isEditable();
+    }
+    
+    /* (non-Javadoc)
+     * @see org.jdatepicker.JDatePicker#setButtonFocusable(boolean)
+     */
+    public void setButtonFocusable(boolean focusable) {
+        button.setFocusable(focusable);
+    }
+    
+    /* (non-Javadoc)
+     * @see org.jdatepicker.JDatePicker#getButtonFocusable()
+     */
+    public boolean getButtonFocusable() {
+        return button.isFocusable();
+    }
 
-	/* (non-Javadoc)
-	 * @see org.jdatepicker.JDatePicker#getJDateInstantPanel()
-	 */
-	public JDatePanel getJDateInstantPanel() {
-		return datePanel;
-	}
+    /* (non-Javadoc)
+     * @see org.jdatepicker.JDatePicker#getJDateInstantPanel()
+     */
+    public JDatePanel getJDateInstantPanel() {
+        return datePanel;
+    }
 
-	/**
-	 * Called internally to popup the dates.
-	 */
-	private void showPopup() {
-		if (popup == null){
-			PopupFactory fac = new PopupFactory();
-			Point xy = getLocationOnScreen();
-			datePanel.setVisible(true);
-			popup = fac.getPopup(this, datePanel, (int) xy.getX(), (int) (xy.getY()+this.getHeight()));
-			popup.show();
-		}
-	}
-	
-	/**
-	 * Called internally to hide the popup dates. 
-	 */
-	private void hidePopup() {
-		if (popup != null) {
-			popup.hide();
-			popup = null;
-		}
-	}
+    /**
+     * Called internally to popup the dates.
+     */
+    private void showPopup() {
+        if (popup == null){
+            PopupFactory fac = new PopupFactory();
+            Point xy = getLocationOnScreen();
+            datePanel.setVisible(true);
+            popup = fac.getPopup(this, datePanel, (int) xy.getX(), (int) (xy.getY()+this.getHeight()));
+            popup.show();
+        }
+    }
+    
+    /**
+     * Called internally to hide the popup dates. 
+     */
+    private void hidePopup() {
+        if (popup != null) {
+            popup.hide();
+            popup = null;
+        }
+    }
 
     private Set<Component> getAllComponents(Component component) {
         Set<Component> children = new HashSet<Component>();
@@ -298,40 +298,40 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
     }
 
     /**
-	 * This internal class hides the public event methods from the outside 
-	 */
-	private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener, AWTEventListener {
+     * This internal class hides the public event methods from the outside 
+     */
+    private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener, AWTEventListener {
 
-		public void ancestorMoved(HierarchyEvent arg0) {
-			hidePopup();
-		}
+        public void ancestorMoved(HierarchyEvent arg0) {
+            hidePopup();
+        }
 
-		public void ancestorResized(HierarchyEvent arg0) {
-			hidePopup();
-		}
+        public void ancestorResized(HierarchyEvent arg0) {
+            hidePopup();
+        }
 
-		public void actionPerformed(ActionEvent arg0) {
-			if (arg0.getSource() == button){
-				if (popup == null) {
-					showPopup();
-				}
-				else {
-					hidePopup();
-				}
-			} 
-			else if (arg0.getSource() == datePanel){
-				hidePopup();
-			}
-		}
+        public void actionPerformed(ActionEvent arg0) {
+            if (arg0.getSource() == button){
+                if (popup == null) {
+                    showPopup();
+                }
+                else {
+                    hidePopup();
+                }
+            } 
+            else if (arg0.getSource() == datePanel){
+                hidePopup();
+            }
+        }
 
-		public void stateChanged(ChangeEvent arg0) {
-			if (arg0.getSource() == datePanel.getModel()) {
-				DateModel<?> model = datePanel.getModel();
-				setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
-			}
-		}
+        public void stateChanged(ChangeEvent arg0) {
+            if (arg0.getSource() == datePanel.getModel()) {
+                DateModel<?> model = datePanel.getModel();
+                setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
+            }
+        }
 
-		public void propertyChange(PropertyChangeEvent evt) {
+        public void propertyChange(PropertyChangeEvent evt) {
             // Short circuit if the following cases are found
             if (evt.getOldValue() == null && evt.getNewValue() == null) {
                 return;
@@ -344,25 +344,25 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
             }
             
             // If the field is editable and we need to parse the date entered
-			if (evt.getNewValue() != null) {
-				Calendar value = (Calendar)evt.getNewValue();
+            if (evt.getNewValue() != null) {
+                Calendar value = (Calendar)evt.getNewValue();
                 DateModel model = new UtilCalendarModel(value);
-				// check constraints
-				if (!datePanel.checkConstraints(model)) {
-					// rollback
+                // check constraints
+                if (!datePanel.checkConstraints(model)) {
+                    // rollback
                     formattedTextField.setValue(evt.getOldValue());
-					return;
-				}
-				datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
-				datePanel.getModel().setSelected(true);
-			}
+                    return;
+                }
+                datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
+                datePanel.getModel().setSelected(true);
+            }
 
-			// Clearing textfield will also fire change event
-			if (evt.getNewValue() == null) {
-				// Set model value unselected, this will fire an event
-				getModel().setSelected(false);
-			}
-		}
+            // Clearing textfield will also fire change event
+            if (evt.getNewValue() == null) {
+                // Set model value unselected, this will fire an event
+                getModel().setSelected(false);
+            }
+        }
 
         public void eventDispatched(AWTEvent event) {
             if (MouseEvent.MOUSE_CLICKED == event.getID() && event.getSource() != button) {

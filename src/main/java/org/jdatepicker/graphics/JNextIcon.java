@@ -39,84 +39,84 @@ import javax.swing.Icon;
  * @author Juan Heyns
  */
 public class JNextIcon implements Icon {
-	
-	private int width;
+    
+    private int width;
     private int height;
 
     private int[] xPoints = new int[3];
     private int[] yPoints = new int[3];
-	
-	private boolean doubleArrow;
+    
+    private boolean doubleArrow;
 
-	public JNextIcon(int width, int height) {
-		setDimension(width, height);
-		doubleArrow = false;
-	}
+    public JNextIcon(int width, int height) {
+        setDimension(width, height);
+        doubleArrow = false;
+    }
 
-	public JNextIcon(int width, int height, boolean doubleArrow) {
-		setDimension(width, height);
-		this.doubleArrow = doubleArrow;
-	}
+    public JNextIcon(int width, int height, boolean doubleArrow) {
+        setDimension(width, height);
+        this.doubleArrow = doubleArrow;
+    }
 
-	public void setDoubleArrow(boolean doubleArrow) {
-		this.doubleArrow = doubleArrow;
-	}
+    public void setDoubleArrow(boolean doubleArrow) {
+        this.doubleArrow = doubleArrow;
+    }
 
-	public boolean getDoubleArrow() {
-		return doubleArrow;
-	}
+    public boolean getDoubleArrow() {
+        return doubleArrow;
+    }
 
-	public int getIconWidth() {
-		return width;
-	}
+    public int getIconWidth() {
+        return width;
+    }
 
-	public int getIconHeight() {
-		return height;
-	}
+    public int getIconHeight() {
+        return height;
+    }
 
-	public void setDimension(int width, int height) {
-		this.width = width;
-		this.height = height;
-	}
+    public void setDimension(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
 
-	public void paintIcon(Component c, Graphics g, int x, int y) {
-		if (doubleArrow) {
-			xPoints[0] = x + (width / 2);
-			yPoints[0] = y + (height / 2);
+    public void paintIcon(Component c, Graphics g, int x, int y) {
+        if (doubleArrow) {
+            xPoints[0] = x + (width / 2);
+            yPoints[0] = y + (height / 2);
 
-			xPoints[1] = x;
-			yPoints[1] = y - 1;
+            xPoints[1] = x;
+            yPoints[1] = y - 1;
 
-			xPoints[2] = x;
-			yPoints[2] = y + height;
+            xPoints[2] = x;
+            yPoints[2] = y + height;
 
-			g.setColor(Color.BLACK);
-			g.fillPolygon(xPoints, yPoints, 3);
+            g.setColor(Color.BLACK);
+            g.fillPolygon(xPoints, yPoints, 3);
 
-			xPoints[0] = x + width;
-			yPoints[0] = y + (height / 2);
+            xPoints[0] = x + width;
+            yPoints[0] = y + (height / 2);
 
-			xPoints[1] = x + (width / 2);
-			yPoints[1] = y - 1;
+            xPoints[1] = x + (width / 2);
+            yPoints[1] = y - 1;
 
-			xPoints[2] = x + (width / 2);
-			yPoints[2] = y + height;
+            xPoints[2] = x + (width / 2);
+            yPoints[2] = y + height;
 
-			g.setColor(Color.BLACK);
-			g.fillPolygon(xPoints, yPoints, 3);
-		} else {
-			xPoints[0] = x + width;
-			yPoints[0] = y + (height / 2);
-			
-			xPoints[1] = x;
-			yPoints[1] = y - 1;
-			
-			xPoints[2] = x;
-			yPoints[2] = y + height;
-			
-			g.setColor(Color.BLACK);
-			g.fillPolygon(xPoints, yPoints, 3);
-		}
-	}
+            g.setColor(Color.BLACK);
+            g.fillPolygon(xPoints, yPoints, 3);
+        } else {
+            xPoints[0] = x + width;
+            yPoints[0] = y + (height / 2);
+            
+            xPoints[1] = x;
+            yPoints[1] = y - 1;
+            
+            xPoints[2] = x;
+            yPoints[2] = y + height;
+            
+            g.setColor(Color.BLACK);
+            g.fillPolygon(xPoints, yPoints, 3);
+        }
+    }
 }
 

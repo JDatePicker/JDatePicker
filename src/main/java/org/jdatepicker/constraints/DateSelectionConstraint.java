@@ -37,13 +37,13 @@ import org.jdatepicker.DateModel;
  */
 public interface DateSelectionConstraint {
 
-	/**
-	 * Check the models value to be a valid, selectable date.
-	 * 
-	 * @param model
-	 *            The model to check
-	 * @return <code>true</code> if the models value is valid, else returns
-	 *         <code>false</code>
-	 */
-	boolean isValidSelection(DateModel<?> model);
+    /**
+     * Check the models value to be a valid, selectable date.
+     * 
+     * @param model
+     *            The model to check
+     * @return <code>true</code> if the models value is valid, else returns
+     *         <code>false</code>
+     */
+    boolean isValidSelection(DateModel<?> model);
 }

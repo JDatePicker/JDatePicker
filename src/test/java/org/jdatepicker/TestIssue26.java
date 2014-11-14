@@ -37,25 +37,25 @@ import javax.swing.WindowConstants;
 
 public class TestIssue26 {
 
-	public static void main(String[] args) {
-		Locale.setDefault(Locale.forLanguageTag("ar-sa"));
-		
-		JFrame testFrame = new JFrame();
-		testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		testFrame.setSize(500, 500);
-		JPanel jPanel = new JPanel();
-		JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
-		picker.setTextEditable(true);
-		picker.setShowYearButtons(true);
-		jPanel.add((JComponent) picker);
+    public static void main(String[] args) {
+        Locale.setDefault(Locale.forLanguageTag("ar-sa"));
+        
+        JFrame testFrame = new JFrame();
+        testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        testFrame.setSize(500, 500);
+        JPanel jPanel = new JPanel();
+        JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        picker.setTextEditable(true);
+        picker.setShowYearButtons(true);
+        jPanel.add((JComponent) picker);
 
-		JPanel DatePanel = new JPanel();
-		DatePanel.setLayout(new BorderLayout());
-		DatePanel.add(jPanel, BorderLayout.WEST);
-		BorderLayout fb = new BorderLayout();
-		testFrame.setLayout(fb);
-		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
-		testFrame.setVisible(true);
-	}
+        JPanel DatePanel = new JPanel();
+        DatePanel.setLayout(new BorderLayout());
+        DatePanel.add(jPanel, BorderLayout.WEST);
+        BorderLayout fb = new BorderLayout();
+        testFrame.setLayout(fb);
+        testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
+        testFrame.setVisible(true);
+    }
 
 }

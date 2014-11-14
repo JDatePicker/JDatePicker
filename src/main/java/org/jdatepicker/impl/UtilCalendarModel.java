@@ -33,25 +33,25 @@ import org.jdatepicker.AbstractDateModel;
 
 
 public class UtilCalendarModel extends AbstractDateModel<Calendar> {
-	
-	public UtilCalendarModel() {
-		this(null);
-	}
-	
-	public UtilCalendarModel(Calendar value) {
-		super();
-		setValue(value);
-	}
+    
+    public UtilCalendarModel() {
+        this(null);
+    }
+    
+    public UtilCalendarModel(Calendar value) {
+        super();
+        setValue(value);
+    }
 
-	@Override
-	protected Calendar fromCalendar(Calendar from) {
-		return (Calendar)from.clone();
-	}
+    @Override
+    protected Calendar fromCalendar(Calendar from) {
+        return (Calendar)from.clone();
+    }
 
-	@Override
-	protected Calendar toCalendar(Calendar from) {
-		return (Calendar)from.clone();
-	}
+    @Override
+    protected Calendar toCalendar(Calendar from) {
+        return (Calendar)from.clone();
+    }
 
 }
 

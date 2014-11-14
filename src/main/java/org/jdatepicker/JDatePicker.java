@@ -31,40 +31,40 @@ import javax.swing.JTextField;
 
 public interface JDatePicker extends JDatePanel {
 
-	/**
-	 * Is the text component editable or not. Defaults to false.
-	 * 
-	 * @param editable should the textfield be editable?
-	 */
-	void setTextEditable(boolean editable);
+    /**
+     * Is the text component editable or not. Defaults to false.
+     * 
+     * @param editable should the textfield be editable?
+     */
+    void setTextEditable(boolean editable);
 
-	/**
-	 * @return Is the text component editable?
-	 */
-	boolean isTextEditable();
+    /**
+     * @return Is the text component editable?
+     */
+    boolean isTextEditable();
 
-	/**
-	 * Sets the button to be focusable. Defaults to true.
-	 * 
-	 * @param focusable should the button be focusable?
-	 */
-	void setButtonFocusable(boolean focusable);
+    /**
+     * Sets the button to be focusable. Defaults to true.
+     * 
+     * @param focusable should the button be focusable?
+     */
+    void setButtonFocusable(boolean focusable);
 
-	/**
-	 * @return Is the button focusable?
-	 */
-	boolean getButtonFocusable();
+    /**
+     * @return Is the button focusable?
+     */
+    boolean getButtonFocusable();
 
-	/**
-	 * @return Columns the size of the underlying textfield
-	 */
-	int getTextfieldColumns();
+    /**
+     * @return Columns the size of the underlying textfield
+     */
+    int getTextfieldColumns();
 
-	/**
-	 * Sets the size of the underlying textfield in columns
-	 * 
-	 * @param columns {@link JTextField#setColumns(int)}
-	 */
-	void setTextfieldColumns(int columns);
+    /**
+     * Sets the size of the underlying textfield in columns
+     * 
+     * @param columns {@link JTextField#setColumns(int)}
+     */
+    void setTextfieldColumns(int columns);
 
 }

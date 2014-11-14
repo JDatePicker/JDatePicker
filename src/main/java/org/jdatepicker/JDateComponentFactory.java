@@ -38,75 +38,75 @@ import org.jdatepicker.impl.JDatePickerImpl;
  */
 public abstract class JDateComponentFactory<T> {
 
-	/**
-	 * Create a factory which will construct widgets with the provided date
-	 * model, date formatter, i18nStrings or colors.
-	 * 
-	 */
-	public JDateComponentFactory() {
-	}
-	
-	/**
-	 * Create a DateModel initialised to today, based on the clazz type.
-	 * 
-	 * @return A new model
-	 */
-	public abstract DateModel<T> createModel();
+    /**
+     * Create a factory which will construct widgets with the provided date
+     * model, date formatter, i18nStrings or colors.
+     * 
+     */
+    public JDateComponentFactory() {
+    }
+    
+    /**
+     * Create a DateModel initialised to today, based on the clazz type.
+     * 
+     * @return A new model
+     */
+    public abstract DateModel<T> createModel();
 
-	/**
-	 * Create a DateModel based on the type of the value.
-	 * 
-	 * @param value value
-	 * @return A new model
-	 */
-	public abstract DateModel<T> createModel(T value);
+    /**
+     * Create a DateModel based on the type of the value.
+     * 
+     * @param value value
+     * @return A new model
+     */
+    public abstract DateModel<T> createModel(T value);
 
-	/**
-	 * Create with factory dateModel, i18nStrings and dateFormatter.
-	 * 
-	 * @return A new Datepicker
-	 */
-	public JDatePicker createJDatePicker() {
-		DateModel<T> model = createModel();
-		return new JDatePickerImpl(new JDatePanelImpl(model));
-	}
-	
-	/**
-	 * Create by specifying the initial value of the widget.
-	 * 
-	 * @param value value
-	 * @return A new Datepicker
-	 */
-	public JDatePicker createJDatePicker(T value) {
-		if (value == null) {
-			throw new IllegalArgumentException("Value may not be null.");
-		}
-		DateModel<T> model = createModel(value);
-		return new JDatePickerImpl(new JDatePanelImpl(model));
-	}
-	
-	/**
-	 * Create with factory dateModel, i18nStrings and dateFormatter.
-	 * 
-	 * @return A new Datepanel
-	 */
-	public JDatePanel createJDatePanel() {
-		DateModel<T> model = createModel();
-		return new JDatePanelImpl(model);
-	}
-	
-	/**
-	 * Create by specifying the initial value of the widget.
-	 * 
-	 * @param value value
-	 * @return A new Datepanel
-	 */
-	public JDatePanel createJDatePanel(T value) {
-		if (value == null) {
-			throw new IllegalArgumentException("Value may not be null.");
-		}
-		DateModel<T> model = createModel(value);
-		return new JDatePanelImpl(model);
-	}
-	
+    /**
+     * Create with factory dateModel, i18nStrings and dateFormatter.
+     * 
+     * @return A new Datepicker
+     */
+    public JDatePicker createJDatePicker() {
+        DateModel<T> model = createModel();
+        return new JDatePickerImpl(new JDatePanelImpl(model));
+    }
+    
+    /**
+     * Create by specifying the initial value of the widget.
+     * 
+     * @param value value
+     * @return A new Datepicker
+     */
+    public JDatePicker createJDatePicker(T value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Value may not be null.");
+        }
+        DateModel<T> model = createModel(value);
+        return new JDatePickerImpl(new JDatePanelImpl(model));
+    }
+    
+    /**
+     * Create with factory dateModel, i18nStrings and dateFormatter.
+     * 
+     * @return A new Datepanel
+     */
+    public JDatePanel createJDatePanel() {
+        DateModel<T> model = createModel();
+        return new JDatePanelImpl(model);
+    }
+    
+    /**
+     * Create by specifying the initial value of the widget.
+     * 
+     * @param value value
+     * @return A new Datepanel
+     */
+    public JDatePanel createJDatePanel(T value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Value may not be null.");
+        }
+        DateModel<T> model = createModel(value);
+        return new JDatePanelImpl(model);
+    }
+    
 }

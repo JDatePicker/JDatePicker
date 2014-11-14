@@ -38,55 +38,55 @@ import javax.swing.UIManager;
 
 
 public class TestJDatePicker {
-	
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (Exception e) { }
-		JFrame testFrame = new JFrame();
-		testFrame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent arg0) {
-				System.exit(0);
-			}
-		});
-		testFrame.setSize(500, 500);
-		JPanel jPanel = new JPanel();
-		JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
-//		new ColorTheme() {
+    
+    public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception e) { }
+        JFrame testFrame = new JFrame();
+        testFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent arg0) {
+                System.exit(0);
+            }
+        });
+        testFrame.setSize(500, 500);
+        JPanel jPanel = new JPanel();
+        JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+//        new ColorTheme() {
 //
-//			public Color fgMonthSelector() { return Color.WHITE; }
-//			public Color bgMonthSelector() { return new Color(0,0,120); }
+//            public Color fgMonthSelector() { return Color.WHITE; }
+//            public Color bgMonthSelector() { return new Color(0,0,120); }
 //
-//			public Color fgGridHeader() { return Color.YELLOW; }
-//			public Color bgGridHeader() { return Color.PINK; }
+//            public Color fgGridHeader() { return Color.YELLOW; }
+//            public Color bgGridHeader() { return Color.PINK; }
 //
-//			public Color fgGridThisMonth() { return Color.WHITE; }
-//			public Color fgGridOtherMonth() { return Color.CYAN; }
-//			public Color fgGridToday() { return Color.GREEN; }
-//			public Color bgGrid() { return Color.BLACK; }
+//            public Color fgGridThisMonth() { return Color.WHITE; }
+//            public Color fgGridOtherMonth() { return Color.CYAN; }
+//            public Color fgGridToday() { return Color.GREEN; }
+//            public Color bgGrid() { return Color.BLACK; }
 //
-//			public Color fgGridSelected() { return Color.MAGENTA; }
-//			public Color bgGridSelected() { return Color.WHITE; }
+//            public Color fgGridSelected() { return Color.MAGENTA; }
+//            public Color bgGridSelected() { return Color.WHITE; }
 //
-//			public Color fgGridTodaySelected() { return Color.YELLOW; }
-//			public Color bgGridTodaySelected() { return Color.GRAY; }
+//            public Color fgGridTodaySelected() { return Color.YELLOW; }
+//            public Color bgGridTodaySelected() { return Color.GRAY; }
 //
-//			public Color fgTodaySelector() { return Color.YELLOW; }
-//			public Color bgTodaySelector() { return Color.RED; }
-//			
-//		},
-//		null);
-		picker.setTextEditable(true);
-		picker.setShowYearButtons(true);
-//		picker.getModel().setSelected(true);
-		jPanel.add((JComponent)picker);
-		JPanel DatePanel = new JPanel();
-		DatePanel.setLayout(new BorderLayout());
-		DatePanel.add(jPanel, BorderLayout.WEST);
-		BorderLayout fb = new BorderLayout();
-		testFrame.setLayout(fb);
-		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
-		testFrame.setVisible(true);
-	}
+//            public Color fgTodaySelector() { return Color.YELLOW; }
+//            public Color bgTodaySelector() { return Color.RED; }
+//            
+//        },
+//        null);
+        picker.setTextEditable(true);
+        picker.setShowYearButtons(true);
+//        picker.getModel().setSelected(true);
+        jPanel.add((JComponent)picker);
+        JPanel DatePanel = new JPanel();
+        DatePanel.setLayout(new BorderLayout());
+        DatePanel.add(jPanel, BorderLayout.WEST);
+        BorderLayout fb = new BorderLayout();
+        testFrame.setLayout(fb);
+        testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
+        testFrame.setVisible(true);
+    }
 
 }

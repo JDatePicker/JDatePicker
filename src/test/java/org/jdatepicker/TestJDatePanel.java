@@ -36,30 +36,30 @@ import javax.swing.JFrame;
 
 public class TestJDatePanel {
 
-	public static void main(String[] args) {
-		// Test 1: Monday is the first day of week (Germany)
-//		Locale.setDefault(Locale.GERMAN);
+    public static void main(String[] args) {
+        // Test 1: Monday is the first day of week (Germany)
+//        Locale.setDefault(Locale.GERMAN);
 
-//		// Test 2: Saturday is the first day of week (Saudi Arabia)
-//		Locale.setDefault(Locale.forLanguageTag("ar-sa"));
+//        // Test 2: Saturday is the first day of week (Saudi Arabia)
+//        Locale.setDefault(Locale.forLanguageTag("ar-sa"));
 
-//		// Test 3: Sunday is the first day of week (US)
-//		Locale.setDefault(Locale.US);
-		
-		JFrame testFrame = new JFrame();
-		JDatePanel panel = new DefaultComponentFactory().createJDatePanel();
-		panel.setShowYearButtons(true);
-		testFrame.getContentPane().add((JComponent)panel);
-		panel.setShowYearButtons(false);
-		panel.setShowYearButtons(true);
+//        // Test 3: Sunday is the first day of week (US)
+//        Locale.setDefault(Locale.US);
+        
+        JFrame testFrame = new JFrame();
+        JDatePanel panel = new DefaultComponentFactory().createJDatePanel();
+        panel.setShowYearButtons(true);
+        testFrame.getContentPane().add((JComponent)panel);
+        panel.setShowYearButtons(false);
+        panel.setShowYearButtons(true);
 
-		testFrame.setSize(300,300);
-		testFrame.addWindowFocusListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent arg0) {
-				System.exit(0);
-			}
-		});
-		testFrame.setVisible(true);
-	}
+        testFrame.setSize(300,300);
+        testFrame.addWindowFocusListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent arg0) {
+                System.exit(0);
+            }
+        });
+        testFrame.setVisible(true);
+    }
 
 }

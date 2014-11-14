@@ -47,35 +47,35 @@ import org.jdatepicker.constraints.DateSelectionConstraint;
  * @author Juan Heyns
  */
 public interface JDateComponent {
-	
-	/**
-	 * Returns the value of the currently represented date in the component.
-	 * Depending on the version of the library used this type will one of the
-	 * following:
-	 * - java.util.Calendar
-	 * - org.joda.time.DateMidnight
-	 * - java.util.Date
-	 * 
-	 * @return A new Model
-	 */
-	DateModel<?> getModel();
+    
+    /**
+     * Returns the value of the currently represented date in the component.
+     * Depending on the version of the library used this type will one of the
+     * following:
+     * - java.util.Calendar
+     * - org.joda.time.DateMidnight
+     * - java.util.Date
+     * 
+     * @return A new Model
+     */
+    DateModel<?> getModel();
 
-	/**
-	 * Adds an ActionListener. The actionListener is notified when a user clicks
-	 * on a date. Deliberately selecting a date will trigger this event, not
-	 * scrolling which fires a ChangeEvent for ChangeListeners.
-	 * 
-	 * @param actionListener The listener to add
-	 */
-	void addActionListener(ActionListener actionListener);
+    /**
+     * Adds an ActionListener. The actionListener is notified when a user clicks
+     * on a date. Deliberately selecting a date will trigger this event, not
+     * scrolling which fires a ChangeEvent for ChangeListeners.
+     * 
+     * @param actionListener The listener to add
+     */
+    void addActionListener(ActionListener actionListener);
 
-	/**
-	 * Removes the ActionListener. The actionListener is notified when a user
-	 * clicks on a date.
-	 * 
-	 * @param actionListener The listener to remove
-	 */
-	void removeActionListener(ActionListener actionListener);
+    /**
+     * Removes the ActionListener. The actionListener is notified when a user
+     * clicks on a date.
+     * 
+     * @param actionListener The listener to remove
+     */
+    void removeActionListener(ActionListener actionListener);
 
 
     /**

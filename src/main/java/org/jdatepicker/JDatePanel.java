@@ -29,32 +29,32 @@ package org.jdatepicker;
 
 public interface JDatePanel extends JDateComponent {
 
-	/**
-	 * Sets the visibilty of the Year navigation buttons. Defaults to false.
-	 * 
-	 * @param showYearButtons show the button?
-	 */
-	void setShowYearButtons(boolean showYearButtons);
+    /**
+     * Sets the visibilty of the Year navigation buttons. Defaults to false.
+     * 
+     * @param showYearButtons show the button?
+     */
+    void setShowYearButtons(boolean showYearButtons);
 
-	/**
-	 * Is the year navigation buttons active.
-	 * 
-	 * @return visiblity of the year
-	 */
-	boolean isShowYearButtons();
+    /**
+     * Is the year navigation buttons active.
+     * 
+     * @return visiblity of the year
+     */
+    boolean isShowYearButtons();
 
-	/**
-	 * This changes the behaviour of the control to require a double click on
-	 * actionable clicks. If this is set the ActionEvent will only be fired
-	 * when double clicked on a date. Defaults to false.
-	 * 
-	 * @param doubleClickAction use double clicks?
-	 */
-	void setDoubleClickAction(boolean doubleClickAction);
+    /**
+     * This changes the behaviour of the control to require a double click on
+     * actionable clicks. If this is set the ActionEvent will only be fired
+     * when double clicked on a date. Defaults to false.
+     * 
+     * @param doubleClickAction use double clicks?
+     */
+    void setDoubleClickAction(boolean doubleClickAction);
 
-	/**
-	 * @return Is a double click required to fire a ActionEvent.
-	 */
-	boolean isDoubleClickAction();
+    /**
+     * @return Is a double click required to fire a ActionEvent.
+     */
+    boolean isDoubleClickAction();
 
 }

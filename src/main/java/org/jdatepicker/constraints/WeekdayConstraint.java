@@ -39,7 +39,7 @@ import org.jdatepicker.DateModel;
  */
 public class WeekdayConstraint implements DateSelectionConstraint {
 
-	public boolean isValidSelection(DateModel<?> model) {
+    public boolean isValidSelection(DateModel<?> model) {
         if (model.isSelected()) {
             Calendar value = Calendar.getInstance();
             value.set(model.getYear(), model.getMonth(), model.getDay());
@@ -62,6 +62,6 @@ public class WeekdayConstraint implements DateSelectionConstraint {
         else {
             return true;
         }
-	}
+    }
 
 }

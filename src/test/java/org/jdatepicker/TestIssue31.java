@@ -40,36 +40,36 @@ import javax.swing.WindowConstants;
 
 public class TestIssue31 {
 
-	public static void main(String[] args) {
-		JFrame testFrame = new JFrame();
-		testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		testFrame.setSize(500, 500);
-		JPanel jPanel = new JPanel();
-		JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
-		picker.setTextEditable(true);
-		picker.setShowYearButtons(true);
-		picker.getModel().addPropertyChangeListener(
-				new PropertyChangeListener() {
-					public void propertyChange(PropertyChangeEvent evt) {
-						System.out.println(evt.getPropertyName() + ": "
-								+ evt.getOldValue() + " -> "
-								+ evt.getNewValue());
-					}
-				});
-		picker.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Action: " + e);
-			}
-		});
-		jPanel.add((JComponent) picker);
+    public static void main(String[] args) {
+        JFrame testFrame = new JFrame();
+        testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        testFrame.setSize(500, 500);
+        JPanel jPanel = new JPanel();
+        JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        picker.setTextEditable(true);
+        picker.setShowYearButtons(true);
+        picker.getModel().addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        System.out.println(evt.getPropertyName() + ": "
+                                + evt.getOldValue() + " -> "
+                                + evt.getNewValue());
+                    }
+                });
+        picker.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Action: " + e);
+            }
+        });
+        jPanel.add((JComponent) picker);
 
-		JPanel DatePanel = new JPanel();
-		DatePanel.setLayout(new BorderLayout());
-		DatePanel.add(jPanel, BorderLayout.WEST);
-		BorderLayout fb = new BorderLayout();
-		testFrame.setLayout(fb);
-		testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
-		testFrame.setVisible(true);
-	}
+        JPanel DatePanel = new JPanel();
+        DatePanel.setLayout(new BorderLayout());
+        DatePanel.add(jPanel, BorderLayout.WEST);
+        BorderLayout fb = new BorderLayout();
+        testFrame.setLayout(fb);
+        testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
+        testFrame.setVisible(true);
+    }
 
 }
