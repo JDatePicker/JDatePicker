@@ -262,7 +262,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
          * Update the UI of the monthLabel
          */
         private void updateMonthLabel() {
-            SimpleDateFormat fmt = new SimpleDateFormat("LLLL");
+            SimpleDateFormat fmt = new SimpleDateFormat("MMMM");
             Calendar cal = new GregorianCalendar(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), internalModel.getModel().getDay());
             monthLabel.setText(fmt.format(cal.getTime()));
         }
