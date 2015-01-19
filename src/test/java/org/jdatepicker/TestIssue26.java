@@ -38,7 +38,7 @@ import javax.swing.WindowConstants;
 public class TestIssue26 {
 
     public static void main(String[] args) {
-        Locale.setDefault(Locale.forLanguageTag("ar-sa"));
+        Locale.setDefault(new Locale("ar", "sa"));
         
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

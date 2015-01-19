@@ -27,11 +27,9 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 
 public class TestJDatePanel {
@@ -41,7 +39,7 @@ public class TestJDatePanel {
 //        Locale.setDefault(Locale.GERMAN);
 
 //        // Test 2: Saturday is the first day of week (Saudi Arabia)
-//        Locale.setDefault(Locale.forLanguageTag("ar-sa"));
+//        Locale.setDefault(new Locale("ar", "sa"));
 
 //        // Test 3: Sunday is the first day of week (US)
 //        Locale.setDefault(Locale.US);
@@ -54,11 +52,7 @@ public class TestJDatePanel {
         panel.setShowYearButtons(true);
 
         testFrame.setSize(300,300);
-        testFrame.addWindowFocusListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent arg0) {
-                System.exit(0);
-            }
-        });
+        testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setVisible(true);
     }
 
