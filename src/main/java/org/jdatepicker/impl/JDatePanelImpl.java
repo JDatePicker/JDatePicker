@@ -35,6 +35,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -261,8 +262,9 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
          * Update the UI of the monthLabel
          */
         private void updateMonthLabel() {
-            DateFormatSymbols df = new DateFormatSymbols();
-            monthLabel.setText(df.getMonths()[internalModel.getModel().getMonth()]);
+            SimpleDateFormat fmt = new SimpleDateFormat("MMMM");
+            Calendar cal = new GregorianCalendar(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), internalModel.getModel().getDay());
+            monthLabel.setText(fmt.format(cal.getTime()));
         }
         
         public InternalView() {
