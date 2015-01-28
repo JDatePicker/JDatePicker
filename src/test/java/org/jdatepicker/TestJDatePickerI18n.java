@@ -1,14 +1,13 @@
 package org.jdatepicker;
 
 import java.awt.BorderLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
 public class TestJDatePickerI18n {
 
@@ -17,11 +16,7 @@ public class TestJDatePickerI18n {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception e) { }
         JFrame testFrame = new JFrame();
-        testFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent arg0) {
-                System.exit(0);
-            }
-        });
+        testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
         
