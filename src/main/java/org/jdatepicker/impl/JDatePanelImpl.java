@@ -214,6 +214,15 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         return ComponentManager.getInstance().getComponentColorDefaults();
     }
 
+    @Override
+    public void setVisible(boolean aFlag) {
+        super.setVisible(aFlag);
+
+        if (aFlag) {
+            internalView.updateTodayLabel();
+        }
+    }
+
     /**
      * Logically grouping the view controls under this internal class. 
      * 
@@ -384,6 +393,17 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
             return noneLabel;
         }
 
+        private void updateTodayLabel() {
+            try {
+                todayLabel.setText(getTexts().getText(
+                        ComponentTextDefaults.TODAY)
+                        + ": "
+                        + formatter.valueToString(Calendar.getInstance()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         /**
          * This method initializes todayLabel    
          *     
@@ -395,12 +415,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
                 todayLabel.setForeground(getColors().fgTodaySelector());
                 todayLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 todayLabel.addMouseListener(internalController);
-                try {
-                    todayLabel.setText(getTexts().getText(ComponentTextDefaults.TODAY) + ": " + formatter.valueToString(Calendar.getInstance()));
-                } 
-                catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                updateTodayLabel();
             }
             return todayLabel;
         }
@@ -969,5 +984,4 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         }
 
     }
-
 }
