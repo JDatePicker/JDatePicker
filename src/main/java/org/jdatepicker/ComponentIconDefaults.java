@@ -19,20 +19,28 @@ public class ComponentIconDefaults {
     private static String CLEAR = "/org/jdatepicker/icons/clear.png";
 
     private Icon clearIcon;
-    private Icon nextMonthIcon;
-    private Icon nextYearIcon;
-    private Icon previousMonthIcon;
-    private Icon previousYearIcon;
+    private Icon nextMonthIconD;
+    private Icon nextMonthIconE;
+    private Icon nextYearIconD;
+    private Icon nextYearIconE;
+    private Icon previousMonthIconD;
+    private Icon previousMonthIconE;
+    private Icon previousYearIconD;
+    private Icon previousYearIconE;
     private Icon popupButtonIcon;
 
     public ComponentIconDefaults() {
         try {
             //TODO consider making all the icons vector images which will scale
             clearIcon = loadIcon(CLEAR);
-            nextMonthIcon = new JNextIcon(4, 7, false);
-            nextYearIcon = new JNextIcon(8, 7, true);
-            previousMonthIcon = new JPreviousIcon(4, 7, false);
-            previousYearIcon = new JPreviousIcon(8, 7, true);
+            nextMonthIconE = new JNextIcon(4, 7, false, true);
+            nextYearIconE = new JNextIcon(8, 7, true, true);
+            previousMonthIconE = new JPreviousIcon(4, 7, false, true);
+            previousYearIconE = new JPreviousIcon(8, 7, true, true);
+            nextMonthIconD = new JNextIcon(4, 7, false, false);
+            nextYearIconD = new JNextIcon(8, 7, true, false);
+            previousMonthIconD = new JPreviousIcon(4, 7, false, false);
+            previousYearIconD = new JPreviousIcon(8, 7, true, false);
             popupButtonIcon = null;
         }
         catch (IOException e) {
@@ -46,52 +54,83 @@ public class ComponentIconDefaults {
         return new ImageIcon(image);
     }
 
-    public Icon getClearIcon() {
-        return clearIcon;
-    }
+	public Icon getClearIcon() {
+		return clearIcon;
+	}
 
-    public void setClearIcon(Icon clearIcon) {
-        this.clearIcon = clearIcon;
-    }
+	public void setClearIcon(Icon clearIcon) {
+		this.clearIcon = clearIcon;
+	}
 
-    public Icon getNextMonthIcon() {
-        return nextMonthIcon;
-    }
+	public Icon getNextMonthIconE() {
+		return nextMonthIconE;
+	}
 
-    public void setNextMonthIcon(Icon nextMonthIcon) {
-        this.nextMonthIcon = nextMonthIcon;
-    }
+	public void setNextMonthIconE(Icon nextMonthIconE) {
+		this.nextMonthIconE = nextMonthIconE;
+	}
 
-    public Icon getNextYearIcon() {
-        return nextYearIcon;
-    }
+	public Icon getNextMonthIconD() {
+		return nextMonthIconD;
+	}
 
-    public void setNextYearIcon(Icon nextYearIcon) {
-        this.nextYearIcon = nextYearIcon;
-    }
+	public void setNextMonthIconD(Icon nextMonthIconD) {
+		this.nextMonthIconD = nextMonthIconD;
+	}
 
-    public Icon getPreviousMonthIcon() {
-        return previousMonthIcon;
-    }
+	public Icon getNextYearIconE() {
+		return nextYearIconE;
+	}
 
-    public void setPreviousMonthIcon(Icon previousMonthIcon) {
-        this.previousMonthIcon = previousMonthIcon;
-    }
+	public void setNextYearIconE(Icon nextYearIconE) {
+		this.nextYearIconE = nextYearIconE;
+	}
 
-    public Icon getPreviousYearIcon() {
-        return previousYearIcon;
-    }
+	public Icon getNextYearIconD() {
+		return nextYearIconD;
+	}
 
-    public void setPreviousYearIcon(Icon previousYearIcon) {
-        this.previousYearIcon = previousYearIcon;
-    }
+	public void setNextYearIconD(Icon nextYearIconD) {
+		this.nextYearIconD = nextYearIconD;
+	}
 
-    public Icon getPopupButtonIcon() {
-        return popupButtonIcon;
-    }
+	public Icon getPreviousMonthIconE() {
+		return previousMonthIconE;
+	}
 
-    public void setPopupButtonIcon(Icon popupButtonIcon) {
-        this.popupButtonIcon = popupButtonIcon;
-    }
+	public void setPreviousMonthIconE(Icon previousMonthIconE) {
+		this.previousMonthIconE = previousMonthIconE;
+	}
 
+	public Icon getPreviousMonthIconD() {
+		return previousMonthIconD;
+	}
+
+	public void setPreviousMonthIconD(Icon previousMonthIconD) {
+		this.previousMonthIconD = previousMonthIconD;
+	}
+
+	public Icon getPreviousYearIconE() {
+		return previousYearIconE;
+	}
+
+	public void setPreviousYearIconE(Icon previousYearIconE) {
+		this.previousYearIconE = previousYearIconE;
+	}
+
+	public Icon getPreviousYearIconD() {
+		return previousYearIconD;
+	}
+
+	public void setPreviousYearIconD(Icon previousYearIconD) {
+		this.previousYearIconD = previousYearIconD;
+	}
+
+	public Icon getPopupButtonIcon() {
+		return popupButtonIcon;
+	}
+
+	public void setPopupButtonIcon(Icon popupButtonIcon) {
+		this.popupButtonIcon = popupButtonIcon;
+	}
 }
