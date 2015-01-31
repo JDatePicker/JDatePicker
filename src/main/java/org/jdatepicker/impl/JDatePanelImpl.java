@@ -223,12 +223,12 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         }
     }
 
-	@Override
-	public void setEnabled(boolean enabled) {
-		internalView.setEnabled(enabled);
+    @Override
+    public void setEnabled(boolean enabled) {
+        internalView.setEnabled(enabled);
 
-		super.setEnabled(enabled);
-	}
+        super.setEnabled(enabled);
+    }
 
     /**
      * Logically grouping the view controls under this internal class. 
@@ -540,7 +540,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
             if (nextMonthButton == null) {
                 nextMonthButton = new JButton();
                 nextMonthButton.setIcon(getIcons().getNextMonthIconE());
-            	nextMonthButton.setDisabledIcon(getIcons().getNextMonthIconD());
+                nextMonthButton.setDisabledIcon(getIcons().getNextMonthIconD());
                 nextMonthButton.setText("");
                 nextMonthButton.setPreferredSize(new java.awt.Dimension(20,15));
                 nextMonthButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -560,10 +560,10 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         private JButton getNextYearButton() {
             if (nextYearButton == null) {
                 nextYearButton = new JButton();
-            	nextYearButton.setIcon(getIcons().getNextYearIconE());
-            	nextYearButton.setDisabledIcon(getIcons().getNextYearIconD());
+                nextYearButton.setIcon(getIcons().getNextYearIconE());
+                nextYearButton.setDisabledIcon(getIcons().getNextYearIconD());
                 nextYearButton.setText("");
-                nextYearButton.setPreferredSize(new java.awt.Dimension(20,15));
+                nextYearButton.setPreferredSize(new java.awt.Dimension(20, 15));
                 nextYearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
                 nextYearButton.setFocusable(false);
                 nextYearButton.setOpaque(true);
@@ -605,7 +605,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
                 previousYearButton.setIcon(getIcons().getPreviousYearIconE());
                 previousYearButton.setDisabledIcon(getIcons().getPreviousYearIconD());
                 previousYearButton.setText("");
-                previousYearButton.setPreferredSize(new java.awt.Dimension(20,15));
+                previousYearButton.setPreferredSize(new java.awt.Dimension(20, 15));
                 previousYearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
                 previousYearButton.setFocusable(false);
                 previousYearButton.setOpaque(true);
@@ -645,18 +645,18 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
             return monthPopupMenuItems;
         }
 
-		@Override
-		public void setEnabled(boolean enabled) {
-			dayTable.setEnabled(enabled);
-			dayTableCellRenderer.setEnabled(enabled);
-			nextMonthButton.setEnabled(enabled);
-			nextYearButton.setEnabled(enabled);
-			previousMonthButton.setEnabled(enabled);
-			previousYearButton.setEnabled(enabled);
-			yearSpinner.setEnabled(enabled);
+        @Override
+        public void setEnabled(boolean enabled) {
+            dayTable.setEnabled(enabled);
+            dayTableCellRenderer.setEnabled(enabled);
+            nextMonthButton.setEnabled(enabled);
+            nextYearButton.setEnabled(enabled);
+            previousMonthButton.setEnabled(enabled);
+            previousYearButton.setEnabled(enabled);
+            yearSpinner.setEnabled(enabled);
 
-			super.setEnabled(enabled);
-		}
+            super.setEnabled(enabled);
+        }
     }
 
     /**
@@ -759,9 +759,9 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
          * updated.
          */
         public void actionPerformed(ActionEvent arg0) {
-			if (!JDatePanelImpl.this.isEnabled()) {
-				return;
-			}
+            if (!JDatePanelImpl.this.isEnabled()) {
+                return;
+            }
 
             if (arg0.getSource() == internalView.getNextMonthButton()) {
                 internalModel.getModel().addMonth(1);
@@ -791,9 +791,9 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
          * clear the date.
          */
         public void mousePressed(MouseEvent arg0) {
-			if (!JDatePanelImpl.this.isEnabled()) {
-				return;
-			}
+            if (!JDatePanelImpl.this.isEnabled()) {
+                return;
+            }
 
             if (arg0.getSource() == internalView.getMonthLabel()) {
                 internalView.getMonthPopupMenu().setLightWeightPopupEnabled(false);

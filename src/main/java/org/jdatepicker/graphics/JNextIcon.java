@@ -77,11 +77,11 @@ public class JNextIcon implements Icon {
     }
 
     public void paintIcon(Component c, Graphics g, int x, int y) {
-    	if(enabled) {
+        if (enabled) {
             g.setColor(Color.BLACK);
-    	} else {
+        } else {
             g.setColor(Color.GRAY);
-    	}
+        }
 
         if (doubleArrow) {
             xPoints[0] = x + (width / 2);

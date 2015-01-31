@@ -22,11 +22,13 @@ public class TestIssue46 {
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
 
-        final JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        final JDatePicker picker = new DefaultComponentFactory()
+                .createJDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
 
-        final JDatePanel panel = new DefaultComponentFactory().createJDatePanel();
+        final JDatePanel panel = new DefaultComponentFactory()
+                .createJDatePanel();
         panel.setShowYearButtons(true);
 
         picker.getModel().setYear(2010);
@@ -36,14 +38,14 @@ public class TestIssue46 {
 
         JButton button = new JButton("Enable / disable");
         button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JDatePickerImpl pickerImpl = (JDatePickerImpl) picker;
-				JDatePanelImpl panelImpl = (JDatePanelImpl) panel;
-				
-				pickerImpl.setEnabled(!pickerImpl.isEnabled());
-				panelImpl.setEnabled(!panelImpl.isEnabled());
-			}
-		});
+            public void actionPerformed(ActionEvent e) {
+                JDatePickerImpl pickerImpl = (JDatePickerImpl) picker;
+                JDatePanelImpl panelImpl = (JDatePanelImpl) panel;
+
+                pickerImpl.setEnabled(!pickerImpl.isEnabled());
+                panelImpl.setEnabled(!panelImpl.isEnabled());
+            }
+        });
         testFrame.setLayout(new BorderLayout());
         testFrame.getContentPane().add((JComponent) picker, BorderLayout.NORTH);
         testFrame.getContentPane().add((JComponent) panel, BorderLayout.CENTER);

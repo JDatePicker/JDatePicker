@@ -31,7 +31,7 @@ public class ComponentIconDefaults {
 
     public ComponentIconDefaults() {
         try {
-            //TODO consider making all the icons vector images which will scale
+            // TODO consider making all the icons vector images which will scale
             clearIcon = loadIcon(CLEAR);
             nextMonthIconE = new JNextIcon(4, 7, false, true);
             nextYearIconE = new JNextIcon(8, 7, true, true);
@@ -54,83 +54,83 @@ public class ComponentIconDefaults {
         return new ImageIcon(image);
     }
 
-	public Icon getClearIcon() {
-		return clearIcon;
-	}
+    public Icon getClearIcon() {
+        return clearIcon;
+    }
 
-	public void setClearIcon(Icon clearIcon) {
-		this.clearIcon = clearIcon;
-	}
+    public void setClearIcon(Icon clearIcon) {
+        this.clearIcon = clearIcon;
+    }
 
-	public Icon getNextMonthIconE() {
-		return nextMonthIconE;
-	}
+    public Icon getNextMonthIconE() {
+        return nextMonthIconE;
+    }
 
-	public void setNextMonthIconE(Icon nextMonthIconE) {
-		this.nextMonthIconE = nextMonthIconE;
-	}
+    public void setNextMonthIconE(Icon nextMonthIconE) {
+        this.nextMonthIconE = nextMonthIconE;
+    }
 
-	public Icon getNextMonthIconD() {
-		return nextMonthIconD;
-	}
+    public Icon getNextMonthIconD() {
+        return nextMonthIconD;
+    }
 
-	public void setNextMonthIconD(Icon nextMonthIconD) {
-		this.nextMonthIconD = nextMonthIconD;
-	}
+    public void setNextMonthIconD(Icon nextMonthIconD) {
+        this.nextMonthIconD = nextMonthIconD;
+    }
 
-	public Icon getNextYearIconE() {
-		return nextYearIconE;
-	}
+    public Icon getNextYearIconE() {
+        return nextYearIconE;
+    }
 
-	public void setNextYearIconE(Icon nextYearIconE) {
-		this.nextYearIconE = nextYearIconE;
-	}
+    public void setNextYearIconE(Icon nextYearIconE) {
+        this.nextYearIconE = nextYearIconE;
+    }
 
-	public Icon getNextYearIconD() {
-		return nextYearIconD;
-	}
+    public Icon getNextYearIconD() {
+        return nextYearIconD;
+    }
 
-	public void setNextYearIconD(Icon nextYearIconD) {
-		this.nextYearIconD = nextYearIconD;
-	}
+    public void setNextYearIconD(Icon nextYearIconD) {
+        this.nextYearIconD = nextYearIconD;
+    }
 
-	public Icon getPreviousMonthIconE() {
-		return previousMonthIconE;
-	}
+    public Icon getPreviousMonthIconE() {
+        return previousMonthIconE;
+    }
 
-	public void setPreviousMonthIconE(Icon previousMonthIconE) {
-		this.previousMonthIconE = previousMonthIconE;
-	}
+    public void setPreviousMonthIconE(Icon previousMonthIconE) {
+        this.previousMonthIconE = previousMonthIconE;
+    }
 
-	public Icon getPreviousMonthIconD() {
-		return previousMonthIconD;
-	}
+    public Icon getPreviousMonthIconD() {
+        return previousMonthIconD;
+    }
 
-	public void setPreviousMonthIconD(Icon previousMonthIconD) {
-		this.previousMonthIconD = previousMonthIconD;
-	}
+    public void setPreviousMonthIconD(Icon previousMonthIconD) {
+        this.previousMonthIconD = previousMonthIconD;
+    }
 
-	public Icon getPreviousYearIconE() {
-		return previousYearIconE;
-	}
+    public Icon getPreviousYearIconE() {
+        return previousYearIconE;
+    }
 
-	public void setPreviousYearIconE(Icon previousYearIconE) {
-		this.previousYearIconE = previousYearIconE;
-	}
+    public void setPreviousYearIconE(Icon previousYearIconE) {
+        this.previousYearIconE = previousYearIconE;
+    }
 
-	public Icon getPreviousYearIconD() {
-		return previousYearIconD;
-	}
+    public Icon getPreviousYearIconD() {
+        return previousYearIconD;
+    }
 
-	public void setPreviousYearIconD(Icon previousYearIconD) {
-		this.previousYearIconD = previousYearIconD;
-	}
+    public void setPreviousYearIconD(Icon previousYearIconD) {
+        this.previousYearIconD = previousYearIconD;
+    }
 
-	public Icon getPopupButtonIcon() {
-		return popupButtonIcon;
-	}
+    public Icon getPopupButtonIcon() {
+        return popupButtonIcon;
+    }
 
-	public void setPopupButtonIcon(Icon popupButtonIcon) {
-		this.popupButtonIcon = popupButtonIcon;
-	}
+    public void setPopupButtonIcon(Icon popupButtonIcon) {
+        this.popupButtonIcon = popupButtonIcon;
+    }
 }

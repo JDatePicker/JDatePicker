@@ -49,7 +49,8 @@ public class JPreviousIcon implements Icon {
     private boolean doubleArrow = false;
     private boolean enabled;
 
-    public JPreviousIcon(int width, int height, boolean doubleArrow, boolean enabled) {
+    public JPreviousIcon(int width, int height, boolean doubleArrow,
+            boolean enabled) {
         setDimension(width, height);
         this.doubleArrow = doubleArrow;
         this.enabled = enabled;
@@ -77,11 +78,11 @@ public class JPreviousIcon implements Icon {
     }
 
     public void paintIcon(Component c, Graphics g, int x, int y) {
-    	if(enabled) {
+        if (enabled) {
             g.setColor(Color.BLACK);
-    	} else {
+        } else {
             g.setColor(Color.GRAY);
-    	}
+        }
 
         if (doubleArrow) {
             xPoints[0] = x;

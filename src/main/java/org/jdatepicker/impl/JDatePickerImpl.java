@@ -297,14 +297,14 @@ public class JDatePickerImpl extends JPanel implements JDatePicker {
         super.setVisible(aFlag);
     }
 
-	@Override
-	public void setEnabled(boolean enabled) {
-		button.setEnabled(enabled);
-		datePanel.setEnabled(enabled);
-		formattedTextField.setEnabled(enabled);
+    @Override
+    public void setEnabled(boolean enabled) {
+        button.setEnabled(enabled);
+        datePanel.setEnabled(enabled);
+        formattedTextField.setEnabled(enabled);
 
-		super.setEnabled(enabled);
-	}
+        super.setEnabled(enabled);
+    }
 
     /**
      * This internal class hides the public event methods from the outside 
