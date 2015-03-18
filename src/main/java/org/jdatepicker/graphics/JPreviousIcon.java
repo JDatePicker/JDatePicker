@@ -47,14 +47,13 @@ public class JPreviousIcon implements Icon {
     private int[] yPoints = new int[3];
 
     private boolean doubleArrow = false;
+    private boolean enabled;
 
-    public JPreviousIcon(int width, int height) {
-        setDimension(width, height);
-    }
-
-    public JPreviousIcon(int width, int height, boolean doubleArrow) {
+    public JPreviousIcon(int width, int height, boolean doubleArrow,
+            boolean enabled) {
         setDimension(width, height);
         this.doubleArrow = doubleArrow;
+        this.enabled = enabled;
     }
 
     public boolean getDoubleArrow() {
@@ -79,6 +78,12 @@ public class JPreviousIcon implements Icon {
     }
 
     public void paintIcon(Component c, Graphics g, int x, int y) {
+        if (enabled) {
+            g.setColor(Color.BLACK);
+        } else {
+            g.setColor(Color.GRAY);
+        }
+
         if (doubleArrow) {
             xPoints[0] = x;
             yPoints[0] = y + (height / 2);
@@ -89,7 +94,6 @@ public class JPreviousIcon implements Icon {
             xPoints[2] = x + (width / 2);
             yPoints[2] = y + height;
             
-            g.setColor(Color.BLACK);
             g.fillPolygon(xPoints, yPoints, 3);
 
             xPoints[0] = x + (width / 2);
@@ -101,7 +105,6 @@ public class JPreviousIcon implements Icon {
             xPoints[2] = x + width;
             yPoints[2] = y + height;
             
-            g.setColor(Color.BLACK);
             g.fillPolygon(xPoints, yPoints, 3);
         } else {
             xPoints[0] = x;
@@ -113,7 +116,6 @@ public class JPreviousIcon implements Icon {
             xPoints[2] = x + width;
             yPoints[2] = y + height;
             
-            g.setColor(Color.BLACK);
             g.fillPolygon(xPoints, yPoints, 3);
         }
     }
