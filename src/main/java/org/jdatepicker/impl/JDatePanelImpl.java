@@ -539,8 +539,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         private JButton getNextMonthButton() {
             if (nextMonthButton == null) {
                 nextMonthButton = new JButton();
-                nextMonthButton.setIcon(getIcons().getNextMonthIconE());
-                nextMonthButton.setDisabledIcon(getIcons().getNextMonthIconD());
+                nextMonthButton.setIcon(getIcons().getNextMonthIconEnabled());
+                nextMonthButton.setDisabledIcon(getIcons().getNextMonthIconDisabled());
                 nextMonthButton.setText("");
                 nextMonthButton.setPreferredSize(new java.awt.Dimension(20,15));
                 nextMonthButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -560,8 +560,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         private JButton getNextYearButton() {
             if (nextYearButton == null) {
                 nextYearButton = new JButton();
-                nextYearButton.setIcon(getIcons().getNextYearIconE());
-                nextYearButton.setDisabledIcon(getIcons().getNextYearIconD());
+                nextYearButton.setIcon(getIcons().getNextYearIconEnabled());
+                nextYearButton.setDisabledIcon(getIcons().getNextYearIconDisabled());
                 nextYearButton.setText("");
                 nextYearButton.setPreferredSize(new java.awt.Dimension(20, 15));
                 nextYearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -581,8 +581,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         private JButton getPreviousMonthButton() {
             if (previousMonthButton == null) {
                 previousMonthButton = new JButton();
-                previousMonthButton.setIcon(getIcons().getPreviousMonthIconE());
-                previousMonthButton.setDisabledIcon(getIcons().getPreviousMonthIconD());
+                previousMonthButton.setIcon(getIcons().getPreviousMonthIconEnabled());
+                previousMonthButton.setDisabledIcon(getIcons().getPreviousMonthIconDisabled());
                 previousMonthButton.setText("");
                 previousMonthButton.setPreferredSize(new java.awt.Dimension(20,15));
                 previousMonthButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -602,8 +602,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         private JButton getPreviousYearButton() {
             if (previousYearButton == null) {
                 previousYearButton = new JButton();
-                previousYearButton.setIcon(getIcons().getPreviousYearIconE());
-                previousYearButton.setDisabledIcon(getIcons().getPreviousYearIconD());
+                previousYearButton.setIcon(getIcons().getPreviousYearIconEnabled());
+                previousYearButton.setDisabledIcon(getIcons().getPreviousYearIconDisabled());
                 previousYearButton.setText("");
                 previousYearButton.setPreferredSize(new java.awt.Dimension(20, 15));
                 previousYearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
