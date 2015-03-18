@@ -462,9 +462,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
                 dayTable.setRowSelectionAllowed(true);
                 dayTable.setFocusable(false);
                 dayTable.addMouseListener(internalController);
-                TableColumn column = null;
                 for (int i = 0; i < 7; i++) {
-                    column = dayTable.getColumnModel().getColumn(i);
+                    TableColumn column = dayTable.getColumnModel().getColumn(i);
                     column.setPreferredWidth(15);
                     column.setCellRenderer(getDayTableCellRenderer());
                 }
@@ -669,8 +668,8 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 
         private static final long serialVersionUID = -2341614459632756921L;
 
-        public Component getTableCellRendererComponent(JTable arg0, Object arg1, boolean isSelected, boolean hasFocus, int row, int col) {
-            JLabel label = (JLabel) super.getTableCellRendererComponent(arg0, arg1, isSelected, hasFocus, row, col);
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             label.setHorizontalAlignment(JLabel.CENTER);
 
             if (row == -1) {
@@ -680,12 +679,11 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
                 return label;
             }
 
-            
             Calendar todayCal = Calendar.getInstance();
             Calendar selectedCal = Calendar.getInstance();
             selectedCal.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), internalModel.getModel().getDay());
             
-            int cellDayValue = (Integer) arg1;
+            int cellDayValue = (Integer) value;
             int lastDayOfMonth = selectedCal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
             // Other month
@@ -945,10 +943,69 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
         /**
          * Part of TableModel, day
          */
-        public String getColumnName(int arg0) {
-            DateFormatSymbols df = new DateFormatSymbols();
-            String[] shortDays = df.getShortWeekdays();
-            return shortDays[1 + (arg0 + firstDayOfWeek - 1) % 7];
+        public int getRowCount() {
+            return 6;
+        }
+
+        /**
+         * Part of TableModel, day
+         */
+        public String getColumnName(int columnIndex) {
+            Calendar dayOfWeek = Calendar.getInstance();
+            dayOfWeek.set(Calendar.DAY_OF_WEEK, firstDayOfWeek + columnIndex);
+            SimpleDateFormat df = new SimpleDateFormat("EEE");
+            return df.format(dayOfWeek.getTime());
+        }
+
+        private int[] lookup = null;
+
+        /**
+         * Results in a mapping which calculates the number of days before the first day of month
+         *
+         * DAY OF WEEK
+         * M T W T F S S
+         * 1 2 3 4 5 6 0
+         *
+         * or
+         *
+         * S M T W T F S
+         * 0 1 2 3 4 5 6
+         *
+         * DAYS BEFORE
+         * 0 1 2 3 4 5 6
+         *
+         * @return
+         */
+        private int[] lookup() {
+            if (lookup == null) {
+                lookup = new int[8];
+                lookup[(firstDayOfWeek - 1) % 7] = 0;
+                lookup[(firstDayOfWeek + 0) % 7] = 1;
+                lookup[(firstDayOfWeek + 1) % 7] = 2;
+                lookup[(firstDayOfWeek + 2) % 7] = 3;
+                lookup[(firstDayOfWeek + 3) % 7] = 4;
+                lookup[(firstDayOfWeek + 4) % 7] = 5;
+                lookup[(firstDayOfWeek + 5) % 7] = 6;
+            }
+            return lookup;
+        }
+
+        /**
+         * Part of TableModel, day
+         *
+         * previous month (... -1, 0) ->
+         * current month (1...DAYS_IN_MONTH) ->
+         * next month (DAYS_IN_MONTH + 1, DAYS_IN_MONTH + 2, ...)
+         */
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            int series = columnIndex + rowIndex * 7 + 1;
+
+            Calendar firstOfMonth = Calendar.getInstance();
+            firstOfMonth.set(model.getYear(), model.getMonth(), 1);
+            int dowForFirst = firstOfMonth.get(Calendar.DAY_OF_WEEK);
+            int daysBefore = lookup()[dowForFirst - 1];
+
+            return series - daysBefore;
         }
 
         /**
@@ -959,24 +1016,6 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
             return Integer.class;
         }
 
-        /**
-         * Part of TableModel, day
-         */
-        public int getRowCount() {
-            return 6;
-        }
-
-        /**
-         * Part of TableModel, day
-         */
-        public Object getValueAt(int arg0, int arg1) {
-            Calendar firstDayOfMonth = Calendar.getInstance();
-            firstDayOfMonth.set(model.getYear(), model.getMonth(), 1);
-            int DOW = firstDayOfMonth.get(Calendar.DAY_OF_WEEK);
-            int value = arg1 - DOW + arg0*7 + 1 + (firstDayOfWeek % 7);
-            return Integer.valueOf(value);
-        }
-        
         /**
          * Part of TableModel, day
          */
