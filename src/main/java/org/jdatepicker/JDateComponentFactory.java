@@ -166,16 +166,14 @@ public class JDateComponentFactory {
 	 * @return
 	 */
 	private static DateModel<?> createDateModel(Object value) {
-		Class<?> clazz = value.getClass();
-		
 		DateModel<?> result = null;
-		if (clazz.equals(java.util.Calendar.class)) {
+		if (value instanceof java.util.Calendar) {
 			result = new UtilCalendarModel((java.util.Calendar)value);
 		}
-		if (clazz.equals(java.util.Date.class)) {
+		if (value instanceof java.util.Date) {
 			result = new UtilDateModel((java.util.Date)value);
 		}
-		if (clazz.equals(java.sql.Date.class)) {
+		if (value instanceof java.sql.Date) {
 			result = new SqlDateModel((java.sql.Date)value);
 		}
 		
