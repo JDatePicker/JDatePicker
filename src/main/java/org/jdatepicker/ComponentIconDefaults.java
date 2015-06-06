@@ -50,8 +50,13 @@ public class ComponentIconDefaults {
 
     private static Icon loadIcon(String path) throws IOException {
         InputStream stream = ComponentIconDefaults.class.getResourceAsStream(path);
-        BufferedImage image = ImageIO.read(stream);
-        return new ImageIcon(image);
+        try {
+            BufferedImage image = ImageIO.read(stream);
+            return new ImageIcon(image);
+        }
+        finally {
+            stream.close();
+        }
     }
 
     public Icon getClearIcon() {
