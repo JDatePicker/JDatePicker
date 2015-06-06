@@ -25,19 +25,19 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package org.jdatepicker;
+package org.jdatepicker.issues;
 
-import java.awt.BorderLayout;
+import org.jdatepicker.ComponentManager;
+import org.jdatepicker.ComponentTextDefaults;
+import org.jdatepicker.DatePicker;
+import org.jdatepicker.DefaultComponentFactory;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+import java.awt.*;
 
 
-public class TestJDatePicker {
-    
+public class Issue20 {
+
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -46,31 +46,29 @@ public class TestJDatePicker {
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
+
+        ComponentManager.getInstance().setComponentTextDefaults(new ComponentTextDefaults() {
+
+            @Override
+            public String getText(String key) {
+                if (key.equals("text.today")) {
+                    return "Yadot";
+                }
+                if (key.equals("text.month")) {
+                    return "Htnom";
+                }
+                if (key.equals("text.year")) {
+                    return "Raey";
+                }
+                if (key.equals("text.clear")) {
+                    return "Raelc";
+                }
+                return null;
+            }
+
+        });
+
         DatePicker picker = new DefaultComponentFactory().createJDatePicker();
-//        new ColorTheme() {
-//
-//            public Color fgMonthSelector() { return Color.WHITE; }
-//            public Color bgMonthSelector() { return new Color(0,0,120); }
-//
-//            public Color fgGridHeader() { return Color.YELLOW; }
-//            public Color bgGridHeader() { return Color.PINK; }
-//
-//            public Color fgGridThisMonth() { return Color.WHITE; }
-//            public Color fgGridOtherMonth() { return Color.CYAN; }
-//            public Color fgGridToday() { return Color.GREEN; }
-//            public Color bgGrid() { return Color.BLACK; }
-//
-//            public Color fgGridSelected() { return Color.MAGENTA; }
-//            public Color bgGridSelected() { return Color.WHITE; }
-//
-//            public Color fgGridTodaySelected() { return Color.YELLOW; }
-//            public Color bgGridTodaySelected() { return Color.GRAY; }
-//
-//            public Color fgTodaySelector() { return Color.YELLOW; }
-//            public Color bgTodaySelector() { return Color.RED; }
-//            
-//        },
-//        null);
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
 //        picker.getModel().setSelected(true);

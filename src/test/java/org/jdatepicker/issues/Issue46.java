@@ -1,4 +1,6 @@
-package org.jdatepicker;
+package org.jdatepicker.issues;
+
+import org.jdatepicker.*;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -9,25 +11,22 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-
 /**
  * Created by jheyns on 2014/10/07.
  */
-public class TestIssue46 {
+public class Issue46 {
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
 
-        final JDatePicker picker = new DefaultComponentFactory()
+        final DatePicker picker = new DefaultComponentFactory()
                 .createJDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
 
-        final JDatePanel panel = new DefaultComponentFactory()
+        final DatePanel panel = new DefaultComponentFactory()
                 .createJDatePanel();
         panel.setShowYearButtons(true);
 
@@ -39,8 +38,8 @@ public class TestIssue46 {
         JButton button = new JButton("Enable / disable");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JDatePickerImpl pickerImpl = (JDatePickerImpl) picker;
-                JDatePanelImpl panelImpl = (JDatePanelImpl) panel;
+                JDatePicker pickerImpl = (JDatePicker) picker;
+                JDatePanel panelImpl = (JDatePanel) panel;
 
                 pickerImpl.setEnabled(!pickerImpl.isEnabled());
                 panelImpl.setEnabled(!panelImpl.isEnabled());

@@ -1,4 +1,7 @@
-package org.jdatepicker;
+package org.jdatepicker.issues;
+
+import org.jdatepicker.DefaultComponentFactory;
+import org.jdatepicker.JDatePicker;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -10,23 +13,21 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import org.jdatepicker.impl.JDatePickerImpl;
-
-public class TestIssue19 extends JFrame {
+public class Issue19 extends JFrame {
     private static final long serialVersionUID = 1L;
 
     public static void main(String[] args) {
-        new TestIssue19().setVisible(true);
+        new Issue19().setVisible(true);
     }
 
-    public TestIssue19() {
+    public Issue19() {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(500, 500);
         setLayout(new FlowLayout());
 
         // create components
         final Container cont = getContentPane();
-        final JDatePickerImpl picker = (JDatePickerImpl) new DefaultComponentFactory()
+        final JDatePicker picker = (JDatePicker) new DefaultComponentFactory()
                 .createJDatePicker();
         final JButton right = new JButton("show / hide");
 

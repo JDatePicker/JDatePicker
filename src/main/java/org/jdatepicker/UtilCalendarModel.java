@@ -25,12 +25,9 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
 */
-package org.jdatepicker.impl;
+package org.jdatepicker;
 
 import java.util.Calendar;
-
-import org.jdatepicker.AbstractDateModel;
-
 
 public class UtilCalendarModel extends AbstractDateModel<Calendar> {
     
@@ -54,4 +51,3 @@ public class UtilCalendarModel extends AbstractDateModel<Calendar> {
     }
 
 }
-

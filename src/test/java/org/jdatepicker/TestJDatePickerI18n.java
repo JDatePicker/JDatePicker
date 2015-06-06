@@ -21,7 +21,7 @@ public class TestJDatePickerI18n {
         JPanel jPanel = new JPanel();
         
         Locale.setDefault(new Locale("pt"));
-        JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        DatePicker picker = new DefaultComponentFactory().createJDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
 //        picker.getModel().setSelected(true);

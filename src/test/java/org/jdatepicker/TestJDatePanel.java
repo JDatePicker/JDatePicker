@@ -45,7 +45,7 @@ public class TestJDatePanel {
 //        Locale.setDefault(Locale.US);
         
         JFrame testFrame = new JFrame();
-        JDatePanel panel = new DefaultComponentFactory().createJDatePanel();
+        DatePanel panel = new DefaultComponentFactory().createJDatePanel();
         panel.setShowYearButtons(true);
         testFrame.getContentPane().add((JComponent)panel);
         panel.setShowYearButtons(false);

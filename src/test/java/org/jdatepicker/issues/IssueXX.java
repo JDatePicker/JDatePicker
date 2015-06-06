@@ -1,4 +1,7 @@
-package org.jdatepicker;
+package org.jdatepicker.issues;
+
+import org.jdatepicker.DatePicker;
+import org.jdatepicker.DefaultComponentFactory;
 
 import java.awt.BorderLayout;
 
@@ -10,7 +13,7 @@ import javax.swing.WindowConstants;
 /**
  * Created by jheyns on 2014/10/07.
  */
-public class TestIssueXX {
+public class IssueXX {
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();
@@ -18,7 +21,7 @@ public class TestIssueXX {
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
 
-        JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        DatePicker picker = new DefaultComponentFactory().createJDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
         jPanel.add((JComponent) picker);

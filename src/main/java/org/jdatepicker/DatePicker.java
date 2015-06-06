@@ -24,38 +24,47 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
- */
+*/
 package org.jdatepicker;
 
-import java.awt.BorderLayout;
-import java.util.Locale;
+import javax.swing.JTextField;
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+public interface DatePicker extends DatePanel {
 
-public class TestIssue26 {
+    /**
+     * Is the text component editable or not. Defaults to false.
+     * 
+     * @param editable should the textfield be editable?
+     */
+    void setTextEditable(boolean editable);
 
-    public static void main(String[] args) {
-        Locale.setDefault(new Locale("ar", "sa"));
-        
-        JFrame testFrame = new JFrame();
-        testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        testFrame.setSize(500, 500);
-        JPanel jPanel = new JPanel();
-        JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
-        picker.setTextEditable(true);
-        picker.setShowYearButtons(true);
-        jPanel.add((JComponent) picker);
+    /**
+     * @return Is the text component editable?
+     */
+    boolean isTextEditable();
 
-        JPanel DatePanel = new JPanel();
-        DatePanel.setLayout(new BorderLayout());
-        DatePanel.add(jPanel, BorderLayout.WEST);
-        BorderLayout fb = new BorderLayout();
-        testFrame.setLayout(fb);
-        testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
-        testFrame.setVisible(true);
-    }
+    /**
+     * Sets the button to be focusable. Defaults to true.
+     * 
+     * @param focusable should the button be focusable?
+     */
+    void setButtonFocusable(boolean focusable);
+
+    /**
+     * @return Is the button focusable?
+     */
+    boolean getButtonFocusable();
+
+    /**
+     * @return Columns the size of the underlying textfield
+     */
+    int getTextfieldColumns();
+
+    /**
+     * Sets the size of the underlying textfield in columns
+     * 
+     * @param columns {@link JTextField#setColumns(int)}
+     */
+    void setTextfieldColumns(int columns);
 
 }

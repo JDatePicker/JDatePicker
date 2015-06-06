@@ -24,40 +24,37 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
- */
+*/
 package org.jdatepicker;
 
-import java.awt.BorderLayout;
-import java.util.Calendar;
+public interface DatePanel extends DateComponent {
 
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+    /**
+     * Sets the visibilty of the Year navigation buttons. Defaults to false.
+     * 
+     * @param showYearButtons show the button?
+     */
+    void setShowYearButtons(boolean showYearButtons);
 
-import org.jdatepicker.constraints.RangeConstraint;
+    /**
+     * Is the year navigation buttons active.
+     * 
+     * @return visiblity of the year
+     */
+    boolean isShowYearButtons();
 
-public class TestIssue4 {
+    /**
+     * This changes the behaviour of the control to require a double click on
+     * actionable clicks. If this is set the ActionEvent will only be fired
+     * when double clicked on a date. Defaults to false.
+     * 
+     * @param doubleClickAction use double clicks?
+     */
+    void setDoubleClickAction(boolean doubleClickAction);
 
-    public static void main(String[] args) {
-        JFrame testFrame = new JFrame();
-        testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        testFrame.setSize(500, 500);
-        JPanel jPanel = new JPanel();
-        JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
-        picker.setTextEditable(true);
-        picker.setShowYearButtons(true);
-        picker.addDateSelectionConstraint(new RangeConstraint(null, Calendar
-                .getInstance()));
-        jPanel.add((JComponent) picker);
-
-        JPanel DatePanel = new JPanel();
-        DatePanel.setLayout(new BorderLayout());
-        DatePanel.add(jPanel, BorderLayout.WEST);
-        BorderLayout fb = new BorderLayout();
-        testFrame.setLayout(fb);
-        testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
-        testFrame.setVisible(true);
-    }
+    /**
+     * @return Is a double click required to fire a ActionEvent.
+     */
+    boolean isDoubleClickAction();
 
 }

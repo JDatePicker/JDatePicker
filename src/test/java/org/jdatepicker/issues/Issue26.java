@@ -24,50 +24,34 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 The views and conclusions contained in the software and documentation are those of the
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
-*/
-package org.jdatepicker;
+ */
+package org.jdatepicker.issues;
 
-import javax.swing.*;
-import java.awt.*;
+import org.jdatepicker.DatePicker;
+import org.jdatepicker.DefaultComponentFactory;
 
+import java.awt.BorderLayout;
+import java.util.Locale;
 
-public class TestIssue20 {
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
+public class Issue26 {
 
     public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) { }
+        Locale.setDefault(new Locale("ar", "sa"));
+        
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
-
-        ComponentManager.getInstance().setComponentTextDefaults(new ComponentTextDefaults() {
-
-            @Override
-            public String getText(String key) {
-                if (key.equals("text.today")) {
-                    return "Yadot";
-                }
-                if (key.equals("text.month")) {
-                    return "Htnom";
-                }
-                if (key.equals("text.year")) {
-                    return "Raey";
-                }
-                if (key.equals("text.clear")) {
-                    return "Raelc";
-                }
-                return null;
-            }
-
-        });
-
-        JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        DatePicker picker = new DefaultComponentFactory().createJDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
-//        picker.getModel().setSelected(true);
-        jPanel.add((JComponent)picker);
+        jPanel.add((JComponent) picker);
+
         JPanel DatePanel = new JPanel();
         DatePanel.setLayout(new BorderLayout());
         DatePanel.add(jPanel, BorderLayout.WEST);

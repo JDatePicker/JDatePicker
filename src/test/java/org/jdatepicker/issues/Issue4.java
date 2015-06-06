@@ -25,42 +25,32 @@ The views and conclusions contained in the software and documentation are those 
 authors and should not be interpreted as representing official policies, either expressed
 or implied, of Juan Heyns.
  */
-package org.jdatepicker;
+package org.jdatepicker.issues;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.util.Calendar;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class TestIssue31 {
+import org.jdatepicker.DatePicker;
+import org.jdatepicker.DefaultComponentFactory;
+import org.jdatepicker.constraints.RangeConstraint;
+
+public class Issue4 {
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
-        JDatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        DatePicker picker = new DefaultComponentFactory().createJDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
-        picker.getModel().addPropertyChangeListener(
-                new PropertyChangeListener() {
-                    public void propertyChange(PropertyChangeEvent evt) {
-                        System.out.println(evt.getPropertyName() + ": "
-                                + evt.getOldValue() + " -> "
-                                + evt.getNewValue());
-                    }
-                });
-        picker.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Action: " + e);
-            }
-        });
+        picker.addDateSelectionConstraint(new RangeConstraint(null, Calendar
+                .getInstance()));
         jPanel.add((JComponent) picker);
 
         JPanel DatePanel = new JPanel();

@@ -46,7 +46,7 @@ import org.jdatepicker.constraints.DateSelectionConstraint;
  * 
  * @author Juan Heyns
  */
-public interface JDateComponent {
+public interface DateComponent {
     
     /**
      * Returns the value of the currently represented date in the component.

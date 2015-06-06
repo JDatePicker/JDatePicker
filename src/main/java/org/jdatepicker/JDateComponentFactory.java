@@ -27,9 +27,6 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-
 /**
  * Created 18 April 2010
  * Updated 10 August 2012
@@ -66,9 +63,9 @@ public abstract class JDateComponentFactory<T> {
      * 
      * @return A new Datepicker
      */
-    public JDatePicker createJDatePicker() {
+    public DatePicker createJDatePicker() {
         DateModel<T> model = createModel();
-        return new JDatePickerImpl(new JDatePanelImpl(model));
+        return new JDatePicker(model);
     }
     
     /**
@@ -77,12 +74,12 @@ public abstract class JDateComponentFactory<T> {
      * @param value value
      * @return A new Datepicker
      */
-    public JDatePicker createJDatePicker(T value) {
+    public DatePicker createJDatePicker(T value) {
         if (value == null) {
             throw new IllegalArgumentException("Value may not be null.");
         }
         DateModel<T> model = createModel(value);
-        return new JDatePickerImpl(new JDatePanelImpl(model));
+        return new JDatePicker(model);
     }
     
     /**
@@ -90,9 +87,9 @@ public abstract class JDateComponentFactory<T> {
      * 
      * @return A new Datepanel
      */
-    public JDatePanel createJDatePanel() {
+    public DatePanel createJDatePanel() {
         DateModel<T> model = createModel();
-        return new JDatePanelImpl(model);
+        return new JDatePanel(model);
     }
     
     /**
@@ -101,12 +98,12 @@ public abstract class JDateComponentFactory<T> {
      * @param value value
      * @return A new Datepanel
      */
-    public JDatePanel createJDatePanel(T value) {
+    public DatePanel createJDatePanel(T value) {
         if (value == null) {
             throw new IllegalArgumentException("Value may not be null.");
         }
         DateModel<T> model = createModel(value);
-        return new JDatePanelImpl(model);
+        return new JDatePanel(model);
     }
     
 }
