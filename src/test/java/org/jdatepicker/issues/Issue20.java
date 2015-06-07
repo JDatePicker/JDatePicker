@@ -27,7 +27,6 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker.issues;
 
-import org.jdatepicker.ComponentManager;
 import org.jdatepicker.ComponentTextDefaults;
 import org.jdatepicker.DatePicker;
 import org.jdatepicker.DefaultComponentFactory;
@@ -47,26 +46,11 @@ public class Issue20 {
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
 
-        ComponentManager.getInstance().setComponentTextDefaults(new ComponentTextDefaults() {
-
-            @Override
-            public String getText(Key key) {
-                if (key.getProperty().equals("text.today")) {
-                    return "Yadot";
-                }
-                if (key.getProperty().equals("text.month")) {
-                    return "Htnom";
-                }
-                if (key.getProperty().equals("text.year")) {
-                    return "Raey";
-                }
-                if (key.getProperty().equals("text.clear")) {
-                    return "Raelc";
-                }
-                return null;
-            }
-
-        });
+        ComponentTextDefaults defaults = ComponentTextDefaults.getInstance();
+        defaults.setText(ComponentTextDefaults.Key.TODAY, "Yadot");
+        defaults.setText(ComponentTextDefaults.Key.MONTH, "Htnom");
+        defaults.setText(ComponentTextDefaults.Key.YEAR, "Raey");
+        defaults.setText(ComponentTextDefaults.Key.CLEAR, "Raelc");
 
         DatePicker picker = new DefaultComponentFactory().createJDatePicker();
         picker.setTextEditable(true);

@@ -27,6 +27,8 @@ or implied, of Juan Heyns.
 */
 package org.jdatepicker.impl;
 
+import org.jdatepicker.ComponentFormatDefaults;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -37,13 +39,13 @@ import javax.swing.JFormattedTextField;
 public class DateComponentFormatter extends JFormattedTextField.AbstractFormatter {
     
     private static final long serialVersionUID = 5997312768041129127L;
-    
+
     private DateFormat format;
-    
-    public DateComponentFormatter(DateFormat format){
-        this.format = format;
+
+    public DateComponentFormatter() {
+        this.format = ComponentFormatDefaults.getInstance().getFormat(ComponentFormatDefaults.Key.SELECTED_DATE_FIELD);
     }
-    
+
     @Override
     public String valueToString(Object value) throws ParseException {
         Calendar cal = (Calendar)value;

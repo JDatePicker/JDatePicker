@@ -33,7 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.ParseException;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -51,7 +51,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import org.jdatepicker.constraints.DateSelectionConstraint;
-import org.jdatepicker.impl.DateComponentFormatter;
 
 /**
  * Created on 26 Mar 2004
@@ -76,8 +75,6 @@ public class JDatePanel extends JComponent implements DatePanel {
     private Set<ActionListener> actionListeners;
     private Set<DateSelectionConstraint> dateConstraints;
 
-    private JFormattedTextField.AbstractFormatter formatter;
-    
     private boolean showYearButtons;
     private boolean doubleClickAction;
     private int firstDayOfWeek;
@@ -129,8 +126,6 @@ public class JDatePanel extends JComponent implements DatePanel {
         actionListeners = new HashSet<ActionListener>();
         dateConstraints = new HashSet<DateSelectionConstraint>();
 
-        this.formatter = new DateComponentFormatter(ComponentManager.getInstance().getComponentFormatDefaults().getTodayDateFormat());
-        
         showYearButtons = false;
         doubleClickAction = false;
         firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
@@ -222,15 +217,19 @@ public class JDatePanel extends JComponent implements DatePanel {
     }
 
     private static ComponentTextDefaults getTexts() {
-        return ComponentManager.getInstance().getComponentTextDefaults();
+        return ComponentTextDefaults.getInstance();
     }
 
     private static ComponentIconDefaults getIcons() {
-        return ComponentManager.getInstance().getComponentIconDefaults();
+        return ComponentIconDefaults.getInstance();
     }
 
     private static ComponentColorDefaults getColors() {
-        return ComponentManager.getInstance().getComponentColorDefaults();
+        return ComponentColorDefaults.getInstance();
+    }
+
+    private static ComponentFormatDefaults getFormats() {
+        return ComponentFormatDefaults.getInstance();
     }
 
     @Override
@@ -418,14 +417,12 @@ public class JDatePanel extends JComponent implements DatePanel {
         }
 
         private void updateTodayLabel() {
-            try {
-                todayLabel.setText(getTexts().getText(
-                        ComponentTextDefaults.Key.TODAY)
-                        + ": "
-                        + formatter.valueToString(Calendar.getInstance()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            Calendar now = Calendar.getInstance();
+            DateFormat df = getFormats().getFormat(ComponentFormatDefaults.Key.TODAY_SELECTOR);
+            todayLabel.setText(getTexts().getText(
+                    ComponentTextDefaults.Key.TODAY)
+                    + ": "
+                    + df.format(now.getTime()));
         }
 
         /**

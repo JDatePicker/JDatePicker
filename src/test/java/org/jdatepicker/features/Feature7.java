@@ -31,7 +31,7 @@ public class Feature7 {
         frame.getContentPane().add(panel);
 
         // Change the component defaults before instantiating
-        ComponentColorDefaults defaults = ComponentManager.getInstance().getComponentColorDefaults();
+        ComponentColorDefaults defaults = ComponentColorDefaults.getInstance();
 
         defaults.setColor(ComponentColorDefaults.Key.FG_MONTH_SELECTOR, Color.ORANGE);
         defaults.setColor(ComponentColorDefaults.Key.BG_MONTH_SELECTOR, Color.BLACK);

@@ -142,7 +142,7 @@ public class JDatePicker extends JComponent implements DatePicker {
 
         //Create and Add Components
         //Add and Configure TextField
-        formattedTextField = new JFormattedTextField(new DateComponentFormatter(ComponentManager.getInstance().getComponentFormatDefaults().getSelectedDateFormat()));
+        formattedTextField = new JFormattedTextField(new DateComponentFormatter());
         DateModel<?> model = datePanel.getModel();
         setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
         formattedTextField.setEditable(false);        
@@ -153,7 +153,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         //Add and Configure Button
         button = new JButton();
         button.setFocusable(true);
-        Icon icon = ComponentManager.getInstance().getComponentIconDefaults().getPopupButtonIcon();
+        Icon icon = ComponentIconDefaults.getInstance().getPopupButtonIcon();
         button.setIcon(icon);
         if(icon == null) {
             // reset to caption
@@ -185,7 +185,7 @@ public class JDatePicker extends JComponent implements DatePicker {
     }
 
     private static ComponentColorDefaults getColors() {
-        return ComponentManager.getInstance().getComponentColorDefaults();
+        return ComponentColorDefaults.getInstance();
     }
 
     public void addActionListener(ActionListener actionListener) {

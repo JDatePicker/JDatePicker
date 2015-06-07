@@ -1,6 +1,5 @@
 package org.jdatepicker.features;
 
-import org.jdatepicker.ComponentManager;
 import org.jdatepicker.ComponentTextDefaults;
 import org.jdatepicker.JDatePanel;
 import org.jdatepicker.JDatePicker;
@@ -26,7 +25,7 @@ public class Feature6 {
         frame.getContentPane().add(panel);
 
         // Change the component defaults before instantiating
-        ComponentTextDefaults defaults = ComponentManager.getInstance().getComponentTextDefaults();
+        ComponentTextDefaults defaults = ComponentTextDefaults.getInstance();
         defaults.setText(ComponentTextDefaults.Key.YEAR, "Jaar");
         defaults.setText(ComponentTextDefaults.Key.MONTH, "Maand");
         defaults.setText(ComponentTextDefaults.Key.TODAY, "Vandag");

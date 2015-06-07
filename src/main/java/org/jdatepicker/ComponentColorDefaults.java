@@ -32,12 +32,16 @@ import java.awt.SystemColor;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created on 15 June 2012
- * 
- * @author Juan Heyns
- */
-public class ComponentColorDefaults {
+public final class ComponentColorDefaults {
+
+    private static ComponentColorDefaults instance;
+
+    public static ComponentColorDefaults getInstance() {
+        if (instance == null) {
+            instance = new ComponentColorDefaults();
+        }
+        return instance;
+    }
 
     public enum Key {
         FG_MONTH_SELECTOR,
@@ -60,7 +64,7 @@ public class ComponentColorDefaults {
 
     private Map<Key, Color> colors;
 
-    public ComponentColorDefaults() {
+    private ComponentColorDefaults() {
         colors = new HashMap<Key, Color>();
 
         colors.put(Key.FG_MONTH_SELECTOR, SystemColor.activeCaptionText);
