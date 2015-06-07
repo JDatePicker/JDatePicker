@@ -328,7 +328,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 northPanel.setLayout(new java.awt.BorderLayout());
                 northPanel.setName("");
                 northPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(3,3,3,3));
-                northPanel.setBackground(getColors().bgMonthSelector());
+                northPanel.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_MONTH_SELECTOR));
                 northPanel.add(getPreviousButtonPanel(), java.awt.BorderLayout.WEST);
                 northPanel.add(getNextButtonPanel(), java.awt.BorderLayout.EAST);
                 northPanel.add(getNorthCenterPanel(), java.awt.BorderLayout.CENTER);
@@ -361,7 +361,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         private JLabel getMonthLabel() {
             if (monthLabel == null) {
                 monthLabel = new javax.swing.JLabel();
-                monthLabel.setForeground(getColors().fgMonthSelector());
+                monthLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_MONTH_SELECTOR));
                 monthLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 monthLabel.addMouseListener(internalController);
                 updateMonthLabel();
@@ -391,7 +391,7 @@ public class JDatePanel extends JComponent implements DatePanel {
             if (southPanel == null) {
                 southPanel = new javax.swing.JPanel();
                 southPanel.setLayout(new java.awt.BorderLayout());
-                southPanel.setBackground(getColors().bgTodaySelector());
+                southPanel.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_TODAY_SELECTOR));
                 southPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(3,3,3,3));
                 southPanel.add(getTodayLabel(), java.awt.BorderLayout.WEST);
                 southPanel.add(getNoneLabel(), java.awt.BorderLayout.EAST);
@@ -407,7 +407,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         private JLabel getNoneLabel() {
             if (noneLabel == null) {
                 noneLabel = new javax.swing.JLabel();
-                noneLabel.setForeground(getColors().fgTodaySelector());
+                noneLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR));
                 noneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 noneLabel.addMouseListener(internalController);
                 //TODO get the translations for each language before adding this in
@@ -436,7 +436,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         private JLabel getTodayLabel() {
             if (todayLabel == null) {
                 todayLabel = new javax.swing.JLabel();
-                todayLabel.setForeground(getColors().fgTodaySelector());
+                todayLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR));
                 todayLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 todayLabel.addMouseListener(internalController);
                 updateTodayLabel();
@@ -473,7 +473,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 dayTable.setPreferredSize(new java.awt.Dimension(100,80));
                 dayTable.setModel(internalModel);
                 dayTable.setShowGrid(true);
-                dayTable.setGridColor(getColors().bgGrid());
+                dayTable.setGridColor(getColors().getColor(ComponentColorDefaults.Key.BG_GRID));
                 dayTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 dayTable.setCellSelectionEnabled(true);
                 dayTable.setRowSelectionAllowed(true);
@@ -688,8 +688,8 @@ public class JDatePanel extends JComponent implements DatePanel {
             label.setHorizontalAlignment(JLabel.CENTER);
 
             if (row == -1) {
-                label.setForeground(getColors().fgGridHeader());
-                label.setBackground(getColors().bgGridHeader());
+                label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_HEADER));
+                label.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_GRID_HEADER));
                 label.setHorizontalAlignment(JLabel.CENTER);
                 return label;
             }
@@ -703,14 +703,16 @@ public class JDatePanel extends JComponent implements DatePanel {
 
             // Other month
             if (cellDayValue < 1 || cellDayValue > lastDayOfMonth) {
-                label.setForeground(getColors().fgGridOtherMonth());
+                label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_OTHER_MONTH));
 
                 Calendar calForDay = Calendar.getInstance();
                 calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
                 DateModel<Calendar> modelForDay = new UtilCalendarModel(calForDay);
-                label.setBackground(checkConstraints(modelForDay) ? getColors().bgGrid() : getColors().bgGridNotSelectable());
+                label.setBackground(checkConstraints(modelForDay) ?
+                        getColors().getColor(ComponentColorDefaults.Key.BG_GRID) :
+                        getColors().getColor(ComponentColorDefaults.Key.BG_GRID_NOT_SELECTABLE)
+                );
 
-                
                 //Past end of month
                 if (cellDayValue > lastDayOfMonth) {
                     label.setText(Integer.toString(cellDayValue - lastDayOfMonth));
@@ -725,30 +727,33 @@ public class JDatePanel extends JComponent implements DatePanel {
             }
             //This month
             else { 
-                label.setForeground(getColors().fgGridThisMonth());
+                label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_THIS_MONTH));
 
                 Calendar calForDay = Calendar.getInstance();
                 calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
                 DateModel<Calendar> modelForDay = new UtilCalendarModel(calForDay);
-                label.setBackground(checkConstraints(modelForDay) ? getColors().bgGrid() : getColors().bgGridNotSelectable());
+                label.setBackground(checkConstraints(modelForDay) ?
+                        getColors().getColor(ComponentColorDefaults.Key.BG_GRID) :
+                        getColors().getColor(ComponentColorDefaults.Key.BG_GRID_NOT_SELECTABLE)
+                );
                 
                 //Today
                 if (todayCal.get(Calendar.DATE) == cellDayValue
                         && todayCal.get(Calendar.MONTH) == internalModel.getModel().getMonth()
                         && todayCal.get(Calendar.YEAR) == internalModel.getModel().getYear()) {
-                    label.setForeground(getColors().fgGridToday());
+                    label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_TODAY));
                     //Selected
                     if (internalModel.getModel().isSelected() && selectedCal.get(Calendar.DATE) == cellDayValue) {
-                        label.setForeground(getColors().fgGridTodaySelected());
-                        label.setBackground(getColors().bgGridTodaySelected());
+                        label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED));
+                        label.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_GRID_TODAY_SELECTED));
                     }
                 }
                 //Other day
                 else {
                     //Selected
                     if (internalModel.getModel().isSelected() && selectedCal.get(Calendar.DATE) == cellDayValue) {
-                        label.setForeground(getColors().fgGridSelected());
-                        label.setBackground(getColors().bgGridSelected());
+                        label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_SELECTED));
+                        label.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_GRID_SELECTED));
                     }
                 }
             }

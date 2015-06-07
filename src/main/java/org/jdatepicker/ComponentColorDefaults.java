@@ -29,6 +29,8 @@ package org.jdatepicker;
 
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created on 15 June 2012
@@ -36,26 +38,61 @@ import java.awt.SystemColor;
  * @author Juan Heyns
  */
 public class ComponentColorDefaults {
-    
-    public Color fgMonthSelector() { return SystemColor.activeCaptionText; }
-    public Color bgMonthSelector() { return SystemColor.activeCaption; }
 
-    public Color fgGridHeader() { return new Color(10, 36, 106); }
-    public Color bgGridHeader() { return Color.LIGHT_GRAY; }
+    public enum Key {
+        FG_MONTH_SELECTOR,
+        BG_MONTH_SELECTOR,
+        FG_GRID_HEADER,
+        BG_GRID_HEADER,
+        FG_GRID_THIS_MONTH,
+        FG_GRID_OTHER_MONTH,
+        FG_GRID_TODAY,
+        BG_GRID,
+        BG_GRID_NOT_SELECTABLE,
+        FG_GRID_SELECTED,
+        BG_GRID_SELECTED,
+        FG_GRID_TODAY_SELECTED,
+        BG_GRID_TODAY_SELECTED,
+        FG_TODAY_SELECTOR,
+        BG_TODAY_SELECTOR,
+        POPUP_BORDER;
+    }
 
-    public Color fgGridThisMonth() { return Color.BLACK; }
-    public Color fgGridOtherMonth() { return Color.LIGHT_GRAY; }
-    public Color fgGridToday() { return Color.RED; }
-    public Color bgGrid() { return Color.WHITE; }
-    public Color bgGridNotSelectable() { return new Color(240, 240, 240); }
+    private Map<Key, Color> colors;
 
-    public Color fgGridSelected() { return Color.WHITE; }
-    public Color bgGridSelected() { return new Color(10, 36, 106); }
+    public ComponentColorDefaults() {
+        colors = new HashMap<Key, Color>();
 
-    public Color fgGridTodaySelected() { return Color.RED; }
-    public Color bgGridTodaySelected() { return new Color(10, 36, 106); }
+        colors.put(Key.FG_MONTH_SELECTOR, SystemColor.activeCaptionText);
+        colors.put(Key.BG_MONTH_SELECTOR, SystemColor.activeCaption);
 
-    public Color fgTodaySelector() { return Color.BLACK; }
-    public Color bgTodaySelector() { return Color.WHITE; }
+        colors.put(Key.FG_GRID_HEADER, new Color(10, 36, 106));
+        colors.put(Key.BG_GRID_HEADER, Color.LIGHT_GRAY);
+
+        colors.put(Key.FG_GRID_THIS_MONTH, Color.BLACK);
+        colors.put(Key.FG_GRID_OTHER_MONTH, Color.LIGHT_GRAY);
+        colors.put(Key.FG_GRID_TODAY, Color.RED);
+        colors.put(Key.BG_GRID, Color.WHITE);
+        colors.put(Key.BG_GRID_NOT_SELECTABLE, new Color(240, 240, 240));
+
+        colors.put(Key.FG_GRID_SELECTED, Color.WHITE);
+        colors.put(Key.BG_GRID_SELECTED, new Color(10, 36, 106));
+
+        colors.put(Key.FG_GRID_TODAY_SELECTED, Color.RED);
+        colors.put(Key.BG_GRID_TODAY_SELECTED, new Color(10, 36, 106));
+
+        colors.put(Key.FG_TODAY_SELECTOR, Color.BLACK);
+        colors.put(Key.BG_TODAY_SELECTOR, Color.WHITE);
+
+        colors.put(Key.POPUP_BORDER, Color.BLACK);
+    }
+
+    public Color getColor(Key key) {
+        return colors.get(key);
+    }
+
+    public void setColor(Key key, Color color) {
+        colors.put(key, color);
+    }
     
 }

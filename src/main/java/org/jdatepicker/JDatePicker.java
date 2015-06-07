@@ -28,7 +28,6 @@ or implied, of Juan Heyns.
 package org.jdatepicker;
 
 import java.awt.AWTEvent;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -134,7 +133,7 @@ public class JDatePicker extends JComponent implements DatePicker {
 
         //Initialise Variables
         popup = null;
-        datePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        datePanel.setBorder(BorderFactory.createLineBorder(getColors().getColor(ComponentColorDefaults.Key.POPUP_BORDER)));
         InternalEventHandler internalEventHandler = new InternalEventHandler();
 
         //Create Layout
@@ -184,7 +183,11 @@ public class JDatePicker extends JComponent implements DatePicker {
         long eventMask = MouseEvent.MOUSE_PRESSED;
         Toolkit.getDefaultToolkit().addAWTEventListener(internalEventHandler, eventMask);
     }
-    
+
+    private static ComponentColorDefaults getColors() {
+        return ComponentManager.getInstance().getComponentColorDefaults();
+    }
+
     public void addActionListener(ActionListener actionListener) {
         datePanel.addActionListener(actionListener);
     }

@@ -47,33 +47,8 @@ public class TestJDatePicker {
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
         DatePicker picker = new DefaultComponentFactory().createJDatePicker();
-//        new ColorTheme() {
-//
-//            public Color fgMonthSelector() { return Color.WHITE; }
-//            public Color bgMonthSelector() { return new Color(0,0,120); }
-//
-//            public Color fgGridHeader() { return Color.YELLOW; }
-//            public Color bgGridHeader() { return Color.PINK; }
-//
-//            public Color fgGridThisMonth() { return Color.WHITE; }
-//            public Color fgGridOtherMonth() { return Color.CYAN; }
-//            public Color fgGridToday() { return Color.GREEN; }
-//            public Color bgGrid() { return Color.BLACK; }
-//
-//            public Color fgGridSelected() { return Color.MAGENTA; }
-//            public Color bgGridSelected() { return Color.WHITE; }
-//
-//            public Color fgGridTodaySelected() { return Color.YELLOW; }
-//            public Color bgGridTodaySelected() { return Color.GRAY; }
-//
-//            public Color fgTodaySelector() { return Color.YELLOW; }
-//            public Color bgTodaySelector() { return Color.RED; }
-//            
-//        },
-//        null);
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
-//        picker.getModel().setSelected(true);
         jPanel.add((JComponent)picker);
         JPanel DatePanel = new JPanel();
         DatePanel.setLayout(new BorderLayout());

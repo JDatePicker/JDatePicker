@@ -35,19 +35,11 @@ import javax.swing.WindowConstants;
 public class TestJDatePanel {
 
     public static void main(String[] args) {
-        // Test 1: Monday is the first day of week (Germany)
-//        Locale.setDefault(Locale.GERMAN);
-
-//        // Test 2: Saturday is the first day of week (Saudi Arabia)
-//        Locale.setDefault(new Locale("ar", "sa"));
-
-//        // Test 3: Sunday is the first day of week (US)
-//        Locale.setDefault(Locale.US);
-        
         JFrame testFrame = new JFrame();
         DatePanel panel = new DefaultComponentFactory().createJDatePanel();
         panel.setShowYearButtons(true);
         testFrame.getContentPane().add((JComponent)panel);
+        // TODO create a feature class to describe these types of variables
         panel.setShowYearButtons(false);
         panel.setShowYearButtons(true);
 
