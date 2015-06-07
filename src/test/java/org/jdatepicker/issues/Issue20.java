@@ -29,7 +29,7 @@ package org.jdatepicker.issues;
 
 import org.jdatepicker.ComponentTextDefaults;
 import org.jdatepicker.DatePicker;
-import org.jdatepicker.DefaultComponentFactory;
+import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +52,7 @@ public class Issue20 {
         defaults.setText(ComponentTextDefaults.Key.YEAR, "Raey");
         defaults.setText(ComponentTextDefaults.Key.CLEAR, "Raelc");
 
-        DatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        DatePicker picker = new JDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
 //        picker.getModel().setSelected(true);

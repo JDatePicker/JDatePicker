@@ -36,7 +36,7 @@ public class TestJDatePanel {
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();
-        DatePanel panel = new DefaultComponentFactory().createJDatePanel();
+        DatePanel panel = new JDatePanel();
         panel.setShowYearButtons(true);
         testFrame.getContentPane().add((JComponent)panel);
         // TODO create a feature class to describe these types of variables

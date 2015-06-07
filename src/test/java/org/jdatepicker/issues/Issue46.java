@@ -21,13 +21,11 @@ public class Issue46 {
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
 
-        final DatePicker picker = new DefaultComponentFactory()
-                .createJDatePicker();
+        final DatePicker picker = new JDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
 
-        final DatePanel panel = new DefaultComponentFactory()
-                .createJDatePanel();
+        final DatePanel panel = new JDatePanel();
         panel.setShowYearButtons(true);
 
         picker.getModel().setYear(2010);

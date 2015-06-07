@@ -87,7 +87,7 @@ public class JDatePanel extends JComponent implements DatePanel {
      * Creates a JDatePanel with a default calendar model.
      */
     public JDatePanel() {
-        this(new DefaultComponentFactory().createModel());
+        this(createModel());
     }
 
     /**
@@ -96,7 +96,7 @@ public class JDatePanel extends JComponent implements DatePanel {
      * @param value the initial value
      */
     public JDatePanel(Calendar value) {
-        this(new DefaultComponentFactory().createModelFromValue(value));
+        this(createModelFromValue(value));
     }
 
     /**
@@ -105,7 +105,7 @@ public class JDatePanel extends JComponent implements DatePanel {
      * @param value the initial value
      */
     public JDatePanel(java.util.Date value) {
-        this(new DefaultComponentFactory().createModelFromValue(value));
+        this(createModelFromValue(value));
     }
 
     /**
@@ -114,7 +114,7 @@ public class JDatePanel extends JComponent implements DatePanel {
      * @param value the initial value
      */
     public JDatePanel(java.sql.Date value) {
-        this(new DefaultComponentFactory().createModelFromValue(value));
+        this(createModelFromValue(value));
     }
 
     /**
@@ -137,7 +137,28 @@ public class JDatePanel extends JComponent implements DatePanel {
         setLayout(new GridLayout(1, 1));
         add(internalView);
     }
-    
+
+    public static DateModel<Calendar> createModel() {
+        return new UtilCalendarModel();
+    }
+
+    private static DateModel<Calendar> createModel(Calendar value) {
+        return new UtilCalendarModel(value);
+    }
+
+    private static DateModel<?> createModelFromValue(Object value) {
+        if (value instanceof java.util.Calendar) {
+            return new UtilCalendarModel((Calendar)value);
+        }
+        if (value instanceof java.util.Date) {
+            return new UtilDateModel((java.util.Date)value);
+        }
+        if (value instanceof java.sql.Date) {
+            return new SqlDateModel((java.sql.Date)value);
+        }
+        throw new IllegalArgumentException("No model could be constructed from the initial value object.");
+    }
+
     public void addActionListener(ActionListener actionListener) {
         actionListeners.add(actionListener);
     }

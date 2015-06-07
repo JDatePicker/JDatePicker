@@ -36,7 +36,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import org.jdatepicker.DatePicker;
-import org.jdatepicker.DefaultComponentFactory;
+import org.jdatepicker.JDatePicker;
 import org.jdatepicker.constraints.RangeConstraint;
 
 public class Issue4 {
@@ -46,7 +46,7 @@ public class Issue4 {
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
-        DatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        DatePicker picker = new JDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
         picker.addDateSelectionConstraint(new RangeConstraint(null, Calendar

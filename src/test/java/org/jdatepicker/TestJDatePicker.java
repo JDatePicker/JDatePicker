@@ -46,7 +46,7 @@ public class TestJDatePicker {
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
-        DatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        DatePicker picker = new JDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
         jPanel.add((JComponent)picker);

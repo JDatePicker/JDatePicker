@@ -1,6 +1,5 @@
 package org.jdatepicker.issues;
 
-import org.jdatepicker.DefaultComponentFactory;
 import org.jdatepicker.JDatePicker;
 
 import java.awt.Container;
@@ -27,8 +26,7 @@ public class Issue19 extends JFrame {
 
         // create components
         final Container cont = getContentPane();
-        final JDatePicker picker = (JDatePicker) new DefaultComponentFactory()
-                .createJDatePicker();
+        final JDatePicker picker = new JDatePicker();
         final JButton right = new JButton("show / hide");
 
         // add button action

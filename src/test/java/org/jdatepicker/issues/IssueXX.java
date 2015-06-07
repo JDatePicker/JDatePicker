@@ -1,7 +1,7 @@
 package org.jdatepicker.issues;
 
 import org.jdatepicker.DatePicker;
-import org.jdatepicker.DefaultComponentFactory;
+import org.jdatepicker.JDatePicker;
 
 import java.awt.BorderLayout;
 
@@ -21,7 +21,7 @@ public class IssueXX {
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
 
-        DatePicker picker = new DefaultComponentFactory().createJDatePicker();
+        DatePicker picker = new JDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
         jPanel.add((JComponent) picker);
