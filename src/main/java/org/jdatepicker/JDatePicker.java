@@ -126,9 +126,7 @@ public class JDatePicker extends JComponent implements DatePicker {
     /**
      * You are able to set the format of the date being displayed on the label.
      * Formatting is described at:
-     * 
-     * http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html
-     * 
+     *
      * @param datePanel The DatePanel to use
      */
     private JDatePicker(JDatePanel datePanel) {

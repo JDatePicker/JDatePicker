@@ -75,10 +75,6 @@ public class Feature3 {
 
         private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        public DemoDateModel() {
-            this(null);
-        }
-
         public DemoDateModel(String value) {
             super();
             setValue(value);

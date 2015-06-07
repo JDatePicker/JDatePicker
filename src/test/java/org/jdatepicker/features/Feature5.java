@@ -18,7 +18,7 @@ public class Feature5 {
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         // Changing the global locale
         // GERMAN: Monday is the first day of week
-        Locale.setDefault(Locale.GERMAN);
+        //Locale.setDefault(Locale.GERMAN);
 
         // AR_SA: Saturday is the first day of week (Saudi Arabia), rtl
         // Locale.setDefault(new Locale("ar", "sa"));
@@ -27,15 +27,15 @@ public class Feature5 {
         // Locale.setDefault(Locale.US);
 
         // SIMPLIFIED_CHINESE: ???
-        // Locale.setDefault(Locale.SIMPLIFIED_CHINESE);
+        //Locale.setDefault(Locale.SIMPLIFIED_CHINESE);
 
-        // JAPAN: ???
+        // JAPAN
         // Locale.setDefault(Locale.JAPAN);
 
-        // KOREAN: ???
+        // KOREAN
         // Locale.setDefault(Locale.KOREAN);
 
-        // RUSSIAN: ???
+        // RUSSIAN
         Locale.setDefault(new Locale("ru"));
 
         // Create a frame

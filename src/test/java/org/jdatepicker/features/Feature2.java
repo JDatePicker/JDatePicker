@@ -20,7 +20,7 @@ public class Feature2 {
         // Create a frame
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.setSize(800, 300);
+        frame.setSize(850, 300);
 
         // Create a flow layout panel
         JPanel panel = new JPanel();

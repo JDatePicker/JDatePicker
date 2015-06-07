@@ -33,9 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DateFormatSymbols;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -299,9 +297,7 @@ public class JDatePanel extends JComponent implements DatePanel {
          * Update the UI of the monthLabel
          */
         private void updateMonthLabel() {
-            SimpleDateFormat fmt = new SimpleDateFormat("MMMM");
-            Calendar cal = new GregorianCalendar(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), internalModel.getModel().getDay());
-            monthLabel.setText(fmt.format(cal.getTime()));
+            monthLabel.setText(getTexts().getText(ComponentTextDefaults.Key.getMonthKey(internalModel.getModel().getMonth())));
         }
         
         public InternalView() {
@@ -424,7 +420,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         private void updateTodayLabel() {
             try {
                 todayLabel.setText(getTexts().getText(
-                        ComponentTextDefaults.TODAY)
+                        ComponentTextDefaults.Key.TODAY)
                         + ": "
                         + formatter.valueToString(Calendar.getInstance()));
             } catch (ParseException e) {
@@ -567,7 +563,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 nextMonthButton.setFocusable(false);
                 nextMonthButton.setOpaque(true);
                 nextMonthButton.addActionListener(internalController);
-                nextMonthButton.setToolTipText(getTexts().getText(ComponentTextDefaults.MONTH));
+                nextMonthButton.setToolTipText(getTexts().getText(ComponentTextDefaults.Key.MONTH));
             }
             return nextMonthButton;
         }
@@ -588,7 +584,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 nextYearButton.setFocusable(false);
                 nextYearButton.setOpaque(true);
                 nextYearButton.addActionListener(internalController);
-                nextYearButton.setToolTipText(getTexts().getText(ComponentTextDefaults.YEAR));
+                nextYearButton.setToolTipText(getTexts().getText(ComponentTextDefaults.Key.YEAR));
             }
             return nextYearButton;
         }
@@ -609,7 +605,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 previousMonthButton.setFocusable(false);
                 previousMonthButton.setOpaque(true);
                 previousMonthButton.addActionListener(internalController);
-                previousMonthButton.setToolTipText(getTexts().getText(ComponentTextDefaults.MONTH));
+                previousMonthButton.setToolTipText(getTexts().getText(ComponentTextDefaults.Key.MONTH));
             }
             return previousMonthButton;
         }
@@ -630,7 +626,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 previousYearButton.setFocusable(false);
                 previousYearButton.setOpaque(true);
                 previousYearButton.addActionListener(internalController);
-                previousYearButton.setToolTipText(getTexts().getText(ComponentTextDefaults.YEAR));
+                previousYearButton.setToolTipText(getTexts().getText(ComponentTextDefaults.Key.YEAR));
             }
             return previousYearButton;
         }
@@ -653,11 +649,9 @@ public class JDatePanel extends JComponent implements DatePanel {
         
         private JMenuItem[] getMonthPopupMenuItems(){
             if (monthPopupMenuItems == null) {
-                DateFormatSymbols df = new DateFormatSymbols();
-                String[] months = df.getMonths();
-                monthPopupMenuItems = new JMenuItem[months.length-1];
-                for (int i=0; i<months.length-1; i++) {
-                    JMenuItem mi = new JMenuItem(months[i]);
+                monthPopupMenuItems = new JMenuItem[12];
+                for (int i = 0; i < 12; i++) {
+                    JMenuItem mi = new JMenuItem(getTexts().getText(ComponentTextDefaults.Key.getMonthKey(i)));
                     mi.addActionListener(internalController);
                     monthPopupMenuItems[i] = mi;
                 }
@@ -972,10 +966,8 @@ public class JDatePanel extends JComponent implements DatePanel {
          * Part of TableModel, day
          */
         public String getColumnName(int columnIndex) {
-            Calendar dayOfWeek = Calendar.getInstance();
-            dayOfWeek.set(Calendar.DAY_OF_WEEK, firstDayOfWeek + columnIndex);
-            SimpleDateFormat df = new SimpleDateFormat("EEE");
-            return df.format(dayOfWeek.getTime());
+            ComponentTextDefaults.Key key = ComponentTextDefaults.Key.getDowKey(((firstDayOfWeek - 1) + columnIndex) % 7);
+            return getTexts().getText(key);
         }
 
         private int[] lookup = null;

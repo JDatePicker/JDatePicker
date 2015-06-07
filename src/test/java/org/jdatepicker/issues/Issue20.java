@@ -50,17 +50,17 @@ public class Issue20 {
         ComponentManager.getInstance().setComponentTextDefaults(new ComponentTextDefaults() {
 
             @Override
-            public String getText(String key) {
-                if (key.equals("text.today")) {
+            public String getText(Key key) {
+                if (key.getProperty().equals("text.today")) {
                     return "Yadot";
                 }
-                if (key.equals("text.month")) {
+                if (key.getProperty().equals("text.month")) {
                     return "Htnom";
                 }
-                if (key.equals("text.year")) {
+                if (key.getProperty().equals("text.year")) {
                     return "Raey";
                 }
-                if (key.equals("text.clear")) {
+                if (key.getProperty().equals("text.clear")) {
                     return "Raelc";
                 }
                 return null;
