@@ -2,15 +2,10 @@ package org.jdatepicker.issues;
 
 import org.jdatepicker.JDatePicker;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 public class Issue19 extends JFrame {
     private static final long serialVersionUID = 1L;

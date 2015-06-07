@@ -3,12 +3,8 @@ package org.jdatepicker.issues;
 import org.jdatepicker.DatePicker;
 import org.jdatepicker.JDatePicker;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by jheyns on 2014/10/07.

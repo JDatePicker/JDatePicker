@@ -1,19 +1,15 @@
 package org.jdatepicker.issues;
 
-import org.jdatepicker.*;
+import org.jdatepicker.DatePanel;
+import org.jdatepicker.DatePicker;
+import org.jdatepicker.JDatePanel;
+import org.jdatepicker.JDatePicker;
 
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
-/**
- * Created by jheyns on 2014/10/07.
- */
 public class Issue46 {
 
     public static void main(String[] args) {

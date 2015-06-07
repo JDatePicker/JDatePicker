@@ -1,6 +1,9 @@
 package org.jdatepicker.features;
 
-import org.jdatepicker.*;
+import org.jdatepicker.ComponentColorDefaults;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDatePanel;
+import org.jdatepicker.JDatePicker;
 import org.jdatepicker.constraints.DateSelectionConstraint;
 
 import javax.swing.*;
@@ -63,8 +66,8 @@ public class Feature7 {
                 Calendar c = Calendar.getInstance();
                 c.add(Calendar.DATE, -1);
                 return !(c.get(Calendar.YEAR) == model.getYear() &&
-                         c.get(Calendar.MONTH) == model.getMonth() &&
-                         c.get(Calendar.DATE) == model.getDay());
+                        c.get(Calendar.MONTH) == model.getMonth() &&
+                        c.get(Calendar.DATE) == model.getDay());
             }
         });
         panel.add(datePanel);

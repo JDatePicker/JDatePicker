@@ -59,8 +59,8 @@ public final class ComponentTextDefaults {
         AUGUST("text.august", "month", 7),
         SEPTEMBER("text.september", "month", 8),
         OCTOBER("text.october", "month", 9),
-        NOVEMBER("text.november",  "month",10),
-        DECEMBER("text.december",  "month",11),
+        NOVEMBER("text.november", "month", 10),
+        DECEMBER("text.december", "month", 11),
 
         // Days of the week abbreviated where necessary
         SUN("text.sun", "dow", 0),
@@ -99,7 +99,7 @@ public final class ComponentTextDefaults {
         }
 
         public static Key getMonthKey(int index) {
-            for (Key key: values()) {
+            for (Key key : values()) {
                 if ("month".equals(key.getKind()) && index == key.getIndex()) {
                     return key;
                 }
@@ -108,7 +108,7 @@ public final class ComponentTextDefaults {
         }
 
         public static Key getDowKey(int index) {
-            for (Key key: values()) {
+            for (Key key : values()) {
                 if ("dow".equals(key.getKind()) && index == key.getIndex()) {
                     return key;
                 }

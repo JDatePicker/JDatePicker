@@ -28,43 +28,35 @@
 package org.jdatepicker;
 
 import javax.swing.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
-public interface DatePicker extends DatePanel {
+public class DateComponentFormatter extends JFormattedTextField.AbstractFormatter {
 
-    /**
-     * Is the text component editable or not. Defaults to false.
-     *
-     * @param editable should the textfield be editable?
-     */
-    void setTextEditable(boolean editable);
+    private static final long serialVersionUID = 5997312768041129127L;
 
-    /**
-     * @return Is the text component editable?
-     */
-    boolean isTextEditable();
+    @Override
+    public String valueToString(Object value) throws ParseException {
+        Calendar cal = (Calendar) value;
+        if (cal == null) {
+            return "";
+        }
+        DateFormat format = ComponentFormatDefaults.getInstance().getFormat(ComponentFormatDefaults.Key.SELECTED_DATE_FIELD);
+        return format.format(cal.getTime());
+    }
 
-    /**
-     * Sets the button to be focusable. Defaults to true.
-     *
-     * @param focusable should the button be focusable?
-     */
-    void setButtonFocusable(boolean focusable);
-
-    /**
-     * @return Is the button focusable?
-     */
-    boolean getButtonFocusable();
-
-    /**
-     * @return Columns the size of the underlying textfield
-     */
-    int getTextfieldColumns();
-
-    /**
-     * Sets the size of the underlying textfield in columns
-     *
-     * @param columns {@link JTextField#setColumns(int)}
-     */
-    void setTextfieldColumns(int columns);
+    @Override
+    public Object stringToValue(String text) throws ParseException {
+        if (text == null || text.equals("")) {
+            return null;
+        }
+        DateFormat format = ComponentFormatDefaults.getInstance().getFormat(ComponentFormatDefaults.Key.SELECTED_DATE_FIELD);
+        Date date = format.parse(text);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+    }
 
 }

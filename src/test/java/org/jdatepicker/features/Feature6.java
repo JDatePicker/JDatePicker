@@ -5,7 +5,6 @@ import org.jdatepicker.JDatePanel;
 import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
-import java.util.Locale;
 
 /**
  * In some cases a locale may not be supported, in which case you will want to change the default texts for a widget.

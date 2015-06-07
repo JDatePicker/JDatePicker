@@ -1,6 +1,8 @@
 package org.jdatepicker.features;
 
-import org.jdatepicker.*;
+import org.jdatepicker.ComponentFormatDefaults;
+import org.jdatepicker.JDatePanel;
+import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import java.text.SimpleDateFormat;

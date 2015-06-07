@@ -91,8 +91,7 @@ public class Feature3 {
                 Calendar c = Calendar.getInstance();
                 c.setTime(sdf.parse(from));
                 return c;
-            }
-            catch (ParseException e) {
+            } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
         }

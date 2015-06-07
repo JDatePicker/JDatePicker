@@ -1,56 +1,44 @@
 /**
-Copyright 2004 Juan Heyns. All rights reserved.
+ Copyright 2004 Juan Heyns. All rights reserved.
 
-Redistribution and use in source and binary forms, with or without modification, are
-permitted provided that the following conditions are met:
+ Redistribution and use in source and binary forms, with or without modification, are
+ permitted provided that the following conditions are met:
 
-   1. Redistributions of source code must retain the above copyright notice, this list of
-      conditions and the following disclaimer.
+ 1. Redistributions of source code must retain the above copyright notice, this list of
+ conditions and the following disclaimer.
 
-   2. Redistributions in binary form must reproduce the above copyright notice, this list
-      of conditions and the following disclaimer in the documentation and/or other materials
-      provided with the distribution.
+ 2. Redistributions in binary form must reproduce the above copyright notice, this list
+ of conditions and the following disclaimer in the documentation and/or other materials
+ provided with the distribution.
 
-THIS SOFTWARE IS PROVIDED BY JUAN HEYNS ``AS IS'' AND ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL JUAN HEYNS OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ THIS SOFTWARE IS PROVIDED BY JUAN HEYNS ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL JUAN HEYNS OR
+ CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-The views and conclusions contained in the software and documentation are those of the
-authors and should not be interpreted as representing official policies, either expressed
-or implied, of Juan Heyns.
-*/
+ The views and conclusions contained in the software and documentation are those of the
+ authors and should not be interpreted as representing official policies, either expressed
+ or implied, of Juan Heyns.
+ */
 package org.jdatepicker;
 
-import java.awt.AWTEvent;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.AWTEventListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.HierarchyBoundsListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.MouseEvent;
+import org.jdatepicker.constraints.DateSelectionConstraint;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import org.jdatepicker.constraints.DateSelectionConstraint;
-import org.jdatepicker.impl.DateComponentFormatter;
 
 
 /**
@@ -69,11 +57,11 @@ import org.jdatepicker.impl.DateComponentFormatter;
 public class JDatePicker extends JComponent implements DatePicker {
 
     private static final long serialVersionUID = 2814777654384974503L;
-    
+
     private Popup popup;
     private JFormattedTextField formattedTextField;
     private JButton button;
-    
+
     private JDatePanel datePanel;
 
     /**
@@ -120,8 +108,6 @@ public class JDatePicker extends JComponent implements DatePicker {
     }
 
 
-
-
     /**
      * You are able to set the format of the date being displayed on the label.
      * Formatting is described at:
@@ -145,7 +131,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         formattedTextField = new JFormattedTextField(new DateComponentFormatter());
         DateModel<?> model = datePanel.getModel();
         setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
-        formattedTextField.setEditable(false);        
+        formattedTextField.setEditable(false);
         add(formattedTextField);
         layout.putConstraint(SpringLayout.WEST, formattedTextField, 0, SpringLayout.WEST, this);
         layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, formattedTextField);
@@ -155,7 +141,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         button.setFocusable(true);
         Icon icon = ComponentIconDefaults.getInstance().getPopupButtonIcon();
         button.setIcon(icon);
-        if(icon == null) {
+        if (icon == null) {
             // reset to caption
             button.setText("...");
         } else {
@@ -166,12 +152,12 @@ public class JDatePicker extends JComponent implements DatePicker {
         layout.putConstraint(SpringLayout.WEST, button, 1, SpringLayout.EAST, formattedTextField);
         layout.putConstraint(SpringLayout.EAST, this, 0, SpringLayout.EAST, button);
         layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, button);
-        
+
         //Do layout formatting
-        int h = (int)button.getPreferredSize().getHeight();
-        int w = (int)datePanel.getPreferredSize().getWidth();
+        int h = (int) button.getPreferredSize().getHeight();
+        int w = (int) datePanel.getPreferredSize().getWidth();
         button.setPreferredSize(new Dimension(h, h));
-        formattedTextField.setPreferredSize(new Dimension(w-h-1, h));
+        formattedTextField.setPreferredSize(new Dimension(w - h - 1, h));
 
         //Add event listeners
         addHierarchyBoundsListener(internalEventHandler);
@@ -199,28 +185,28 @@ public class JDatePicker extends JComponent implements DatePicker {
     public DateModel<?> getModel() {
         return datePanel.getModel();
     }
-    
+
     /* (non-Javadoc)
      * @see org.jdatepicker.JDatePicker#setTextEditable(boolean)
      */
     public void setTextEditable(boolean editable) {
         formattedTextField.setEditable(editable);
     }
-    
+
     /* (non-Javadoc)
      * @see org.jdatepicker.JDatePicker#isTextEditable()
      */
     public boolean isTextEditable() {
         return formattedTextField.isEditable();
     }
-    
+
     /* (non-Javadoc)
      * @see org.jdatepicker.JDatePicker#setButtonFocusable(boolean)
      */
     public void setButtonFocusable(boolean focusable) {
         button.setFocusable(focusable);
     }
-    
+
     /* (non-Javadoc)
      * @see org.jdatepicker.JDatePicker#getButtonFocusable()
      */
@@ -239,17 +225,17 @@ public class JDatePicker extends JComponent implements DatePicker {
      * Called internally to popup the dates.
      */
     private void showPopup() {
-        if (popup == null){
+        if (popup == null) {
             PopupFactory fac = new PopupFactory();
             Point xy = getLocationOnScreen();
             datePanel.setVisible(true);
-            popup = fac.getPopup(this, datePanel, (int) xy.getX(), (int) (xy.getY()+this.getHeight()));
+            popup = fac.getPopup(this, datePanel, (int) xy.getX(), (int) (xy.getY() + this.getHeight()));
             popup.show();
         }
     }
-    
+
     /**
-     * Called internally to hide the popup dates. 
+     * Called internally to hide the popup dates.
      */
     private void hidePopup() {
         if (popup != null) {
@@ -262,7 +248,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         Set<Component> children = new HashSet<Component>();
         children.add(component);
         if (component instanceof Container) {
-            Container container = (Container)component;
+            Container container = (Container) component;
             Component[] components = container.getComponents();
             for (int i = 0; i < components.length; i++) {
                 children.addAll(getAllComponents(components[i]));
@@ -290,8 +276,7 @@ public class JDatePicker extends JComponent implements DatePicker {
     private void setTextFieldValue(JFormattedTextField textField, int year, int month, int day, boolean isSelected) {
         if (!isSelected) {
             textField.setValue(null);
-        }
-        else {
+        } else {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, month, day, 0, 0, 0);
             calendar.set(Calendar.MILLISECOND, 0);
@@ -341,7 +326,7 @@ public class JDatePicker extends JComponent implements DatePicker {
     }
 
     /**
-     * This internal class hides the public event methods from the outside 
+     * This internal class hides the public event methods from the outside
      */
     private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener, AWTEventListener {
 
@@ -354,15 +339,13 @@ public class JDatePicker extends JComponent implements DatePicker {
         }
 
         public void actionPerformed(ActionEvent arg0) {
-            if (arg0.getSource() == button){
+            if (arg0.getSource() == button) {
                 if (popup == null) {
                     showPopup();
-                }
-                else {
+                } else {
                     hidePopup();
                 }
-            } 
-            else if (arg0.getSource() == datePanel){
+            } else if (arg0.getSource() == datePanel) {
                 hidePopup();
             }
         }
@@ -385,10 +368,10 @@ public class JDatePicker extends JComponent implements DatePicker {
             if (!formattedTextField.isEditable()) {
                 return;
             }
-            
+
             // If the field is editable and we need to parse the date entered
             if (evt.getNewValue() != null) {
-                Calendar value = (Calendar)evt.getNewValue();
+                Calendar value = (Calendar) evt.getNewValue();
                 DateModel model = new UtilCalendarModel(value);
                 // check constraints
                 if (!datePanel.checkConstraints(model)) {
@@ -411,7 +394,7 @@ public class JDatePicker extends JComponent implements DatePicker {
             if (MouseEvent.MOUSE_CLICKED == event.getID() && event.getSource() != button) {
                 Set<Component> components = getAllComponents(datePanel);
                 boolean clickInPopup = false;
-                for (Component component: components) {
+                for (Component component : components) {
                     if (event.getSource() == component) {
                         clickInPopup = true;
                     }

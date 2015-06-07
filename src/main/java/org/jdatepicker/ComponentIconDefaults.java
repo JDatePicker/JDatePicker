@@ -27,16 +27,14 @@
  */
 package org.jdatepicker;
 
+import org.jdatepicker.graphics.JNextIcon;
+import org.jdatepicker.graphics.JPreviousIcon;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
-import org.jdatepicker.graphics.JNextIcon;
-import org.jdatepicker.graphics.JPreviousIcon;
 
 public final class ComponentIconDefaults {
 
@@ -79,8 +77,7 @@ public final class ComponentIconDefaults {
             previousMonthIconDisabled = new JPreviousIcon(4, 7, false, false);
             previousYearIconDisabled = new JPreviousIcon(8, 7, true, false);
             popupButtonIcon = null;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -90,8 +87,7 @@ public final class ComponentIconDefaults {
         try {
             BufferedImage image = ImageIO.read(stream);
             return new ImageIcon(image);
-        }
-        finally {
+        } finally {
             stream.close();
         }
     }
@@ -175,4 +171,5 @@ public final class ComponentIconDefaults {
     public void setPopupButtonIcon(Icon popupButtonIcon) {
         this.popupButtonIcon = popupButtonIcon;
     }
+
 }
