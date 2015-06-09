@@ -56,7 +56,8 @@ public final class ComponentColorDefaults {
         BG_GRID_SELECTED,
         FG_GRID_TODAY_SELECTED,
         BG_GRID_TODAY_SELECTED,
-        FG_TODAY_SELECTOR,
+        FG_TODAY_SELECTOR_ENABLED,
+        FG_TODAY_SELECTOR_DISABLED,
         BG_TODAY_SELECTOR,
         POPUP_BORDER;
     }
@@ -84,7 +85,8 @@ public final class ComponentColorDefaults {
         colors.put(Key.FG_GRID_TODAY_SELECTED, Color.RED);
         colors.put(Key.BG_GRID_TODAY_SELECTED, new Color(10, 36, 106));
 
-        colors.put(Key.FG_TODAY_SELECTOR, Color.BLACK);
+        colors.put(Key.FG_TODAY_SELECTOR_ENABLED, Color.BLACK);
+        colors.put(Key.FG_TODAY_SELECTOR_DISABLED, Color.LIGHT_GRAY);
         colors.put(Key.BG_TODAY_SELECTOR, Color.WHITE);
 
         colors.put(Key.POPUP_BORDER, Color.BLACK);

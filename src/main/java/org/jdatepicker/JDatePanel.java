@@ -421,7 +421,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         private JLabel getNoneLabel() {
             if (noneLabel == null) {
                 noneLabel = new javax.swing.JLabel();
-                noneLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR));
+                noneLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR_ENABLED));
                 noneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 noneLabel.addMouseListener(internalController);
                 //TODO get the translations for each language before adding this in
@@ -448,7 +448,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         private JLabel getTodayLabel() {
             if (todayLabel == null) {
                 todayLabel = new javax.swing.JLabel();
-                todayLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR));
+                todayLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR_ENABLED));
                 todayLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
                 todayLabel.addMouseListener(internalController);
                 updateTodayLabel();
@@ -676,10 +676,19 @@ public class JDatePanel extends JComponent implements DatePanel {
             dayTable.setEnabled(enabled);
             dayTableCellRenderer.setEnabled(enabled);
             nextMonthButton.setEnabled(enabled);
-            nextYearButton.setEnabled(enabled);
+            if (nextYearButton != null) {
+                nextYearButton.setEnabled(enabled);
+            }
             previousMonthButton.setEnabled(enabled);
-            previousYearButton.setEnabled(enabled);
+            if (previousYearButton != null) {
+                previousYearButton.setEnabled(enabled);
+            }
             yearSpinner.setEnabled(enabled);
+            if (enabled) {
+                todayLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR_ENABLED));
+            } else {
+                todayLabel.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR_DISABLED));
+            }
 
             super.setEnabled(enabled);
         }
