@@ -55,6 +55,7 @@ public class Feature7 {
         defaults.setColor(ComponentColorDefaults.Key.BG_GRID_TODAY_SELECTED, Color.YELLOW);
 
         defaults.setColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR_ENABLED, Color.PINK);
+        defaults.setColor(ComponentColorDefaults.Key.FG_TODAY_SELECTOR_DISABLED, Color.YELLOW);
         defaults.setColor(ComponentColorDefaults.Key.BG_TODAY_SELECTOR, Color.BLACK);
 
         defaults.setColor(ComponentColorDefaults.Key.POPUP_BORDER, Color.WHITE);
