@@ -59,7 +59,7 @@ import java.util.*;
  * @author JC Oosthuizen
  * @author Yue Huang
  */
-public class JDatePanel extends JComponent implements DatePanel {
+public abstract class JDatePanel<T> extends JComponent implements DatePanel {
 
     private static final long serialVersionUID = -2299249311312882915L;
 
@@ -77,34 +77,6 @@ public class JDatePanel extends JComponent implements DatePanel {
      * Creates a JDatePanel with a default calendar model.
      */
     public JDatePanel() {
-        this(createModel());
-    }
-
-    /**
-     * Create a JDatePanel with an initial value, with a UtilCalendarModel.
-     *
-     * @param value the initial value
-     */
-    public JDatePanel(Calendar value) {
-        this(createModelFromValue(value));
-    }
-
-    /**
-     * Create a JDatePanel with an initial value, with a UtilDateModel.
-     *
-     * @param value the initial value
-     */
-    public JDatePanel(java.util.Date value) {
-        this(createModelFromValue(value));
-    }
-
-    /**
-     * Create a JDatePanel with an initial value, with a SqlDateModel.
-     *
-     * @param value the initial value
-     */
-    public JDatePanel(java.sql.Date value) {
-        this(createModelFromValue(value));
     }
 
     /**
@@ -112,7 +84,7 @@ public class JDatePanel extends JComponent implements DatePanel {
      *
      * @param model a custom date model
      */
-    public JDatePanel(DateModel<?> model) {
+    public JDatePanel(DateModel<T> model) {
         actionListeners = new HashSet<ActionListener>();
         dateConstraints = new HashSet<DateSelectionConstraint>();
 
@@ -125,27 +97,6 @@ public class JDatePanel extends JComponent implements DatePanel {
 
         setLayout(new GridLayout(1, 1));
         add(internalView);
-    }
-
-    public static DateModel<Calendar> createModel() {
-        return new UtilCalendarModel();
-    }
-
-    private static DateModel<Calendar> createModel(Calendar value) {
-        return new UtilCalendarModel(value);
-    }
-
-    private static DateModel<?> createModelFromValue(Object value) {
-        if (value instanceof java.util.Calendar) {
-            return new UtilCalendarModel((Calendar) value);
-        }
-        if (value instanceof java.util.Date) {
-            return new UtilDateModel((java.util.Date) value);
-        }
-        if (value instanceof java.sql.Date) {
-            return new SqlDateModel((java.sql.Date) value);
-        }
-        throw new IllegalArgumentException("No model could be constructed from the initial value object.");
     }
 
     public void addActionListener(ActionListener actionListener) {
@@ -197,7 +148,7 @@ public class JDatePanel extends JComponent implements DatePanel {
     /* (non-Javadoc)
      * @see org.jdatepicker.JDateComponent#getModel()
      */
-    public DateModel<?> getModel() {
+    public DateModel<T> getModel() {
         return internalModel.getModel();
     }
 
@@ -923,18 +874,18 @@ public class JDatePanel extends JComponent implements DatePanel {
     protected class InternalCalendarModel implements TableModel, SpinnerModel, ChangeListener {
 
         private final int firstDayOfWeekOffset = Calendar.getInstance().getFirstDayOfWeek() - Calendar.SUNDAY;
-        private DateModel<?> model;
+        private DateModel<T> model;
         private Set<ChangeListener> spinnerChangeListeners;
         private Set<TableModelListener> tableModelListeners;
 
-        public InternalCalendarModel(DateModel<?> model) {
+        public InternalCalendarModel(DateModel<T> model) {
             this.spinnerChangeListeners = new HashSet<ChangeListener>();
             this.tableModelListeners = new HashSet<TableModelListener>();
             this.model = model;
             model.addChangeListener(this);
         }
 
-        public DateModel<?> getModel() {
+        public DateModel<T> getModel() {
             return model;
         }
 

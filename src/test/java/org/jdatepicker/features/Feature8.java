@@ -7,6 +7,8 @@ import org.jdatepicker.JDatePicker;
 import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import org.jdatepicker.JUtilCalendarPanel;
+import org.jdatepicker.JUtilCalendarPicker;
 
 /**
  * Change the date display formats.
@@ -38,11 +40,11 @@ public class Feature8 {
         defaults.setFormat(ComponentFormatDefaults.Key.MONTH_SELECTOR, new SimpleDateFormat("MMM"));
 
         // Create the JDatePanel
-        final JDatePanel datePanel = new JDatePanel(Calendar.getInstance());
+        final JDatePanel<?> datePanel = new JUtilCalendarPanel(Calendar.getInstance());
         panel.add(datePanel);
 
         // Create the JDatePicker
-        final JDatePicker datePicker = new JDatePicker(Calendar.getInstance());
+        final JDatePicker<?> datePicker = new JUtilCalendarPicker(Calendar.getInstance());
         datePicker.setTextEditable(true);
         panel.add(datePicker);
 

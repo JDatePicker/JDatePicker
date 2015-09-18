@@ -4,6 +4,8 @@ import org.jdatepicker.JDatePanel;
 import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
+import org.jdatepicker.JUtilDatePanel;
+import org.jdatepicker.JUtilDatePicker;
 
 /**
  * Change the LnF for the component.
@@ -27,11 +29,11 @@ public class Feature4 {
         frame.getContentPane().add(panel);
 
         // Create the JDatePanel
-        final JDatePanel datePanel = new JDatePanel();
+        JDatePanel<?> datePanel = new JUtilDatePanel();
         panel.add(datePanel);
 
         // Create the JDatePicker
-        final JDatePicker datePicker = new JDatePicker();
+        JDatePicker<?> datePicker = new JUtilDatePicker();
         panel.add(datePicker);
 
         // Make the frame visible

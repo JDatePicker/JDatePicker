@@ -25,37 +25,23 @@
  authors and should not be interpreted as representing official policies, either expressed
  or implied, of Juan Heyns.
  */
-package org.jdatepicker.issues;
+package org.jdatepicker;
 
-import org.jdatepicker.DatePicker;
-import org.jdatepicker.JDatePicker;
+import java.util.Calendar;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Locale;
-import org.jdatepicker.JUtilDatePicker;
+/**
+ *
+ * @author richter
+ */
+public class JUtilCalendarPicker extends JDatePicker<java.util.Calendar> {
+    private static final long serialVersionUID = 1L;
 
-public class Issue26 {
-
-    public static void main(String[] args) {
-        Locale.setDefault(new Locale("ar", "sa"));
-
-        JFrame testFrame = new JFrame();
-        testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        testFrame.setSize(500, 500);
-        JPanel jPanel = new JPanel();
-        DatePicker<?> picker = new JUtilDatePicker();
-        picker.setTextEditable(true);
-        picker.setShowYearButtons(true);
-        jPanel.add((JComponent) picker);
-
-        JPanel DatePanel = new JPanel();
-        DatePanel.setLayout(new BorderLayout());
-        DatePanel.add(jPanel, BorderLayout.WEST);
-        BorderLayout fb = new BorderLayout();
-        testFrame.setLayout(fb);
-        testFrame.getContentPane().add(DatePanel, BorderLayout.WEST);
-        testFrame.setVisible(true);
+    public JUtilCalendarPicker() {
+        super(new JUtilCalendarPanel());
     }
 
+    public JUtilCalendarPicker(Calendar value) {
+        super(new JUtilCalendarPanel(value));
+    }
+    
 }
