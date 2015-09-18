@@ -5,6 +5,8 @@ import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import java.util.Locale;
+import org.jdatepicker.JUtilDatePanel;
+import org.jdatepicker.JUtilDatePicker;
 
 /**
  * Change the locale for the widget.
@@ -48,11 +50,11 @@ public class Feature5 {
         frame.getContentPane().add(panel);
 
         // Create the JDatePanel
-        final JDatePanel datePanel = new JDatePanel();
+        final JDatePanel<?> datePanel = new JUtilDatePanel();
         panel.add(datePanel);
 
         // Create the JDatePicker
-        final JDatePicker datePicker = new JDatePicker();
+        final JDatePicker<?> datePicker = new JUtilDatePicker();
         panel.add(datePicker);
 
         // Make the frame visible

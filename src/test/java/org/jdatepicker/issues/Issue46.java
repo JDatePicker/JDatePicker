@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import org.jdatepicker.JUtilDatePanel;
+import org.jdatepicker.JUtilDatePicker;
 
 public class Issue46 {
 
@@ -17,11 +19,11 @@ public class Issue46 {
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
 
-        final DatePicker picker = new JDatePicker();
+        final DatePicker<?> picker = new JUtilDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
 
-        final DatePanel panel = new JDatePanel();
+        final DatePanel<?> panel = new JUtilDatePanel();
         panel.setShowYearButtons(true);
 
         picker.getModel().setYear(2010);

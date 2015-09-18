@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import org.jdatepicker.JUtilDatePanel;
+import org.jdatepicker.JUtilDatePicker;
 
 /**
  * Simplest case for each one of the supported components.
@@ -30,11 +32,11 @@ public class Feature1 {
         frame.getContentPane().add(panel);
 
         // Create the JDatePanel
-        final JDatePanel datePanel = new JDatePanel();
+        final JDatePanel<?> datePanel = new JUtilDatePanel();
         panel.add(datePanel);
 
         // Create the JDatePicker
-        final JDatePicker datePicker = new JDatePicker();
+        final JDatePicker<?> datePicker = new JUtilDatePicker();
         panel.add(datePicker);
 
         // Add a button to print out date value

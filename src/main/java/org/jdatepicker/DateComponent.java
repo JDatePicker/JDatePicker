@@ -46,7 +46,7 @@ import java.util.Set;
  *
  * @author Juan Heyns
  */
-public interface DateComponent {
+public interface DateComponent<T> {
 
     /**
      * Returns the value of the currently represented date in the component.
@@ -58,7 +58,7 @@ public interface DateComponent {
      *
      * @return A new Model
      */
-    DateModel<?> getModel();
+    DateModel<T> getModel();
 
     /**
      * Adds an ActionListener. The actionListener is notified when a user clicks

@@ -54,7 +54,7 @@ import java.util.Set;
  * @author JC Oosthuizen
  * @author Yue Huang
  */
-public class JDatePicker extends JComponent implements DatePicker {
+public abstract class JDatePicker<T> extends JComponent implements DatePicker {
 
     private static final long serialVersionUID = 2814777654384974503L;
 
@@ -62,51 +62,10 @@ public class JDatePicker extends JComponent implements DatePicker {
     private JFormattedTextField formattedTextField;
     private JButton button;
 
-    private JDatePanel datePanel;
+    private JDatePanel<T> datePanel;
 
-    /**
-     * Create a JDatePicker with a default calendar model.
-     */
     public JDatePicker() {
-        this(new JDatePanel());
     }
-
-    /**
-     * Create a JDatePicker with an initial value, with a UtilCalendarModel.
-     *
-     * @param value the initial value
-     */
-    public JDatePicker(Calendar value) {
-        this(new JDatePanel(value));
-    }
-
-    /**
-     * Create a JDatePicker with an initial value, with a UtilDateModel.
-     *
-     * @param value the initial value
-     */
-    public JDatePicker(java.util.Date value) {
-        this(new JDatePanel(value));
-    }
-
-    /**
-     * Create a JDatePicker with an initial value, with a SqlDateModel.
-     *
-     * @param value the initial value
-     */
-    public JDatePicker(java.sql.Date value) {
-        this(new JDatePanel(value));
-    }
-
-    /**
-     * Create a JDatePicker with a custom date model.
-     *
-     * @param model a custom date model
-     */
-    public JDatePicker(DateModel<?> model) {
-        this(new JDatePanel(model));
-    }
-
 
     /**
      * You are able to set the format of the date being displayed on the label.
@@ -114,7 +73,7 @@ public class JDatePicker extends JComponent implements DatePicker {
      *
      * @param datePanel The DatePanel to use
      */
-    private JDatePicker(JDatePanel datePanel) {
+    protected JDatePicker(JDatePanel<T> datePanel) {
         this.datePanel = datePanel;
 
         //Initialise Variables
@@ -129,7 +88,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         //Create and Add Components
         //Add and Configure TextField
         formattedTextField = new JFormattedTextField(new DateComponentFormatter());
-        DateModel<?> model = datePanel.getModel();
+        DateModel<T> model = datePanel.getModel();
         setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
         formattedTextField.setEditable(false);
         add(formattedTextField);
@@ -182,7 +141,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         datePanel.removeActionListener(actionListener);
     }
 
-    public DateModel<?> getModel() {
+    public DateModel<T> getModel() {
         return datePanel.getModel();
     }
 

@@ -9,6 +9,9 @@ import org.jdatepicker.constraints.DateSelectionConstraint;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Calendar;
+import org.jdatepicker.JUtilCalendarPanel;
+import org.jdatepicker.JUtilCalendarPicker;
+import org.jdatepicker.JUtilDatePanel;
 
 /**
  * Colour theme may be changed to match application style or the platform colours.
@@ -61,7 +64,7 @@ public class Feature7 {
         defaults.setColor(ComponentColorDefaults.Key.POPUP_BORDER, Color.WHITE);
 
         // Create the JDatePanel
-        final JDatePanel datePanel = new JDatePanel(Calendar.getInstance());
+        final JDatePanel<?> datePanel = new JUtilCalendarPanel(Calendar.getInstance());
         datePanel.addDateSelectionConstraint(new DateSelectionConstraint() {
             public boolean isValidSelection(DateModel<?> model) {
                 Calendar c = Calendar.getInstance();
@@ -74,7 +77,7 @@ public class Feature7 {
         panel.add(datePanel);
 
         // Create the JDatePicker
-        final JDatePicker datePicker = new JDatePicker(Calendar.getInstance());
+        final JDatePicker<?> datePicker = new JUtilCalendarPicker(Calendar.getInstance());
         panel.add(datePicker);
 
         // Make the frame visible

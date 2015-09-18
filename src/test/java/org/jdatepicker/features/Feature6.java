@@ -5,6 +5,8 @@ import org.jdatepicker.JDatePanel;
 import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
+import org.jdatepicker.JUtilDatePanel;
+import org.jdatepicker.JUtilDatePicker;
 
 /**
  * In some cases a locale may not be supported, in which case you will want to change the default texts for a widget.
@@ -52,11 +54,11 @@ public class Feature6 {
         defaults.setText(ComponentTextDefaults.Key.SAT, "Sa");
 
         // Create the JDatePanel
-        final JDatePanel datePanel = new JDatePanel();
+        final JDatePanel<?> datePanel = new JUtilDatePanel();
         panel.add(datePanel);
 
         // Create the JDatePicker
-        final JDatePicker datePicker = new JDatePicker();
+        final JDatePicker<?> datePicker = new JUtilDatePicker();
         panel.add(datePicker);
 
         // Make the frame visible
