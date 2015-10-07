@@ -17,14 +17,14 @@ import java.util.Calendar;
  */
 public class Feature9 {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         // Create a frame
-        JFrame frame = new JFrame();
+        final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(550, 300);
 
         // Create a flow layout panel
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         frame.getContentPane().add(panel);
 
         // Create the JDatePanel
@@ -38,7 +38,7 @@ public class Feature9 {
         panel.add(datePicker);
 
         // Add a button to print out date value
-        JButton button = new JButton("Read Value");
+        final JButton button = new JButton("Read Value");
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

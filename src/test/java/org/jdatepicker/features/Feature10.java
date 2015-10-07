@@ -25,14 +25,14 @@ import java.util.Calendar;
  */
 public class Feature10 {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         // Create a frame
-        JFrame frame = new JFrame();
+        final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(550, 300);
 
         // Create a flow layout panel
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         frame.getContentPane().add(panel);
 
         // Create the JDatePicker
@@ -41,7 +41,7 @@ public class Feature10 {
         panel.add(datePicker);
 
         // Add a button to print out date value
-        JButton button1 = new JButton("Read Value");
+        final JButton button1 = new JButton("Read Value");
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -51,10 +51,10 @@ public class Feature10 {
         });
         panel.add(button1);
 
-        JButton button2 = new JButton("Hide in 10 seconds");
+        final JButton button2 = new JButton("Hide in 10 seconds");
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Thread thread = new Thread(new Runnable() {
+                final Thread thread = new Thread(new Runnable() {
                     public void run() {
                         for (int t = 1; t <= 10; t++) {
                             try {

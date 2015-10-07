@@ -19,14 +19,14 @@ import java.util.Calendar;
  */
 public class Feature8 {
 
-    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(final String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         // Create a frame
-        JFrame frame = new JFrame();
+        final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(550, 300);
 
         // Create a flow layout panel
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         frame.getContentPane().add(panel);
 
         // Change the component defaults before instantiating
@@ -38,11 +38,11 @@ public class Feature8 {
         defaults.setFormat(ComponentFormatDefaults.Key.MONTH_SELECTOR, new SimpleDateFormat("MMM"));
 
         // Create the JDatePanel
-        JDatePanel datePanel = new JDatePanel(Calendar.getInstance());
+        final JDatePanel datePanel = new JDatePanel(Calendar.getInstance());
         panel.add(datePanel);
 
         // Create the JDatePicker
-        JDatePicker datePicker = new JDatePicker(Calendar.getInstance());
+        final JDatePicker datePicker = new JDatePicker(Calendar.getInstance());
         datePicker.setTextEditable(true);
         panel.add(datePicker);
 

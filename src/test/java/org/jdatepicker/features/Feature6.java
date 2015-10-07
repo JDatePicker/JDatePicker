@@ -13,18 +13,18 @@ import javax.swing.*;
  */
 public class Feature6 {
 
-    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(final String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         // Create a frame
-        JFrame frame = new JFrame();
+        final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(550, 300);
 
         // Create a flow layout panel
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         frame.getContentPane().add(panel);
 
         // Change the component defaults before instantiating
-        ComponentTextDefaults defaults = ComponentTextDefaults.getInstance();
+        final ComponentTextDefaults defaults = ComponentTextDefaults.getInstance();
         defaults.setText(ComponentTextDefaults.Key.YEAR, "Jaar");
         defaults.setText(ComponentTextDefaults.Key.MONTH, "Maand");
         defaults.setText(ComponentTextDefaults.Key.TODAY, "Vandag");
@@ -52,11 +52,11 @@ public class Feature6 {
         defaults.setText(ComponentTextDefaults.Key.SAT, "Sa");
 
         // Create the JDatePanel
-        JDatePanel datePanel = new JDatePanel();
+        final JDatePanel datePanel = new JDatePanel();
         panel.add(datePanel);
 
         // Create the JDatePicker
-        JDatePicker datePicker = new JDatePicker();
+        final JDatePicker datePicker = new JDatePicker();
         panel.add(datePicker);
 
         // Make the frame visible

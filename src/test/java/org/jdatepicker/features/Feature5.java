@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 public class Feature5 {
 
-    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(final String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         // Changing the global locale
         // GERMAN: Monday is the first day of week
         //Locale.setDefault(Locale.GERMAN);
@@ -39,20 +39,20 @@ public class Feature5 {
         Locale.setDefault(new Locale("ru"));
 
         // Create a frame
-        JFrame frame = new JFrame();
+        final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(550, 300);
 
         // Create a flow layout panel
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         frame.getContentPane().add(panel);
 
         // Create the JDatePanel
-        JDatePanel datePanel = new JDatePanel();
+        final JDatePanel datePanel = new JDatePanel();
         panel.add(datePanel);
 
         // Create the JDatePicker
-        JDatePicker datePicker = new JDatePicker();
+        final JDatePicker datePicker = new JDatePicker();
         panel.add(datePicker);
 
         // Make the frame visible

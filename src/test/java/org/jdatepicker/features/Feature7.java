@@ -23,18 +23,18 @@ import java.util.Calendar;
  */
 public class Feature7 {
 
-    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(final String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         // Create a frame
-        JFrame frame = new JFrame();
+        final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(550, 300);
 
         // Create a flow layout panel
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         frame.getContentPane().add(panel);
 
         // Change the component defaults before instantiating
-        ComponentColorDefaults defaults = ComponentColorDefaults.getInstance();
+        final ComponentColorDefaults defaults = ComponentColorDefaults.getInstance();
 
         defaults.setColor(ComponentColorDefaults.Key.FG_MONTH_SELECTOR, Color.ORANGE);
         defaults.setColor(ComponentColorDefaults.Key.BG_MONTH_SELECTOR, Color.BLACK);
@@ -61,7 +61,7 @@ public class Feature7 {
         defaults.setColor(ComponentColorDefaults.Key.POPUP_BORDER, Color.WHITE);
 
         // Create the JDatePanel
-        JDatePanel datePanel = new JDatePanel(Calendar.getInstance());
+        final JDatePanel datePanel = new JDatePanel(Calendar.getInstance());
         datePanel.addDateSelectionConstraint(new DateSelectionConstraint() {
             public boolean isValidSelection(DateModel<?> model) {
                 Calendar c = Calendar.getInstance();
@@ -74,7 +74,7 @@ public class Feature7 {
         panel.add(datePanel);
 
         // Create the JDatePicker
-        JDatePicker datePicker = new JDatePicker(Calendar.getInstance());
+        final JDatePicker datePicker = new JDatePicker(Calendar.getInstance());
         panel.add(datePicker);
 
         // Make the frame visible

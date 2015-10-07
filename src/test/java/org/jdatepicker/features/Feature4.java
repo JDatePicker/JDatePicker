@@ -13,25 +13,25 @@ import javax.swing.*;
  */
 public class Feature4 {
 
-    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(final String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         // Change the look and feel to windows LnF
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
         // Create a frame
-        JFrame frame = new JFrame();
+        final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(550, 300);
 
         // Create a flow layout panel
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         frame.getContentPane().add(panel);
 
         // Create the JDatePanel
-        JDatePanel datePanel = new JDatePanel();
+        final JDatePanel datePanel = new JDatePanel();
         panel.add(datePanel);
 
         // Create the JDatePicker
-        JDatePicker datePicker = new JDatePicker();
+        final JDatePicker datePicker = new JDatePicker();
         panel.add(datePicker);
 
         // Make the frame visible
