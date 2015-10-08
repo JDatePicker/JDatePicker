@@ -132,11 +132,33 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
     }
 
     public void setMonth(int month) {
+        int oldYearValue = this.calendarValue.get(Calendar.YEAR);
         int oldMonthValue = this.calendarValue.get(Calendar.MONTH);
+        int oldDayValue = this.calendarValue.get(Calendar.DAY_OF_MONTH);
         T oldValue = getValue();
-        calendarValue.set(Calendar.MONTH, month);
+
+        Calendar newVal = Calendar.getInstance();
+        newVal.set(Calendar.DAY_OF_MONTH, 1);
+        newVal.set(Calendar.MONTH, month);
+        newVal.set(Calendar.YEAR, oldYearValue);
+
+        if (newVal.getActualMaximum(Calendar.DAY_OF_MONTH) <= oldDayValue) {
+            newVal.set(Calendar.DAY_OF_MONTH,
+                    newVal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        } else {
+            newVal.set(Calendar.DAY_OF_MONTH, oldDayValue);
+        }
+
+        calendarValue.set(Calendar.MONTH, newVal.get(Calendar.MONTH));
+        calendarValue.set(Calendar.DAY_OF_MONTH, newVal.get(Calendar.DAY_OF_MONTH));
+        
         fireChangeEvent();
         firePropertyChange(PROPERTY_MONTH, oldMonthValue, this.calendarValue.get(Calendar.MONTH));
+        // only fire change event when day actually changed
+        if (this.calendarValue.get(Calendar.DAY_OF_MONTH) != oldDayValue) {
+            firePropertyChange(PROPERTY_DAY, oldDayValue,
+                    this.calendarValue.get(Calendar.DAY_OF_MONTH));
+        }
         firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
     }
 
@@ -151,10 +173,32 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
 
     public void setYear(int year) {
         int oldYearValue = this.calendarValue.get(Calendar.YEAR);
+        int oldMonthValue = this.calendarValue.get(Calendar.MONTH);
+        int oldDayValue = this.calendarValue.get(Calendar.DAY_OF_MONTH);
         T oldValue = getValue();
-        calendarValue.set(Calendar.YEAR, year);
+
+        Calendar newVal = Calendar.getInstance();
+        newVal.set(Calendar.DAY_OF_MONTH, 1);
+        newVal.set(Calendar.MONTH, oldMonthValue);
+        newVal.set(Calendar.YEAR, year);
+
+        if (newVal.getActualMaximum(Calendar.DAY_OF_MONTH) <= oldDayValue) {
+            newVal.set(Calendar.DAY_OF_MONTH,
+                    newVal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        } else {
+            newVal.set(Calendar.DAY_OF_MONTH, oldDayValue);
+        }
+
+        calendarValue.set(Calendar.YEAR, newVal.get(Calendar.YEAR));
+        calendarValue.set(Calendar.DAY_OF_MONTH, newVal.get(Calendar.DAY_OF_MONTH));
+        
         fireChangeEvent();
         firePropertyChange(PROPERTY_YEAR, oldYearValue, this.calendarValue.get(Calendar.YEAR));
+        // only fire change event when day actually changed
+        if (this.calendarValue.get(Calendar.DAY_OF_MONTH) != oldDayValue) {
+            firePropertyChange(PROPERTY_DAY, oldDayValue,
+                    this.calendarValue.get(Calendar.DAY_OF_MONTH));
+        }
         firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
     }
 
