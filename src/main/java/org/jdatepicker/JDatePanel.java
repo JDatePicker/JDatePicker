@@ -39,10 +39,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.text.DateFormat;
 import java.util.*;
 
@@ -481,8 +478,6 @@ public class JDatePanel extends JComponent implements DatePanel {
             if (dayTable == null) {
                 dayTable = new javax.swing.JTable();
                 dayTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-                dayTable.setRowHeight(18);
-                dayTable.setPreferredSize(new java.awt.Dimension(100, 80));
                 dayTable.setModel(internalModel);
                 dayTable.setShowGrid(true);
                 dayTable.setGridColor(getColors().getColor(ComponentColorDefaults.Key.BG_GRID));
@@ -493,9 +488,38 @@ public class JDatePanel extends JComponent implements DatePanel {
                 dayTable.addMouseListener(internalController);
                 for (int i = 0; i < 7; i++) {
                     TableColumn column = dayTable.getColumnModel().getColumn(i);
-                    column.setPreferredWidth(15);
                     column.setCellRenderer(getDayTableCellRenderer());
                 }
+                dayTable.addComponentListener(new ComponentListener() {
+
+                    public void componentResized(ComponentEvent e) {
+                        // The new size of the table
+                        final double w = e.getComponent().getSize().getWidth();
+                        final double h = e.getComponent().getSize().getHeight();
+
+                        // Set the size of the font as a fraction of the width or the height, whichever is smallest
+                        final float sw = (float) Math.floor(w / 16);
+                        final float sh = (float) Math.floor(h / 8);
+                        dayTable.setFont(dayTable.getFont().deriveFont(Math.min(sw, sh)));
+
+                        // Set the row height as a fraction of the height
+                        final int r = (int) Math.floor(h / 6);
+                        dayTable.setRowHeight(r);
+                    }
+
+                    public void componentMoved(ComponentEvent e) {
+                        // Do nothing
+                    }
+
+                    public void componentShown(ComponentEvent e) {
+                        // Do nothing
+                    }
+
+                    public void componentHidden(ComponentEvent e) {
+                        // Do nothing
+                    }
+
+                });
             }
             return dayTable;
         }
