@@ -1,20 +1,20 @@
 package org.jdatepicker.features;
 
-import org.jdatepicker.JDatePanel;
-import org.jdatepicker.JDatePicker;
+import org.jdatepicker.*;
 
 import javax.swing.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
  * Construct the components specifying some initial data in the constructor.
- *
+ * <p/>
  * a. Construct date models from java.util.Calendar, java.util.Date and java.sql.Date.
  * b. Get notified of different property changes.
  */
 public class Feature2 {
+
+    private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public static void main(final String[] args) {
         // Create a frame
@@ -32,9 +32,10 @@ public class Feature2 {
         c.set(Calendar.MONTH, 4);
         c.set(Calendar.DATE, 1);
         final JDatePanel datePanel1 = new JDatePanel(c);
-        datePanel1.getModel().addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
+        datePanel1.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
+            public void selectionChanged(DateSelectionModelEvent e) {
+                DateSelectionModel model = e.getSource();
+                System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePanel1);
@@ -42,9 +43,10 @@ public class Feature2 {
         c.set(Calendar.MONTH, 5);
         c.set(Calendar.DATE, 6);
         final JDatePanel datePanel2 = new JDatePanel(new java.util.Date(c.getTimeInMillis()));
-        datePanel2.getModel().addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
+        datePanel2.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
+            public void selectionChanged(DateSelectionModelEvent e) {
+                DateSelectionModel model = e.getSource();
+                System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePanel2);
@@ -53,17 +55,19 @@ public class Feature2 {
         c.set(Calendar.MONTH, 5);
         c.set(Calendar.DATE, 13);
         final JDatePanel datePanel3 = new JDatePanel(new java.sql.Date(c.getTimeInMillis()));
-        datePanel3.getModel().addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
+        datePanel3.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
+            public void selectionChanged(DateSelectionModelEvent e) {
+                DateSelectionModel model = e.getSource();
+                System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePanel3);
 
         final JDatePanel datePanel4 = new JDatePanel();
-        datePanel4.getModel().addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
+        datePanel4.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
+            public void selectionChanged(DateSelectionModelEvent e) {
+                DateSelectionModel model = e.getSource();
+                System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePanel4);
@@ -73,19 +77,21 @@ public class Feature2 {
         c.set(Calendar.MONTH, 4);
         c.set(Calendar.DATE, 1);
         final JDatePicker datePicker1 = new JDatePicker(c);
-        datePicker1.getModel().addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
+        datePicker1.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
+            public void selectionChanged(DateSelectionModelEvent e) {
+                DateSelectionModel model = e.getSource();
+                System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePicker1);
 
         c.set(Calendar.MONTH, 5);
         c.set(Calendar.DATE, 6);
-        final JDatePicker datePicker2= new JDatePicker(new java.util.Date(c.getTimeInMillis()));
-        datePicker2.getModel().addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
+        final JDatePicker datePicker2 = new JDatePicker(new java.util.Date(c.getTimeInMillis()));
+        datePicker2.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
+            public void selectionChanged(DateSelectionModelEvent e) {
+                DateSelectionModel model = e.getSource();
+                System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePicker2);
@@ -94,17 +100,19 @@ public class Feature2 {
         c.set(Calendar.MONTH, 5);
         c.set(Calendar.DATE, 13);
         final JDatePicker datePicker3 = new JDatePicker(new java.sql.Date(c.getTimeInMillis()));
-        datePicker3.getModel().addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
+        datePicker3.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
+            public void selectionChanged(DateSelectionModelEvent e) {
+                DateSelectionModel model = e.getSource();
+                System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePicker3);
 
         final JDatePicker datePicker4 = new JDatePicker();
-        datePicker4.getModel().addPropertyChangeListener(new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
+        datePicker4.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
+            public void selectionChanged(DateSelectionModelEvent e) {
+                DateSelectionModel model = e.getSource();
+                System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePicker4);

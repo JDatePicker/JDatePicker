@@ -24,11 +24,6 @@ public class Issue46 {
         final DatePanel panel = new JDatePanel();
         panel.setShowYearButtons(true);
 
-        picker.getModel().setYear(2010);
-        picker.getModel().setMonth(1);
-        picker.getModel().setDay(15);
-        picker.getModel().setSelected(true);
-
         JButton button = new JButton("Enable / disable");
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

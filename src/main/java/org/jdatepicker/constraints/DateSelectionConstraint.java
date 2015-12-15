@@ -27,7 +27,7 @@
  */
 package org.jdatepicker.constraints;
 
-import org.jdatepicker.DateModel;
+import java.util.Calendar;
 
 /**
  * This interface provides a callback function to limit the selection of a date from the picker and panel.
@@ -39,10 +39,10 @@ public interface DateSelectionConstraint {
     /**
      * Check the models value to be a valid, selectable date.
      *
-     * @param model The model to check
+     * @param c the Date to check.
      * @return <code>true</code> if the models value is valid, else returns
      * <code>false</code>
      */
-    boolean isValidSelection(DateModel<?> model);
+    boolean isValidSelection(Calendar c);
 
 }

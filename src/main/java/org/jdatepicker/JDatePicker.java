@@ -27,8 +27,6 @@
  */
 package org.jdatepicker;
 
-import org.jdatepicker.constraints.DateSelectionConstraint;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -36,10 +34,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  * Created on 25 Mar 2004
@@ -103,7 +101,7 @@ public class JDatePicker extends JComponent implements DatePicker {
      *
      * @param model a custom date model
      */
-    public JDatePicker(DateModel<?> model) {
+    public JDatePicker(DateSelectionModel model) {
         this(new JDatePanel(model));
     }
 
@@ -129,8 +127,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         //Create and Add Components
         //Add and Configure TextField
         formattedTextField = new JFormattedTextField(new DateComponentFormatter());
-        DateModel<?> model = datePanel.getModel();
-        setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
+        setTextFieldValue(formattedTextField, datePanel.getModel());
         formattedTextField.setEditable(false);
         add(formattedTextField);
         layout.putConstraint(SpringLayout.WEST, formattedTextField, 0, SpringLayout.WEST, this);
@@ -164,8 +161,7 @@ public class JDatePicker extends JComponent implements DatePicker {
 //TODO        addAncestorListener(listener)
         button.addActionListener(internalEventHandler);
         formattedTextField.addPropertyChangeListener("value", internalEventHandler);
-        datePanel.addActionListener(internalEventHandler);
-        datePanel.getModel().addChangeListener(internalEventHandler);
+        datePanel.getModel().addDateSelectionModelListener(internalEventHandler);
         long eventMask = MouseEvent.MOUSE_PRESSED;
         Toolkit.getDefaultToolkit().addAWTEventListener(internalEventHandler, eventMask);
     }
@@ -174,15 +170,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         return ComponentColorDefaults.getInstance();
     }
 
-    public void addActionListener(ActionListener actionListener) {
-        datePanel.addActionListener(actionListener);
-    }
-
-    public void removeActionListener(ActionListener actionListener) {
-        datePanel.removeActionListener(actionListener);
-    }
-
-    public DateModel<?> getModel() {
+    public DateSelectionModel getModel() {
         return datePanel.getModel();
     }
 
@@ -273,31 +261,12 @@ public class JDatePicker extends JComponent implements DatePicker {
         datePanel.setShowYearButtons(showYearButtons);
     }
 
-    private void setTextFieldValue(JFormattedTextField textField, int year, int month, int day, boolean isSelected) {
-        if (!isSelected) {
+    private void setTextFieldValue(JFormattedTextField textField, DateSelectionModel model) {
+        if (model.getSelectionCount() == 0) {
             textField.setValue(null);
         } else {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, month, day, 0, 0, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-            textField.setValue(calendar);
+            textField.setValue(model.getValue());
         }
-    }
-
-    public void addDateSelectionConstraint(DateSelectionConstraint constraint) {
-        datePanel.addDateSelectionConstraint(constraint);
-    }
-
-    public void removeDateSelectionConstraint(DateSelectionConstraint constraint) {
-        datePanel.removeDateSelectionConstraint(constraint);
-    }
-
-    public void removeAllDateSelectionConstraints() {
-        datePanel.removeAllDateSelectionConstraints();
-    }
-
-    public Set<DateSelectionConstraint> getDateSelectionConstraints() {
-        return datePanel.getDateSelectionConstraints();
     }
 
     public int getTextfieldColumns() {
@@ -328,41 +297,44 @@ public class JDatePicker extends JComponent implements DatePicker {
     /**
      * This internal class hides the public event methods from the outside
      */
-    private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener, AWTEventListener {
+    private class InternalEventHandler implements ActionListener, HierarchyBoundsListener, ChangeListener, PropertyChangeListener, AWTEventListener, DateSelectionModelListener {
 
-        public void ancestorMoved(HierarchyEvent arg0) {
+        public void ancestorMoved(HierarchyEvent event) {
             hidePopup();
         }
 
-        public void ancestorResized(HierarchyEvent arg0) {
+        public void ancestorResized(HierarchyEvent event) {
             hidePopup();
         }
 
-        public void actionPerformed(ActionEvent arg0) {
-            if (arg0.getSource() == button) {
+        public void actionPerformed(ActionEvent event) {
+            if (event.getSource() == button) {
                 if (popup == null) {
                     showPopup();
                 } else {
                     hidePopup();
                 }
-            } else if (arg0.getSource() == datePanel) {
+            }
+        }
+
+        public void selectionChanged(DateSelectionModelEvent event) {
+            if (event.getSource() == datePanel) {
                 hidePopup();
             }
         }
 
-        public void stateChanged(ChangeEvent arg0) {
-            if (arg0.getSource() == datePanel.getModel()) {
-                DateModel<?> model = datePanel.getModel();
-                setTextFieldValue(formattedTextField, model.getYear(), model.getMonth(), model.getDay(), model.isSelected());
+        public void stateChanged(ChangeEvent event) {
+            if (event.getSource() == datePanel.getModel()) {
+                setTextFieldValue(formattedTextField, datePanel.getModel());
             }
         }
 
-        public void propertyChange(PropertyChangeEvent evt) {
+        public void propertyChange(PropertyChangeEvent event) {
             // Short circuit if the following cases are found
-            if (evt.getOldValue() == null && evt.getNewValue() == null) {
+            if (event.getOldValue() == null && event.getNewValue() == null) {
                 return;
             }
-            if (evt.getOldValue() != null && evt.getOldValue().equals(evt.getNewValue())) {
+            if (event.getOldValue() != null && event.getOldValue().equals(event.getNewValue())) {
                 return;
             }
             if (!formattedTextField.isEditable()) {
@@ -370,23 +342,22 @@ public class JDatePicker extends JComponent implements DatePicker {
             }
 
             // If the field is editable and we need to parse the date entered
-            if (evt.getNewValue() != null) {
-                Calendar value = (Calendar) evt.getNewValue();
-                DateModel model = new UtilCalendarModel(value);
+            if (event.getNewValue() != null) {
+                Calendar newValue = (Calendar) event.getNewValue();
                 // check constraints
-                if (!datePanel.checkConstraints(model)) {
+                if (!datePanel.getModel().isDateSelectable(newValue)) {
                     // rollback
-                    formattedTextField.setValue(evt.getOldValue());
+                    // TODO I think this needs to be replaced by an exception, otherwise it will trigger another event.
+                    formattedTextField.setValue(event.getOldValue());
                     return;
                 }
-                datePanel.getModel().setDate(value.get(Calendar.YEAR), value.get(Calendar.MONTH), value.get(Calendar.DATE));
-                datePanel.getModel().setSelected(true);
+                datePanel.getModel().replaceSelectedDates(Arrays.asList(newValue));
             }
 
             // Clearing textfield will also fire change event
-            if (evt.getNewValue() == null) {
+            if (event.getNewValue() == null) {
                 // Set model value unselected, this will fire an event
-                getModel().setSelected(false);
+                getModel().clearSelectedDates();
             }
         }
 

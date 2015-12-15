@@ -27,8 +27,7 @@
  */
 package org.jdatepicker.issues;
 
-import org.jdatepicker.DatePicker;
-import org.jdatepicker.JDatePicker;
+import org.jdatepicker.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,8 +35,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
 
 public class Issue31 {
+
+    private final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     public static void main(String[] args) {
         JFrame testFrame = new JFrame();
@@ -47,17 +49,10 @@ public class Issue31 {
         DatePicker picker = new JDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
-        picker.getModel().addPropertyChangeListener(
-                new PropertyChangeListener() {
-                    public void propertyChange(PropertyChangeEvent evt) {
-                        System.out.println(evt.getPropertyName() + ": "
-                                + evt.getOldValue() + " -> "
-                                + evt.getNewValue());
-                    }
-                });
-        picker.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Action: " + e);
+        picker.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
+            public void selectionChanged(DateSelectionModelEvent e) {
+                DateSelectionModel model = e.getSource();
+                System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         jPanel.add((JComponent) picker);

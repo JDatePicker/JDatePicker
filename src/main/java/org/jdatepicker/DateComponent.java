@@ -27,18 +27,10 @@
  */
 package org.jdatepicker;
 
-import org.jdatepicker.constraints.DateSelectionConstraint;
-
-import java.awt.event.ActionListener;
-import java.util.Set;
-
 /**
  * This interface is implemented by all components which represent a date by day
- * granularity. T will be one of the following org.joda.time.DateMidnight,
- * java.util.Date or java.util.Calendar.
- *
- * Since the first version of JDatePicker generics was added to Java and
- * JodaTime emerged as a important date handling library in the Java community.
+ * granularity. The model allows for selection of single, multiple or a range of
+ * dates.
  *
  * Created 16 April 2010
  * Updated 18 April 2010
@@ -50,58 +42,8 @@ public interface DateComponent {
 
     /**
      * Returns the value of the currently represented date in the component.
-     * Depending on the version of the library used this type will one of the
-     * following:
-     * - java.util.Calendar
-     * - org.joda.time.DateMidnight
-     * - java.util.Date
-     *
-     * @return A new Model
+     * @return a date selection model
      */
-    DateModel<?> getModel();
-
-    /**
-     * Adds an ActionListener. The actionListener is notified when a user clicks
-     * on a date. Deliberately selecting a date will trigger this event, not
-     * scrolling which fires a ChangeEvent for ChangeListeners.
-     *
-     * @param actionListener The listener to add
-     */
-    void addActionListener(ActionListener actionListener);
-
-    /**
-     * Removes the ActionListener. The actionListener is notified when a user
-     * clicks on a date.
-     *
-     * @param actionListener The listener to remove
-     */
-    void removeActionListener(ActionListener actionListener);
-
-
-    /**
-     * Adds an constraint on selectable dates.
-     *
-     * @param constraint the constraint to add
-     */
-    void addDateSelectionConstraint(DateSelectionConstraint constraint);
-
-    /**
-     * Removes an constraint on selectable dates.
-     *
-     * @param constraint the constraint to remove
-     */
-    void removeDateSelectionConstraint(DateSelectionConstraint constraint);
-
-    /**
-     * Removes all registered date selection constraints.
-     */
-    void removeAllDateSelectionConstraints();
-
-    /**
-     * Get all registered date selection constraints.
-     *
-     * @return An immutable Set of all constraints.
-     */
-    Set<DateSelectionConstraint> getDateSelectionConstraints();
+    DateSelectionModel getModel();
 
 }

@@ -22,12 +22,6 @@ public class IssueXX {
         picker.setShowYearButtons(true);
         jPanel.add((JComponent) picker);
 
-        picker.getModel().setYear(2010);
-        picker.getModel().setMonth(1);
-        //picker.getModel().setMonth(1);
-        picker.getModel().setDay(15);
-        picker.getModel().setSelected(true);
-
         JPanel datePanel = new JPanel();
         datePanel.setLayout(new BorderLayout());
         datePanel.add(jPanel, BorderLayout.WEST);

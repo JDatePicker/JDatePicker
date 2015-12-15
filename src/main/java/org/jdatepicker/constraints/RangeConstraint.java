@@ -27,8 +27,6 @@
  */
 package org.jdatepicker.constraints;
 
-import org.jdatepicker.DateModel;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -69,7 +67,7 @@ public class RangeConstraint implements DateSelectionConstraint {
      * @param after  Lower bound for values, including.
      * @param before Upper bound for values, including.
      */
-    public RangeConstraint(Date after, Date before) {
+   public RangeConstraint(Date after, Date before) {
         Calendar _after = Calendar.getInstance();
         Calendar _before = Calendar.getInstance();
 
@@ -102,26 +100,14 @@ public class RangeConstraint implements DateSelectionConstraint {
         }
     }
 
-    public boolean isValidSelection(DateModel<?> model) {
+    public boolean isValidSelection(Calendar date) {
         boolean result = true;
 
-        if (model.isSelected() && after != null) {
-            Calendar value = Calendar.getInstance();
-            value.set(model.getYear(), model.getMonth(), model.getDay());
-            value.set(Calendar.HOUR, 0);
-            value.set(Calendar.MINUTE, 0);
-            value.set(Calendar.SECOND, 0);
-            value.set(Calendar.MILLISECOND, 0);
-            result &= value.after(after);
+        if (after != null) {
+            result &= date.after(after);
         }
-        if (model.isSelected() && before != null) {
-            Calendar value = Calendar.getInstance();
-            value.set(model.getYear(), model.getMonth(), model.getDay());
-            value.set(Calendar.HOUR, 0);
-            value.set(Calendar.MINUTE, 0);
-            value.set(Calendar.SECOND, 0);
-            value.set(Calendar.MILLISECOND, 0);
-            result &= value.before(before);
+        if (before != null) {
+            result &= date.before(before);
         }
 
         return result;

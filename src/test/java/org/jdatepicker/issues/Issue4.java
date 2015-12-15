@@ -45,8 +45,7 @@ public class Issue4 {
         DatePicker picker = new JDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
-        picker.addDateSelectionConstraint(new RangeConstraint(null, Calendar
-                .getInstance()));
+        picker.getModel().addDateSelectionConstraint(new RangeConstraint(null, Calendar.getInstance()));
         jPanel.add((JComponent) picker);
 
         JPanel DatePanel = new JPanel();

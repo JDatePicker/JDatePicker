@@ -43,10 +43,10 @@ public class Feature1 {
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // The default model is UtilCalendarModel
-                Calendar c1 = (Calendar) datePanel.getModel().getValue();
+                Calendar c1 = datePanel.getModel().getValue();
                 System.out.println("JDatePanel: " + (c1 != null ? sdf.format(c1.getTime()) : null));
 
-                Calendar c2 = (Calendar) datePicker.getModel().getValue();
+                Calendar c2 = datePicker.getModel().getValue();
                 System.out.println("JDatePicker: " + (c2 != null ? sdf.format(c2.getTime()) : null));
             }
         });
