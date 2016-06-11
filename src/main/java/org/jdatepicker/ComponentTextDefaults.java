@@ -140,11 +140,12 @@ public final class ComponentTextDefaults {
     /**
      * For general texts retrieve from the resource bundles.
      *
-     * For months and day of the week use the SimpleDateFormat symbols. In most cases these are the correct ones, but
-     * we may want to override it, so if a text is specified then we will not consider the SimpleDateFormat symbols.
+     * For months and day of the week use the SimpleDateFormat symbols. In most
+     * cases these are the correct ones, but we may want to override it, so if a
+     * text is specified then we will not consider the SimpleDateFormat symbols.
      *
-     * @param key
-     * @return
+     * @param key the key of the resource
+     * @return the retrieved text
      */
     public String getText(Key key) {
         String text = texts.getProperty(key.getProperty());
