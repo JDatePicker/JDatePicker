@@ -53,8 +53,9 @@ import java.util.Set;
  * @author Juan Heyns
  * @author JC Oosthuizen
  * @author Yue Huang
+ * @param <D> the type of the {@link DateModel} the date picker works with
  */
-public class JDatePicker extends JComponent implements DatePicker {
+public class JDatePicker<D extends DateModel<?>> extends JComponent implements DatePicker {
 
     private static final long serialVersionUID = 2814777654384974503L;
 
@@ -62,7 +63,7 @@ public class JDatePicker extends JComponent implements DatePicker {
     private JFormattedTextField formattedTextField;
     private JButton button;
 
-    private JDatePanel datePanel;
+    private JDatePanel<D> datePanel;
 
     /**
      * Create a JDatePicker with a default calendar model.
@@ -103,7 +104,7 @@ public class JDatePicker extends JComponent implements DatePicker {
      *
      * @param model a custom date model
      */
-    public JDatePicker(DateModel<?> model) {
+    public JDatePicker(D model) {
         this(new JDatePanel(model));
     }
 
@@ -182,7 +183,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         datePanel.removeActionListener(actionListener);
     }
 
-    public DateModel<?> getModel() {
+    public D getModel() {
         return datePanel.getModel();
     }
 

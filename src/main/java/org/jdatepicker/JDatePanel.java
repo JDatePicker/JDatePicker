@@ -58,8 +58,9 @@ import java.util.*;
  * @author Juan Heyns
  * @author JC Oosthuizen
  * @author Yue Huang
+ * @param <D> the type of the {@link DateModel} the date panel works with
  */
-public class JDatePanel extends JComponent implements DatePanel {
+public class JDatePanel<D extends DateModel<?>> extends JComponent implements DatePanel {
 
     private static final long serialVersionUID = -2299249311312882915L;
 
@@ -70,7 +71,7 @@ public class JDatePanel extends JComponent implements DatePanel {
     private boolean doubleClickAction;
     private int firstDayOfWeek;
 
-    private InternalCalendarModel internalModel;
+    private InternalCalendarModel<D> internalModel;
     private InternalController internalController;
     private InternalView internalView;
 
@@ -199,7 +200,7 @@ public class JDatePanel extends JComponent implements DatePanel {
     /* (non-Javadoc)
      * @see org.jdatepicker.JDateComponent#getModel()
      */
-    public DateModel<?> getModel() {
+    public D getModel() {
         return internalModel.getModel();
     }
 
@@ -922,20 +923,20 @@ public class JDatePanel extends JComponent implements DatePanel {
      *
      * @author Juan Heyns
      */
-    protected class InternalCalendarModel implements TableModel, SpinnerModel, ChangeListener {
+    protected class InternalCalendarModel<D extends DateModel<?>> implements TableModel, SpinnerModel, ChangeListener {
 
-        private DateModel<?> model;
+        private D model;
         private Set<ChangeListener> spinnerChangeListeners;
         private Set<TableModelListener> tableModelListeners;
 
-        public InternalCalendarModel(DateModel<?> model) {
+        public InternalCalendarModel(D model) {
             this.spinnerChangeListeners = new HashSet<ChangeListener>();
             this.tableModelListeners = new HashSet<TableModelListener>();
             this.model = model;
             model.addChangeListener(this);
         }
 
-        public DateModel<?> getModel() {
+        public D getModel() {
             return model;
         }
 
