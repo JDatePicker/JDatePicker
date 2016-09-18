@@ -3,6 +3,7 @@ package org.jdatepicker.issues;
 import org.jdatepicker.JDatePanel;
 
 import javax.swing.*;
+import org.jdatepicker.JUtilDatePanel;
 
 public class Issue18 {
 
@@ -13,7 +14,7 @@ public class Issue18 {
         frame.setSize(200, 200);
 
         // Create the JDatePanel and add it to the main content pane, resizing the window will resize the panel
-        final JDatePanel datePanel = new JDatePanel();
+        final JDatePanel datePanel = new JUtilDatePanel();
         frame.getContentPane().add(datePanel);
 
         // Make the frame visible

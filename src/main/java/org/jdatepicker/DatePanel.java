@@ -27,7 +27,7 @@
  */
 package org.jdatepicker;
 
-public interface DatePanel extends DateComponent {
+public interface DatePanel<T> extends DateComponent<T> {
 
     /**
      * Sets the visibilty of the Year navigation buttons. Defaults to false.

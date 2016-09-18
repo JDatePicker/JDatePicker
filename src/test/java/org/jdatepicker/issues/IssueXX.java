@@ -5,6 +5,7 @@ import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import java.awt.*;
+import org.jdatepicker.JUtilDatePicker;
 
 /**
  * Created by jheyns on 2014/10/07.
@@ -17,7 +18,7 @@ public class IssueXX {
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
 
-        DatePicker picker = new JDatePicker();
+        DatePicker<?> picker = new JUtilDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
         jPanel.add((JComponent) picker);

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import org.jdatepicker.JUtilDatePicker;
 
 /**
  * Opening and closing the popup of JDatePicker.
@@ -36,7 +37,7 @@ public class Feature10 {
         frame.getContentPane().add(panel);
 
         // Create the JDatePicker
-        final JDatePicker datePicker = new JDatePicker();
+        final JDatePicker datePicker = new JUtilDatePicker();
 //        datePicker.setDoubleClickAction(true);
         panel.add(datePicker);
 

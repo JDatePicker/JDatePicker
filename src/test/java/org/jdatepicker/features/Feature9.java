@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import org.jdatepicker.JUtilDatePanel;
+import org.jdatepicker.JUtilDatePicker;
 
 /**
  * Disable a the widget.
@@ -28,12 +30,12 @@ public class Feature9 {
         frame.getContentPane().add(panel);
 
         // Create the JDatePanel
-        final JDatePanel datePanel = new JDatePanel();
+        final JDatePanel<?> datePanel = new JUtilDatePanel();
         datePanel.setEnabled(false);
         panel.add(datePanel);
 
         // Create the JDatePicker
-        final JDatePicker datePicker = new JDatePicker();
+        final JDatePicker<?> datePicker = new JUtilDatePicker();
         datePicker.setEnabled(false);
         panel.add(datePicker);
 

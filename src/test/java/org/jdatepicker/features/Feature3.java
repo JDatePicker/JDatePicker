@@ -10,6 +10,8 @@ import javax.swing.event.ChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JUtilDatePanel;
 
 /**
  * Construct components with a custom date model.
@@ -30,7 +32,7 @@ public class Feature3 {
         frame.getContentPane().add(panel);
 
         // Create the JDatePanel
-        final JDatePanel datePanel1 = new JDatePanel(new DemoDateModel("1980-05-01"));
+        final JDatePanel datePanel1 = new JStringDatePanel(new DemoDateModel("1980-05-01"));
         datePanel1.getModel().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 DemoDateModel source = (DemoDateModel) e.getSource();
@@ -39,7 +41,7 @@ public class Feature3 {
         });
         panel.add(datePanel1);
 
-        final JDatePanel datePanel2 = new JDatePanel(new DemoDateModel(null));
+        final JDatePanel datePanel2 = new JStringDatePanel(new DemoDateModel(null));
         datePanel2.getModel().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 DemoDateModel source = (DemoDateModel) e.getSource();
@@ -49,7 +51,7 @@ public class Feature3 {
         panel.add(datePanel2);
 
         // Create the JDatePicker
-        final JDatePicker datePicker1 = new JDatePicker(new DemoDateModel("1980-06-06"));
+        final JDatePicker datePicker1 = new JStringDatePicker(new DemoDateModel("1980-06-06"));
         datePicker1.getModel().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 DemoDateModel source = (DemoDateModel) e.getSource();
@@ -58,7 +60,7 @@ public class Feature3 {
         });
         panel.add(datePicker1);
 
-        final JDatePicker datePicker2 = new JDatePicker(new DemoDateModel(null));
+        final JDatePicker datePicker2 = new JStringDatePicker(new DemoDateModel(null));
         datePicker2.getModel().addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 DemoDateModel source = (DemoDateModel) e.getSource();
@@ -71,6 +73,21 @@ public class Feature3 {
         frame.setVisible(true);
     }
 
+    public static class JStringDatePicker extends JDatePicker<String> {
+        private static final long serialVersionUID = 1L;
+
+        public JStringDatePicker(DateModel<String> model) {
+            super(new JStringDatePanel(model));
+        }
+    }
+
+    public static class JStringDatePanel extends JDatePanel<String> {
+
+        public JStringDatePanel(DateModel<String> model) {
+            super(model);
+        }
+    }
+            
     public static class DemoDateModel extends AbstractDateModel<String> {
 
         private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
