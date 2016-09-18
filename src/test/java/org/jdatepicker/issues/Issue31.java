@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import org.jdatepicker.JUtilDatePicker;
 
 public class Issue31 {
 
@@ -44,7 +45,7 @@ public class Issue31 {
         testFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         testFrame.setSize(500, 500);
         JPanel jPanel = new JPanel();
-        DatePicker picker = new JDatePicker();
+        DatePicker<?> picker = new JUtilDatePicker();
         picker.setTextEditable(true);
         picker.setShowYearButtons(true);
         picker.getModel().addPropertyChangeListener(

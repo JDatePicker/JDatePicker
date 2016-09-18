@@ -29,7 +29,7 @@ package org.jdatepicker;
 
 import javax.swing.*;
 
-public interface DatePicker extends DatePanel {
+public interface DatePicker<T> extends DatePanel<T> {
 
     /**
      * Is the text component editable or not. Defaults to false.

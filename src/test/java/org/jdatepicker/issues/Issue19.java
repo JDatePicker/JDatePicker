@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import org.jdatepicker.JUtilDatePicker;
 
 public class Issue19 extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -21,7 +22,7 @@ public class Issue19 extends JFrame {
 
         // create components
         final Container cont = getContentPane();
-        final JDatePicker picker = new JDatePicker();
+        final JDatePicker<?> picker = new JUtilDatePicker();
         final JButton right = new JButton("show / hide");
 
         // add button action

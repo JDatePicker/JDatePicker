@@ -7,6 +7,12 @@ import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
+import org.jdatepicker.JSqlDatePanel;
+import org.jdatepicker.JSqlDatePicker;
+import org.jdatepicker.JUtilCalendarPanel;
+import org.jdatepicker.JUtilCalendarPicker;
+import org.jdatepicker.JUtilDatePanel;
+import org.jdatepicker.JUtilDatePicker;
 
 /**
  * Construct the components specifying some initial data in the constructor.
@@ -31,7 +37,7 @@ public class Feature2 {
         c.set(Calendar.YEAR, 1980);
         c.set(Calendar.MONTH, 4);
         c.set(Calendar.DATE, 1);
-        final JDatePanel datePanel1 = new JDatePanel(c);
+        final JDatePanel<?> datePanel1 = new JUtilCalendarPanel(c);
         datePanel1.getModel().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
@@ -41,7 +47,7 @@ public class Feature2 {
 
         c.set(Calendar.MONTH, 5);
         c.set(Calendar.DATE, 6);
-        final JDatePanel datePanel2 = new JDatePanel(new java.util.Date(c.getTimeInMillis()));
+        final JDatePanel<?> datePanel2 = new JUtilDatePanel(new java.util.Date(c.getTimeInMillis()));
         datePanel2.getModel().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
@@ -52,7 +58,7 @@ public class Feature2 {
         c.set(Calendar.YEAR, 2014);
         c.set(Calendar.MONTH, 5);
         c.set(Calendar.DATE, 13);
-        final JDatePanel datePanel3 = new JDatePanel(new java.sql.Date(c.getTimeInMillis()));
+        final JDatePanel<?> datePanel3 = new JSqlDatePanel(new java.sql.Date(c.getTimeInMillis()));
         datePanel3.getModel().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
@@ -60,7 +66,7 @@ public class Feature2 {
         });
         panel.add(datePanel3);
 
-        final JDatePanel datePanel4 = new JDatePanel();
+        final JDatePanel<?> datePanel4 = new JSqlDatePanel();
         datePanel4.getModel().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
@@ -72,7 +78,7 @@ public class Feature2 {
         c.set(Calendar.YEAR, 1980);
         c.set(Calendar.MONTH, 4);
         c.set(Calendar.DATE, 1);
-        final JDatePicker datePicker1 = new JDatePicker(c);
+        final JDatePicker datePicker1 = new JUtilCalendarPicker(c);
         datePicker1.getModel().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
@@ -82,7 +88,7 @@ public class Feature2 {
 
         c.set(Calendar.MONTH, 5);
         c.set(Calendar.DATE, 6);
-        final JDatePicker datePicker2= new JDatePicker(new java.util.Date(c.getTimeInMillis()));
+        final JDatePicker datePicker2 = new JUtilDatePicker(new java.util.Date(c.getTimeInMillis()));
         datePicker2.getModel().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
@@ -93,7 +99,7 @@ public class Feature2 {
         c.set(Calendar.YEAR, 2014);
         c.set(Calendar.MONTH, 5);
         c.set(Calendar.DATE, 13);
-        final JDatePicker datePicker3 = new JDatePicker(new java.sql.Date(c.getTimeInMillis()));
+        final JDatePicker datePicker3 = new JSqlDatePicker(new java.sql.Date(c.getTimeInMillis()));
         datePicker3.getModel().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
@@ -101,7 +107,7 @@ public class Feature2 {
         });
         panel.add(datePicker3);
 
-        final JDatePicker datePicker4 = new JDatePicker();
+        final JDatePicker datePicker4 = new JUtilDatePicker();
         datePicker4.getModel().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
                 System.out.println(String.format("%s: %s -> %s", e.getPropertyName(), e.getOldValue(), e.getNewValue()));
