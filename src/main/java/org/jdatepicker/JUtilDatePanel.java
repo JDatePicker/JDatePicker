@@ -37,6 +37,7 @@ public class JUtilDatePanel extends JDatePanel<Date> {
     private static final long serialVersionUID = 1L;
 
     public JUtilDatePanel() {
+        this(new UtilDateModel());
     }
 
     public JUtilDatePanel(Date value) {

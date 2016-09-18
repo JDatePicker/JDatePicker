@@ -37,6 +37,7 @@ public class JSqlDatePanel extends JDatePanel<Date>{
     private static final long serialVersionUID = 1L;
 
     public JSqlDatePanel() {
+        this(new SqlDateModel());
     }
     
     public JSqlDatePanel(Date value) {
