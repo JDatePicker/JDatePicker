@@ -73,7 +73,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.8.1</version>
+        <version>3.0.0-M1</version>
+            <!-- need at least 3.0.0-M1 to run with JDK9 in order to avoid
+                    `An API incompatibility was encountered while executing
+                    org.apache.maven.plugins:maven-javadoc-plugin:2.10.4:jar:
+                    java.lang.ExceptionInInitializerError: null`
+                    see https://issues.apache.org/jira/browse/MJAVADOC-485 for
+                    details -->
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -154,9 +160,9 @@
   </profiles>
 
   <properties>
-    <maven.compiler.compilerVersion>1.5</maven.compiler.compilerVersion>
-    <maven.compiler.source>1.5</maven.compiler.source>
-    <maven.compiler.target>1.5</maven.compiler.target>
+    <maven.compiler.compilerVersion>1.6</maven.compiler.compilerVersion>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
