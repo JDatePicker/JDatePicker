@@ -746,6 +746,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 	 */
 	protected class InternalCalendarModel implements TableModel, SpinnerModel, ChangeListener {
 
+		private final int firstDayOfWeekOffset = Calendar.getInstance().getFirstDayOfWeek() - Calendar.SUNDAY;
 		private DateModel<?> model;
 		private HashSet<ChangeListener> spinnerChangeListeners;
 		private HashSet<TableModelListener> tableModelListeners;
@@ -830,7 +831,7 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		public String getColumnName(int arg0) {
 			DateFormatSymbols df = new DateFormatSymbols();
 			String[] shortDays = df.getShortWeekdays();
-			return shortDays[arg0 + 1];
+			return shortDays[Calendar.SUNDAY + ((arg0 + firstDayOfWeekOffset) % 7)];
 		}
 
 		/**
@@ -852,11 +853,11 @@ public class JDatePanelImpl extends JPanel implements JDatePanel {
 		 * Part of TableModel, day
 		 */
 		public Object getValueAt(int arg0, int arg1) {
-			Calendar firstDayOfMonth = Calendar.getInstance();
+			final Calendar firstDayOfMonth = Calendar.getInstance();
 			firstDayOfMonth.set(model.getYear(), model.getMonth(), 1);
-			int DOW = firstDayOfMonth.get(Calendar.DAY_OF_WEEK);
-			int value = arg1 - DOW + arg0*7 + 2;
-			return new Integer(value);
+			final int DOW = firstDayOfMonth.get(Calendar.DAY_OF_WEEK);
+			final int value = arg1 - DOW + firstDayOfWeekOffset + arg0*7 + 2;
+			return Integer.valueOf(value);
 		}
 		
 		/**
