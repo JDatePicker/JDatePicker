@@ -68,7 +68,6 @@ public class JDatePanel extends JComponent implements DatePanel {
 
     private boolean showYearButtons;
     private boolean doubleClickAction;
-    private int firstDayOfWeek;
 
     private InternalCalendarModel internalModel;
     private InternalController internalController;
@@ -119,7 +118,6 @@ public class JDatePanel extends JComponent implements DatePanel {
 
         showYearButtons = false;
         doubleClickAction = false;
-        firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
 
         internalModel = new InternalCalendarModel(model);
         internalController = new InternalController();
@@ -924,6 +922,7 @@ public class JDatePanel extends JComponent implements DatePanel {
      */
     protected class InternalCalendarModel implements TableModel, SpinnerModel, ChangeListener {
 
+        private final int firstDayOfWeekOffset = Calendar.getInstance().getFirstDayOfWeek() - Calendar.SUNDAY;
         private DateModel<?> model;
         private Set<ChangeListener> spinnerChangeListeners;
         private Set<TableModelListener> tableModelListeners;
@@ -1014,41 +1013,8 @@ public class JDatePanel extends JComponent implements DatePanel {
          * Part of TableModel, day
          */
         public String getColumnName(int columnIndex) {
-            ComponentTextDefaults.Key key = ComponentTextDefaults.Key.getDowKey(((firstDayOfWeek - 1) + columnIndex) % 7);
+            ComponentTextDefaults.Key key = ComponentTextDefaults.Key.getDowKey(Calendar.SUNDAY + ((columnIndex + firstDayOfWeekOffset) % 7));
             return getTexts().getText(key);
-        }
-
-        private int[] lookup = null;
-
-        /**
-         * Results in a mapping which calculates the number of days before the first day of month
-         *
-         * DAY OF WEEK
-         * M T W T F S S
-         * 1 2 3 4 5 6 0
-         *
-         * or
-         *
-         * S M T W T F S
-         * 0 1 2 3 4 5 6
-         *
-         * DAYS BEFORE
-         * 0 1 2 3 4 5 6
-         *
-         * @return
-         */
-        private int[] lookup() {
-            if (lookup == null) {
-                lookup = new int[8];
-                lookup[(firstDayOfWeek - 1) % 7] = 0;
-                lookup[(firstDayOfWeek + 0) % 7] = 1;
-                lookup[(firstDayOfWeek + 1) % 7] = 2;
-                lookup[(firstDayOfWeek + 2) % 7] = 3;
-                lookup[(firstDayOfWeek + 3) % 7] = 4;
-                lookup[(firstDayOfWeek + 4) % 7] = 5;
-                lookup[(firstDayOfWeek + 5) % 7] = 6;
-            }
-            return lookup;
         }
 
         /**
@@ -1059,12 +1025,12 @@ public class JDatePanel extends JComponent implements DatePanel {
          * next month (DAYS_IN_MONTH + 1, DAYS_IN_MONTH + 2, ...)
          */
         public Object getValueAt(int rowIndex, int columnIndex) {
-            int series = columnIndex + rowIndex * 7 + 1;
+            final int series = columnIndex + rowIndex * 7 + 1;
 
             Calendar firstOfMonth = Calendar.getInstance();
             firstOfMonth.set(model.getYear(), model.getMonth(), 1);
-            int dowForFirst = firstOfMonth.get(Calendar.DAY_OF_WEEK);
-            int daysBefore = lookup()[dowForFirst - 1];
+            final int dowForFirst = firstOfMonth.get(Calendar.DAY_OF_WEEK);
+            final int daysBefore = dowForFirst - firstDayOfWeekOffset - 1;
 
             return series - daysBefore;
         }
