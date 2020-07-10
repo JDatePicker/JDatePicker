@@ -55,6 +55,8 @@
         <configuration>
           <fork>true</fork>
           <verbose>true</verbose>
+		  <source>1.8</source>
+		  <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
@@ -86,7 +88,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
-        <version>1.11</version>
+        <version>1.16</version>
         <executions>
           <execution>
             <id>check-java-version</id>
@@ -97,7 +99,7 @@
             <configuration>
               <signature>
                 <groupId>org.codehaus.mojo.signature</groupId>
-                <artifactId>java15</artifactId>
+                <artifactId>java18</artifactId>
                 <version>1.0</version>
               </signature>
             </configuration>
@@ -134,7 +136,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.4</version>
+            <version>1.5</version>
             <configuration>
               <passphrase>${gpg.passphrase}</passphrase>
             </configuration>
@@ -154,9 +156,9 @@
   </profiles>
 
   <properties>
-    <maven.compiler.compilerVersion>1.5</maven.compiler.compilerVersion>
-    <maven.compiler.source>1.5</maven.compiler.source>
-    <maven.compiler.target>1.5</maven.compiler.target>
+    <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>
