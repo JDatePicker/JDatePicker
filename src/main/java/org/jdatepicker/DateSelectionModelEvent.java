@@ -17,7 +17,7 @@ public final class DateSelectionModelEvent extends EventObject implements Serial
      * @param source The object on which the Event initially occurred.
      * @throws IllegalArgumentException if source is null.
      */
-    public DateSelectionModelEvent(final DateSelectionModel source, final Collection<Calendar> unselected, final Collection<Calendar> selected) {
+    public DateSelectionModelEvent(final SelectionModel source, final Collection<Calendar> unselected, final Collection<Calendar> selected) {
         super(source);
         this.unselected = unselected != null ? new TreeSet<Calendar>(unselected) : new TreeSet<Calendar>();
         this.selected = selected != null ? new TreeSet<Calendar>(selected) : new TreeSet<Calendar>();
@@ -28,8 +28,8 @@ public final class DateSelectionModelEvent extends EventObject implements Serial
      *
      * @return The object on which the Event initially occurred.
      */
-    public DateSelectionModel getSource() {
-        return (DateSelectionModel) source;
+    public SelectionModel getSource() {
+        return (SelectionModel) source;
     }
 
     /**

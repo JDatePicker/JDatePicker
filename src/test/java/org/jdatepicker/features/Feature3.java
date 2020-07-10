@@ -30,38 +30,38 @@ public class Feature3 {
         frame.getContentPane().add(panel);
 
         // Create the JDatePanel
-        final JDatePanel datePanel1 = new JDatePanel(new DemoDateModel("1980-05-01"));
+        final JDatePanel datePanel1 = new JDatePanel(new DemoModel("1980-05-01"));
         datePanel1.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePanel1);
 
-        final JDatePanel datePanel2 = new JDatePanel(new DemoDateModel(null));
+        final JDatePanel datePanel2 = new JDatePanel(new DemoModel(null));
         datePanel2.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePanel2);
 
         // Create the JDatePicker
-        final JDatePicker datePicker1 = new JDatePicker(new DemoDateModel("1980-06-06"));
+        final JDatePicker datePicker1 = new JDatePicker(new DemoModel("1980-06-06"));
         datePicker1.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
         panel.add(datePicker1);
 
-        final JDatePicker datePicker2 = new JDatePicker(new DemoDateModel(null));
+        final JDatePicker datePicker2 = new JDatePicker(new DemoModel(null));
         datePicker2.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
@@ -71,11 +71,11 @@ public class Feature3 {
         frame.setVisible(true);
     }
 
-    public static class DemoDateModel extends DefaultDateSelectionModel {
+    public static class DemoModel extends AbstractSelectionModel {
 
         private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        public DemoDateModel(String value) {
+        public DemoModel(String value) {
             super(toCalendar(value));
         }
 

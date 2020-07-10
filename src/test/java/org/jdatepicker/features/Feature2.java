@@ -8,7 +8,7 @@ import java.util.Calendar;
 
 /**
  * Construct the components specifying some initial data in the constructor.
- * <p/>
+ *
  * a. Construct date models from java.util.Calendar, java.util.Date and java.sql.Date.
  * b. Get notified of different property changes.
  */
@@ -34,7 +34,7 @@ public class Feature2 {
         final JDatePanel datePanel1 = new JDatePanel(c);
         datePanel1.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
@@ -45,7 +45,7 @@ public class Feature2 {
         final JDatePanel datePanel2 = new JDatePanel(new java.util.Date(c.getTimeInMillis()));
         datePanel2.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
@@ -57,7 +57,7 @@ public class Feature2 {
         final JDatePanel datePanel3 = new JDatePanel(new java.sql.Date(c.getTimeInMillis()));
         datePanel3.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
@@ -66,7 +66,7 @@ public class Feature2 {
         final JDatePanel datePanel4 = new JDatePanel();
         datePanel4.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
@@ -79,7 +79,7 @@ public class Feature2 {
         final JDatePicker datePicker1 = new JDatePicker(c);
         datePicker1.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
@@ -90,7 +90,7 @@ public class Feature2 {
         final JDatePicker datePicker2 = new JDatePicker(new java.util.Date(c.getTimeInMillis()));
         datePicker2.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
@@ -102,7 +102,7 @@ public class Feature2 {
         final JDatePicker datePicker3 = new JDatePicker(new java.sql.Date(c.getTimeInMillis()));
         datePicker3.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });
@@ -111,7 +111,7 @@ public class Feature2 {
         final JDatePicker datePicker4 = new JDatePicker();
         datePicker4.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });

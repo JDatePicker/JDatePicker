@@ -101,7 +101,7 @@ public class JDatePicker extends JComponent implements DatePicker {
      *
      * @param model a custom date model
      */
-    public JDatePicker(DateSelectionModel model) {
+    public JDatePicker(SelectionModel model) {
         this(new JDatePanel(model));
     }
 
@@ -170,7 +170,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         return ComponentColorDefaults.getInstance();
     }
 
-    public DateSelectionModel getModel() {
+    public SelectionModel getModel() {
         return datePanel.getModel();
     }
 
@@ -261,7 +261,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         datePanel.setShowYearButtons(showYearButtons);
     }
 
-    private void setTextFieldValue(JFormattedTextField textField, DateSelectionModel model) {
+    private void setTextFieldValue(JFormattedTextField textField, SelectionModel model) {
         if (model.getSelectionCount() == 0) {
             textField.setValue(null);
         } else {

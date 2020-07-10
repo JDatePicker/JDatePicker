@@ -44,6 +44,6 @@ public interface DateComponent {
      * Returns the value of the currently represented date in the component.
      * @return a date selection model
      */
-    DateSelectionModel getModel();
+    SelectionModel getModel();
 
 }

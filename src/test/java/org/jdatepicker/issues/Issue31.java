@@ -31,10 +31,6 @@ import org.jdatepicker.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 
 public class Issue31 {
@@ -51,7 +47,7 @@ public class Issue31 {
         picker.setShowYearButtons(true);
         picker.getModel().addDateSelectionModelListener(new DateSelectionModelListener() {
             public void selectionChanged(DateSelectionModelEvent e) {
-                DateSelectionModel model = e.getSource();
+                SelectionModel model = e.getSource();
                 System.out.println(String.format("%s", sdf.format(model.getValue())));
             }
         });

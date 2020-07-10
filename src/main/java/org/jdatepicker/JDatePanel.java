@@ -65,7 +65,7 @@ public class JDatePanel extends JComponent implements DatePanel {
     private boolean doubleClickAction;
     private int firstDayOfWeek;
 
-    private InternalCalendarModel internalModel;
+    private InternalModel internalModel;
     private InternalController internalController;
     private InternalView internalView;
 
@@ -108,40 +108,34 @@ public class JDatePanel extends JComponent implements DatePanel {
      *
      * @param model a custom date model
      */
-    public JDatePanel(DateSelectionModel model) {
+    public JDatePanel(SelectionModel model) {
         showYearButtons = false;
         doubleClickAction = false;
         firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
 
-        internalModel = new InternalCalendarModel(model);
+        internalModel = new InternalModel(model);
         internalController = new InternalController();
         internalView = new InternalView();
-
-        setLayout(new GridLayout(1, 1));
-        add(internalView);
+        internalView.initialize(this);
     }
 
-    public static DateSelectionModel createModel() {
-        return new DefaultDateSelectionModel();
+    public static SelectionModel createModel() {
+        return new AbstractSelectionModel();
     }
 
-    private static DateSelectionModel createModel(Calendar value) {
-        return new DefaultDateSelectionModel(value);
-    }
-
-    private static DateSelectionModel createModelFromValue(Object value) {
+    private static SelectionModel createModelFromValue(Object value) {
         if (value instanceof java.util.Calendar) {
-            return new DefaultDateSelectionModel((Calendar) value);
+            return new AbstractSelectionModel((Calendar) value);
         }
         if (value instanceof java.util.Date) {
             Calendar c = Calendar.getInstance();
             c.setTime((java.util.Date)value);
-            return new DefaultDateSelectionModel(c);
+            return new AbstractSelectionModel(c);
         }
         if (value instanceof java.sql.Date) {
             Calendar c = Calendar.getInstance();
             c.setTime((java.sql.Date)value);
-            return new DefaultDateSelectionModel(c);
+            return new AbstractSelectionModel(c);
         }
         throw new IllegalArgumentException("No model could be constructed from the initial value object.");
     }
@@ -178,7 +172,7 @@ public class JDatePanel extends JComponent implements DatePanel {
     /* (non-Javadoc)
      * @see org.jdatepicker.JDateComponent#getModel()
      */
-    public DateSelectionModel getModel() {
+    public SelectionModel getModel() {
         return internalModel.getModel();
     }
 
@@ -262,22 +256,13 @@ public class JDatePanel extends JComponent implements DatePanel {
          * Update the UI of the monthLabel
          */
         private void updateMonthLabel() {
-            if (internalModel.getModel().getValue() != null) {
-                monthLabel.setText(getTexts().getText(ComponentTextDefaults.Key.getMonthKey(internalModel.getModel().getValue().get(Calendar.MONTH))));
-            }
-            else {
-                monthLabel.setText("");
-            }
-        }
-
-        public InternalView() {
-            initialise();
+            monthLabel.setText(getTexts().getText(ComponentTextDefaults.Key.getMonthKey(internalModel.getScrollMonth())));
         }
 
         /**
          * Initialise the control.
          */
-        private void initialise() {
+        public void initialize(JDatePanel datePanel) {
             this.setLayout(new java.awt.BorderLayout());
             this.setSize(200, 180);
             this.setPreferredSize(new java.awt.Dimension(200, 180));
@@ -285,6 +270,8 @@ public class JDatePanel extends JComponent implements DatePanel {
             this.add(getNorthPanel(), java.awt.BorderLayout.NORTH);
             this.add(getSouthPanel(), java.awt.BorderLayout.SOUTH);
             this.add(getCenterPanel(), java.awt.BorderLayout.CENTER);
+            datePanel.setLayout(new GridLayout(1, 1));
+            datePanel.add(internalView);
         }
 
         /**
@@ -705,7 +692,7 @@ public class JDatePanel extends JComponent implements DatePanel {
 
             Calendar todayCal = Calendar.getInstance();
             Calendar selectedCal = Calendar.getInstance();
-            selectedCal.set(internalModel.getModel().getValue().get(Calendar.YEAR), internalModel.getModel().getValue().get(Calendar.MONTH), internalModel.getModel().getValue().get(Calendar.DATE));
+            selectedCal.set(internalModel.getScrollYear(), internalModel.getScrollMonth(), internalModel.getScrollDate());
 
             int cellDayValue = (Integer) value;
             int lastDayOfMonth = selectedCal.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -715,7 +702,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_OTHER_MONTH));
 
                 Calendar calForDay = Calendar.getInstance();
-                calForDay.set(internalModel.getModel().getValue().get(Calendar.YEAR), internalModel.getModel().getValue().get(Calendar.MONTH), cellDayValue);
+                calForDay.set(internalModel.getScrollYear(), internalModel.getScrollMonth(), cellDayValue);
                 label.setBackground(internalModel.getModel().isDateSelectable(calForDay) ?
                                 getColors().getColor(ComponentColorDefaults.Key.BG_GRID) :
                                 getColors().getColor(ComponentColorDefaults.Key.BG_GRID_NOT_SELECTABLE)
@@ -738,7 +725,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_THIS_MONTH));
 
                 Calendar calForDay = Calendar.getInstance();
-                calForDay.set(internalModel.getModel().getValue().get(Calendar.YEAR), internalModel.getModel().getValue().get(Calendar.MONTH), cellDayValue);
+                calForDay.set(internalModel.getScrollYear(), internalModel.getScrollMonth(), cellDayValue);
                 label.setBackground(internalModel.getModel().isDateSelectable(calForDay) ?
                                 getColors().getColor(ComponentColorDefaults.Key.BG_GRID) :
                                 getColors().getColor(ComponentColorDefaults.Key.BG_GRID_NOT_SELECTABLE)
@@ -746,8 +733,8 @@ public class JDatePanel extends JComponent implements DatePanel {
 
                 //Today
                 if (todayCal.get(Calendar.DATE) == cellDayValue
-                        && todayCal.get(Calendar.MONTH) == internalModel.getModel().getValue().get(Calendar.MONTH)
-                        && todayCal.get(Calendar.YEAR) == internalModel.getModel().getValue().get(Calendar.YEAR)) {
+                        && todayCal.get(Calendar.MONTH) == internalModel.getScrollMonth()
+                        && todayCal.get(Calendar.YEAR) == internalModel.getScrollYear()) {
                     label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_TODAY));
                     //Selected
                     if (internalModel.getModel().getSelectionCount() > 0 && selectedCal.get(Calendar.DATE) == cellDayValue) {
@@ -789,37 +776,17 @@ public class JDatePanel extends JComponent implements DatePanel {
             }
 
             if (arg0.getSource() == internalView.getNextMonthButton()) {
-                Calendar oldValue = internalModel.getModel().getValue();
-                Calendar newValue = Calendar.getInstance();
-                newValue.setTime(oldValue.getTime());
-                newValue.add(Calendar.MONTH, 1);
-                internalModel.getModel().replaceSelectedDates(Arrays.asList(newValue));
+                internalModel.setScrollMonth(internalModel.getScrollMonth() + 1);
             } else if (arg0.getSource() == internalView.getPreviousMonthButton()) {
-                Calendar oldValue = internalModel.getModel().getValue();
-                Calendar newValue = Calendar.getInstance();
-                newValue.setTime(oldValue.getTime());
-                newValue.add(Calendar.MONTH, -1);
-                internalModel.getModel().replaceSelectedDates(Arrays.asList(newValue));
+                internalModel.setScrollMonth(internalModel.getScrollMonth() - 1);
             } else if (arg0.getSource() == internalView.getNextYearButton()) {
-                Calendar oldValue = internalModel.getModel().getValue();
-                Calendar newValue = Calendar.getInstance();
-                newValue.setTime(oldValue.getTime());
-                newValue.add(Calendar.YEAR, 1);
-                internalModel.getModel().replaceSelectedDates(Arrays.asList(newValue));
+                internalModel.setScrollYear(internalModel.getScrollYear() + 1);
             } else if (arg0.getSource() == internalView.getPreviousYearButton()) {
-                Calendar oldValue = internalModel.getModel().getValue();
-                Calendar newValue = Calendar.getInstance();
-                newValue.setTime(oldValue.getTime());
-                newValue.add(Calendar.YEAR, -1);
-                internalModel.getModel().replaceSelectedDates(Arrays.asList(newValue));
+                internalModel.setScrollYear(internalModel.getScrollYear() - 1);
             } else {
                 for (int month = 0; month < internalView.getMonthPopupMenuItems().length; month++) {
                     if (arg0.getSource() == internalView.getMonthPopupMenuItems()[month]) {
-                        Calendar oldValue = internalModel.getModel().getValue();
-                        Calendar newValue = Calendar.getInstance();
-                        newValue.setTime(oldValue.getTime());
-                        newValue.set(Calendar.MONTH, month);
-                        internalModel.getModel().replaceSelectedDates(Arrays.asList(newValue));
+                        internalModel.setScrollMonth(month);
                     }
                 }
             }
@@ -849,9 +816,8 @@ public class JDatePanel extends JComponent implements DatePanel {
                     Integer date = (Integer) internalModel.getValueAt(row, col);
 
                     // check constraints
-                    Calendar oldValue = internalModel.getModel().getValue();
                     Calendar newValue = Calendar.getInstance();
-                    newValue.setTime(oldValue.getTime());
+                    newValue.set(internalModel.getScrollYear(), internalModel.getScrollMonth(), internalModel.getScrollDate());
                     newValue.set(Calendar.DATE, date);
                     if (!internalModel.getModel().isDateSelectable(newValue)) {
                         // rollback
@@ -896,21 +862,47 @@ public class JDatePanel extends JComponent implements DatePanel {
      *
      * @author Juan Heyns
      */
-    protected class InternalCalendarModel implements TableModel, SpinnerModel, ChangeListener, DateSelectionModelListener {
+    protected class InternalModel implements TableModel, SpinnerModel, ChangeListener, DateSelectionModelListener {
 
-        private DateSelectionModel model;
+        private SelectionModel model;
+        private Calendar scroll;
         private Set<ChangeListener> spinnerChangeListeners;
         private Set<TableModelListener> tableModelListeners;
 
-        public InternalCalendarModel(DateSelectionModel model) {
+        public InternalModel(SelectionModel model) {
+            this.model = model;
+            this.scroll = Calendar.getInstance();
             this.spinnerChangeListeners = new HashSet<ChangeListener>();
             this.tableModelListeners = new HashSet<TableModelListener>();
-            this.model = model;
             model.addDateSelectionModelListener(this);
         }
 
-        public DateSelectionModel getModel() {
+        public SelectionModel getModel() {
             return model;
+        }
+
+        public int getScrollYear() {
+            return scroll.get(Calendar.YEAR);
+        }
+
+        public void setScrollYear(int year) {
+            scroll.set(Calendar.YEAR, year);
+        }
+
+        public int getScrollMonth() {
+            return scroll.get(Calendar.MONTH);
+        }
+
+        public void setScrollMonth(int month) {
+            scroll.set(Calendar.MONTH, month);
+        }
+
+        public int getScrollDate() {
+            return scroll.get(Calendar.DATE);
+        }
+
+        public void setScrollDate(int date) {
+            scroll.set(Calendar.DATE, date);
         }
 
         /**
@@ -931,14 +923,14 @@ public class JDatePanel extends JComponent implements DatePanel {
          * Part of SpinnerModel, year
          */
         public Object getNextValue() {
-            return Integer.toString(model.getValue().get(Calendar.YEAR) + 1);
+            return Integer.toString(internalModel.getScrollYear() + 1);
         }
 
         /**
          * Part of SpinnerModel, year
          */
         public Object getPreviousValue() {
-            return Integer.toString(model.getValue().get(Calendar.YEAR) - 1);
+            return Integer.toString(internalModel.getScrollYear() - 1);
         }
 
         /**
@@ -946,18 +938,14 @@ public class JDatePanel extends JComponent implements DatePanel {
          */
         public void setValue(Object text) {
             String year = (String) text;
-            Calendar oldValue = model.getValue();
-            Calendar newValue = Calendar.getInstance();
-            newValue.setTime(oldValue.getTime());
-            newValue.set(Calendar.YEAR, Integer.parseInt(year));
-            model.replaceSelectedDates(Arrays.asList(newValue));
+            internalModel.setScrollYear(Integer.parseInt(year));
         }
 
         /**
          * Part of SpinnerModel, year
          */
         public Object getValue() {
-            return Integer.toString(model.getValue().get(Calendar.YEAR));
+            return internalModel.getScrollYear();
         }
 
         /**
@@ -1040,7 +1028,12 @@ public class JDatePanel extends JComponent implements DatePanel {
             int series = columnIndex + rowIndex * 7 + 1;
 
             Calendar firstOfMonth = Calendar.getInstance();
-            firstOfMonth.set(model.getValue().get(Calendar.YEAR), model.getValue().get(Calendar.MONTH), 1);
+            // TODO need to introduce a scrolling model
+            firstOfMonth.set(
+                    model.getValue() != null ? model.getValue().get(Calendar.YEAR) : Calendar.getInstance().get(Calendar.YEAR),
+                    model.getValue() != null ? model.getValue().get(Calendar.MONTH) : Calendar.getInstance().get(Calendar.MONTH),
+                    1
+            );
             int dowForFirst = firstOfMonth.get(Calendar.DAY_OF_WEEK);
             int daysBefore = lookup()[dowForFirst - 1];
 

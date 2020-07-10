@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Default implementation fo the DatePickerModel only supports the GregorianCalendar.
  */
-public class DefaultDateSelectionModel implements DateSelectionModel {
+public abstract class AbstractSelectionModel implements SelectionModel {
 
     private final SortedSet<Calendar> selected;
     private final List<DateSelectionConstraint> constraints;
@@ -16,7 +16,7 @@ public class DefaultDateSelectionModel implements DateSelectionModel {
     /**
      * Create a model without any date selected.
      */
-    public DefaultDateSelectionModel() {
+    public AbstractSelectionModel() {
         selected = new TreeSet<Calendar>();
         constraints = new ArrayList<DateSelectionConstraint>();
         listeners = new ArrayList<DateSelectionModelListener>();
@@ -26,7 +26,7 @@ public class DefaultDateSelectionModel implements DateSelectionModel {
      * Create a model with one date already selected.
      * @param date
      */
-    public DefaultDateSelectionModel(final Calendar date) {
+    public AbstractSelectionModel(final Calendar date) {
         this();
         selected.addAll(Arrays.asList(date));
     }
@@ -35,7 +35,7 @@ public class DefaultDateSelectionModel implements DateSelectionModel {
      * Create a model with multiple selected already selected.
      * @param dates
      */
-    public DefaultDateSelectionModel(final Collection<Calendar> dates) {
+    public AbstractSelectionModel(final Collection<Calendar> dates) {
         this();
         selected.addAll(dates);
     }
