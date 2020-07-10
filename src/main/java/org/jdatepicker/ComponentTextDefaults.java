@@ -157,7 +157,7 @@ public final class ComponentTextDefaults {
         }
         if (text == null && "dow".equals(key.getKind())) {
             Calendar c = Calendar.getInstance();
-            c.set(Calendar.DAY_OF_WEEK, key.getIndex());
+            c.set(Calendar.DAY_OF_WEEK, key.getIndex() + 1);        // In a calendar, the day of the week is ONE INDEXED, while the keys we're using are ZERO INDEXED
             ComponentFormatDefaults defaults = ComponentFormatDefaults.getInstance();
             DateFormat dowFormat = defaults.getFormat(ComponentFormatDefaults.Key.DOW_HEADER);
             text = dowFormat.format(c.getTime());
