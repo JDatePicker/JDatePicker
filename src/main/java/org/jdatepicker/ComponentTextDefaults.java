@@ -63,13 +63,13 @@ public final class ComponentTextDefaults {
         DECEMBER("text.december", "month", 11),
 
         // Days of the week abbreviated where necessary
-        SUN("text.sun", "dow", 0),
-        MON("text.mon", "dow", 1),
-        TUE("text.tue", "dow", 2),
-        WED("text.wed", "dow", 3),
-        THU("text.thu", "dow", 4),
-        FRI("text.fri", "dow", 5),
-        SAT("text.sat", "dow", 6);
+        SUN("text.sun", "dow", Calendar.SUNDAY),
+        MON("text.mon", "dow", Calendar.MONDAY),
+        TUE("text.tue", "dow", Calendar.TUESDAY),
+        WED("text.wed", "dow", Calendar.WEDNESDAY),
+        THU("text.thu", "dow", Calendar.THURSDAY),
+        FRI("text.fri", "dow", Calendar.FRIDAY),
+        SAT("text.sat", "dow", Calendar.SATURDAY);
 
         private String property;
         private String kind;
@@ -143,8 +143,8 @@ public final class ComponentTextDefaults {
      * For months and day of the week use the SimpleDateFormat symbols. In most cases these are the correct ones, but
      * we may want to override it, so if a text is specified then we will not consider the SimpleDateFormat symbols.
      *
-     * @param key
-     * @return
+     * @param key the key to search for
+     * @return the retrieved text
      */
     public String getText(Key key) {
         String text = texts.getProperty(key.getProperty());
