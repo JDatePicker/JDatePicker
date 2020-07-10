@@ -1020,9 +1020,11 @@ public class JDatePanel extends JComponent implements DatePanel {
         /**
          * Part of TableModel, day
          *
-         * previous month (... -1, 0) ->
-         * current month (1...DAYS_IN_MONTH) ->
+         * <pre>
+         * previous month (... -1, 0) -&gt;
+         * current month (1...DAYS_IN_MONTH) -&gt;
          * next month (DAYS_IN_MONTH + 1, DAYS_IN_MONTH + 2, ...)
+         * </pre>
          */
         public Object getValueAt(int rowIndex, int columnIndex) {
             final int series = columnIndex + rowIndex * 7 + 1;

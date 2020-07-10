@@ -143,8 +143,8 @@ public final class ComponentTextDefaults {
      * For months and day of the week use the SimpleDateFormat symbols. In most cases these are the correct ones, but
      * we may want to override it, so if a text is specified then we will not consider the SimpleDateFormat symbols.
      *
-     * @param key
-     * @return
+     * @param key the key to search for
+     * @return the retrieved text
      */
     public String getText(Key key) {
         String text = texts.getProperty(key.getProperty());
