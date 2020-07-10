@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
+  <!--parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
     <version>7</version>
-  </parent>
+  </parent-->
 
   <groupId>org.jdatepicker</groupId>
   <artifactId>jdatepicker</artifactId>
-  <version>1.3.4</version>
+  <version>1.3.4.1</version>
   <packaging>jar</packaging>
   <name>jdatepicker</name>
   <description>JDatePicker and JDatePanel is a Java Swing component. It is designed with the Model View Controller pattern and it uses the Java Calendar object as the model. The component may be used via a popup control or embedded on a panel.</description>
