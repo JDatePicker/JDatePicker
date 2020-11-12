@@ -221,6 +221,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         return internalModel.getModel();
     }
 
+
     public void addDateSelectionConstraint(DateSelectionConstraint constraint) {
         dateConstraints.add(constraint);
     }
