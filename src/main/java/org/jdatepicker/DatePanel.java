@@ -44,6 +44,20 @@ public interface DatePanel extends DateComponent {
     boolean isShowYearButtons();
 
     /**
+     * Sets the visibility of the Year navigation spinner. Defaults to true.
+     *
+     * @param showYearSpinner show the spinner?
+     */
+    void setShowYearSpinner(boolean showYearSpinner);
+
+    /**
+     * Is the year navigation spinner active?
+     *
+     * @return visibility of the year navigation spinner
+     */
+    boolean isShowYearSpinner();
+
+    /**
      * This changes the behaviour of the control to require a double click on
      * actionable clicks. If this is set the ActionEvent will only be fired
      * when double clicked on a date. Defaults to false.
@@ -56,5 +70,19 @@ public interface DatePanel extends DateComponent {
      * @return Is a double click required to fire a ActionEvent.
      */
     boolean isDoubleClickAction();
+
+    /**
+     * Sets the visibility of the Today label. Defaults to true.
+     *
+     * @param showTodayLabel show the Today label?
+     */
+    void setShowTodayLabel(boolean showTodayLabel);
+
+    /**
+     * Is the Today label visible?
+     *
+     * @return the visibility of the Today label
+     */
+    boolean isShowTodayLabel();
 
 }

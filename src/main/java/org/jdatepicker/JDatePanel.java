@@ -180,6 +180,16 @@ public class JDatePanel extends JComponent implements DatePanel {
         return this.showYearButtons;
     }
 
+    @Override
+    public void setShowYearSpinner(boolean showYearSpinner) {
+        internalView.getYearSpinner().setVisible(showYearSpinner);
+    }
+
+    @Override
+    public boolean isShowYearSpinner() {
+        return internalView.getYearSpinner().isVisible();
+    }
+
     /* (non-Javadoc)
      * @see org.jdatepicker.JDatePanel#setDoubleClickAction(boolean)
      */
@@ -192,6 +202,16 @@ public class JDatePanel extends JComponent implements DatePanel {
      */
     public boolean isDoubleClickAction() {
         return doubleClickAction;
+    }
+
+    @Override
+    public void setShowTodayLabel(boolean showTodayLabel) {
+        internalView.getTodayLabel().setVisible(showTodayLabel);
+    }
+
+    @Override
+    public boolean isShowTodayLabel() {
+        return internalView.getTodayLabel().isVisible();
     }
 
     /* (non-Javadoc)
