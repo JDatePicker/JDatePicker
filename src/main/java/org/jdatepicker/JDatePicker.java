@@ -271,6 +271,16 @@ public class JDatePicker extends JComponent implements DatePicker {
         return datePanel.isShowTodayLabel();
     }
 
+    @Override
+    public void setAllowResetDate(boolean allowResetDate) {
+        datePanel.setAllowResetDate(allowResetDate);
+    }
+
+    @Override
+    public boolean isAllowResetDateAllowed() {
+        return datePanel.isAllowResetDateAllowed();
+    }
+
     public boolean isShowYearButtons() {
         return datePanel.isShowYearButtons();
     }

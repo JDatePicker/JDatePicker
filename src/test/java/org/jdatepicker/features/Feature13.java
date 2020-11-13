@@ -27,6 +27,7 @@ public class Feature13 {
         // Create the JDateTimePicker
         DateTimeModel<LocalDateTime> model = new DemoDateTimeModel(LocalDateTime.of(2001, Month.JANUARY, 1, 0, 0, 0));
         final JDateTimePicker dateTimePicker = new JDateTimePicker(model);
+        dateTimePicker.setAllowResetDate(false);
         panel.add(dateTimePicker);
 
         // Add a Display label that updates with the current value.

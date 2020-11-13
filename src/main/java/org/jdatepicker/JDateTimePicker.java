@@ -111,6 +111,16 @@ public class JDateTimePicker extends JComponent implements DateTimePanel {
     }
 
     @Override
+    public void setAllowResetDate(boolean allowResetDate) {
+        datePicker.setAllowResetDate(allowResetDate);
+    }
+
+    @Override
+    public boolean isAllowResetDateAllowed() {
+        return datePicker.isAllowResetDateAllowed();
+    }
+
+    @Override
     public void setEnableMinutes(boolean enableMinutes) {
         timePanel.setEnableMinutes(enableMinutes);
     }

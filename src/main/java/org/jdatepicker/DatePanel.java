@@ -85,4 +85,16 @@ public interface DatePanel extends DateComponent {
      */
     boolean isShowTodayLabel();
 
+    /**
+     * Should a reset of the date be allowed?
+     *
+     * @param allowResetDate allow to reset the date?
+     */
+    void setAllowResetDate(boolean allowResetDate);
+
+    /**
+     * @return is a date reset allowed?
+     */
+    boolean isAllowResetDateAllowed();
+
 }

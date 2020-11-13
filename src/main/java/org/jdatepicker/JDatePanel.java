@@ -214,6 +214,16 @@ public class JDatePanel extends JComponent implements DatePanel {
         return internalView.getTodayLabel().isVisible();
     }
 
+    @Override
+    public void setAllowResetDate(boolean allowResetDate) {
+        internalView.getNoneLabel().setVisible(allowResetDate);
+    }
+
+    @Override
+    public boolean isAllowResetDateAllowed() {
+        return internalView.getNoneLabel().isVisible();
+    }
+
     /* (non-Javadoc)
      * @see org.jdatepicker.JDateComponent#getModel()
      */
