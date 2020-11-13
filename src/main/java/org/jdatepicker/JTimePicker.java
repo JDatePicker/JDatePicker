@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
-public class JTimePanel extends JComponent implements TimePanel {
+public class JTimePicker extends JComponent implements TimePanel {
 
     private boolean isMinutesEnabled;
     private boolean isSecondsEnabled;
@@ -25,7 +25,7 @@ public class JTimePanel extends JComponent implements TimePanel {
     private final InternalController internalController;
     private final InternalModel<?> internalModel;
 
-    public JTimePanel(TimeModel<?> model) {
+    public JTimePicker(TimeModel<?> model) {
         internalModel = new InternalModel<>(model);
         InternalView<?> internalView = new InternalView<>(internalModel);
         internalController = new InternalController(internalModel, internalView);
@@ -34,7 +34,7 @@ public class JTimePanel extends JComponent implements TimePanel {
     }
 
     @Override
-    public TimePanel setEnableMinutes(boolean enableMinutes) {
+    public void setEnableMinutes(boolean enableMinutes) {
         this.isMinutesEnabled = enableMinutes;
         if (enableMinutes) {
             internalController.enableMinutes();
@@ -43,7 +43,6 @@ public class JTimePanel extends JComponent implements TimePanel {
             this.isSecondsEnabled = false;
             this.isNanoSecondsEnabled = false;
         }
-        return this;
     }
 
     @Override
@@ -52,7 +51,7 @@ public class JTimePanel extends JComponent implements TimePanel {
     }
 
     @Override
-    public TimePanel setEnableSeconds(boolean enableSeconds) {
+    public void setEnableSeconds(boolean enableSeconds) {
         this.isSecondsEnabled = enableSeconds;
         if (enableSeconds) {
             internalController.enableSeconds();
@@ -60,7 +59,6 @@ public class JTimePanel extends JComponent implements TimePanel {
             internalController.disableSeconds();
             this.isNanoSecondsEnabled = false;
         }
-        return this;
     }
 
     @Override
@@ -69,14 +67,13 @@ public class JTimePanel extends JComponent implements TimePanel {
     }
 
     @Override
-    public TimePanel setEnableNanoseconds(boolean enableNanoseconds) {
+    public void setEnableNanoseconds(boolean enableNanoseconds) {
         this.isNanoSecondsEnabled = enableNanoseconds;
         if (enableNanoseconds) {
             internalController.enableNanoseconds();
         } else {
             internalController.disableNanoseconds();
         }
-        return this;
     }
 
     @Override
@@ -85,9 +82,8 @@ public class JTimePanel extends JComponent implements TimePanel {
     }
 
     @Override
-    public TimePanel setAlwaysShowSpinner(boolean alwaysShowSpinner) {
+    public void setAlwaysShowSpinner(boolean alwaysShowSpinner) {
         this.isAlwaysShowSpinner = alwaysShowSpinner;
-        return this;
     }
 
     @Override
@@ -162,9 +158,6 @@ public class JTimePanel extends JComponent implements TimePanel {
 
         @Override
         public void setValue(Object o) {
-            if (o == null) {
-                return;
-            }
             T oldValue = timeModel.getValue();
             if (Objects.equals(oldValue, o)) {
                 return;

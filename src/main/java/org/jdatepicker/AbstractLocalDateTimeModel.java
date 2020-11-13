@@ -5,14 +5,17 @@ import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.Vector;
 
-public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
+public abstract class AbstractLocalDateTimeModel<T> implements DateTimeModel<T> {
 
     private final DateModel<LocalDate> dateModel;
     private final TimeModel<LocalTime> timeModel;
 
-    public AbstractDateTimeModel(T initialValue) {
+    public AbstractLocalDateTimeModel(T initialValue) {
         LocalDateTime localDateTime = toLocalDateTime(initialValue);
         this.dateModel = new LocalDateModel(localDateTime.toLocalDate());
         this.timeModel = new LocalTimeModel(localDateTime.toLocalTime());
@@ -79,6 +82,16 @@ public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
     }
 
     @Override
+    public DateModel<?> getDateModel() {
+        return dateModel;
+    }
+
+    @Override
+    public TimeModel<?> getTimeModel() {
+        return timeModel;
+    }
+
+    @Override
     public DateTimeModel<T> setHour(int hour) {
         timeModel.setHour(hour);
         return this;
@@ -119,43 +132,75 @@ public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
 
     @Override
     public DateTimeModel<T> addHours(int numberOfHours) {
-        return toModels(fromModels().plusHours(numberOfHours));
+        LocalDateTime localDateTime = fromModels();
+        if (localDateTime == null) {
+            return this;
+        }
+        return toModels(localDateTime.plusHours(numberOfHours));
     }
 
     @Override
     public DateTimeModel<T> addMinutes(int numberOfMinutes) {
-        return toModels(fromModels().plusMinutes(numberOfMinutes));
+        LocalDateTime localDateTime = fromModels();
+        if (localDateTime == null) {
+            return this;
+        }
+        return toModels(localDateTime.plusMinutes(numberOfMinutes));
     }
 
 
     @Override
     public DateTimeModel<T> addSeconds(int numberOfSeconds) {
-        return toModels(fromModels().plusSeconds(numberOfSeconds));
+        LocalDateTime localDateTime = fromModels();
+        if (localDateTime == null) {
+            return this;
+        }
+        return toModels(localDateTime.plusSeconds(numberOfSeconds));
     }
 
     @Override
     public DateTimeModel<T> addNanoSeconds(int numberOfNanoseconds) {
-        return toModels(fromModels().plusNanos(numberOfNanoseconds));
+        LocalDateTime localDateTime = fromModels();
+        if (localDateTime == null) {
+            return this;
+        }
+        return toModels(localDateTime.plusNanos(numberOfNanoseconds));
     }
 
     @Override
     public T getValuePlusHours(int numberOfHours) {
-        return fromLocalDateTime(fromModels().plusHours(numberOfHours));
+        LocalDateTime localDateTime = fromModels();
+        if (localDateTime == null) {
+            return null;
+        }
+        return fromLocalDateTime(localDateTime.plusHours(numberOfHours));
     }
 
     @Override
     public T getValuePlusMinutes(int numberOfMinutes) {
-        return fromLocalDateTime(fromModels().plusMinutes(numberOfMinutes));
+        LocalDateTime localDateTime = fromModels();
+        if (localDateTime == null) {
+            return null;
+        }
+        return fromLocalDateTime(localDateTime.plusMinutes(numberOfMinutes));
     }
 
     @Override
     public T getValuePlusSeconds(int numberOfSeconds) {
-        return fromLocalDateTime(fromModels().plusSeconds(numberOfSeconds));
+        LocalDateTime localDateTime = fromModels();
+        if (localDateTime == null) {
+            return null;
+        }
+        return fromLocalDateTime(localDateTime.plusSeconds(numberOfSeconds));
     }
 
     @Override
     public T getValuePlusNanoseconds(int numberOfNanoseconds) {
-        return fromLocalDateTime(fromModels().plusNanos(numberOfNanoseconds));
+        LocalDateTime localDateTime = fromModels();
+        if (localDateTime == null) {
+            return null;
+        }
+        return fromLocalDateTime(localDateTime.plusNanos(numberOfNanoseconds));
     }
 
     @Override
@@ -210,32 +255,40 @@ public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
 
     protected abstract T fromLocalDateTime(LocalDateTime from);
 
-    private AbstractDateTimeModel<T> toModels(LocalDateTime localDateTime) {
+    private AbstractLocalDateTimeModel<T> toModels(LocalDateTime localDateTime) {
         dateModel.setValue(localDateTime.toLocalDate());
         timeModel.setValue(localDateTime.toLocalTime());
         return this;
     }
 
     private LocalDateTime fromModels() {
+        if (dateModel.getValue() == null || timeModel.getValue() == null) {
+            return null;
+        }
         return LocalDateTime.of(dateModel.getValue(), timeModel.getValue());
     }
 
 
-    private static class LocalDateModel extends AbstractLocalDateModel<LocalDate> {
+    private static class LocalDateModel extends AbstractDateModel<LocalDate> {
 
         public LocalDateModel(LocalDate initialValue) {
-            super(initialValue);
+            setValue(initialValue);
         }
 
         @Override
-        protected LocalDate toLocalDate(LocalDate from) {
-            return from;
+        protected LocalDate fromCalendar(Calendar from) {
+            TimeZone zone = from.getTimeZone();
+            ZoneId zoneId = null == zone ? ZoneId.systemDefault() : zone.toZoneId();
+            return LocalDateTime.ofInstant(from.toInstant(), zoneId).toLocalDate();
         }
 
         @Override
-        protected LocalDate fromLocalDate(LocalDate from) {
-            return from;
+        protected Calendar toCalendar(LocalDate from) {
+            Calendar c = Calendar.getInstance();
+            c.set(from.getYear(),from.getMonthValue() - 1, from.getDayOfMonth());
+            return c;
         }
+
     }
 
     private static class LocalTimeModel extends AbstractLocalTimeModel<LocalTime> {
@@ -255,4 +308,5 @@ public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
             return from;
         }
     }
+
 }

@@ -3,13 +3,7 @@ package org.jdatepicker.features;
 import org.jdatepicker.*;
 
 import javax.swing.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 /**
  * JDatePicker that selects only days and months, hiding the year.
@@ -28,8 +22,8 @@ public class Feature12 {
         frame.getContentPane().add(panel);
 
         // Create the JTimePanels
-        final JTimePanel timePanel = new JTimePanel(new DemoLocalTimeModel("00:00"));
-        final JTimePanel timePanelWithMinutes = new JTimePanel(new DemoLocalTimeModel("00:00"));
+        final JTimePicker timePanel = new JTimePicker(new DemoTimeModel("00:00"));
+        final JTimePicker timePanelWithMinutes = new JTimePicker(new DemoTimeModel("00:00"));
         timePanelWithMinutes.setEnableMinutes(true);
         panel.add(timePanel);
         panel.add(timePanelWithMinutes);
@@ -38,10 +32,10 @@ public class Feature12 {
         frame.setVisible(true);
     }
 
-    private static class DemoLocalTimeModel extends AbstractLocalTimeModel<String> {
+    private static class DemoTimeModel extends AbstractLocalTimeModel<String> {
 
 
-        public DemoLocalTimeModel(String initialValue) {
+        public DemoTimeModel(String initialValue) {
             super(initialValue);
         }
 

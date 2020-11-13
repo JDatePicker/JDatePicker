@@ -28,7 +28,7 @@ public class SwingPropertyChangeSupport {
 
     public synchronized void fireChangeEvent() {
         for (ChangeListener changeListener : changeListeners) {
-            changeListener.stateChanged(new ChangeEvent(this));
+            changeListener.stateChanged(new ChangeEvent(source));
         }
     }
 

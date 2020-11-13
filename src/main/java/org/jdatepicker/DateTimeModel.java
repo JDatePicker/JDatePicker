@@ -10,6 +10,16 @@ package org.jdatepicker;
 public interface DateTimeModel<T> extends DateModel<T>, TimeModel<T> {
 
     /**
+     * @return the underlying date model
+     */
+    DateModel<?> getDateModel();
+
+    /**
+     * @return the underlying time model
+     */
+    TimeModel<?> getTimeModel();
+
+    /**
      * @param hour between 0 and 23
      */
     DateTimeModel<T> setHour(int hour);
