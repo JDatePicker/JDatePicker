@@ -49,8 +49,8 @@ public interface DateTimeModel<T> extends DateModel<T>, TimeModel<T> {
 
     /**
      * Adds the given number of nanoseconds.
-     * @param numberOfNanoSeconds the number of nanoseconds to add
+     * @param numberOfNanoseconds the number of nanoseconds to add
      */
-    DateTimeModel<T> addNanoSeconds(int numberOfNanoSeconds);
+    DateTimeModel<T> addNanoSeconds(int numberOfNanoseconds);
 
 }

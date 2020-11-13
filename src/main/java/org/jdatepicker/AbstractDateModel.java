@@ -27,17 +27,14 @@
  */
 package org.jdatepicker;
 
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created 18 April 2010
  * Updated 26 April 2010
+ * Updated 12 November 2020
  *
  * @param <T> The type of this model (e.g. java.util.Date, java.util.Calendar)
  * @author Juan Heyns

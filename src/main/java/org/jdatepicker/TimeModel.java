@@ -1,5 +1,7 @@
 package org.jdatepicker;
 
+import java.util.Vector;
+
 /**
  *  Created 12 November 2020
  *  Updated 12 November 2020
@@ -7,7 +9,12 @@ package org.jdatepicker;
  * @param <T> The type of this model (e.g. java.time.LocalTime, java.util.Calendar)
  * @author Marc Jakobi
  */
-public interface TimeModel<T> extends Model<T> {
+public abstract interface TimeModel<T> extends Model<T> {
+
+    /**
+     * @param value the value to set, represented by a String.
+     */
+    void setValueFromString(String value);
 
     /**
      * @return the hour (between 0 and 23)
@@ -42,7 +49,7 @@ public interface TimeModel<T> extends Model<T> {
     /**
      * @return the nanosecond
      */
-    int getNanoSecond();
+    int getNanosecond();
 
     /**
      * @param nanoSecond the nanosecond
@@ -69,7 +76,40 @@ public interface TimeModel<T> extends Model<T> {
 
     /**
      * Adds the given number of nanoseconds.
-     * @param numberOfNanoSeconds the number of nanoseconds to add
+     * @param numberOfNanoseconds the number of nanoseconds to add
      */
-    TimeModel<T> addNanoSeconds(int numberOfNanoSeconds);
+    TimeModel<T> addNanoSeconds(int numberOfNanoseconds);
+
+    /**
+     * Adds the given number of hours.
+     * @param numberOfHours the number of hours to add
+     * @return a copy of the value with the number of hours added
+     */
+    T getValuePlusHours(int numberOfHours);
+
+    /**
+     * Adds the given number of minutes.
+     * @param numberOfMinutes the number of minutes to add
+     * @return a copy of the value with the number of minutes added
+     */
+    T getValuePlusMinutes(int numberOfMinutes);
+
+    /**
+     * Adds the given number of seconds.
+     * @param numberOfSeconds the number of seconds to add
+     * @return a copy of the value with the number of seconds added
+     */
+    T getValuePlusSeconds(int numberOfSeconds);
+
+    /**
+     * Adds the given number of nanoseconds.
+     * @param numberOfNanoseconds the number of nanoseconds to add
+     * @return a copy of the value with the number of nanoseconds added
+     */
+    T getValuePlusNanoseconds(int numberOfNanoseconds);
+
+    /**
+     * @return a collection containing all the full hours
+     */
+    Vector<?> getFullHours();
 }

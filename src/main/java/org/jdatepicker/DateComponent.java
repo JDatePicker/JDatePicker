@@ -43,10 +43,11 @@ import java.util.Set;
  * Created 16 April 2010
  * Updated 18 April 2010
  * Updated 10 August 2012
+ * Updated 12 November 2020
  *
  * @author Juan Heyns
  */
-public interface DateComponent {
+public interface DateComponent extends TemporalComponent {
 
     /**
      * Returns the value of the currently represented date in the component.
@@ -58,25 +59,8 @@ public interface DateComponent {
      *
      * @return A new Model
      */
+    @Override
     DateModel<?> getModel();
-
-    /**
-     * Adds an ActionListener. The actionListener is notified when a user clicks
-     * on a date. Deliberately selecting a date will trigger this event, not
-     * scrolling which fires a ChangeEvent for ChangeListeners.
-     *
-     * @param actionListener The listener to add
-     */
-    void addActionListener(ActionListener actionListener);
-
-    /**
-     * Removes the ActionListener. The actionListener is notified when a user
-     * clicks on a date.
-     *
-     * @param actionListener The listener to remove
-     */
-    void removeActionListener(ActionListener actionListener);
-
 
     /**
      * Adds an constraint on selectable dates.

@@ -3,6 +3,9 @@ package org.jdatepicker;
 import javax.swing.event.ChangeListener;
 import java.beans.PropertyChangeListener;
 import java.time.LocalTime;
+import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  *  Created 12 November 2020
@@ -27,6 +30,11 @@ public abstract class AbstractLocalTimeModel<T> implements TimeModel<T> {
 
     public AbstractLocalTimeModel(T initialValue) {
         this.timeValue = toLocalTime(initialValue);
+    }
+
+    @Override
+    public void setValueFromString(String value) {
+        setValue(fromLocalTime(LocalTime.parse(value)));
     }
 
     @Override
@@ -78,17 +86,17 @@ public abstract class AbstractLocalTimeModel<T> implements TimeModel<T> {
     }
 
     @Override
-    public int getNanoSecond() {
+    public int getNanosecond() {
         return this.timeValue.getNano();
     }
 
     @Override
     public TimeModel<T> setNanoSecond(int nanoSecond) {
-        int oldNanoSecond = getNanoSecond();
+        int oldNanoSecond = getNanosecond();
         T oldValue = getValue();
         this.timeValue = this.timeValue.withNano(nanoSecond);
         fireChangeEvent();
-        firePropertyChange(PROPERTY_NANOSECOND, oldNanoSecond, getNanoSecond());
+        firePropertyChange(PROPERTY_NANOSECOND, oldNanoSecond, getNanosecond());
         firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
         return this;
     }
@@ -137,8 +145,8 @@ public abstract class AbstractLocalTimeModel<T> implements TimeModel<T> {
     }
 
     @Override
-    public TimeModel<T> addNanoSeconds(int numberOfNanoSeconds) {
-        if (numberOfNanoSeconds == 0) {
+    public TimeModel<T> addNanoSeconds(int numberOfNanoseconds) {
+        if (numberOfNanoseconds == 0) {
             return this;
         }
         int oldHour = this.timeValue.getHour();
@@ -146,21 +154,46 @@ public abstract class AbstractLocalTimeModel<T> implements TimeModel<T> {
         int oldSecond = this.timeValue.getSecond();
         int oldNanoSecond = this.timeValue.getNano();
         T oldValue = getValue();
-        this.timeValue = this.timeValue.plusNanos(numberOfNanoSeconds);
+        this.timeValue = this.timeValue.plusNanos(numberOfNanoseconds);
         fireChangeEvent();
         firePropertyChange(PROPERTY_HOUR, oldHour, getHour());
         firePropertyChange(PROPERTY_MINUTE, oldMinute, getMinute());
         firePropertyChange(PROPERTY_SECOND, oldSecond, getSecond());
-        firePropertyChange(PROPERTY_NANOSECOND, oldNanoSecond, getNanoSecond());
+        firePropertyChange(PROPERTY_NANOSECOND, oldNanoSecond, getNanosecond());
         firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
         return this;
     }
 
     @Override
+    public T getValuePlusHours(int numberOfHours) {
+        return fromLocalTime(timeValue.plusHours(numberOfHours));
+    }
+
+    @Override
+    public T getValuePlusMinutes(int numberOfMinutes) {
+        return fromLocalTime(timeValue.plusMinutes(numberOfMinutes));
+    }
+
+    @Override
+    public T getValuePlusSeconds(int numberOfSeconds) {
+        return fromLocalTime(timeValue.plusSeconds(numberOfSeconds));
+    }
+
+    @Override
+    public T getValuePlusNanoseconds(int numberOfNanoseconds) {
+        return fromLocalTime(timeValue.plusNanos(numberOfNanoseconds));
+    }
+
+    @Override
+    public Vector<T> getFullHours() {
+        return IntStream.range(0, 24)
+                .mapToObj(hour -> LocalTime.of(hour, 0, 0))
+                .map(this::fromLocalTime)
+                .collect(Collectors.toCollection(Vector::new));
+    }
+
+    @Override
     public T getValue() {
-        if (!isSelected()) {
-            return null;
-        }
         return fromLocalTime(this.timeValue);
     }
 
@@ -169,7 +202,7 @@ public abstract class AbstractLocalTimeModel<T> implements TimeModel<T> {
         int oldHour = getHour();
         int oldMinute = getMinute();
         int oldSecond = getSecond();
-        int oldNanoSecond = getNanoSecond();
+        int oldNanoSecond = getNanosecond();
         T oldValue = getValue();
         boolean oldSelected = isSelected();
         if (null == value) {
@@ -182,7 +215,7 @@ public abstract class AbstractLocalTimeModel<T> implements TimeModel<T> {
         firePropertyChange(PROPERTY_HOUR, oldHour, getHour());
         firePropertyChange(PROPERTY_MINUTE, oldMinute, getMinute());
         firePropertyChange(PROPERTY_SECOND, oldSecond, getSecond());
-        firePropertyChange(PROPERTY_NANOSECOND, oldNanoSecond, getNanoSecond());
+        firePropertyChange(PROPERTY_NANOSECOND, oldNanoSecond, getNanosecond());
         firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
         firePropertyChange(PROPERTY_SELECTED, oldSelected, isSelected());
     }
@@ -214,10 +247,12 @@ public abstract class AbstractLocalTimeModel<T> implements TimeModel<T> {
         propertyChangeSupport.fireChangeEvent();
     }
 
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }

@@ -1,6 +1,7 @@
 package org.jdatepicker;
 
 import javax.swing.event.ChangeListener;
+import java.beans.PropertyChangeListener;
 
 public interface Model<T> {
 
@@ -48,4 +49,24 @@ public interface Model<T> {
      */
     void removeChangeListener(ChangeListener changeListener);
 
+    /**
+     * Adds a PropertyChangeListener to the list of bean listeners.
+     * The listener is registered for all bound properties of the target bean.
+     *
+     * @param listener The PropertyChangeListener to be added
+     * @see #removePropertyChangeListener(PropertyChangeListener)
+     */
+    void addPropertyChangeListener(PropertyChangeListener listener);
+
+
+    /**
+     * Removes a PropertyChangeListener from the list of bean listeners.
+     * This method should be used to remove PropertyChangeListeners that
+     * were registered for all bound properties of the target bean.
+     *
+     * @param listener The PropertyChangeListener to be removed
+     * @see #addPropertyChangeListener(PropertyChangeListener)
+     */
+    void removePropertyChangeListener(PropertyChangeListener listener);
+    
 }

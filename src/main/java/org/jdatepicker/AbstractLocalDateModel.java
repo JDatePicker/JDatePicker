@@ -58,27 +58,31 @@ public abstract class AbstractLocalDateModel<T> implements DateModel<T> {
         dateTimeValue = toLocalDate(initialValue);
     }
 
-    public synchronized void addChangeListener(ChangeListener changeListener) {
+    @Override
+    public void addChangeListener(ChangeListener changeListener) {
         propertyChangeSupport.addChangeListener(changeListener);
     }
 
-    public synchronized void removeChangeListener(ChangeListener changeListener) {
+    @Override
+    public void removeChangeListener(ChangeListener changeListener) {
         propertyChangeSupport.removeChangeListener(changeListener);
     }
 
-    protected synchronized void fireChangeEvent() {
+    protected void fireChangeEvent() {
         propertyChangeSupport.fireChangeEvent();
     }
 
-    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
-    public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
-    protected synchronized void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }
 

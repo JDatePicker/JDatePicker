@@ -1,9 +1,11 @@
 package org.jdatepicker;
 
 import javax.swing.event.ChangeListener;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Vector;
 
 public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
 
@@ -67,6 +69,11 @@ public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
     }
 
     @Override
+    public void setValueFromString(String value) {
+        setValue(fromLocalDateTime(LocalDateTime.parse(value)));
+    }
+
+    @Override
     public int getHour() {
         return timeModel.getHour();
     }
@@ -100,8 +107,8 @@ public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
     }
 
     @Override
-    public int getNanoSecond() {
-        return timeModel.getNanoSecond();
+    public int getNanosecond() {
+        return timeModel.getNanosecond();
     }
 
     @Override
@@ -127,8 +134,33 @@ public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
     }
 
     @Override
-    public DateTimeModel<T> addNanoSeconds(int numberOfNanoSeconds) {
-        return toModels(fromModels().plusNanos(numberOfNanoSeconds));
+    public DateTimeModel<T> addNanoSeconds(int numberOfNanoseconds) {
+        return toModels(fromModels().plusNanos(numberOfNanoseconds));
+    }
+
+    @Override
+    public T getValuePlusHours(int numberOfHours) {
+        return fromLocalDateTime(fromModels().plusHours(numberOfHours));
+    }
+
+    @Override
+    public T getValuePlusMinutes(int numberOfMinutes) {
+        return fromLocalDateTime(fromModels().plusMinutes(numberOfMinutes));
+    }
+
+    @Override
+    public T getValuePlusSeconds(int numberOfSeconds) {
+        return fromLocalDateTime(fromModels().plusSeconds(numberOfSeconds));
+    }
+
+    @Override
+    public T getValuePlusNanoseconds(int numberOfNanoseconds) {
+        return fromLocalDateTime(fromModels().plusNanos(numberOfNanoseconds));
+    }
+
+    @Override
+    public Vector<?> getFullHours() {
+        return this.timeModel.getFullHours();
     }
 
     @Override
@@ -163,7 +195,17 @@ public abstract class AbstractDateTimeModel<T> implements DateTimeModel<T> {
         this.dateModel.removeChangeListener(changeListener);
         this.timeModel.removeChangeListener(changeListener);
     }
-    
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+
+    }
+
     protected abstract LocalDateTime toLocalDateTime(T from);
 
     protected abstract T fromLocalDateTime(LocalDateTime from);
