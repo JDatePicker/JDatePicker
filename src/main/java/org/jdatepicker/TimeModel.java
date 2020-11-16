@@ -9,7 +9,7 @@ import java.util.Vector;
  * @param <T> The type of this model (e.g. java.time.LocalTime, java.util.Calendar)
  * @author Marc Jakobi
  */
-public abstract interface TimeModel<T> extends Model<T> {
+public interface TimeModel<T> extends Model<T> {
 
     /**
      * @param value the value to set, represented by a String.
