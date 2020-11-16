@@ -124,7 +124,7 @@ public class JTimePicker extends JComponent implements TimePanel {
     }
 
     @SuppressWarnings("unchecked")
-    private static class InternalModel<T> implements SpinnerModel, ComboBoxModel<T>, ChangeListener {
+    private static class InternalModel<T> extends DefaultComboBoxModel<T> implements SpinnerModel, ChangeListener {
 
         private final Set<ActionListener> actionListeners = new HashSet<>();
         private final Set<ChangeListener> spinnerChangeListeners = new HashSet<>();
@@ -257,16 +257,9 @@ public class JTimePicker extends JComponent implements TimePanel {
         }
 
         @Override
-        public void addListDataListener(ListDataListener listDataListener) {
-        }
-
-        @Override
-        public void removeListDataListener(ListDataListener listDataListener) {
-        }
-
-        @Override
         public void stateChanged(ChangeEvent changeEvent) {
             spinnerChangeListeners.forEach(it -> it.stateChanged(changeEvent));
+            fireContentsChanged(this, -1, -1);
         }
 
         public enum ModelResolution {
