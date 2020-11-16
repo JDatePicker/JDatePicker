@@ -1,13 +1,12 @@
 package org.jdatepicker;
 
+import org.jdatepicker.factory.ModelFactory;
+
 import javax.swing.event.ChangeListener;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.Vector;
 
 public abstract class AbstractLocalDateTimeModel<T> implements DateTimeModel<T> {
@@ -17,8 +16,8 @@ public abstract class AbstractLocalDateTimeModel<T> implements DateTimeModel<T> 
 
     public AbstractLocalDateTimeModel(T initialValue) {
         LocalDateTime localDateTime = toLocalDateTime(initialValue);
-        this.dateModel = new LocalDateModel(localDateTime.toLocalDate());
-        this.timeModel = new LocalTimeModel(localDateTime.toLocalTime());
+        this.dateModel = ModelFactory.createLocalDateModel(localDateTime.toLocalDate());
+        this.timeModel = ModelFactory.createLocalTimeModel(localDateTime.toLocalTime());
     }
 
     @Override
@@ -266,47 +265,6 @@ public abstract class AbstractLocalDateTimeModel<T> implements DateTimeModel<T> 
             return null;
         }
         return LocalDateTime.of(dateModel.getValue(), timeModel.getValue());
-    }
-
-
-    private static class LocalDateModel extends AbstractDateModel<LocalDate> {
-
-        public LocalDateModel(LocalDate initialValue) {
-            setValue(initialValue);
-        }
-
-        @Override
-        protected LocalDate fromCalendar(Calendar from) {
-            TimeZone zone = from.getTimeZone();
-            ZoneId zoneId = null == zone ? ZoneId.systemDefault() : zone.toZoneId();
-            return LocalDateTime.ofInstant(from.toInstant(), zoneId).toLocalDate();
-        }
-
-        @Override
-        protected Calendar toCalendar(LocalDate from) {
-            Calendar c = Calendar.getInstance();
-            c.set(from.getYear(),from.getMonthValue() - 1, from.getDayOfMonth());
-            return c;
-        }
-
-    }
-
-    private static class LocalTimeModel extends AbstractLocalTimeModel<LocalTime> {
-
-
-        public LocalTimeModel(LocalTime initialValue) {
-            super(initialValue);
-        }
-
-        @Override
-        protected LocalTime toLocalTime(LocalTime from) {
-            return from;
-        }
-
-        @Override
-        protected LocalTime fromLocalTime(LocalTime from) {
-            return from;
-        }
     }
 
 }
