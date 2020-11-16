@@ -24,10 +24,11 @@ public class JTimePicker extends JComponent implements TimePanel {
 
     private final InternalController internalController;
     private final InternalModel<?> internalModel;
+    private final InternalView<?> internalView;
 
     public JTimePicker(TimeModel<?> model) {
         internalModel = new InternalModel<>(model);
-        InternalView<?> internalView = new InternalView<>(internalModel);
+        internalView = new InternalView<>(internalModel);
         internalController = new InternalController(internalModel, internalView);
         setLayout(new GridLayout(1, 1));
         add(internalView);
@@ -114,6 +115,12 @@ public class JTimePicker extends JComponent implements TimePanel {
     @Override
     public void removeTimeSelectionConstraint(TimeSelectionConstraint constraint) {
         internalModel.removeTimeSelectionConstraint(constraint);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        internalView.setEnabled(enabled);
+        super.setEnabled(enabled);
     }
 
     @SuppressWarnings("unchecked")
@@ -268,17 +275,21 @@ public class JTimePicker extends JComponent implements TimePanel {
             Second,
             Nano
         }
+
+
     }
 
     private static class InternalView<T> extends JPanel {
 
         private static final String COMBOBOX_SELECTOR_KEY = "combobox-selector";
         private static final String SPINNER_SELECTOR_KEY = "spinner-selector";
+        private final JSpinner timeSpinner;
+        private final JComboBox<T> timeComboBox;
 
         public InternalView(InternalModel<T> model) {
-            JSpinner timeSpinner = new JSpinner();
+            timeSpinner = new JSpinner();
             timeSpinner.setModel(model);
-            JComboBox<T> timeComboBox = new JComboBox<>();
+            timeComboBox = new JComboBox<>();
             timeComboBox.setModel(model);
             setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
             setLayout(new CardLayout());
@@ -296,6 +307,13 @@ public class JTimePicker extends JComponent implements TimePanel {
 
         private void show(String key) {
             ((CardLayout) getLayout()).show(this, key);
+        }
+
+        @Override
+        public void setEnabled(boolean enabled) {
+            timeSpinner.setEnabled(enabled);
+            timeComboBox.setEnabled(enabled);
+            super.setEnabled(enabled);
         }
     }
 

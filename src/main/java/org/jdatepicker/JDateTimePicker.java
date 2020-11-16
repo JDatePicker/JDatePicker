@@ -41,6 +41,28 @@ public class JDateTimePicker extends JComponent implements DateTimePanel {
     }
 
     @Override
+    public void setShowTimePicker(boolean showTimePanel) {
+        timePanel.setVisible(showTimePanel);
+        revalidate();
+        repaint(getVisibleRect());
+    }
+
+    @Override
+    public boolean isShowTimePicker() {
+        return timePanel.isVisible();
+    }
+
+    @Override
+    public void setShowDatePicker(boolean showDatePicker) {
+        datePicker.setVisible(showDatePicker);
+    }
+
+    @Override
+    public boolean isShowDatePicker() {
+        return datePicker.isVisible();
+    }
+
+    @Override
     public void addTimeSelectionConstraint(TimeSelectionConstraint constraint) {
         timePanel.addTimeSelectionConstraint(constraint);
     }
@@ -158,5 +180,12 @@ public class JDateTimePicker extends JComponent implements DateTimePanel {
     @Override
     public boolean isAlwaysShowSpinner() {
         return timePanel.isAlwaysShowSpinner();
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        datePicker.setEnabled(enabled);
+        timePanel.setEnabled(enabled);
+        super.setEnabled(enabled);
     }
 }
