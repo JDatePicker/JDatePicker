@@ -242,12 +242,14 @@ public abstract class AbstractLocalDateTimeModel<T> implements DateTimeModel<T> 
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-
+        this.dateModel.addPropertyChangeListener(listener);
+        this.timeModel.addPropertyChangeListener(listener);
     }
 
     @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
-
+        this.dateModel.removePropertyChangeListener(listener);
+        this.timeModel.removePropertyChangeListener(listener);
     }
 
     protected abstract LocalDateTime toLocalDateTime(T from);
