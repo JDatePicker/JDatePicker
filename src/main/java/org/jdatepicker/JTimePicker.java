@@ -284,7 +284,7 @@ public class JTimePicker extends JComponent implements TimePanel {
             timeSpinner.setModel(model);
             timeComboBox = new JComboBox<>();
             timeComboBox.setModel(model);
-            setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+            setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
             setLayout(new CardLayout());
             add(timeComboBox, COMBOBOX_SELECTOR_KEY);
             add(timeSpinner, SPINNER_SELECTOR_KEY);
