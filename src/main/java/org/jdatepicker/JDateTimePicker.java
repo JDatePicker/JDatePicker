@@ -11,28 +11,28 @@ import java.util.Set;
 public class JDateTimePicker extends JComponent implements DateTimePanel {
 
     private final JDatePicker datePicker;
-    private final JTimePicker timePanel;
+    private final JTimePicker timePicker;
     private final DateTimeModel<?> model;
 
     public JDateTimePicker(DateTimeModel<?> model) {
         this.model = model;
         this.datePicker = new JDatePicker(model.getDateModel());
-        this.timePanel = new JTimePicker(model.getTimeModel());
-        setLayout(new FlowLayout());
-        add(datePicker);
-        add(timePanel);
+        this.timePicker = new JTimePicker(model.getTimeModel());
+        setLayout(new BorderLayout());
+        add(datePicker, BorderLayout.CENTER);
+        add(timePicker, BorderLayout.EAST);
     }
 
     @Override
     public void addActionListener(ActionListener actionListener) {
         datePicker.addActionListener(actionListener);
-        timePanel.addActionListener(actionListener);
+        timePicker.addActionListener(actionListener);
     }
 
     @Override
     public void removeActionListener(ActionListener actionListener) {
         datePicker.removeActionListener(actionListener);
-        timePanel.removeActionListener(actionListener);
+        timePicker.removeActionListener(actionListener);
     }
 
     @Override
@@ -42,14 +42,14 @@ public class JDateTimePicker extends JComponent implements DateTimePanel {
 
     @Override
     public void setShowTimePicker(boolean showTimePanel) {
-        timePanel.setVisible(showTimePanel);
+        timePicker.setVisible(showTimePanel);
         revalidate();
         repaint(getVisibleRect());
     }
 
     @Override
     public boolean isShowTimePicker() {
-        return timePanel.isVisible();
+        return timePicker.isVisible();
     }
 
     @Override
@@ -64,12 +64,12 @@ public class JDateTimePicker extends JComponent implements DateTimePanel {
 
     @Override
     public void addTimeSelectionConstraint(TimeSelectionConstraint constraint) {
-        timePanel.addTimeSelectionConstraint(constraint);
+        timePicker.addTimeSelectionConstraint(constraint);
     }
 
     @Override
     public void removeTimeSelectionConstraint(TimeSelectionConstraint constraint) {
-        timePanel.removeTimeSelectionConstraint(constraint);
+        timePicker.removeTimeSelectionConstraint(constraint);
     }
 
     @Override
@@ -144,48 +144,48 @@ public class JDateTimePicker extends JComponent implements DateTimePanel {
 
     @Override
     public void setEnableMinutes(boolean enableMinutes) {
-        timePanel.setEnableMinutes(enableMinutes);
+        timePicker.setEnableMinutes(enableMinutes);
     }
 
     @Override
     public boolean isMinutesEnabled() {
-        return timePanel.isMinutesEnabled();
+        return timePicker.isMinutesEnabled();
     }
 
     @Override
     public void setEnableSeconds(boolean enableSeconds) {
-        timePanel.setEnableSeconds(enableSeconds);
+        timePicker.setEnableSeconds(enableSeconds);
     }
 
     @Override
     public boolean isSecondsEnabled() {
-        return timePanel.isSecondsEnabled();
+        return timePicker.isSecondsEnabled();
     }
 
     @Override
     public void setEnableNanoseconds(boolean enableNanoSeconds) {
-        timePanel.setEnableNanoseconds(enableNanoSeconds);
+        timePicker.setEnableNanoseconds(enableNanoSeconds);
     }
 
     @Override
     public boolean isNanoSecondsEnabled() {
-        return timePanel.isNanoSecondsEnabled();
+        return timePicker.isNanoSecondsEnabled();
     }
 
     @Override
     public void setAlwaysShowSpinner(boolean alwaysShowSpinner) {
-        timePanel.setAlwaysShowSpinner(alwaysShowSpinner);
+        timePicker.setAlwaysShowSpinner(alwaysShowSpinner);
     }
 
     @Override
     public boolean isAlwaysShowSpinner() {
-        return timePanel.isAlwaysShowSpinner();
+        return timePicker.isAlwaysShowSpinner();
     }
 
     @Override
     public void setEnabled(boolean enabled) {
         datePicker.setEnabled(enabled);
-        timePanel.setEnabled(enabled);
+        timePicker.setEnabled(enabled);
         super.setEnabled(enabled);
     }
 }
