@@ -27,17 +27,14 @@
  */
 package org.jdatepicker;
 
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created 18 April 2010
  * Updated 26 April 2010
+ * Updated 12 November 2020
  *
  * @param <T> The type of this model (e.g. java.util.Date, java.util.Calendar)
  * @author Juan Heyns
@@ -52,46 +49,35 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
 
     private boolean selected;
     private Calendar calendarValue;
-    private Set<ChangeListener> changeListeners;
-    private Set<PropertyChangeListener> propertyChangeListeners;
+    private final SwingPropertyChangeSupport propertyChangeSupport = new SwingPropertyChangeSupport(this);
 
     protected AbstractDateModel() {
-        changeListeners = new HashSet<ChangeListener>();
-        propertyChangeListeners = new HashSet<PropertyChangeListener>();
         selected = false;
         calendarValue = Calendar.getInstance();
     }
 
     public synchronized void addChangeListener(ChangeListener changeListener) {
-        changeListeners.add(changeListener);
+        propertyChangeSupport.addChangeListener(changeListener);
     }
 
     public synchronized void removeChangeListener(ChangeListener changeListener) {
-        changeListeners.remove(changeListener);
+        propertyChangeSupport.removeChangeListener(changeListener);
     }
 
     protected synchronized void fireChangeEvent() {
-        for (ChangeListener changeListener : changeListeners) {
-            changeListener.stateChanged(new ChangeEvent(this));
-        }
+        propertyChangeSupport.fireChangeEvent();
     }
 
     public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeListeners.add(listener);
+        propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
     public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeListeners.remove(listener);
+        propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
     protected synchronized void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        if (oldValue != null && newValue != null && oldValue.equals(newValue)) {
-            return;
-        }
-
-        for (PropertyChangeListener listener : propertyChangeListeners) {
-            listener.propertyChange(new PropertyChangeEvent(this, propertyName, oldValue, newValue));
-        }
+        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }
 
     public int getDay() {
