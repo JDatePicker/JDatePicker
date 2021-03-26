@@ -273,6 +273,10 @@ public class JDatePicker extends JComponent implements DatePicker {
         datePanel.setShowYearButtons(showYearButtons);
     }
 
+    public void setTodayMarkingBorder (Color color){
+        datePanel.setTodayMarkingBorder(color);
+    }
+    
     private void setTextFieldValue(JFormattedTextField textField, int year, int month, int day, boolean isSelected) {
         if (!isSelected) {
             textField.setValue(null);

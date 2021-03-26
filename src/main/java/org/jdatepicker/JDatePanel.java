@@ -42,6 +42,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
 import java.util.*;
+import javax.swing.border.Border;
+import org.jdatepicker.ComponentColorDefaults.Key;
 
 /**
  * Created on 26 Mar 2004
@@ -72,6 +74,8 @@ public class JDatePanel extends JComponent implements DatePanel {
     private InternalCalendarModel internalModel;
     private InternalController internalController;
     private InternalView internalView;
+    
+    private Border todayMarkingBorder;
 
     /**
      * Creates a JDatePanel with a default calendar model.
@@ -178,6 +182,21 @@ public class JDatePanel extends JComponent implements DatePanel {
      */
     public boolean isShowYearButtons() {
         return this.showYearButtons;
+    }
+
+    /* (non-Javadoc)
+     * @see org.jdatepicker.DatePanel#setTodayMarkingBorder(color)
+     */
+    public void setTodayMarkingBorder (Color color){
+        this.todayMarkingBorder = BorderFactory.createLineBorder(color, 2);
+
+        ComponentColorDefaults colorDefaults = ComponentColorDefaults.getInstance();
+        Color everyDayColor = colorDefaults
+                .getColor(Key.FG_GRID_THIS_MONTH);
+        Color everyDaySelectedColor = colorDefaults
+                .getColor(Key.FG_GRID_SELECTED);
+        colorDefaults.setColor(Key.FG_GRID_TODAY, everyDayColor);
+        colorDefaults.setColor(Key.FG_GRID_TODAY_SELECTED, everyDaySelectedColor);
     }
 
     /* (non-Javadoc)
@@ -790,6 +809,10 @@ public class JDatePanel extends JComponent implements DatePanel {
                         && todayCal.get(Calendar.MONTH) == internalModel.getModel().getMonth()
                         && todayCal.get(Calendar.YEAR) == internalModel.getModel().getYear()) {
                     label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_TODAY));
+                    
+                    //set border (null allowed):
+                    label.setBorder(todayMarkingBorder);
+                    
                     //Selected
                     if (internalModel.getModel().isSelected() && selectedCal.get(Calendar.DATE) == cellDayValue) {
                         label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED));
