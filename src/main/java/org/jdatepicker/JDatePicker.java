@@ -265,6 +265,10 @@ public class JDatePicker extends JComponent implements DatePicker {
         return datePanel.isShowYearButtons();
     }
 
+    public boolean isShowTodayBorder() {
+        return datePanel.isShowTodayBorder();
+    }
+
     public void setDoubleClickAction(boolean doubleClickAction) {
         datePanel.setDoubleClickAction(doubleClickAction);
     }
@@ -273,8 +277,8 @@ public class JDatePicker extends JComponent implements DatePicker {
         datePanel.setShowYearButtons(showYearButtons);
     }
 
-    public void setTodayMarkingBorder (Color color){
-        datePanel.setTodayMarkingBorder(color);
+    public void setStaticTodayBorder (boolean showTodayBorder){
+        datePanel.setStaticTodayBorder(showTodayBorder);
     }
     
     private void setTextFieldValue(JFormattedTextField textField, int year, int month, int day, boolean isSelected) {

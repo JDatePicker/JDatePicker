@@ -27,8 +27,6 @@
  */
 package org.jdatepicker;
 
-import java.awt.Color;
-
 public interface DatePanel extends DateComponent {
 
     /**
@@ -60,10 +58,16 @@ public interface DatePanel extends DateComponent {
     boolean isDoubleClickAction();
     
     /**
-     * @param color sets the border around the number of today with
-     * the specified color. Disables red color for number of today.
-     * Default is no border.
+     * Sets the visability of a red border that marks the number of 
+     * today instead of a colored number. Defaults to false.
+     * 
+     * @param showTodayBorder show the border?
      */
-    public void setTodayMarkingBorder (Color color);
+    void setStaticTodayBorder (boolean showTodayBorder);
+    
+    /**
+     * @return is a border shown to mark today.
+     */
+    boolean isShowTodayBorder ();
 
 }

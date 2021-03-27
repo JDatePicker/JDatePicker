@@ -42,8 +42,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
 import java.util.*;
-import javax.swing.border.Border;
-import org.jdatepicker.ComponentColorDefaults.Key;
 
 /**
  * Created on 26 Mar 2004
@@ -69,14 +67,13 @@ public class JDatePanel extends JComponent implements DatePanel {
     private Set<DateSelectionConstraint> dateConstraints;
 
     private boolean showYearButtons;
+    private static boolean showTodayBorder;
     private boolean doubleClickAction;
 
     private InternalCalendarModel internalModel;
     private InternalController internalController;
     private InternalView internalView;
     
-    private Border todayMarkingBorder;
-
     /**
      * Creates a JDatePanel with a default calendar model.
      */
@@ -185,18 +182,18 @@ public class JDatePanel extends JComponent implements DatePanel {
     }
 
     /* (non-Javadoc)
-     * @see org.jdatepicker.DatePanel#setTodayMarkingBorder(color)
+     * @see org.jdatepicker.JDatePanel#setStaticTodayBorder(boolean)
      */
-    public void setTodayMarkingBorder (Color color){
-        this.todayMarkingBorder = BorderFactory.createLineBorder(color, 2);
+    public void setStaticTodayBorder(boolean showTodayBorder){
+        JDatePanel.showTodayBorder = showTodayBorder;
+        internalView.updateShowTodayBorder();
+    }
 
-        ComponentColorDefaults colorDefaults = ComponentColorDefaults.getInstance();
-        Color everyDayColor = colorDefaults
-                .getColor(Key.FG_GRID_THIS_MONTH);
-        Color everyDaySelectedColor = colorDefaults
-                .getColor(Key.FG_GRID_SELECTED);
-        colorDefaults.setColor(Key.FG_GRID_TODAY, everyDayColor);
-        colorDefaults.setColor(Key.FG_GRID_TODAY_SELECTED, everyDaySelectedColor);
+    /* (non-Javadoc)
+     * @see org.jdatepicker.JDatePanel#isShowTodayBorder()
+     */
+    public boolean isShowTodayBorder(){
+        return JDatePanel.showTodayBorder;
     }
 
     /* (non-Javadoc)
@@ -321,6 +318,23 @@ public class JDatePanel extends JComponent implements DatePanel {
             }
         }
 
+        private void updateShowTodayBorder() {
+            ComponentColorDefaults colorDefaults = ComponentColorDefaults.getInstance();
+            //set today's number color statically, depending on visibility of a surrounding border
+            if (JDatePanel.showTodayBorder) {
+                Color everyDayColor = getColors()
+                        .getColor(ComponentColorDefaults.Key.FG_GRID_THIS_MONTH);
+                Color everyDaySelectedColor = getColors()
+                        .getColor(ComponentColorDefaults.Key.FG_GRID_SELECTED);
+
+                colorDefaults.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY, everyDayColor);
+                colorDefaults.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED, everyDaySelectedColor);
+            } else {
+                colorDefaults.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY);
+                colorDefaults.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED);
+            }
+        }
+
         /**
          * Update the UI of the monthLabel
          */
@@ -428,7 +442,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         }
 
         /**
-         * This method initializes todayLabel
+         * This method initializes noneLabel
          *
          * @return javax.swing.JLabel
          */
@@ -808,15 +822,23 @@ public class JDatePanel extends JComponent implements DatePanel {
                 if (todayCal.get(Calendar.DATE) == cellDayValue
                         && todayCal.get(Calendar.MONTH) == internalModel.getModel().getMonth()
                         && todayCal.get(Calendar.YEAR) == internalModel.getModel().getYear()) {
-                    label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_TODAY));
                     
-                    //set border (null allowed):
-                    label.setBorder(todayMarkingBorder);
-                    
+                    //Mark today with a border or with a colored number
+                    if(JDatePanel.showTodayBorder&&super.isEnabled()){
+                        Color borderColor = getColors()
+                                .getColor(ComponentColorDefaults.Key.FG_GRID_TODAY_BORDER);
+
+                        label.setBorder(BorderFactory.createLineBorder(borderColor, 2));
+                    }else{
+                        label.setBorder(null);
+                    }
+
                     //Selected
                     if (internalModel.getModel().isSelected() && selectedCal.get(Calendar.DATE) == cellDayValue) {
                         label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED));
                         label.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_GRID_TODAY_SELECTED));
+                    }else{//not selected
+                        label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_TODAY));
                     }
                 }
                 //Other day

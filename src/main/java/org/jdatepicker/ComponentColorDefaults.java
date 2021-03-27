@@ -56,16 +56,19 @@ public final class ComponentColorDefaults {
         BG_GRID_SELECTED,
         FG_GRID_TODAY_SELECTED,
         BG_GRID_TODAY_SELECTED,
+        FG_GRID_TODAY_BORDER,
         FG_TODAY_SELECTOR_ENABLED,
         FG_TODAY_SELECTOR_DISABLED,
         BG_TODAY_SELECTOR,
         POPUP_BORDER;
     }
 
-    private Map<Key, Color> colors;
+    private final Map<Key, Color> colors;
+    private final Map<Key, Color> customColors;
 
     private ComponentColorDefaults() {
-        colors = new HashMap<Key, Color>();
+        colors = new HashMap<>();
+        customColors = new HashMap<>();
 
         colors.put(Key.FG_MONTH_SELECTOR, SystemColor.activeCaptionText);
         colors.put(Key.BG_MONTH_SELECTOR, SystemColor.activeCaption);
@@ -88,16 +91,24 @@ public final class ComponentColorDefaults {
         colors.put(Key.FG_TODAY_SELECTOR_ENABLED, Color.BLACK);
         colors.put(Key.FG_TODAY_SELECTOR_DISABLED, Color.LIGHT_GRAY);
         colors.put(Key.BG_TODAY_SELECTOR, Color.WHITE);
+        
+        colors.put(Key.FG_GRID_TODAY_BORDER, Color.RED);
 
         colors.put(Key.POPUP_BORDER, Color.BLACK);
     }
 
     public Color getColor(Key key) {
+        Color color = customColors.get(key);
+        if(color!=null) return color;
         return colors.get(key);
     }
 
     public void setColor(Key key, Color color) {
-        colors.put(key, color);
+        if(colors.get(key).equals(color)) customColors.put(key, color);
+    }
+
+    public void setToDefault(Key key) {
+        customColors.remove(key);
     }
 
 }
