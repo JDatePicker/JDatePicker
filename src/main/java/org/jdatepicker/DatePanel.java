@@ -27,21 +27,25 @@
  */
 package org.jdatepicker;
 
-public interface DatePanel extends DateComponent {
+import java.awt.Color;
+import javax.swing.JComponent;
+
+public abstract class DatePanel extends JComponent implements DateComponent {
+    private static boolean showTodayBorder;
 
     /**
      * Sets the visibilty of the Year navigation buttons. Defaults to false.
      *
      * @param showYearButtons show the button?
      */
-    void setShowYearButtons(boolean showYearButtons);
+    public abstract void setShowYearButtons(boolean showYearButtons);
 
     /**
      * Is the year navigation buttons active.
      *
      * @return visiblity of the year
      */
-    boolean isShowYearButtons();
+    public abstract boolean isShowYearButtons();
 
     /**
      * This changes the behaviour of the control to require a double click on
@@ -50,12 +54,12 @@ public interface DatePanel extends DateComponent {
      *
      * @param doubleClickAction use double clicks?
      */
-    void setDoubleClickAction(boolean doubleClickAction);
+    public abstract void setDoubleClickAction(boolean doubleClickAction);
 
     /**
      * @return Is a double click required to fire a ActionEvent.
      */
-    boolean isDoubleClickAction();
+    public abstract boolean isDoubleClickAction();
     
     /**
      * Sets the visability of a red border that marks the number of 
@@ -63,11 +67,33 @@ public interface DatePanel extends DateComponent {
      * 
      * @param showTodayBorder show the border?
      */
-    void setStaticTodayBorder (boolean showTodayBorder);
+    public static final void setStaticTodayBorder(boolean showTodayBorder){
+        DatePanel.showTodayBorder = showTodayBorder;
+        setTodayNumberColorSchema(showTodayBorder);
+    }
     
     /**
      * @return is a border shown to mark today.
      */
-    boolean isShowTodayBorder ();
+    public static final boolean isShowTodayBorder(){
+        return DatePanel.showTodayBorder;
+    }
+    
+    private static void setTodayNumberColorSchema(boolean hasBorder){
+            ComponentColorDefaults colorSchema = ComponentColorDefaults.getInstance();
+            //set today's number color statically, depending on visibility of a surrounding border
+            if (hasBorder) {
+                Color everyDayColor = colorSchema
+                        .getColor(ComponentColorDefaults.Key.FG_GRID_THIS_MONTH);
+                Color everyDaySelectedColor = colorSchema
+                        .getColor(ComponentColorDefaults.Key.FG_GRID_SELECTED);
+
+                colorSchema.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY, everyDayColor);
+                colorSchema.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED, everyDaySelectedColor);
+            } else {
+                colorSchema.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY);
+                colorSchema.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED);
+            }
+    }
 
 }

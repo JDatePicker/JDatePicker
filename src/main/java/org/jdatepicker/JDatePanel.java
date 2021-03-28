@@ -59,7 +59,7 @@ import java.util.*;
  * @author JC Oosthuizen
  * @author Yue Huang
  */
-public class JDatePanel extends JComponent implements DatePanel {
+public class JDatePanel extends DatePanel {
 
     private static final long serialVersionUID = -2299249311312882915L;
 
@@ -67,7 +67,6 @@ public class JDatePanel extends JComponent implements DatePanel {
     private Set<DateSelectionConstraint> dateConstraints;
 
     private boolean showYearButtons;
-    private static boolean showTodayBorder;
     private boolean doubleClickAction;
 
     private InternalCalendarModel internalModel;
@@ -179,21 +178,6 @@ public class JDatePanel extends JComponent implements DatePanel {
      */
     public boolean isShowYearButtons() {
         return this.showYearButtons;
-    }
-
-    /* (non-Javadoc)
-     * @see org.jdatepicker.JDatePanel#setStaticTodayBorder(boolean)
-     */
-    public void setStaticTodayBorder(boolean showTodayBorder){
-        JDatePanel.showTodayBorder = showTodayBorder;
-        internalView.updateShowTodayBorder();
-    }
-
-    /* (non-Javadoc)
-     * @see org.jdatepicker.JDatePanel#isShowTodayBorder()
-     */
-    public boolean isShowTodayBorder(){
-        return JDatePanel.showTodayBorder;
     }
 
     /* (non-Javadoc)
@@ -315,23 +299,6 @@ public class JDatePanel extends JComponent implements DatePanel {
             } else {
                 getNextButtonPanel().remove(getNextYearButton());
                 getPreviousButtonPanel().remove(getPreviousYearButton());
-            }
-        }
-
-        private void updateShowTodayBorder() {
-            ComponentColorDefaults colorDefaults = ComponentColorDefaults.getInstance();
-            //set today's number color statically, depending on visibility of a surrounding border
-            if (JDatePanel.showTodayBorder) {
-                Color everyDayColor = getColors()
-                        .getColor(ComponentColorDefaults.Key.FG_GRID_THIS_MONTH);
-                Color everyDaySelectedColor = getColors()
-                        .getColor(ComponentColorDefaults.Key.FG_GRID_SELECTED);
-
-                colorDefaults.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY, everyDayColor);
-                colorDefaults.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED, everyDaySelectedColor);
-            } else {
-                colorDefaults.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY);
-                colorDefaults.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED);
             }
         }
 
@@ -824,7 +791,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                         && todayCal.get(Calendar.YEAR) == internalModel.getModel().getYear()) {
                     
                     //Mark today with a border or with a colored number
-                    if(JDatePanel.showTodayBorder&&super.isEnabled()){
+                    if(DatePanel.isShowTodayBorder()&&super.isEnabled()){
                         Color borderColor = getColors()
                                 .getColor(ComponentColorDefaults.Key.FG_GRID_TODAY_BORDER);
 

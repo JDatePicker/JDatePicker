@@ -29,42 +29,42 @@ package org.jdatepicker;
 
 import javax.swing.*;
 
-public interface DatePicker extends DatePanel {
+public abstract class DatePicker extends DatePanel {
 
     /**
      * Is the text component editable or not. Defaults to false.
      *
      * @param editable should the textfield be editable?
      */
-    void setTextEditable(boolean editable);
+    public abstract void setTextEditable(boolean editable);
 
     /**
      * @return Is the text component editable?
      */
-    boolean isTextEditable();
+    public abstract boolean isTextEditable();
 
     /**
      * Sets the button to be focusable. Defaults to true.
      *
      * @param focusable should the button be focusable?
      */
-    void setButtonFocusable(boolean focusable);
+    public abstract void setButtonFocusable(boolean focusable);
 
     /**
      * @return Is the button focusable?
      */
-    boolean getButtonFocusable();
+    public abstract boolean getButtonFocusable();
 
     /**
      * @return Columns the size of the underlying textfield
      */
-    int getTextfieldColumns();
+    public abstract int getTextfieldColumns();
 
     /**
      * Sets the size of the underlying textfield in columns
      *
      * @param columns {@link JTextField#setColumns(int)}
      */
-    void setTextfieldColumns(int columns);
+    public abstract void setTextfieldColumns(int columns);
 
 }
