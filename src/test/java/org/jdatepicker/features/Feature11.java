@@ -20,20 +20,22 @@ public class Feature11 {
         final JPanel jPanel = new JPanel();
         frame.getContentPane().add(jPanel);
 
+        JDatePanel.setTodayBorder(true);
         // Create a first JDatePanel without a border that is marking today.
         // As the border is a static feature (just like a colored today number)
         // a border is still displayed because it is subsequently set. 
         final JDatePanel datePanel = new JDatePanel();
-        
+        datePanel.setTodayBorder(true);
+
         // Create a second JDatePanel with border marking today
         final JDatePanel datePanelWithBorder = new JDatePanel();
         //Set a border marking today in DatePanel
-        datePanelWithBorder.setStaticTodayBorder(true);
+        datePanelWithBorder.setTodayBorder(true);
         
         // Create a third JDatePanel with border marking today but disabled
         final JDatePanel datePanelWithBorderDis = new JDatePanel();
         //Statically setting a border in DatePanel is redundant:
-        datePanelWithBorderDis.setStaticTodayBorder(true);
+        datePanelWithBorderDis.setTodayBorder(true);
         datePanelWithBorderDis.setEnabled(false);
         
         // add the DatePanel to the layout panel of the frame

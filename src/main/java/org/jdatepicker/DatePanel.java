@@ -67,7 +67,7 @@ public abstract class DatePanel extends JComponent implements DateComponent {
      * 
      * @param showTodayBorder show the border?
      */
-    public static final void setStaticTodayBorder(boolean showTodayBorder){
+    public static final void setTodayBorder(boolean showTodayBorder){
         DatePanel.showTodayBorder = showTodayBorder;
         setTodayNumberColorSchema(showTodayBorder);
     }
@@ -80,20 +80,20 @@ public abstract class DatePanel extends JComponent implements DateComponent {
     }
     
     private static void setTodayNumberColorSchema(boolean hasBorder){
-            ComponentColorDefaults colorSchema = ComponentColorDefaults.getInstance();
-            //set today's number color statically, depending on visibility of a surrounding border
-            if (hasBorder) {
-                Color everyDayColor = colorSchema
-                        .getColor(ComponentColorDefaults.Key.FG_GRID_THIS_MONTH);
-                Color everyDaySelectedColor = colorSchema
-                        .getColor(ComponentColorDefaults.Key.FG_GRID_SELECTED);
+        ComponentColorDefaults colorSchema = ComponentColorDefaults.getInstance();
+        //set today's number color statically, depending on visibility of a surrounding border
+        if (hasBorder) {
+            Color everyDayColor = colorSchema
+                    .getColor(ComponentColorDefaults.Key.FG_GRID_THIS_MONTH);
+            Color everyDaySelectedColor = colorSchema
+                    .getColor(ComponentColorDefaults.Key.FG_GRID_SELECTED);
 
-                colorSchema.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY, everyDayColor);
-                colorSchema.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED, everyDaySelectedColor);
-            } else {
-                colorSchema.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY);
-                colorSchema.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED);
-            }
-    }
+            colorSchema.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY, everyDayColor);
+            colorSchema.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED, everyDaySelectedColor);
+        } else {
+            colorSchema.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY);
+            colorSchema.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED);
+        }
+}
 
 }

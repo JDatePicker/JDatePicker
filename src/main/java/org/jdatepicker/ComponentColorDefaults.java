@@ -104,7 +104,8 @@ public final class ComponentColorDefaults {
     }
 
     public void setColor(Key key, Color color) {
-        if(colors.get(key).equals(color)) customColors.put(key, color);
+        //add only colors different from default
+        if(!colors.get(key).equals(color)) customColors.put(key, color);
     }
 
     public void setToDefault(Key key) {
