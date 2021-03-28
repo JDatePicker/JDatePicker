@@ -94,6 +94,5 @@ public abstract class DatePanel extends JComponent implements DateComponent {
             colorSchema.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY);
             colorSchema.setToDefault(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED);
         }
-}
-
+    }
 }
