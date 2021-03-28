@@ -2,6 +2,7 @@ package org.jdatepicker.features;
 
 
 import javax.swing.*;
+import org.jdatepicker.DatePanel;
 import org.jdatepicker.JDatePanel;
 
 /**
@@ -20,28 +21,29 @@ public class Feature11 {
         final JPanel jPanel = new JPanel();
         frame.getContentPane().add(jPanel);
 
-        JDatePanel.setTodayBorder(true);
-        // Create a first JDatePanel without a border that is marking today.
-        // As the border is a static feature (just like a colored today number)
-        // a border is still displayed because it is subsequently set. 
+        // Create a JDatePanel
         final JDatePanel datePanel = new JDatePanel();
-        datePanel.setTodayBorder(true);
+        
+        // Create a disabled JDatePanel
+        final JDatePanel datePanelDisabled = new JDatePanel();
+        datePanelDisabled.setEnabled(false);
+        
+        final JDatePanel datePanelExp = new JDatePanel();
+        //not the right way (because the border couldn't be disabled 
+        //only for the instance, it will be overriden by the following setting 
+        //of border):
+        datePanelExp.setTodayBorder(false);
 
-        // Create a second JDatePanel with border marking today
-        final JDatePanel datePanelWithBorder = new JDatePanel();
-        //Set a border marking today in DatePanel
-        datePanelWithBorder.setTodayBorder(true);
+        /* As the border is a static feature (just like the colored today number)
+         * a border is displayed for all instances in a runtime. 
+         */
+        DatePanel.setTodayBorder(true);
+//        DatePanel.setTodayBorder(false);
         
-        // Create a third JDatePanel with border marking today but disabled
-        final JDatePanel datePanelWithBorderDis = new JDatePanel();
-        //Statically setting a border in DatePanel is redundant:
-        datePanelWithBorderDis.setTodayBorder(true);
-        datePanelWithBorderDis.setEnabled(false);
-        
-        // add the DatePanel to the layout panel of the frame
+        // add the DatePanels to the layout panel of the frame
         jPanel.add(datePanel);
-        jPanel.add(datePanelWithBorder);
-        jPanel.add(datePanelWithBorderDis);
+        jPanel.add(datePanelExp);
+        jPanel.add(datePanelDisabled);
 
         // Make the frame visible
         frame.setVisible(true);
