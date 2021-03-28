@@ -29,9 +29,9 @@ public class Feature11 {
         datePanelDisabled.setEnabled(false);
         
         final JDatePanel datePanelExp = new JDatePanel();
-        //not the right way (because the border couldn't be disabled 
-        //only for the instance, it will be overriden by the following setting 
-        //of border):
+        //instance using a static method is not the right way but would work
+        //(anyway the border couldn't be disabled only for the instance, 
+        //this will be overriden by the subsequent setting of border):
         datePanelExp.setTodayBorder(false);
 
         /* As the border is a static feature (just like the colored today number)
