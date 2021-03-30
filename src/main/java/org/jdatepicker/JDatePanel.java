@@ -797,8 +797,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                     }
                     //Optionally mark today with a border
                     if(TodayMark.isShowTodayBorder()&&isEnabled()){
-                        Color borderColor = getColors()
-                                .getColor(ComponentColorDefaults.Key.FG_GRID_TODAY_BORDER);
+                        Color borderColor = getColors().getColor(ComponentColorDefaults.Key.FG_GRID_TODAY_BORDER);
                         label.setBorder(BorderFactory.createLineBorder(borderColor, 2));
                     }else{
                         label.setBorder(null);
