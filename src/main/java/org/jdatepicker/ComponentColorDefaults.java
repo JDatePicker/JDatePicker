@@ -59,7 +59,8 @@ public final class ComponentColorDefaults {
         FG_TODAY_SELECTOR_ENABLED,
         FG_TODAY_SELECTOR_DISABLED,
         BG_TODAY_SELECTOR,
-        POPUP_BORDER;
+        POPUP_BORDER,
+        FG_GRID_TODAY_BORDER;
     }
 
     private Map<Key, Color> colors;
@@ -90,6 +91,8 @@ public final class ComponentColorDefaults {
         colors.put(Key.BG_TODAY_SELECTOR, Color.WHITE);
 
         colors.put(Key.POPUP_BORDER, Color.BLACK);
+
+        colors.put(Key.FG_GRID_TODAY_BORDER, Color.RED);
     }
 
     public Color getColor(Key key) {
