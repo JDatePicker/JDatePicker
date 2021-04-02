@@ -29,9 +29,9 @@ public class Feature11 {
         datePanelDisabled.setEnabled(false);
         
         //Set a border marking today in DatePanels
-        TodayMark.setShowTodayBorder(true);
+        TodayMark.setBorder(true);
         //Set color of today's number like every other day of this month
-        TodayMark.setRedColorForTodayNumber(false);
+        TodayMark.setRedNumber(false);
         
         // add the DatePanel to the layout panel of the frame
         jPanel.add(datePanel);

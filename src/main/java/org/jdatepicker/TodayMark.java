@@ -38,17 +38,17 @@ public class TodayMark {
 
     private TodayMark() {}
     
-    public static final boolean isShowTodayBorder() {
+    public static final boolean isBorder() {
         return showTodayBorder;
     }
 
-    public static final void setShowTodayBorder(boolean showTodayBorder) {
+    public static final void setBorder(boolean showTodayBorder) {
         TodayMark.showTodayBorder = showTodayBorder;
     }
     
-    public static void setRedColorForTodayNumber(boolean isRed){
+    public static void setRedNumber(boolean isRedNumber){
         ComponentColorDefaults colors = ComponentColorDefaults.getInstance();
-        if(isRed){
+        if(isRedNumber){
             colors.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY, Color.RED);
             colors.setColor(ComponentColorDefaults.Key.FG_GRID_TODAY_SELECTED, Color.RED);
         }else{
