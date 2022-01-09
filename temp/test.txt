@@ -2,3 +2,4 @@ test
 test2
 git add
 git add 2 (fixed)
+git add local
