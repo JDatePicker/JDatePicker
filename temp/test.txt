@@ -1,4 +1,4 @@
 test
 test2
 git add
-gitt add 2
+git add 2 (fixed)
