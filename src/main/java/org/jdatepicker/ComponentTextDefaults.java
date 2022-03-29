@@ -151,6 +151,10 @@ public final class ComponentTextDefaults {
         if (text == null && "month".equals(key.getKind())) {
             Calendar c = Calendar.getInstance();
             c.set(Calendar.MONTH, key.getIndex());
+            // We need to set the day as well as the month because the Calendar instance is initialised to the current time, if this time happens to be on a day (31) with more days than the month we want (we want a month with less than 31 days) then the call to getTime() will be on the incorrect month.
+            // So if we set the month to February on the 30th of March, then the actual month will be March because there is no 30th of February
+            // Setting the day to 1 should work in all cases
+            c.set(Calendar.DAY_OF_MONTH, 1);
             ComponentFormatDefaults defaults = ComponentFormatDefaults.getInstance();
             DateFormat monthFormat = defaults.getFormat(ComponentFormatDefaults.Key.MONTH_SELECTOR);
             text = monthFormat.format(c.getTime());
