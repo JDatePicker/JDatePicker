@@ -406,5 +406,64 @@ public class JDatePicker extends JComponent implements DatePicker {
         }
 
     }
+    
+    /**
+     * Sets the selected date using a java.util.Date.
+     *
+     * @param date the Date to select, or null to clear the selection.
+     */
+    public void setDate(java.util.Date date) {
+        if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            datePanel.getModel().setDate(
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)
+            );
+            datePanel.getModel().setSelected(true);
+        } else {
+            datePanel.getModel().setSelected(false);
+        }
+    }
+
+    /**
+     * Returns the selected date as java.util.Date, or null if nothing is
+     * selected.
+     * @return 
+     */
+    public java.util.Date getDate() {
+        DateModel<?> model = datePanel.getModel();
+        if (model.isSelected()) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(model.getYear(), model.getMonth(), model.getDay(), 0, 0, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            return cal.getTime();
+        }
+        return null;
+    }
+
+    /**
+     * Sets the selected date using java.time.Instant.
+     * @param instant
+     */
+    public void setInstant(java.time.Instant instant) {
+        if (instant != null) {
+            setDate(java.util.Date.from(instant));
+        } else {
+            datePanel.getModel().setSelected(false);
+        }
+    }
+
+    /**
+     * Gets the selected date as java.time.Instant.
+     * @return 
+     */
+    public java.time.Instant getInstant() {
+        java.util.Date date = getDate();
+        return date != null ? date.toInstant() : null;
+    }
+
+    
 
 }
