@@ -32,11 +32,15 @@ import java.util.*;
 
 public final class ComponentTextDefaults {
 
-    private static ComponentTextDefaults instance;
+    private static volatile ComponentTextDefaults instance;
 
     public static ComponentTextDefaults getInstance() {
         if (instance == null) {
-            instance = new ComponentTextDefaults();
+            synchronized (ComponentTextDefaults.class) {
+                if (instance == null) {
+                    instance = new ComponentTextDefaults();
+                }
+            }
         }
         return instance;
     }

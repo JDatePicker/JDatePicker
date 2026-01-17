@@ -34,11 +34,15 @@ import java.util.Map;
 
 public final class ComponentFormatDefaults {
 
-    private static ComponentFormatDefaults instance;
+    private static volatile ComponentFormatDefaults instance;
 
     public static ComponentFormatDefaults getInstance() {
         if (instance == null) {
-            instance = new ComponentFormatDefaults();
+            synchronized (ComponentFormatDefaults.class) {
+                if (instance == null) {
+                    instance = new ComponentFormatDefaults();
+                }
+            }
         }
         return instance;
     }

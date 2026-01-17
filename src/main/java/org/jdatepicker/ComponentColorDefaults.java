@@ -33,11 +33,15 @@ import java.util.Map;
 
 public final class ComponentColorDefaults {
 
-    private static ComponentColorDefaults instance;
+    private static volatile ComponentColorDefaults instance;
 
     public static ComponentColorDefaults getInstance() {
         if (instance == null) {
-            instance = new ComponentColorDefaults();
+            synchronized (ComponentColorDefaults.class) {
+                if (instance == null) {
+                    instance = new ComponentColorDefaults();
+                }
+            }
         }
         return instance;
     }

@@ -42,6 +42,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * Created on 26 Mar 2004
@@ -113,8 +114,8 @@ public class JDatePanel extends JComponent implements DatePanel {
      * @param model a custom date model
      */
     public JDatePanel(DateModel<?> model) {
-        actionListeners = new HashSet<ActionListener>();
-        dateConstraints = new HashSet<DateSelectionConstraint>();
+        actionListeners = new CopyOnWriteArraySet<ActionListener>();
+        dateConstraints = new CopyOnWriteArraySet<DateSelectionConstraint>();
 
         showYearButtons = false;
         doubleClickAction = false;
@@ -928,8 +929,8 @@ public class JDatePanel extends JComponent implements DatePanel {
         private Set<TableModelListener> tableModelListeners;
 
         public InternalCalendarModel(DateModel<?> model) {
-            this.spinnerChangeListeners = new HashSet<ChangeListener>();
-            this.tableModelListeners = new HashSet<TableModelListener>();
+            this.spinnerChangeListeners = new CopyOnWriteArraySet<ChangeListener>();
+            this.tableModelListeners = new CopyOnWriteArraySet<TableModelListener>();
             this.model = model;
             model.addChangeListener(this);
         }

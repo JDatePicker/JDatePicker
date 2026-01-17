@@ -38,11 +38,15 @@ import java.io.InputStream;
 
 public final class ComponentIconDefaults {
 
-    private static ComponentIconDefaults instance;
+    private static volatile ComponentIconDefaults instance;
 
     public static ComponentIconDefaults getInstance() {
         if (instance == null) {
-            instance = new ComponentIconDefaults();
+            synchronized (ComponentIconDefaults.class) {
+                if (instance == null) {
+                    instance = new ComponentIconDefaults();
+                }
+            }
         }
         return instance;
     }

@@ -63,6 +63,7 @@ public class JDatePicker extends JComponent implements DatePicker {
     private JButton button;
 
     private JDatePanel datePanel;
+    private InternalEventHandler internalEventHandler;
 
     /**
      * Create a JDatePicker with a default calendar model.
@@ -120,7 +121,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         //Initialise Variables
         popup = null;
         datePanel.setBorder(BorderFactory.createLineBorder(getColors().getColor(ComponentColorDefaults.Key.POPUP_BORDER)));
-        InternalEventHandler internalEventHandler = new InternalEventHandler();
+        this.internalEventHandler = new InternalEventHandler();
 
         //Create Layout
         SpringLayout layout = new SpringLayout();
@@ -323,6 +324,15 @@ public class JDatePicker extends JComponent implements DatePicker {
         formattedTextField.setEnabled(enabled);
 
         super.setEnabled(enabled);
+    }
+
+    @Override
+    public void removeNotify() {
+        // Remove AWTEventListener to prevent memory leak
+        if (internalEventHandler != null) {
+            Toolkit.getDefaultToolkit().removeAWTEventListener(internalEventHandler);
+        }
+        super.removeNotify();
     }
 
     /**

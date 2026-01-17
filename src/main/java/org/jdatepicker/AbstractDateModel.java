@@ -32,8 +32,8 @@ import javax.swing.event.ChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * Created 18 April 2010
@@ -56,35 +56,35 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
     private Set<PropertyChangeListener> propertyChangeListeners;
 
     protected AbstractDateModel() {
-        changeListeners = new HashSet<ChangeListener>();
-        propertyChangeListeners = new HashSet<PropertyChangeListener>();
+        changeListeners = new CopyOnWriteArraySet<ChangeListener>();
+        propertyChangeListeners = new CopyOnWriteArraySet<PropertyChangeListener>();
         selected = false;
         calendarValue = Calendar.getInstance();
     }
 
-    public synchronized void addChangeListener(ChangeListener changeListener) {
+    public void addChangeListener(ChangeListener changeListener) {
         changeListeners.add(changeListener);
     }
 
-    public synchronized void removeChangeListener(ChangeListener changeListener) {
+    public void removeChangeListener(ChangeListener changeListener) {
         changeListeners.remove(changeListener);
     }
 
-    protected synchronized void fireChangeEvent() {
+    protected void fireChangeEvent() {
         for (ChangeListener changeListener : changeListeners) {
             changeListener.stateChanged(new ChangeEvent(this));
         }
     }
 
-    public synchronized void addPropertyChangeListener(PropertyChangeListener listener) {
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeListeners.add(listener);
     }
 
-    public synchronized void removePropertyChangeListener(PropertyChangeListener listener) {
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeListeners.remove(listener);
     }
 
-    protected synchronized void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         if (oldValue != null && newValue != null && oldValue.equals(newValue)) {
             return;
         }
@@ -261,7 +261,7 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
     }
 
     private void setToMidnight() {
-        calendarValue.set(Calendar.HOUR, 0);
+        calendarValue.set(Calendar.HOUR_OF_DAY, 0);
         calendarValue.set(Calendar.MINUTE, 0);
         calendarValue.set(Calendar.SECOND, 0);
         calendarValue.set(Calendar.MILLISECOND, 0);
