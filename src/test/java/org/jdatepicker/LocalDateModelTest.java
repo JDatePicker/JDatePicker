@@ -62,11 +62,11 @@ class LocalDateModelTest {
     @Test
     @DisplayName("setYear updates year correctly")
     void testSetYear() {
-        model.setValue(LocalDate.of(2023, 6, 15));
+        model.setValue(LocalDate.of(2023, 6, 15)); // June 15, 2023
         model.setYear(2024);
 
         assertEquals(2024, model.getYear());
-        assertEquals(6, model.getMonth()); // Month should be unchanged (0-indexed)
+        assertEquals(5, model.getMonth()); // June is month index 5 (0-indexed)
         assertEquals(15, model.getDay());
     }
 
@@ -108,20 +108,22 @@ class LocalDateModelTest {
     @Test
     @DisplayName("addYear increments year")
     void testAddYear() {
-        model.setValue(LocalDate.of(2024, 6, 15));
+        model.setValue(LocalDate.of(2024, 6, 15)); // June 15, 2024
         model.addYear(1);
 
         assertEquals(2025, model.getYear());
+        assertEquals(5, model.getMonth()); // June is month index 5
         assertEquals(LocalDate.of(2025, 6, 15), model.getValue());
     }
 
     @Test
     @DisplayName("addYear with negative value decrements year")
     void testAddYearNegative() {
-        model.setValue(LocalDate.of(2024, 6, 15));
+        model.setValue(LocalDate.of(2024, 6, 15)); // June 15, 2024
         model.addYear(-1);
 
         assertEquals(2023, model.getYear());
+        assertEquals(5, model.getMonth()); // June is month index 5
         assertEquals(LocalDate.of(2023, 6, 15), model.getValue());
     }
 
