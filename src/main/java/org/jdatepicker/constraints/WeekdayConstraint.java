@@ -48,16 +48,14 @@ public class WeekdayConstraint implements DateSelectionConstraint {
             value.set(Calendar.SECOND, 0);
             value.set(Calendar.MILLISECOND, 0);
 
-            switch (value.get(Calendar.DAY_OF_WEEK)) {
-                case Calendar.MONDAY:
-                case Calendar.TUESDAY:
-                case Calendar.WEDNESDAY:
-                case Calendar.THURSDAY:
-                case Calendar.FRIDAY:
-                    return true;
-                default:
-                    return false;
-            }
+            return switch (value.get(Calendar.DAY_OF_WEEK)) {
+                case Calendar.MONDAY,
+                     Calendar.TUESDAY,
+                     Calendar.WEDNESDAY,
+                     Calendar.THURSDAY,
+                     Calendar.FRIDAY -> true;
+                default -> false;
+            };
         } else {
             return true;
         }

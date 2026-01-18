@@ -22,6 +22,7 @@ class WeekdayConstraintTest {
     void setUp() {
         constraint = new WeekdayConstraint();
         model = new UtilCalendarModel();
+        model.setSelected(true);
     }
 
     @Test

@@ -8,6 +8,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -37,22 +41,47 @@ class UtilDateModelTest {
     }
 
     @Test
-    @DisplayName("Constructor with date sets value correctly")
+    @DisplayName("Constructor with date sets value correctly, discards time component")
     void testConstructorWithDate() {
-        Date date = new Date();
-        UtilDateModel dateModel = new UtilDateModel(date);
+        Date argument = new Date();
+        UtilDateModel dateModel = new UtilDateModel(argument);
+        LocalDate a = Instant.ofEpochMilli(argument.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 
         assertNotNull(dateModel.getValue());
-        assertEquals(date, dateModel.getValue());
+
+        Date value = dateModel.getValue();
+
+        LocalDate v = Instant.ofEpochMilli(value.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+        assertEquals(a.getYear(), v.getYear());
+        assertEquals(a.getMonth(), v.getMonth());
+        assertEquals(a.getDayOfMonth(), v.getDayOfMonth());
+
+        LocalTime t = Instant.ofEpochMilli(value.getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
+        assertEquals(0, t.getHour());
+        assertEquals(0, t.getMinute());
+        assertEquals(0, t.getSecond());
     }
 
     @Test
-    @DisplayName("setValue updates the date value")
+    @DisplayName("setValue updates the date value, discards time component")
     void testSetValue() {
-        Date date = new Date();
-        model.setValue(date);
+        Date argument = new Date();
+        LocalDate a = Instant.ofEpochMilli(argument.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 
-        assertEquals(date, model.getValue());
+        model.setValue(argument);
+        assertNotNull(model.getValue());
+
+        Date value = model.getValue();
+
+        LocalDate v = Instant.ofEpochMilli(value.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+        assertEquals(a.getYear(), v.getYear());
+        assertEquals(a.getMonth(), v.getMonth());
+        assertEquals(a.getDayOfMonth(), v.getDayOfMonth());
+
+        LocalTime t = Instant.ofEpochMilli(value.getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
+        assertEquals(0, t.getHour());
+        assertEquals(0, t.getMinute());
+        assertEquals(0, t.getSecond());
     }
 
     @Test
@@ -141,10 +170,17 @@ class UtilDateModelTest {
     }
 
     @Test
+    @DisplayName("setValue updates selected state")
+    void testSetValueSelected() {
+        model.setValue(new Date());
+        assertTrue(model.isSelected());
+        model.setSelected(false);
+        assertFalse(model.isSelected());
+    }
+
+    @Test
     @DisplayName("setSelected updates selected state")
     void testSetSelected() {
-        model.setValue(new Date());
-
         assertFalse(model.isSelected());
         model.setSelected(true);
         assertTrue(model.isSelected());
@@ -191,13 +227,26 @@ class UtilDateModelTest {
     @Test
     @DisplayName("PropertyChangeListener is notified on value change")
     void testPropertyChangeListenerOnValueChange() {
-        AtomicReference<PropertyChangeEvent> event = new AtomicReference<>();
+        AtomicReference<PropertyChangeEvent> event0 = new AtomicReference<>();
+        AtomicReference<PropertyChangeEvent> event1 = new AtomicReference<>();
+        final AtomicReference<Integer> i = new AtomicReference<>(0);
 
-        model.addPropertyChangeListener(e -> event.set(e));
+        model.addPropertyChangeListener(e -> {
+            if (i.get() == 0) {
+                event0.set(e);
+            }
+            if (i.get() == 1) {
+                event1.set(e);
+            }
+            i.set(i.get() + 1);
+        });
         model.setValue(new Date());
 
-        assertNotNull(event.get());
-        assertEquals(AbstractDateModel.PROPERTY_VALUE, event.get().getPropertyName());
+        assertNotNull(event0.get());
+        assertEquals(AbstractDateModel.PROPERTY_VALUE, event0.get().getPropertyName());
+
+        assertNotNull(event1.get());
+        assertEquals(AbstractDateModel.PROPERTY_SELECTED, event1.get().getPropertyName());
     }
 
     @Test
@@ -227,8 +276,13 @@ class UtilDateModelTest {
     @Test
     @DisplayName("equals returns false for models with different values")
     void testNotEquals() {
-        UtilDateModel model1 = new UtilDateModel(new Date(1000));
-        UtilDateModel model2 = new UtilDateModel(new Date(2000));
+        long date1 = 1000 * LocalDate.of(2024, 1, 1)
+                .toEpochSecond(LocalTime.now(), ZoneId.systemDefault().getRules().getOffset(Instant.now()));
+        long date2 = 1000 * LocalDate.of(2024, 1, 2)
+                .toEpochSecond(LocalTime.now(), ZoneId.systemDefault().getRules().getOffset(Instant.now()));
+
+        UtilDateModel model1 = new UtilDateModel(new Date(date1));                ;
+        UtilDateModel model2 = new UtilDateModel(new Date(date2));
 
         assertNotEquals(model1, model2);
     }

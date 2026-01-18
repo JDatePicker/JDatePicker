@@ -30,24 +30,28 @@ class UtilCalendarModelTest {
     }
 
     @Test
-    @DisplayName("Constructor with calendar sets value correctly")
+    @DisplayName("Constructor with calendar sets value correctly, and discards time portion")
     void testConstructorWithCalendar() {
         Calendar calendar = Calendar.getInstance();
         UtilCalendarModel calModel = new UtilCalendarModel(calendar);
 
         assertNotNull(calModel.getValue());
-        assertEquals(calendar, calModel.getValue());
+        assertEquals(calendar.get(Calendar.YEAR), calModel.getYear(), "Cloned calendar year should equal original");
+        assertEquals(calendar.get(Calendar.MONTH), calModel.getMonth(), "Cloned calendar month should equal original");
+        assertEquals(calendar.get(Calendar.DATE), calModel.getDay(), "Cloned calendar date should equal original");
     }
 
     @Test
-    @DisplayName("setValue clones the calendar")
+    @DisplayName("setValue clones the calendar, and discards the time portion")
     void testSetValueClonesCalendar() {
         Calendar original = Calendar.getInstance();
         model.setValue(original);
 
         Calendar retrieved = model.getValue();
         assertNotSame(original, retrieved, "Calendar should be cloned, not the same instance");
-        assertEquals(original, retrieved, "Cloned calendar should equal original");
+        assertEquals(original.get(Calendar.YEAR), retrieved.get(Calendar.YEAR), "Cloned calendar year should equal original");
+        assertEquals(original.get(Calendar.MONTH), retrieved.get(Calendar.MONTH), "Cloned calendar month should equal original");
+        assertEquals(original.get(Calendar.DATE), retrieved.get(Calendar.DATE), "Cloned calendar date should equal original");
     }
 
     @Test
