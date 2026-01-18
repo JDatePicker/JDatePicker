@@ -20,6 +20,7 @@ class LocalDateModelTest {
     @BeforeEach
     void setUp() {
         model = new LocalDateModel();
+        model.setSelected(true);
     }
 
     @Test
@@ -34,7 +35,7 @@ class LocalDateModelTest {
     @DisplayName("Constructor with LocalDate sets value correctly, and selected is true")
     void testConstructorWithLocalDate() {
         LocalDate date = LocalDate.of(2024, 1, 15);
-        LocalDateModel dateModel = new LocalDateModel(date);
+        LocalDateModel dateModel = new LocalDateModel(date, true);
 
         assertNotNull(dateModel.getValue());
         assertEquals(date, dateModel.getValue());
@@ -186,10 +187,12 @@ class LocalDateModelTest {
     @DisplayName("setSelected updates selected state")
     void testSetSelected() {
         model.setValue(LocalDate.of(2024, 1, 15));
-
+        model.setSelected(false);
         assertFalse(model.isSelected());
+
         model.setSelected(true);
         assertTrue(model.isSelected());
+
         model.setSelected(false);
         assertFalse(model.isSelected());
     }
@@ -219,8 +222,8 @@ class LocalDateModelTest {
     @Test
     @DisplayName("equals returns false for models with different LocalDates")
     void testNotEquals() {
-        LocalDateModel model1 = new LocalDateModel(LocalDate.of(2024, 1, 15));
-        LocalDateModel model2 = new LocalDateModel(LocalDate.of(2024, 1, 16));
+        LocalDateModel model1 = new LocalDateModel(LocalDate.of(2024, 1, 15), true);
+        LocalDateModel model2 = new LocalDateModel(LocalDate.of(2024, 1, 16), true);
 
         assertNotEquals(model1, model2);
     }
