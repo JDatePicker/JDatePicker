@@ -33,12 +33,17 @@ import java.util.Objects;
 public class UtilCalendarModel extends AbstractDateModel<Calendar> {
 
     public UtilCalendarModel() {
-        this(null);
+        this(null, false);
     }
 
-    public UtilCalendarModel(Calendar value) {
+    public UtilCalendarModel(Calendar argument) {
+        this(argument, false);
+    }
+
+    public UtilCalendarModel(Calendar value, boolean isSelected) {
         super();
         setValue(value);
+        setSelected(isSelected);
     }
 
     @Override

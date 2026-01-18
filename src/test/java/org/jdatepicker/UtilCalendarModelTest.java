@@ -19,6 +19,7 @@ class UtilCalendarModelTest {
     @BeforeEach
     void setUp() {
         model = new UtilCalendarModel();
+        model.setSelected(true);
     }
 
     @Test
@@ -30,10 +31,19 @@ class UtilCalendarModelTest {
     }
 
     @Test
+    @DisplayName("Constructor with value also creates unselected model")
+    void testConstructorWithValue() {
+        UtilCalendarModel nullModel = new UtilCalendarModel(Calendar.getInstance());
+        assertNull(nullModel.getValue());
+        assertFalse(nullModel.isSelected());
+    }
+
+    @Test
     @DisplayName("Constructor with calendar sets value correctly, and discards time portion")
     void testConstructorWithCalendar() {
         Calendar calendar = Calendar.getInstance();
         UtilCalendarModel calModel = new UtilCalendarModel(calendar);
+        calModel.setSelected(true);
 
         assertNotNull(calModel.getValue());
         assertEquals(calendar.get(Calendar.YEAR), calModel.getYear(), "Cloned calendar year should equal original");
@@ -104,7 +114,10 @@ class UtilCalendarModelTest {
         cal2.set(2024, 5, 16);
 
         UtilCalendarModel model1 = new UtilCalendarModel(cal1);
+        model1.setSelected(true);
+
         UtilCalendarModel model2 = new UtilCalendarModel(cal2);
+        model2.setSelected(true);
 
         assertNotEquals(model1, model2);
     }

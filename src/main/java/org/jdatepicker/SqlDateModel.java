@@ -34,12 +34,17 @@ import java.util.Objects;
 public class SqlDateModel extends AbstractDateModel<java.sql.Date> {
 
     public SqlDateModel() {
-        this(null);
+        this(null, false);
     }
 
     public SqlDateModel(Date value) {
+        this(value, false);
+    }
+
+    public SqlDateModel(Date value, boolean isSelected) {
         super();
         setValue(value);
+        setSelected(isSelected);
     }
 
     @Override

@@ -50,17 +50,23 @@ public class LocalDateModel extends AbstractDateModel<LocalDate> {
      * The model will be in an unselected state with a null value.
      */
     public LocalDateModel() {
-        this(null);
+        this(null, false);
+    }
+
+    public LocalDateModel(LocalDate argument) {
+        this(argument, false);
     }
 
     /**
      * Creates a new LocalDateModel with the specified initial value.
      *
      * @param value the initial LocalDate value, or null for no date
+     * @param isSelected whether the model is selected (true) or unselected (false)
      */
-    public LocalDateModel(LocalDate value) {
+    public LocalDateModel(LocalDate value, boolean isSelected) {
         super();
         setValue(value);
+        setSelected(isSelected);
     }
 
     /**

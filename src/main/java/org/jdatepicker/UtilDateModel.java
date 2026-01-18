@@ -34,12 +34,17 @@ import java.util.Objects;
 public class UtilDateModel extends AbstractDateModel<java.util.Date> {
 
     public UtilDateModel() {
-        this(null);
+        this(null, false);
     }
 
-    public UtilDateModel(Date value) {
+    public UtilDateModel(Date argument) {
+        this(argument, false);
+    }
+
+    public UtilDateModel(Date value, boolean isSelected) {
         super();
         setValue(value);
+        setSelected(isSelected);
     }
 
     @Override

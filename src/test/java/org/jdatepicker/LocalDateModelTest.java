@@ -31,13 +31,14 @@ class LocalDateModelTest {
     }
 
     @Test
-    @DisplayName("Constructor with LocalDate sets value correctly")
+    @DisplayName("Constructor with LocalDate sets value correctly, and selected is true")
     void testConstructorWithLocalDate() {
         LocalDate date = LocalDate.of(2024, 1, 15);
         LocalDateModel dateModel = new LocalDateModel(date);
 
         assertNotNull(dateModel.getValue());
         assertEquals(date, dateModel.getValue());
+        assertTrue(dateModel.isSelected());
     }
 
     @Test
@@ -56,7 +57,8 @@ class LocalDateModelTest {
         model.setValue(original);
 
         LocalDate retrieved = model.getValue();
-        assertSame(original, retrieved, "LocalDate should be the same instance (immutable)");
+        assertNotSame(original, retrieved, "LocalDate should not be the same instance");
+        assertEquals(original, retrieved, "LocalDate values should be equal");
     }
 
     @Test

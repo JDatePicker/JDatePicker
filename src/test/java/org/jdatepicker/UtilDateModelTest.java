@@ -44,7 +44,7 @@ class UtilDateModelTest {
     @DisplayName("Constructor with date sets value correctly, discards time component")
     void testConstructorWithDate() {
         Date argument = new Date();
-        UtilDateModel dateModel = new UtilDateModel(argument);
+        UtilDateModel dateModel = new UtilDateModel(argument, true);
         LocalDate a = Instant.ofEpochMilli(argument.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 
         assertNotNull(dateModel.getValue());
@@ -69,6 +69,7 @@ class UtilDateModelTest {
         LocalDate a = Instant.ofEpochMilli(argument.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 
         model.setValue(argument);
+        model.setSelected(true);
         assertNotNull(model.getValue());
 
         Date value = model.getValue();
@@ -170,10 +171,11 @@ class UtilDateModelTest {
     }
 
     @Test
-    @DisplayName("setValue updates selected state")
+    @DisplayName("setValue updates date but does not update selected state if unselected")
     void testSetValueSelected() {
+        model.setSelected(false);
         model.setValue(new Date());
-        assertTrue(model.isSelected());
+        assertFalse(model.isSelected());
         model.setSelected(false);
         assertFalse(model.isSelected());
     }
@@ -245,8 +247,8 @@ class UtilDateModelTest {
         assertNotNull(event0.get());
         assertEquals(AbstractDateModel.PROPERTY_VALUE, event0.get().getPropertyName());
 
-        assertNotNull(event1.get());
-        assertEquals(AbstractDateModel.PROPERTY_SELECTED, event1.get().getPropertyName());
+        // There was an inconsistency in the original implementation, setting the value updated the selected state.
+        assertNull(event1.get());
     }
 
     @Test
@@ -281,8 +283,8 @@ class UtilDateModelTest {
         long date2 = 1000 * LocalDate.of(2024, 1, 2)
                 .toEpochSecond(LocalTime.now(), ZoneId.systemDefault().getRules().getOffset(Instant.now()));
 
-        UtilDateModel model1 = new UtilDateModel(new Date(date1));                ;
-        UtilDateModel model2 = new UtilDateModel(new Date(date2));
+        UtilDateModel model1 = new UtilDateModel(new Date(date1), true);
+        UtilDateModel model2 = new UtilDateModel(new Date(date2), true);
 
         assertNotEquals(model1, model2);
     }
