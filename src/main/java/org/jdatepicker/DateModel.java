@@ -31,11 +31,54 @@ import javax.swing.event.ChangeListener;
 import java.beans.PropertyChangeListener;
 
 /**
- * Created 18 April 2010
- * Updated 26 April 2010
+ * Generic date model interface for JDatePicker components.
  *
- * @param <T> The type of this model (e.g. java.util.Date, java.util.Calendar)
+ * <p>This interface defines the contract for date models that store and manipulate
+ * dates in the Gregorian calendar system. It supports various date types through generics,
+ * including {@link java.util.Date}, {@link java.util.Calendar}, and {@link java.sql.Date}.
+ *
+ * <p><b>Event Notification:</b>
+ * <ul>
+ *   <li>{@link javax.swing.event.ChangeListener} - Notified when any date component changes
+ *       (year, month, day). Fired during user interaction with the calendar.</li>
+ *   <li>{@link java.beans.PropertyChangeListener} - Notified when properties change, following
+ *       JavaBeans conventions. Used for data binding and validation frameworks.</li>
+ * </ul>
+ *
+ * <p><b>Month Indexing:</b> Months are 0-indexed following {@link java.util.Calendar} convention:
+ * <ul>
+ *   <li>0 = January</li>
+ *   <li>1 = February</li>
+ *   <li>...</li>
+ *   <li>11 = December</li>
+ * </ul>
+ *
+ * <p><b>Selection State:</b> The model maintains a "selected" state separate from the date value.
+ * This allows distinguishing between "no date selected" and "a specific date selected". When
+ * {@code isSelected()} returns false, the getValue() returns null.
+ *
+ * <p><b>Thread Safety:</b> Implementations use {@link java.util.concurrent.CopyOnWriteArraySet}
+ * for listener management, making listener operations thread-safe. However, date manipulation
+ * methods are not synchronized and should be called from the Event Dispatch Thread when used
+ * in Swing components.
+ *
+ * <p><b>Example Usage:</b>
+ * <pre>
+ * DateModel&lt;Calendar&gt; model = new UtilCalendarModel();
+ * model.setDate(2024, 0, 15); // January 15, 2024
+ * model.setSelected(true);
+ *
+ * model.addChangeListener(e -&gt; {
+ *     System.out.println("Date changed: " + model.getValue());
+ * });
+ * </pre>
+ *
+ * @param <T> The type of date object this model wraps (e.g., java.util.Date, java.util.Calendar, java.sql.Date)
  * @author Juan Heyns
+ * @since 1.0
+ * @see UtilDateModel
+ * @see UtilCalendarModel
+ * @see SqlDateModel
  */
 public interface DateModel<T> {
 

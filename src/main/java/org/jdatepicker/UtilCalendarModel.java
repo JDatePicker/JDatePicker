@@ -28,16 +28,22 @@
 package org.jdatepicker;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class UtilCalendarModel extends AbstractDateModel<Calendar> {
 
     public UtilCalendarModel() {
-        this(null);
+        this(null, false);
     }
 
-    public UtilCalendarModel(Calendar value) {
+    public UtilCalendarModel(Calendar argument) {
+        this(argument, argument != null);
+    }
+
+    public UtilCalendarModel(Calendar value, boolean isSelected) {
         super();
         setValue(value);
+        setSelected(isSelected);
     }
 
     @Override
@@ -48,6 +54,23 @@ public class UtilCalendarModel extends AbstractDateModel<Calendar> {
     @Override
     protected Calendar toCalendar(Calendar from) {
         return (Calendar) from.clone();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof UtilCalendarModel other)) {
+            return false;
+        }
+        return Objects.equals(getValue(), other.getValue()) &&
+               isSelected() == other.isSelected();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getValue(), isSelected());
     }
 
 }

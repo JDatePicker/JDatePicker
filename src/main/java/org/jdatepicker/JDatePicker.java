@@ -42,17 +42,31 @@ import java.util.Set;
 
 
 /**
- * Created on 25 Mar 2004
- * Refactored 21 Jun 2004
- * Refactored 14 May 2009
- * Refactored 16 April 2010
- * Updated 26 April 2010
- * Updated 10 August 2012
- * Updated 6 Jun 2015
+ * A popup date picker component that displays a text field with a button.
+ * Clicking the button shows a calendar panel for date selection.
+ *
+ * <p>The component consists of:
+ * <ul>
+ *   <li>A formatted text field for displaying and manually editing the date</li>
+ *   <li>A button that opens a popup calendar panel</li>
+ *   <li>A {@link JDatePanel} for graphical date selection</li>
+ * </ul>
+ *
+ * <p>Example usage:
+ * <pre>
+ * JDatePicker datePicker = new JDatePicker();
+ * datePicker.addActionListener(e -&gt; {
+ *     Calendar selectedDate = (Calendar) datePicker.getModel().getValue();
+ *     System.out.println("Selected: " + selectedDate.getTime());
+ * });
+ * </pre>
+ *
+ * <p>This component is thread-safe for UI operations when used on the Event Dispatch Thread.
  *
  * @author Juan Heyns
  * @author JC Oosthuizen
  * @author Yue Huang
+ * @since 1.0
  */
 public class JDatePicker extends JComponent implements DatePicker {
 
@@ -63,6 +77,7 @@ public class JDatePicker extends JComponent implements DatePicker {
     private JButton button;
 
     private JDatePanel datePanel;
+    private InternalEventHandler internalEventHandler;
 
     /**
      * Create a JDatePicker with a default calendar model.
@@ -120,7 +135,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         //Initialise Variables
         popup = null;
         datePanel.setBorder(BorderFactory.createLineBorder(getColors().getColor(ComponentColorDefaults.Key.POPUP_BORDER)));
-        InternalEventHandler internalEventHandler = new InternalEventHandler();
+        this.internalEventHandler = new InternalEventHandler();
 
         //Create Layout
         SpringLayout layout = new SpringLayout();
@@ -323,6 +338,15 @@ public class JDatePicker extends JComponent implements DatePicker {
         formattedTextField.setEnabled(enabled);
 
         super.setEnabled(enabled);
+    }
+
+    @Override
+    public void removeNotify() {
+        // Remove AWTEventListener to prevent memory leak
+        if (internalEventHandler != null) {
+            Toolkit.getDefaultToolkit().removeAWTEventListener(internalEventHandler);
+        }
+        super.removeNotify();
     }
 
     /**

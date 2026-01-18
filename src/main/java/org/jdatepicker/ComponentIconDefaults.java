@@ -38,11 +38,15 @@ import java.io.InputStream;
 
 public final class ComponentIconDefaults {
 
-    private static ComponentIconDefaults instance;
+    private static volatile ComponentIconDefaults instance;
 
     public static ComponentIconDefaults getInstance() {
         if (instance == null) {
-            instance = new ComponentIconDefaults();
+            synchronized (ComponentIconDefaults.class) {
+                if (instance == null) {
+                    instance = new ComponentIconDefaults();
+                }
+            }
         }
         return instance;
     }
@@ -78,17 +82,18 @@ public final class ComponentIconDefaults {
             previousYearIconDisabled = new JPreviousIcon(8, 7, true, false);
             popupButtonIcon = null;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Warning: Failed to load icon resources: " + e.getMessage());
+            // Icons will remain null and components will function without them
         }
     }
 
     private static Icon loadIcon(String path) throws IOException {
-        InputStream stream = ComponentIconDefaults.class.getResourceAsStream(path);
-        try {
+        try (InputStream stream = ComponentIconDefaults.class.getResourceAsStream(path)) {
+            if (stream == null) {
+                throw new IOException("Resource not found: " + path);
+            }
             BufferedImage image = ImageIO.read(stream);
             return new ImageIcon(image);
-        } finally {
-            stream.close();
         }
     }
 
