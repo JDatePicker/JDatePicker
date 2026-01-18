@@ -29,6 +29,7 @@ package org.jdatepicker;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class SqlDateModel extends AbstractDateModel<java.sql.Date> {
 
@@ -51,6 +52,23 @@ public class SqlDateModel extends AbstractDateModel<java.sql.Date> {
         Calendar to = Calendar.getInstance();
         to.setTime(from);
         return to;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof SqlDateModel other)) {
+            return false;
+        }
+        return Objects.equals(getValue(), other.getValue()) &&
+               isSelected() == other.isSelected();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getValue(), isSelected());
     }
 
 }

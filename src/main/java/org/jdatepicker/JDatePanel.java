@@ -137,14 +137,14 @@ public class JDatePanel extends JComponent implements DatePanel {
     }
 
     private static DateModel<?> createModelFromValue(Object value) {
-        if (value instanceof java.util.Calendar) {
-            return new UtilCalendarModel((Calendar) value);
+        if (value instanceof java.util.Calendar calendar) {
+            return new UtilCalendarModel(calendar);
         }
-        if (value instanceof java.util.Date) {
-            return new UtilDateModel((java.util.Date) value);
+        if (value instanceof java.sql.Date sqlDate) {
+            return new SqlDateModel(sqlDate);
         }
-        if (value instanceof java.sql.Date) {
-            return new SqlDateModel((java.sql.Date) value);
+        if (value instanceof java.util.Date utilDate) {
+            return new UtilDateModel(utilDate);
         }
         throw new IllegalArgumentException("No model could be constructed from the initial value object.");
     }
@@ -268,6 +268,17 @@ public class JDatePanel extends JComponent implements DatePanel {
 
         private static final long serialVersionUID = -6844493839307157682L;
 
+        // UI dimension constants
+        private static final int DEFAULT_PANEL_WIDTH = 200;
+        private static final int DEFAULT_PANEL_HEIGHT = 180;
+        private static final int PANEL_BORDER_PADDING = 3;
+        private static final int INNER_PANEL_HORIZONTAL_PADDING = 5;
+
+        // Font scaling constants for dynamic resizing
+        private static final double FONT_WIDTH_DIVISOR = 16.0;
+        private static final double FONT_HEIGHT_DIVISOR = 8.0;
+        private static final double ROW_HEIGHT_DIVISOR = 6.0;
+
         private JPanel centerPanel;
         private JPanel northCenterPanel;
         private JPanel northPanel;
@@ -319,8 +330,8 @@ public class JDatePanel extends JComponent implements DatePanel {
          */
         private void initialise() {
             this.setLayout(new java.awt.BorderLayout());
-            this.setSize(200, 180);
-            this.setPreferredSize(new java.awt.Dimension(200, 180));
+            this.setSize(DEFAULT_PANEL_WIDTH, DEFAULT_PANEL_HEIGHT);
+            this.setPreferredSize(new java.awt.Dimension(DEFAULT_PANEL_WIDTH, DEFAULT_PANEL_HEIGHT));
             this.setOpaque(false);
             this.add(getNorthPanel(), java.awt.BorderLayout.NORTH);
             this.add(getSouthPanel(), java.awt.BorderLayout.SOUTH);
@@ -337,7 +348,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 northPanel = new javax.swing.JPanel();
                 northPanel.setLayout(new java.awt.BorderLayout());
                 northPanel.setName("");
-                northPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+                northPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(PANEL_BORDER_PADDING, PANEL_BORDER_PADDING, PANEL_BORDER_PADDING, PANEL_BORDER_PADDING));
                 northPanel.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_MONTH_SELECTOR));
                 northPanel.add(getPreviousButtonPanel(), java.awt.BorderLayout.WEST);
                 northPanel.add(getNextButtonPanel(), java.awt.BorderLayout.EAST);
@@ -355,7 +366,7 @@ public class JDatePanel extends JComponent implements DatePanel {
             if (northCenterPanel == null) {
                 northCenterPanel = new javax.swing.JPanel();
                 northCenterPanel.setLayout(new java.awt.BorderLayout());
-                northCenterPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+                northCenterPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, INNER_PANEL_HORIZONTAL_PADDING, 0, INNER_PANEL_HORIZONTAL_PADDING));
                 northCenterPanel.setOpaque(false);
                 northCenterPanel.add(getMonthLabel(), java.awt.BorderLayout.CENTER);
                 northCenterPanel.add(getYearSpinner(), java.awt.BorderLayout.EAST);
@@ -402,7 +413,7 @@ public class JDatePanel extends JComponent implements DatePanel {
                 southPanel = new javax.swing.JPanel();
                 southPanel.setLayout(new java.awt.BorderLayout());
                 southPanel.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_TODAY_SELECTOR));
-                southPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3));
+                southPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(PANEL_BORDER_PADDING, PANEL_BORDER_PADDING, PANEL_BORDER_PADDING, PANEL_BORDER_PADDING));
                 southPanel.add(getTodayLabel(), java.awt.BorderLayout.WEST);
                 southPanel.add(getNoneLabel(), java.awt.BorderLayout.EAST);
             }
@@ -497,12 +508,12 @@ public class JDatePanel extends JComponent implements DatePanel {
                         final double h = e.getComponent().getSize().getHeight();
 
                         // Set the size of the font as a fraction of the width or the height, whichever is smallest
-                        final float sw = (float) Math.floor(w / 16);
-                        final float sh = (float) Math.floor(h / 8);
+                        final float sw = (float) Math.floor(w / FONT_WIDTH_DIVISOR);
+                        final float sh = (float) Math.floor(h / FONT_HEIGHT_DIVISOR);
                         dayTable.setFont(dayTable.getFont().deriveFont(Math.min(sw, sh)));
 
                         // Set the row height as a fraction of the height
-                        final int r = (int) Math.floor(h / 6);
+                        final int r = (int) Math.floor(h / ROW_HEIGHT_DIVISOR);
                         dayTable.setRowHeight(r);
                     }
 
@@ -971,8 +982,23 @@ public class JDatePanel extends JComponent implements DatePanel {
          * Part of SpinnerModel, year
          */
         public void setValue(Object text) {
-            String year = (String) text;
-            model.setYear(Integer.parseInt(year));
+            if (text == null) {
+                return;
+            }
+            if (!(text instanceof String)) {
+                throw new IllegalArgumentException("Year must be a String");
+            }
+            String yearStr = (String) text;
+            try {
+                int year = Integer.parseInt(yearStr);
+                // Reasonable year bounds: 1-9999 (Calendar supports this range)
+                if (year < 1 || year > 9999) {
+                    throw new IllegalArgumentException("Year must be between 1 and 9999");
+                }
+                model.setYear(year);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid year format: " + yearStr, e);
+            }
         }
 
         /**
