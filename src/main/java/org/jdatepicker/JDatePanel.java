@@ -1041,8 +1041,7 @@ public class JDatePanel extends JComponent implements DatePanel {
         /**
          * Part of TableModel, day
          */
-        @SuppressWarnings({"unchecked", "rawtypes"})
-        public Class getColumnClass(int arg0) {
+        public Class<Integer> getColumnClass(int arg0) {
             return Integer.class;
         }
 

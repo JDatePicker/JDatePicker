@@ -49,7 +49,7 @@ public class DateComponentFormatter extends JFormattedTextField.AbstractFormatte
 
     @Override
     public Object stringToValue(String text) throws ParseException {
-        if (text == null || text.equals("")) {
+        if (text == null || text.isEmpty()) {
             return null;
         }
         DateFormat format = ComponentFormatDefaults.getInstance().getFormat(ComponentFormatDefaults.Key.SELECTED_DATE_FIELD);
