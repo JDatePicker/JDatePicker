@@ -38,7 +38,7 @@ public class SqlDateModel extends AbstractDateModel<java.sql.Date> {
     }
 
     public SqlDateModel(Date value) {
-        this(value, false);
+        this(value, value != null);
     }
 
     public SqlDateModel(Date value, boolean isSelected) {

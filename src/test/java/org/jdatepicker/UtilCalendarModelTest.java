@@ -31,11 +31,11 @@ class UtilCalendarModelTest {
     }
 
     @Test
-    @DisplayName("Constructor with value also creates unselected model")
+    @DisplayName("Constructor with value also creates a selected model")
     void testConstructorWithValue() {
-        UtilCalendarModel nullModel = new UtilCalendarModel(Calendar.getInstance());
-        assertNull(nullModel.getValue());
-        assertFalse(nullModel.isSelected());
+        UtilCalendarModel valueModel = new UtilCalendarModel(Calendar.getInstance());
+        assertNotNull(valueModel.getValue());
+        assertTrue(valueModel.isSelected());
     }
 
     @Test

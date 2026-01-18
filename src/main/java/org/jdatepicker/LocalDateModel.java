@@ -54,7 +54,7 @@ public class LocalDateModel extends AbstractDateModel<LocalDate> {
     }
 
     public LocalDateModel(LocalDate argument) {
-        this(argument, false);
+        this(argument, argument != null);
     }
 
     /**

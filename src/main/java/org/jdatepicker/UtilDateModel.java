@@ -38,7 +38,7 @@ public class UtilDateModel extends AbstractDateModel<java.util.Date> {
     }
 
     public UtilDateModel(Date argument) {
-        this(argument, false);
+        this(argument, argument != null);
     }
 
     public UtilDateModel(Date value, boolean isSelected) {

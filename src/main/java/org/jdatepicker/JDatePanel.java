@@ -82,7 +82,7 @@ public class JDatePanel extends JComponent implements DatePanel {
     }
 
     /**
-     * Create a JDatePanel with an initial value, with a UtilCalendarModel.
+     * Create a JDatePanel with an initial selected value, with a UtilCalendarModel.
      *
      * @param value the initial value
      */
@@ -98,6 +98,7 @@ public class JDatePanel extends JComponent implements DatePanel {
     public JDatePanel(java.util.Date value) {
         this(createModelFromValue(value));
     }
+
 
     /**
      * Create a JDatePanel with an initial value, with a SqlDateModel.

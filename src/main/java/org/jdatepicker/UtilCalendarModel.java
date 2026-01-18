@@ -37,7 +37,7 @@ public class UtilCalendarModel extends AbstractDateModel<Calendar> {
     }
 
     public UtilCalendarModel(Calendar argument) {
-        this(argument, false);
+        this(argument, argument != null);
     }
 
     public UtilCalendarModel(Calendar value, boolean isSelected) {

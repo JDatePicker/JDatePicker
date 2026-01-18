@@ -55,7 +55,7 @@ import java.beans.PropertyChangeListener;
  *
  * <p><b>Selection State:</b> The model maintains a "selected" state separate from the date value.
  * This allows distinguishing between "no date selected" and "a specific date selected". When
- * {@code isSelected()} returns false, the getValue() may be null or contain a default value.
+ * {@code isSelected()} returns false, the getValue() returns null.
  *
  * <p><b>Thread Safety:</b> Implementations use {@link java.util.concurrent.CopyOnWriteArraySet}
  * for listener management, making listener operations thread-safe. However, date manipulation
