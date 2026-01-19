@@ -396,7 +396,7 @@ public class JDatePicker extends JComponent implements DatePicker {
             // If the field is editable and we need to parse the date entered
             if (evt.getNewValue() != null) {
                 Calendar value = (Calendar) evt.getNewValue();
-                DateModel model = new UtilCalendarModel(value);
+                DateModel<?> model = new UtilCalendarModel(value);
                 // check constraints
                 if (!datePanel.checkConstraints(model)) {
                     // rollback

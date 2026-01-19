@@ -133,10 +133,6 @@ public class JDatePanel extends JComponent implements DatePanel {
         return new UtilCalendarModel();
     }
 
-    private static DateModel<Calendar> createModel(Calendar value) {
-        return new UtilCalendarModel(value);
-    }
-
     private static DateModel<?> createModelFromValue(Object value) {
         if (value instanceof java.util.Calendar calendar) {
             return new UtilCalendarModel(calendar);
