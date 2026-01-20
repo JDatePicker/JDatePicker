@@ -181,8 +181,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         formattedTextField.addPropertyChangeListener("value", internalEventHandler);
         datePanel.addActionListener(internalEventHandler);
         datePanel.getModel().addChangeListener(internalEventHandler);
-        long eventMask = MouseEvent.MOUSE_PRESSED;
-        Toolkit.getDefaultToolkit().addAWTEventListener(internalEventHandler, eventMask);
+        // Note: AWTEventListener is registered in addNotify() to prevent memory leak
     }
 
     private static ComponentColorDefaults getColors() {
@@ -341,6 +340,17 @@ public class JDatePicker extends JComponent implements DatePicker {
     }
 
     @Override
+    public void addNotify() {
+        super.addNotify();
+        // Register AWTEventListener only when component is added to hierarchy
+        // This prevents memory leak if component is created but never added
+        if (internalEventHandler != null) {
+            long eventMask = MouseEvent.MOUSE_PRESSED;
+            Toolkit.getDefaultToolkit().addAWTEventListener(internalEventHandler, eventMask);
+        }
+    }
+
+    @Override
     public void removeNotify() {
         // Remove AWTEventListener to prevent memory leak
         if (internalEventHandler != null) {
@@ -415,7 +425,7 @@ public class JDatePicker extends JComponent implements DatePicker {
         }
 
         public void eventDispatched(AWTEvent event) {
-            if (MouseEvent.MOUSE_CLICKED == event.getID() && event.getSource() != button) {
+            if (MouseEvent.MOUSE_PRESSED == event.getID() && event.getSource() != button) {
                 Set<Component> components = getAllComponents(datePanel);
                 boolean clickInPopup = false;
                 for (Component component : components) {

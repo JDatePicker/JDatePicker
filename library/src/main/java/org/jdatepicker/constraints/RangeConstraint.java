@@ -108,7 +108,7 @@ public class RangeConstraint implements DateSelectionConstraint {
         if (model.isSelected() && after != null) {
             Calendar value = Calendar.getInstance();
             value.set(model.getYear(), model.getMonth(), model.getDay());
-            value.set(Calendar.HOUR, 0);
+            value.set(Calendar.HOUR_OF_DAY, 0);
             value.set(Calendar.MINUTE, 0);
             value.set(Calendar.SECOND, 0);
             value.set(Calendar.MILLISECOND, 0);
@@ -117,7 +117,7 @@ public class RangeConstraint implements DateSelectionConstraint {
         if (model.isSelected() && before != null) {
             Calendar value = Calendar.getInstance();
             value.set(model.getYear(), model.getMonth(), model.getDay());
-            value.set(Calendar.HOUR, 0);
+            value.set(Calendar.HOUR_OF_DAY, 0);
             value.set(Calendar.MINUTE, 0);
             value.set(Calendar.SECOND, 0);
             value.set(Calendar.MILLISECOND, 0);

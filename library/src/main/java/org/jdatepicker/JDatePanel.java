@@ -735,6 +735,13 @@ public class JDatePanel extends JComponent implements DatePanel {
 
         private static final long serialVersionUID = -2341614459632756921L;
 
+        // Cache Calendar instances to avoid expensive allocations on every cell render
+        private final Calendar todayCal = Calendar.getInstance();
+        private final Calendar selectedCal = Calendar.getInstance();
+        private final Calendar workingCal = Calendar.getInstance();
+        private final Calendar lastMonthCal = Calendar.getInstance();
+        private final UtilCalendarModel workingModel = new UtilCalendarModel();
+
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             // Exit this method if the value is null, encountered from JTable#AccessibleJTable
             if (value == null) {
@@ -751,8 +758,8 @@ public class JDatePanel extends JComponent implements DatePanel {
                 return label;
             }
 
-            Calendar todayCal = Calendar.getInstance();
-            Calendar selectedCal = Calendar.getInstance();
+            // Reuse cached Calendar instances instead of creating new ones
+            todayCal.setTimeInMillis(System.currentTimeMillis());
             selectedCal.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), internalModel.getModel().getDay());
 
             int cellDayValue = (Integer) value;
@@ -762,10 +769,10 @@ public class JDatePanel extends JComponent implements DatePanel {
             if (cellDayValue < 1 || cellDayValue > lastDayOfMonth) {
                 label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_OTHER_MONTH));
 
-                Calendar calForDay = Calendar.getInstance();
-                calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
-                DateModel<Calendar> modelForDay = new UtilCalendarModel(calForDay);
-                label.setBackground(checkConstraints(modelForDay) ?
+                // Reuse cached Calendar and model instances
+                workingCal.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
+                workingModel.setValue(workingCal);
+                label.setBackground(checkConstraints(workingModel) ?
                                 getColors().getColor(ComponentColorDefaults.Key.BG_GRID) :
                                 getColors().getColor(ComponentColorDefaults.Key.BG_GRID_NOT_SELECTABLE)
                 );
@@ -776,9 +783,8 @@ public class JDatePanel extends JComponent implements DatePanel {
                 }
                 //Before start of month
                 else {
-                    Calendar lastMonth = new GregorianCalendar();
-                    lastMonth.set(selectedCal.get(Calendar.YEAR), selectedCal.get(Calendar.MONTH) - 1, 1);
-                    int lastDayLastMonth = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
+                    lastMonthCal.set(selectedCal.get(Calendar.YEAR), selectedCal.get(Calendar.MONTH) - 1, 1);
+                    int lastDayLastMonth = lastMonthCal.getActualMaximum(Calendar.DAY_OF_MONTH);
                     label.setText(Integer.toString(lastDayLastMonth + cellDayValue));
                 }
             }
@@ -786,10 +792,10 @@ public class JDatePanel extends JComponent implements DatePanel {
             else {
                 label.setForeground(getColors().getColor(ComponentColorDefaults.Key.FG_GRID_THIS_MONTH));
 
-                Calendar calForDay = Calendar.getInstance();
-                calForDay.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
-                DateModel<Calendar> modelForDay = new UtilCalendarModel(calForDay);
-                label.setBackground(checkConstraints(modelForDay) ?
+                // Reuse cached Calendar and model instances
+                workingCal.set(internalModel.getModel().getYear(), internalModel.getModel().getMonth(), cellDayValue);
+                workingModel.setValue(workingCal);
+                label.setBackground(checkConstraints(workingModel) ?
                                 getColors().getColor(ComponentColorDefaults.Key.BG_GRID) :
                                 getColors().getColor(ComponentColorDefaults.Key.BG_GRID_NOT_SELECTABLE)
                 );
