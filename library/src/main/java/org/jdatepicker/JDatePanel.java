@@ -113,8 +113,11 @@ public class JDatePanel extends JComponent implements DatePanel {
      * Create a JDatePanel with a custom date model.
      *
      * @param model a custom date model
+     * @throws NullPointerException if model is null
      */
     public JDatePanel(DateModel<?> model) {
+        Objects.requireNonNull(model, "DateModel cannot be null");
+        
         actionListeners = new CopyOnWriteArraySet<ActionListener>();
         dateConstraints = new CopyOnWriteArraySet<DateSelectionConstraint>();
 
