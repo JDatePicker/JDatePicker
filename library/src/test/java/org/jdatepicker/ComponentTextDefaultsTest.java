@@ -59,7 +59,7 @@ public class ComponentTextDefaultsTest {
         // Test that we can get text for all 12 months without errors
         // This would fail on the 31st of any month for months with < 31 days
         
-        ComponentTextDefaults defaults = ComponentTextDefaults.getInstance(Locale.US);
+        ComponentTextDefaults defaults = ComponentTextDefaults.getInstance();
         
         for (int month = 0; month < 12; month++) {
             ComponentTextDefaults.Key key = ComponentTextDefaults.Key.getMonthKey(month);
@@ -77,7 +77,7 @@ public class ComponentTextDefaultsTest {
         // This test verifies that the month text returned is actually for the correct month
         // by checking it matches what we'd expect from a properly constructed Calendar
         
-        ComponentTextDefaults defaults = ComponentTextDefaults.getInstance(Locale.US);
+        ComponentTextDefaults defaults = ComponentTextDefaults.getInstance();
         
         // Test a few specific months that are prone to the rollover bug
         int[] testMonths = {
@@ -97,8 +97,8 @@ public class ComponentTextDefaultsTest {
             expected.set(Calendar.DAY_OF_MONTH, 1);
             expected.set(Calendar.MONTH, month);
             
-            // Get the expected month name
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM", Locale.US);
+            // Get the expected month name using the system locale
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM");
             String expectedText = sdf.format(expected.getTime());
             
             assertEquals(expectedText, actualText,
