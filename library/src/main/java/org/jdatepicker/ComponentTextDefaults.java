@@ -154,6 +154,10 @@ public final class ComponentTextDefaults {
         String text = texts.getProperty(key.getProperty());
         if (text == null && "month".equals(key.getKind())) {
             Calendar c = Calendar.getInstance();
+            // Fix for issue #100: Set day to 1 before setting month to prevent rollover
+            // If today is the 31st and we set month to February (which has < 31 days),
+            // Calendar would roll over to March. Setting day to 1 first prevents this.
+            c.set(Calendar.DAY_OF_MONTH, 1);
             c.set(Calendar.MONTH, key.getIndex());
             ComponentFormatDefaults defaults = ComponentFormatDefaults.getInstance();
             DateFormat monthFormat = defaults.getFormat(ComponentFormatDefaults.Key.MONTH_SELECTOR);
