@@ -241,10 +241,9 @@ public class JDatePicker extends JComponent implements DatePicker {
      */
     private void showPopup() {
         if (popup == null) {
-            PopupFactory fac = new PopupFactory();
             Point xy = getLocationOnScreen();
             datePanel.setVisible(true);
-            popup = fac.getPopup(this, datePanel, (int) xy.getX(), (int) (xy.getY() + this.getHeight()));
+            popup = PopupFactory.getSharedInstance().getPopup(this, datePanel, (int) xy.getX(), (int) (xy.getY() + this.getHeight()));
             popup.show();
         }
     }
