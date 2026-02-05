@@ -348,6 +348,102 @@ public class JDatePicker extends JComponent implements DatePicker {
         super.removeNotify();
     }
 
+    // Convenience methods for java.util.Date and java.time support
+
+    /**
+     * Sets the selected date using a java.util.Date.
+     *
+     * @param date the Date to select, or null to clear the selection
+     */
+    public void setDate(java.util.Date date) {
+        if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            datePanel.getModel().setDate(
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)
+            );
+            datePanel.getModel().setSelected(true);
+        } else {
+            datePanel.getModel().setSelected(false);
+        }
+    }
+
+    /**
+     * Returns the selected date as java.util.Date, or null if nothing is selected.
+     *
+     * @return the selected date, or null
+     */
+    public java.util.Date getDate() {
+        DateModel<?> model = datePanel.getModel();
+        if (model.isSelected()) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(model.getYear(), model.getMonth(), model.getDay(), 0, 0, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            return cal.getTime();
+        }
+        return null;
+    }
+
+    /**
+     * Sets the selected date using java.time.Instant.
+     *
+     * @param instant the Instant to select, or null to clear the selection
+     */
+    public void setInstant(java.time.Instant instant) {
+        if (instant != null) {
+            setDate(java.util.Date.from(instant));
+        } else {
+            datePanel.getModel().setSelected(false);
+        }
+    }
+
+    /**
+     * Gets the selected date as java.time.Instant.
+     *
+     * @return the selected date as Instant, or null if nothing is selected
+     */
+    public java.time.Instant getInstant() {
+        java.util.Date date = getDate();
+        return date != null ? date.toInstant() : null;
+    }
+
+    /**
+     * Sets the selected date using java.time.LocalDate.
+     *
+     * @param localDate the LocalDate to select, or null to clear the selection
+     */
+    public void setLocalDate(java.time.LocalDate localDate) {
+        if (localDate != null) {
+            datePanel.getModel().setDate(
+                    localDate.getYear(),
+                    localDate.getMonthValue() - 1, // LocalDate months are 1-12, Calendar uses 0-11
+                    localDate.getDayOfMonth()
+            );
+            datePanel.getModel().setSelected(true);
+        } else {
+            datePanel.getModel().setSelected(false);
+        }
+    }
+
+    /**
+     * Gets the selected date as java.time.LocalDate.
+     *
+     * @return the selected date as LocalDate, or null if nothing is selected
+     */
+    public java.time.LocalDate getLocalDate() {
+        DateModel<?> model = datePanel.getModel();
+        if (model.isSelected()) {
+            return java.time.LocalDate.of(
+                    model.getYear(),
+                    model.getMonth() + 1, // Calendar months are 0-11, LocalDate uses 1-12
+                    model.getDay()
+            );
+        }
+        return null;
+    }
+
     /**
      * This internal class hides the public event methods from the outside
      */
