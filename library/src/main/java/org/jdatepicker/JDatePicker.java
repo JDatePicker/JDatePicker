@@ -38,6 +38,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -128,8 +129,11 @@ public class JDatePicker extends JComponent implements DatePicker {
      * Formatting is described at:
      *
      * @param datePanel The DatePanel to use
+     * @throws NullPointerException if datePanel is null
      */
     private JDatePicker(JDatePanel datePanel) {
+        Objects.requireNonNull(datePanel, "JDatePanel cannot be null");
+        
         this.datePanel = datePanel;
 
         //Initialise Variables
