@@ -169,10 +169,19 @@ public class JDatePicker extends JComponent implements DatePicker {
         add(button);
         layout.putConstraint(SpringLayout.WEST, button, 1, SpringLayout.EAST, formattedTextField);
         layout.putConstraint(SpringLayout.EAST, this, 0, SpringLayout.EAST, button);
-        // Size the picker to fit the taller of the text field and the button (issue #61)
-        layout.getConstraints(this).setConstraint(SpringLayout.SOUTH, Spring.max(
-                layout.getConstraint(SpringLayout.SOUTH, formattedTextField),
-                layout.getConstraint(SpringLayout.SOUTH, button)));
+        // Size the picker to fit the taller of the text field and the button (issue #61).
+        // Do not use Spring.max here: its setValue pushes the parent-given height into both
+        // children, so they stretch and the picker has no maximum height. This spring only
+        // stores the value it gets, so the children keep their preferred heights.
+        layout.getConstraints(this).setConstraint(SpringLayout.SOUTH, new Spring() {
+            private int value = UNSET;
+            private int pref() { return Math.max(formattedTextField.getPreferredSize().height, button.getPreferredSize().height); }
+            public int getMinimumValue() { return pref(); }
+            public int getPreferredValue() { return pref(); }
+            public int getMaximumValue() { return pref(); }
+            public int getValue() { return value == UNSET ? pref() : value; }
+            public void setValue(int v) { value = v; }
+        });
 
         //Do layout formatting
         int h = (int) button.getPreferredSize().getHeight();

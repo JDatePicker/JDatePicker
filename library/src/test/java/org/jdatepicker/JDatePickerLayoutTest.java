@@ -34,9 +34,34 @@ public class JDatePickerLayoutTest {
     }
 
     @Test
+    void testMaximumHeightEqualsPreferredHeight() {
+        JDatePicker picker = new JDatePicker();
+
+        assertEquals(picker.getPreferredSize().height, picker.getMaximumSize().height,
+            "Picker maximum height should equal its preferred height");
+    }
+
+    @Test
+    void testChildrenKeepPreferredHeightWhenPickerIsTaller() {
+        JDatePicker picker = new JDatePicker();
+        Component textField = picker.getComponent(0);
+        Component button = picker.getComponent(1);
+
+        Dimension pref = picker.getPreferredSize();
+        picker.setSize(pref.width, 3 * pref.height);
+        picker.doLayout();
+
+        assertEquals(textField.getPreferredSize().height, textField.getBounds().height,
+            "Text field should keep its preferred height when the picker is taller");
+        assertEquals(button.getPreferredSize().height, button.getBounds().height,
+            "Button should keep its preferred height when the picker is taller");
+    }
+
+    @Test
     void testTallerTextFieldIsNotClipped() {
         JDatePicker picker = new JDatePicker();
         Component textField = picker.getComponent(0);
+        Component button = picker.getComponent(1);
 
         textField.setPreferredSize(new Dimension(100, 100));
 
@@ -51,5 +76,7 @@ public class JDatePickerLayoutTest {
         assertTrue(bounds.y + bounds.height <= picker.getHeight(),
             "Text field bottom (" + (bounds.y + bounds.height) + ") should be inside the picker height ("
                 + picker.getHeight() + ")");
+        assertEquals(button.getPreferredSize().height, button.getBounds().height,
+            "Button should keep its preferred height next to a taller text field");
     }
 }
