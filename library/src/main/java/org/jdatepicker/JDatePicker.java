@@ -37,7 +37,6 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -262,17 +261,24 @@ public class JDatePicker extends JComponent implements DatePicker {
         }
     }
 
-    private Set<Component> getAllComponents(Component component) {
-        Set<Component> children = new HashSet<Component>();
-        children.add(component);
-        if (component instanceof Container) {
-            Container container = (Container) component;
-            Component[] components = container.getComponents();
-            for (int i = 0; i < components.length; i++) {
-                children.addAll(getAllComponents(components[i]));
+    /**
+     * Check if a component is inside the root component. A component in a popup menu
+     * (for example the month menu) is inside the root if the popup menu was invoked
+     * from inside the root.
+     */
+    static boolean isInside(Component source, Component root) {
+        Component component = source;
+        while (component != null) {
+            if (component == root) {
+                return true;
+            }
+            if (component instanceof JPopupMenu) {
+                component = ((JPopupMenu) component).getInvoker();
+            } else {
+                component = component.getParent();
             }
         }
-        return children;
+        return false;
     }
 
     public boolean isDoubleClickAction() {
@@ -515,13 +521,8 @@ public class JDatePicker extends JComponent implements DatePicker {
 
         public void eventDispatched(AWTEvent event) {
             if (MouseEvent.MOUSE_CLICKED == event.getID() && event.getSource() != button) {
-                Set<Component> components = getAllComponents(datePanel);
-                boolean clickInPopup = false;
-                for (Component component : components) {
-                    if (event.getSource() == component) {
-                        clickInPopup = true;
-                    }
-                }
+                boolean clickInPopup = event.getSource() instanceof Component
+                        && isInside((Component) event.getSource(), datePanel);
                 if (!clickInPopup) {
                     hidePopup();
                 }
