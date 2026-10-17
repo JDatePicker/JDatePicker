@@ -71,7 +71,7 @@ public final class ComponentColorDefaults {
     private ComponentColorDefaults() {
         colors = new HashMap<Key, Color>();
 
-        colors.put(Key.FG_MONTH_SELECTOR, SystemColor.activeCaptionText);
+        colors.put(Key.FG_MONTH_SELECTOR, readableForeground(SystemColor.activeCaptionText, SystemColor.activeCaption));
         colors.put(Key.BG_MONTH_SELECTOR, SystemColor.activeCaption);
 
         colors.put(Key.FG_GRID_HEADER, new Color(10, 36, 106));
@@ -102,6 +102,43 @@ public final class ComponentColorDefaults {
 
     public void setColor(Key key, Color color) {
         colors.put(key, color);
+    }
+
+    /**
+     * Returns the foreground if it is readable on the background (WCAG contrast
+     * ratio of at least 4.5:1), otherwise black or white, whichever has the higher
+     * contrast against the background.
+     */
+    static Color readableForeground(Color foreground, Color background) {
+        if (foreground == null || background == null) {
+            return foreground;
+        }
+        if (contrastRatio(foreground, background) >= 4.5) {
+            return foreground;
+        }
+        return contrastRatio(Color.BLACK, background) >= contrastRatio(Color.WHITE, background)
+                ? Color.BLACK
+                : Color.WHITE;
+    }
+
+    /**
+     * WCAG 2.x contrast ratio between two colors, from 1.0 to 21.0.
+     */
+    static double contrastRatio(Color a, Color b) {
+        double la = relativeLuminance(a);
+        double lb = relativeLuminance(b);
+        return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+    }
+
+    private static double relativeLuminance(Color color) {
+        return 0.2126 * linearise(color.getRed())
+                + 0.7152 * linearise(color.getGreen())
+                + 0.0722 * linearise(color.getBlue());
+    }
+
+    private static double linearise(int component) {
+        double c = component / 255.0;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
     }
 
 }
