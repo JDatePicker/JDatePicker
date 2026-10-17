@@ -283,12 +283,20 @@ public class JDatePicker extends JComponent implements DatePicker {
         return datePanel.isShowYearButtons();
     }
 
+    public boolean isShowNoneButton() {
+        return datePanel.isShowNoneButton();
+    }
+
     public void setDoubleClickAction(boolean doubleClickAction) {
         datePanel.setDoubleClickAction(doubleClickAction);
     }
 
     public void setShowYearButtons(boolean showYearButtons) {
         datePanel.setShowYearButtons(showYearButtons);
+    }
+
+    public void setShowNoneButton(boolean showNoneButton) {
+        datePanel.setShowNoneButton(showNoneButton);
     }
 
     private void setTextFieldValue(JFormattedTextField textField, int year, int month, int day, boolean isSelected) {

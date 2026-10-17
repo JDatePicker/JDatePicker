@@ -57,4 +57,17 @@ public interface DatePanel extends DateComponent {
      */
     boolean isDoubleClickAction();
 
+    /**
+     * Sets the visibilty of the "None" button. Defaults to true.
+     *
+     * @param showNoneButton show the button?
+     */
+    void setShowNoneButton(boolean showNoneButton);
+    
+    /**
+     * Is the "None" button active.
+     *
+     * @return visiblity of the "None" button
+     */
+    boolean isShowNoneButton();
 }
