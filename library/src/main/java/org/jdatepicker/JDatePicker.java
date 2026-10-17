@@ -153,7 +153,6 @@ public class JDatePicker extends JComponent implements DatePicker {
         formattedTextField.setEditable(false);
         add(formattedTextField);
         layout.putConstraint(SpringLayout.WEST, formattedTextField, 0, SpringLayout.WEST, this);
-        layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, formattedTextField);
 
         //Add and Configure Button
         button = new JButton();
@@ -170,7 +169,10 @@ public class JDatePicker extends JComponent implements DatePicker {
         add(button);
         layout.putConstraint(SpringLayout.WEST, button, 1, SpringLayout.EAST, formattedTextField);
         layout.putConstraint(SpringLayout.EAST, this, 0, SpringLayout.EAST, button);
-        layout.putConstraint(SpringLayout.SOUTH, this, 0, SpringLayout.SOUTH, button);
+        // Size the picker to fit the taller of the text field and the button (issue #61)
+        layout.getConstraints(this).setConstraint(SpringLayout.SOUTH, Spring.max(
+                layout.getConstraint(SpringLayout.SOUTH, formattedTextField),
+                layout.getConstraint(SpringLayout.SOUTH, button)));
 
         //Do layout formatting
         int h = (int) button.getPreferredSize().getHeight();
