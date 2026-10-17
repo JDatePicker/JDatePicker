@@ -60,6 +60,7 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
         propertyChangeListeners = new CopyOnWriteArraySet<PropertyChangeListener>();
         selected = false;
         calendarValue = Calendar.getInstance();
+        setToMidnight();
     }
 
     public void addChangeListener(ChangeListener changeListener) {
