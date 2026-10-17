@@ -165,4 +165,18 @@ class UtilCalendarModelTest {
         assertEquals(6, model.getMonth()); // July
         assertEquals(1, model.getDay());
     }
+
+    @Test
+    @DisplayName("Issue #65: date picked on a new model has time part at midnight")
+    void testSetDateOnNewModelHasMidnightTime() {
+        UtilCalendarModel newModel = new UtilCalendarModel();
+        newModel.setDate(2024, 5, 15);
+        newModel.setSelected(true);
+
+        Calendar value = newModel.getValue();
+        assertEquals(0, value.get(Calendar.HOUR_OF_DAY));
+        assertEquals(0, value.get(Calendar.MINUTE));
+        assertEquals(0, value.get(Calendar.SECOND));
+        assertEquals(0, value.get(Calendar.MILLISECOND));
+    }
 }

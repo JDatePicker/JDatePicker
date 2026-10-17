@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -327,6 +328,56 @@ class UtilDateModelTest {
         UtilDateModel model1 = new UtilDateModel();
         UtilDateModel model2 = new UtilDateModel();
 
+        assertEquals(model1, model2);
+    }
+
+    @Test
+    @DisplayName("Issue #65: date picked with setDate has time part at midnight")
+    void testSetDateOnNewModelHasMidnightTime() {
+        model.setDate(2024, 5, 15);
+        model.setSelected(true);
+
+        Calendar value = Calendar.getInstance();
+        value.setTime(model.getValue());
+        assertEquals(2024, value.get(Calendar.YEAR));
+        assertEquals(5, value.get(Calendar.MONTH));
+        assertEquals(15, value.get(Calendar.DAY_OF_MONTH));
+        assertEquals(0, value.get(Calendar.HOUR_OF_DAY));
+        assertEquals(0, value.get(Calendar.MINUTE));
+        assertEquals(0, value.get(Calendar.SECOND));
+        assertEquals(0, value.get(Calendar.MILLISECOND));
+    }
+
+    @Test
+    @DisplayName("Issue #65: date picked with setYear/setMonth/setDay has time part at midnight")
+    void testSetDayOnNewModelHasMidnightTime() {
+        model.setYear(2024);
+        model.setMonth(5);
+        model.setDay(15);
+        model.setSelected(true);
+
+        Calendar value = Calendar.getInstance();
+        value.setTime(model.getValue());
+        assertEquals(0, value.get(Calendar.HOUR_OF_DAY));
+        assertEquals(0, value.get(Calendar.MINUTE));
+        assertEquals(0, value.get(Calendar.SECOND));
+        assertEquals(0, value.get(Calendar.MILLISECOND));
+    }
+
+    @Test
+    @DisplayName("Issue #65: two models that pick the same day have equal values")
+    void testTwoModelsPickingSameDayAreEqual() throws InterruptedException {
+        UtilDateModel model1 = new UtilDateModel();
+        // Make sure the two models are not created in the same millisecond.
+        Thread.sleep(5);
+        UtilDateModel model2 = new UtilDateModel();
+
+        model1.setDate(2024, 5, 15);
+        model1.setSelected(true);
+        model2.setDate(2024, 5, 15);
+        model2.setSelected(true);
+
+        assertEquals(model1.getValue(), model2.getValue());
         assertEquals(model1, model2);
     }
 }
