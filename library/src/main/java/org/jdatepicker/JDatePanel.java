@@ -69,6 +69,7 @@ public class JDatePanel extends JComponent implements DatePanel {
 
     private boolean showYearButtons;
     private boolean doubleClickAction;
+    private boolean showNoneButton;
 
     private InternalCalendarModel internalModel;
     private InternalController internalController;
@@ -123,6 +124,7 @@ public class JDatePanel extends JComponent implements DatePanel {
 
         showYearButtons = false;
         doubleClickAction = false;
+        showNoneButton = true;
 
         internalModel = new InternalCalendarModel(model);
         internalController = new InternalController();
@@ -193,6 +195,15 @@ public class JDatePanel extends JComponent implements DatePanel {
      */
     public boolean isDoubleClickAction() {
         return doubleClickAction;
+    }
+
+    public void setShowNoneButton(boolean showNoneButton) {
+        this.showNoneButton = showNoneButton;
+        internalView.updateShowNoneButton();
+    }
+
+    public boolean isShowNoneButton() {
+        return showNoneButton;
     }
 
     /* (non-Javadoc)
@@ -414,10 +425,24 @@ public class JDatePanel extends JComponent implements DatePanel {
                 southPanel.setLayout(new java.awt.BorderLayout());
                 southPanel.setBackground(getColors().getColor(ComponentColorDefaults.Key.BG_TODAY_SELECTOR));
                 southPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(PANEL_BORDER_PADDING, PANEL_BORDER_PADDING, PANEL_BORDER_PADDING, PANEL_BORDER_PADDING));
-                southPanel.add(getTodayLabel(), java.awt.BorderLayout.WEST);
-                southPanel.add(getNoneLabel(), java.awt.BorderLayout.EAST);
+                updateShowNoneButton();
             }
             return southPanel;
+        }
+
+        private void updateShowNoneButton() {
+            if (southPanel == null) {
+                return;
+            }
+            southPanel.removeAll();
+            if (showNoneButton) {
+                southPanel.add(getTodayLabel(), java.awt.BorderLayout.WEST);
+                southPanel.add(getNoneLabel(), java.awt.BorderLayout.EAST);
+            } else {
+                southPanel.add(getTodayLabel(), java.awt.BorderLayout.CENTER);
+            }
+            southPanel.revalidate();
+            southPanel.repaint();
         }
 
         /**
