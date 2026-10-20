@@ -221,6 +221,9 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
         if (value != null) {
             this.calendarValue = toCalendar(value);
             setToMidnight();
+            selected = true;
+        } else {
+            selected = false;
         }
 
         fireChangeEvent();

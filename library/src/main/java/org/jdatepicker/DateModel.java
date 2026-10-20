@@ -180,9 +180,11 @@ public interface DateModel<T> {
     T getValue();
 
     /**
-     * Set the value this model represents.
+     * Set the value this model represents. A non-null value also selects the
+     * model; a null value clears the selection, so {@link #getValue()} then
+     * returns null.
      *
-     * @param value new value
+     * @param value new value, or null to clear the selection
      */
     void setValue(T value);
 

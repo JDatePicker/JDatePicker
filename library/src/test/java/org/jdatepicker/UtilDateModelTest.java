@@ -168,11 +168,11 @@ class UtilDateModelTest {
     }
 
     @Test
-    @DisplayName("setValue updates date but does not update selected state if unselected")
+    @DisplayName("setValue updates date and selects the model if unselected")
     void testSetValueSelected() {
         model.setSelected(false);
         model.setValue(new Date());
-        assertFalse(model.isSelected());
+        assertTrue(model.isSelected());
         model.setSelected(false);
         assertFalse(model.isSelected());
     }
@@ -244,8 +244,9 @@ class UtilDateModelTest {
         assertNotNull(event0.get());
         assertEquals(AbstractDateModel.PROPERTY_VALUE, event0.get().getPropertyName());
 
-        // There was an inconsistency in the original implementation, setting the value updated the selected state.
-        assertNull(event1.get());
+        // Setting a non-null value also selects the model (issue #124).
+        assertNotNull(event1.get());
+        assertEquals(AbstractDateModel.PROPERTY_SELECTED, event1.get().getPropertyName());
     }
 
     @Test
