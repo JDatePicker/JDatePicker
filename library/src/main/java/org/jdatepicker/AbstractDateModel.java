@@ -221,6 +221,9 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
         if (value != null) {
             this.calendarValue = toCalendar(value);
             setToMidnight();
+            selected = true;
+        } else {
+            selected = false;
         }
 
         fireChangeEvent();
@@ -228,7 +231,7 @@ public abstract class AbstractDateModel<T> implements DateModel<T> {
         firePropertyChange(PROPERTY_MONTH, oldMonthValue, this.calendarValue.get(Calendar.MONTH));
         firePropertyChange(PROPERTY_DAY, oldDayValue, this.calendarValue.get(Calendar.DATE));
         firePropertyChange(PROPERTY_VALUE, oldValue, getValue());
-        firePropertyChange("selected", oldSelectedValue, this.selected);
+        firePropertyChange(PROPERTY_SELECTED, oldSelectedValue, this.selected);
     }
 
     public void setDate(int year, int month, int day) {
