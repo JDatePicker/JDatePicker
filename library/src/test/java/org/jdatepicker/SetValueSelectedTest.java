@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,14 +82,30 @@ class SetValueSelectedTest {
     }
 
     @Test
+    @DisplayName("Issue #124: SqlDateModel.setValue(date) selects an unselected model")
+    void sqlDateModelSetValueSelects() {
+        assertSetValueSelects(new SqlDateModel(), java.sql.Date.valueOf("2024-03-15"));
+    }
+
+    @Test
+    @DisplayName("Issue #124: SqlDateModel.setValue(null) clears a selected model")
+    void sqlDateModelSetNullDeselects() {
+        assertSetNullDeselects(new SqlDateModel(java.sql.Date.valueOf("2024-03-15"), true));
+    }
+
+    @Test
     @DisplayName("Issue #124: setValue fires 'selected' and 'value' property change events")
     void setValueFiresSelectedAndValueEvents() {
         LocalDateModel model = new LocalDateModel();
         List<PropertyChangeEvent> fired = new ArrayList<>();
         model.addPropertyChangeListener(fired::add);
+        AtomicInteger changes = new AtomicInteger();
+        model.addChangeListener(e -> changes.incrementAndGet());
         LocalDate date = LocalDate.of(2024, 3, 15);
 
         model.setValue(date);
+
+        assertEquals(1, changes.get());
 
         List<PropertyChangeEvent> selected = events(fired, AbstractDateModel.PROPERTY_SELECTED);
         assertEquals(1, selected.size());
@@ -96,7 +113,10 @@ class SetValueSelectedTest {
         assertEquals(true, selected.get(0).getNewValue());
 
         fired.clear();
+        changes.set(0);
         model.setValue(null);
+
+        assertEquals(1, changes.get());
 
         selected = events(fired, AbstractDateModel.PROPERTY_SELECTED);
         assertEquals(1, selected.size());
